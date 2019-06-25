@@ -22,7 +22,7 @@ namespace cidk {
 
     Cx &cx;
     It it;
-    map<const Sym *, Var *> bindings;
+    map<const Sym *, Var *> vars;
     
     Env(Cx &cx);
     ~Env();
@@ -35,6 +35,7 @@ namespace cidk {
                  Rest &&...rest);
     
     bool get(const Pos &pos, const Sym *key, Val &out, bool silent);
+    bool mark_refs(const Pos &pos);
     bool set(const Pos &pos, const Sym *key, const Val &val, bool force);
   };
 }

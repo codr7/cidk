@@ -46,4 +46,9 @@ namespace cidk {
   void Cx::eval(const Pos &pos, const Ops &in) {
     for (const Op &o: in) { o.eval(*this, pos); }
   }
+
+  void Cx::mark_refs(const Pos &pos) {
+    for (Env *e: envs) { e->mark_refs(pos); }
+    for (Val v: stack) { v.mark_refs(pos); }
+  }
 }

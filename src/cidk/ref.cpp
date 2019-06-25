@@ -3,7 +3,7 @@
 
 namespace cidk {
   Ref::Ref(Cx &cx):
-    cx(cx), it(cx.refs.insert(cx.refs.end(), this)), state(State::_) { }
+    cx(cx), it(cx.refs.insert(cx.refs.end(), this)), ref_state(RefState::_) { }
 
   Ref::~Ref() {
     cx.refs.erase(it);

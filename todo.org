@@ -1,10 +1,9 @@
+* remove dup method
+** assign val struct
 * add refs
-** add void cx.mark_refs(const Pos &pos)
-*** start by clearing Ref.marks for cx.refs
-*** process cx.envs & cx.stack
-*** add bool ValType.mark_refs()
 ** add cx.sweep_refs()
-*** use Val.sweep()
+*** loop refs, call Val.sweep() unless ref_state == mark
+*** reset ref_state to _
 ** valgrind
 * ---
 * move ValType.sweep to env
@@ -29,3 +28,5 @@
 ** use call.target.cx instead
 * change env storage to sorted deque & compare perf
 * add asm read/write support
+** treat anything indented more as body
+** port fib

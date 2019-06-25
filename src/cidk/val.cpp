@@ -8,21 +8,12 @@ namespace cidk {
     src.dup(pos, *this);
   }
 
-  Val::Val(Val &&src): pos(src.pos), type(src.type) {
-    src.move(pos, *this);
-  }
-
   Val::Val(const Pos &pos, ValType &type): pos(pos), type(&type) { }
 
   Val::~Val() { }
 
   const Val &Val::operator =(const Val &src) {
     src.dup(pos, *this);
-    return *this;
-  }
-
-  const Val &Val::operator =(Val &&src) {
-    src.move(pos, *this);
     return *this;
   }
 
@@ -35,7 +26,7 @@ namespace cidk {
     auto &s(cx.stack);
     s.push_back(*this);
     type->call_env(pos, cx.intern("clone"));
-    s.back().move(pos, dst);
+    dst = s.back();
     s.pop_back();
   }
 
@@ -63,10 +54,8 @@ namespace cidk {
     return type->is(pos, *this, y);
   }
 
-  void Val::move(const Pos &pos, Val &dst) {
-    type->move(pos, dst, *this);
-    dst.type = type;
-    type = nullptr;
+  bool Val::mark_refs(const Pos &pos) {
+    return type->mark_refs(pos, *this);
   }
 
   void Val::splat(const Pos &pos) {

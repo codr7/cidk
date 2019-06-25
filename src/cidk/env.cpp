@@ -7,13 +7,13 @@ namespace cidk {
 
   Env::~Env() {
     cx.envs.erase(it);
-    for (auto &b: bindings) { cx.var_pool.put(b.second); }
+    for (auto &v: vars) { cx.var_pool.put(v.second); }
   }
 
   bool Env::get(const Pos &pos, const Sym *key, Val &out, bool silent) {
-    auto found(bindings.find(key));
+    auto found(vars.find(key));
 
-    if (found == bindings.end()) {
+    if (found == vars.end()) {
       if (!silent) {
         throw UnknownId(pos, key);
       }
@@ -21,16 +21,26 @@ namespace cidk {
       return false;
     }
 
-    found->second->val.move(pos, out);
+    out = found->second->val;
     return true;
   }
-  
-  bool Env::set(const Pos &pos, const Sym *key, const Val &val, bool force) {
-    auto found(bindings.find(key));
+
+  bool Env::mark_refs(const Pos &pos) {
+    bool res(false);
     
-    if (found == bindings.end()) {
+    for (auto &v: vars) {
+      res |= v.second->val.mark_refs(pos);
+    }
+
+    return res;
+  }
+
+  bool Env::set(const Pos &pos, const Sym *key, const Val &val, bool force) {
+    auto found(vars.find(key));
+    
+    if (found == vars.end()) {
       if (!force) { return false; }
-      bindings.emplace(key, cx.var_pool.get(pos, this, val));
+      vars.emplace(key, cx.var_pool.get(pos, this, val));
     } else {
       auto v(found->second);
       

@@ -31,7 +31,6 @@ namespace cidk {
         
     Val();
     Val(const Val &src);
-    Val(Val &&src);
     Val(const Pos &pos, ValType &type);
 
     template <typename ValT>
@@ -42,12 +41,9 @@ namespace cidk {
     ~Val();
 
     const Val &operator =(const Val &src);
-    const Val &operator =(Val &&src);
     
     template <typename ValT>
-    ValT as() const {
-      return any_cast<ValT>(as_any);
-    }
+    ValT as() const { return any_cast<ValT>(as_any); }
 
     void call(const Pos &pos);
     void clone(const Pos &pos, Val &dst) const;
@@ -55,7 +51,7 @@ namespace cidk {
     void dup(const Pos &pos, Val &dst) const;
     bool eq(const Pos &pos, const Val &y) const;
     bool is(const Pos &pos, const Val &y) const;
-    void move(const Pos &pos, Val &dst);
+    bool mark_refs(const Pos &pos);
 
     template <typename ValT>
     void reset(const Pos &pos, ValTType<ValT> &type, ValT val) {

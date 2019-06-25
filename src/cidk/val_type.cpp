@@ -38,9 +38,7 @@ namespace cidk {
     return is(pos, x, y);
   }
 
-  void ValType::move(const Pos &pos, Val &dst, const Val &src) const {
-    dup(pos, dst, src);
-  }
+  bool ValType::mark_refs(const Pos &pos, const Val &val) { return false; }
 
   void ValType::splat(const Pos &pos, Val &val) {
     cx.stack.push_back(val);

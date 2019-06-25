@@ -34,5 +34,6 @@ int main() {
   assert(s.size() == 42);
   assert(s.back().as_int == 41);
 
+  cx.mark_refs(p);
   return 0;
 }

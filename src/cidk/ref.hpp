@@ -8,13 +8,13 @@ namespace cidk {
 
   struct Cx;
   struct Pos;
+
+  enum struct RefState { _, mark, sweep };
   
-  struct Ref {
-    enum struct State { _, keep, sweep };
-      
+  struct Ref {    
     Cx &cx;
     list<Ref *>::iterator it;
-    State state;
+    RefState ref_state;
 
     Ref(Cx &cx);
     virtual ~Ref();
