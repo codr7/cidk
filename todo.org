@@ -1,7 +1,8 @@
+* rename Lit op to Push
 * add refs
 ** add Ref type
-*** uint16_t nmarks
-*** Refs::iter link;
+*** int nmarks
+*** list<Ref *>::iterator link
 *** copy sweep method
 *** embed in Fun
 ** add std::list cx.refs
@@ -14,7 +15,8 @@
 *** use Val.sweep()
 ** valgrind
 * ---
-* add Id op
+* add Sym type
+* add Get op
 ** add support for recursive lookups
 * add Fun.args (Args)
 ** init arg ids
@@ -28,5 +30,7 @@
 *** https://stackoverflow.com/questions/16208079/how-to-work-with-utf-8-in-c-conversion-from-other-encodings-to-utf-8
 ** splat chars
 * --
+* remove call.cx
+** use call.target.cx instead
 * change env storage to sorted deque & compare perf
-
+* add asm read/write support
