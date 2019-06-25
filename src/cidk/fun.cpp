@@ -1,3 +1,4 @@
+#include "cidk/cx.hpp"
 #include "cidk/e.hpp"
 #include "cidk/fun.hpp"
 
@@ -8,5 +9,8 @@ namespace cidk {
            initializer_list<Arg> args,
            initializer_list<Ret> rets,
            Imp imp):
-    Def(cx, pos, id), env(cx), imp(imp) { }
+    Def(cx, pos, id),
+    ref(cx, [this, &cx](const Pos &pos) { cx.Fun.pool.put(this); }),
+    env(cx),
+    imp(imp) { }
 }

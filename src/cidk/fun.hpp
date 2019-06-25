@@ -6,6 +6,7 @@
 #include "cidk/arg.hpp"
 #include "cidk/def.hpp"
 #include "cidk/env.hpp"
+#include "cidk/ref.hpp"
 #include "cidk/stack.hpp"
 
 namespace cidk {
@@ -14,8 +15,9 @@ namespace cidk {
   struct Val;
   
   struct Fun: Def {
-    using Imp = function<void (Call &call)>;
+    using Imp = function<void (Call &)>;
 
+    Ref ref;
     Env env;
     Imp imp;
     

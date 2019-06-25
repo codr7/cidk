@@ -7,7 +7,6 @@ namespace cidk {
   Cx::Cx():
     root_env(*this),
     call(nullptr),
-    
     Any(*this, Pos::MISSING, "Any"),
     Bool(*this, Pos::MISSING, "Bool"),
     Byte(*this, Pos::MISSING, "Byte"),

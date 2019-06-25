@@ -1,19 +1,14 @@
 * add refs
-** add Ref type
-*** int nmarks
-*** list<Ref *>::iterator link
-*** copy sweep method
-*** embed in Fun
-** add std::list cx.refs
-*** add/remove Fun in constructor/destructor
-** add cx.mark_refs(const Pos &pos, Vals &out)
-*** start by clearing Ref.nmarks for cx.refs
+** add cx.mark_refs(const Pos &pos)
+*** start by clearing Ref.marks for cx.refs
 *** add ValType.mark_refs()
 *** process cx.envs & cx.stack
 ** add cx.sweep_refs()
 *** use Val.sweep()
 ** valgrind
 * ---
+* move ValType.sweep to env
+** update Val.sweep()
 * add Sym type
 * add Get op
 ** add support for recursive lookups

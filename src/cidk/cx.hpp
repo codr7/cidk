@@ -16,8 +16,10 @@
 
 namespace cidk {
   struct Call;
+  struct Ref;
   
   struct Cx {
+    Pool<Env> env_pool;
     Pool<Sym> sym_pool;    
     Pool<Var> var_pool;
 
@@ -26,8 +28,10 @@ namespace cidk {
 
     list<Env *> envs;
     Env root_env;
-    Stack stack;
     
+    list<Ref *> refs;
+    
+    Stack stack;    
     Call *call;
 
     AnyType Any;

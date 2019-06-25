@@ -23,6 +23,6 @@ namespace cidk {
   }
 
   void FunType::sweep(const Pos &pos, Val &val) {
-    pool.put(val.as_fun);
+    val.as_fun->ref.sweep(pos);
   }
 }
