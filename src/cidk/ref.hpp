@@ -1,7 +1,6 @@
 #ifndef CIDK_REF_HPP
 #define CIDK_REF_HPP
 
-#include <functional>
 #include <list>
 
 namespace cidk {
@@ -11,15 +10,16 @@ namespace cidk {
   struct Pos;
   
   struct Ref {
-    using SweepImp = function<void (const Pos &)>;
-
+    enum struct State { _, keep, sweep };
+      
     Cx &cx;
     list<Ref *>::iterator it;
-    SweepImp sweep;
-    int marks;
+    State state;
 
-    Ref(Cx &cx, SweepImp sweep);
-    ~Ref();
+    Ref(Cx &cx);
+    virtual ~Ref();
+    
+    virtual void sweep(const Pos &pos) = 0;
   };
 }
 

@@ -20,6 +20,11 @@ namespace cidk {
 
   ValType::ValType(Cx &cx, const Pos &pos, const string &id): Type(cx, pos, id) { }
 
+  void ValType::init() {
+    env.add_fun(pos, "clone", {Arg("it")}, {Ret(cx.Any)}, clone_imp);
+    env.add_fun(pos, "eq", {Arg("x"), Arg("y")}, {Ret(cx.Bool)}, eq_imp);
+  }
+
   void ValType::call(const Pos &pos, const Val &val) const {
     cx.stack.emplace_back(val);
   }
@@ -31,11 +36,6 @@ namespace cidk {
   
   bool ValType::eq(const Pos &pos, const Val &x, const Val &y) const {
     return is(pos, x, y);
-  }
-
-  void ValType::init() {
-    env.add_fun(pos, "clone", {Arg("it")}, {Ret(cx.Any)}, clone_imp);
-    env.add_fun(pos, "eq", {Arg("x"), Arg("y")}, {Ret(cx.Bool)}, eq_imp);
   }
 
   void ValType::move(const Pos &pos, Val &dst, const Val &src) const {

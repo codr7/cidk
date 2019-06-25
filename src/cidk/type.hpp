@@ -3,7 +3,6 @@
 
 #include "cidk/def.hpp"
 #include "cidk/env.hpp"
-#include "cidk/ops.hpp"
 
 namespace cidk {
   struct Val;
@@ -13,9 +12,10 @@ namespace cidk {
     Env env;
     
     Type(Cx &cx, const Pos &pos, const string &id);
+    virtual void init();
 
     void call_env(const Pos &pos, const Sym *id);
-    virtual void init();
+    virtual void sweep(const Pos &pos) override;
   };
 }
 

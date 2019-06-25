@@ -3,5 +3,5 @@
 
 namespace cidk {
   Def::Def(Cx &cx, const Pos &pos, const string &id):
-    cx(cx), pos(pos), id(cx.intern(id)) { }
+    Ref(cx), pos(pos), id(cx.intern(id)) { }
 }

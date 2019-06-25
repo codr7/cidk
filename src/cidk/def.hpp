@@ -4,15 +4,14 @@
 #include <string>
 
 #include "cidk/pos.hpp"
+#include "cidk/ref.hpp"
 
 namespace cidk {
   using namespace std;
   
-  struct Cx;
   struct Sym;
   
-  struct Def {
-    Cx &cx;
+  struct Def: Ref {
     Pos pos;
     const Sym *id;
     

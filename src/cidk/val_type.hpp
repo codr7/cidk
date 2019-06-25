@@ -2,18 +2,19 @@
 #define CIDK_VAL_TYPE_HPP
 
 #include "cidk/type.hpp"
+#include "cidk/ops.hpp"
 
 namespace cidk {
   struct Val;
 
   struct ValType: Type {
     ValType(Cx &cx, const Pos &pos, const string &id);
+    virtual void init() override;
     
     virtual void call(const Pos &pos, const Val &val) const;
     virtual void compile(const Pos &pos, const Val &val, Ops &out) const;
     virtual void dup(const Pos &pos, Val &dst, const Val &src) const = 0;
     virtual bool eq(const Pos &pos, const Val &x, const Val &y) const;
-    virtual void init() override;
     virtual bool is(const Pos &pos, const Val &x, const Val &y) const = 0;
     virtual void move(const Pos &pos, Val &dst, const Val &src) const;
     virtual void splat(const Pos &pos, Val &val);

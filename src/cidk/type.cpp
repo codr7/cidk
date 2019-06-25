@@ -7,11 +7,15 @@ namespace cidk {
     cx.types.push_back(this);
   }
 
+  void Type::init() { }
+
   void Type::call_env(const Pos &pos, const Sym *id) {
     Val target;
     env.get(pos, id, target, false);
     target.call(pos);
   }
 
-  void Type::init() { }
+  void Type::sweep(const Pos &pos) {
+    delete this;
+  }
 }

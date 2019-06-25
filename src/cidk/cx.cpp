@@ -11,7 +11,8 @@ namespace cidk {
     Bool(*this, Pos::MISSING, "Bool"),
     Byte(*this, Pos::MISSING, "Byte"),
     Fun(*this, Pos::MISSING, "Fun"),
-    Int(*this, Pos::MISSING, "Int") {
+    Int(*this, Pos::MISSING, "Int"),
+    Meta(*this, Pos::MISSING, "Meta") {
     init_types();
   }
 
@@ -20,7 +21,12 @@ namespace cidk {
     for (auto &s: syms) { delete s.second; }
 #endif
   }
-  
+
+  void Cx::init_types() {
+    for (Type *t: types) { t->init(); }
+    types.clear();
+  }
+
   const Sym *Cx::intern(const string &name) {
     auto ok(syms.find(name));
 
@@ -39,10 +45,5 @@ namespace cidk {
 
   void Cx::eval(const Pos &pos, const Ops &in) {
     for (const Op &o: in) { o.eval(*this, pos); }
-  }
-
-  void Cx::init_types() {
-    for (Type *t: types) { t->init(); }
-    types.clear();
   }
 }

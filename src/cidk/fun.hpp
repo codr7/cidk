@@ -17,7 +17,6 @@ namespace cidk {
   struct Fun: Def {
     using Imp = function<void (Call &)>;
 
-    Ref ref;
     Env env;
     Imp imp;
     
@@ -27,6 +26,8 @@ namespace cidk {
         initializer_list<Arg> args,
         initializer_list<Ret> rets,
         Imp imp);
+
+    virtual void sweep(const Pos &pos) override;
   };
 }
 

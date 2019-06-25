@@ -26,6 +26,7 @@ namespace cidk {
       Byte as_byte;
       Fun *as_fun;
       Int as_int;
+      Type *as_type;
     };
         
     Val();
