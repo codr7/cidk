@@ -1,0 +1,32 @@
+* add refs
+** add Ref type
+*** uint16_t nmarks
+*** Refs::iter link;
+*** copy sweep method
+*** embed in Fun
+** add std::list cx.refs
+*** add/remove Fun in constructor/destructor
+** add cx.mark_refs(const Pos &pos, Vals &out)
+*** start by clearing Ref.nmarks for cx.refs
+*** add ValType.mark_refs()
+*** process cx.envs & cx.stack
+** add cx.sweep_refs()
+*** use Val.sweep()
+** valgrind
+* ---
+* add Id op
+** add support for recursive lookups
+* add Fun.args (Args)
+** init arg ids
+* add Fun.rets (Rets)
+* add Ops Fun.body
+* --
+* add Char type
+** char32_t
+* add Str type
+** read as utf-8
+*** https://stackoverflow.com/questions/16208079/how-to-work-with-utf-8-in-c-conversion-from-other-encodings-to-utf-8
+** splat chars
+* --
+* change env storage to sorted deque & compare perf
+
