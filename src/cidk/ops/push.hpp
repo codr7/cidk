@@ -1,22 +1,22 @@
-#ifndef CIDK_OP_LIT_HPP
-#define CIDK_OP_LIT_HPP
+#ifndef CIDK_OP_PUSH_HPP
+#define CIDK_OP_PUSH_HPP
 
 #include "cidk/op.hpp"
 #include "cidk/val.hpp"
 
 namespace cidk::ops {
-  struct LitType: OpType {
-    LitType(string id);
+  struct PushType: OpType {
+    PushType(string id);
     virtual void eval(Cx &cx, const Op &op) const override;
   };
 
-  extern const LitType Lit;
+  extern const PushType Push;
 }
 
 
 namespace cidk {
   template <>
-  inline void init(Op &op, const ops::LitType &type, const Val &val) {
+  inline void init(Op &op, const ops::PushType &type, const Val &val) {
     op.data = val;
   }
 }

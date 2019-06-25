@@ -1,7 +1,7 @@
 #include <cassert>
 
 #include "cidk/cx.hpp"
-#include "cidk/ops/lit.hpp"
+#include "cidk/ops/push.hpp"
 #include "cidk/val.hpp"
 
 int main() {
@@ -24,7 +24,7 @@ int main() {
   cidk::Ops out;
   cx.compile(p, in, out);
   assert(out.size() == 42);
-  assert(out.back().type == &cidk::ops::Lit);
+  assert(out.back().type == &cidk::ops::Push);
 
   assert(s.size() == 42);
   assert(s.back().as_int == 41);

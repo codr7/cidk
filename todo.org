@@ -1,4 +1,3 @@
-* rename Lit op to Push
 * add refs
 ** add Ref type
 *** int nmarks

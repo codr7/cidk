@@ -1,6 +1,6 @@
 #include "cidk/call.hpp"
 #include "cidk/cx.hpp"
-#include "cidk/ops/lit.hpp"
+#include "cidk/ops/push.hpp"
 #include "cidk/val_type.hpp"
 
 namespace cidk {
@@ -26,7 +26,7 @@ namespace cidk {
 
   void ValType::compile(const Pos &pos, const Val &val, Ops &out) const {
     cx.stack.push_back(val);
-    out.emplace_back(ops::Lit, val);
+    out.emplace_back(ops::Push, val);
   }
   
   bool ValType::eq(const Pos &pos, const Val &x, const Val &y) const {
