@@ -2,9 +2,9 @@
 ** bench/fib_rec.idk
 ** add Ops Fun.body
 ** add Call op
+*** pop fun from stack if no arg
 *** allow multiple ids in reader
 **** generate separate ops
-*** pop fun from stack if no args
 ** add Bench op
 *** reps1 & reps2 for outer/inner loop
 ** add Dump op
