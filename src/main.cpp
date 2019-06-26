@@ -18,20 +18,5 @@ int main() {
   assert(s.size() == 42);
   assert(s.back().as_int == 41);
 
-  cidk::Stack in(s);
-  s.clear();
-  
-  cidk::Ops out;
-  cx.compile(p, in, out);
-  assert(out.size() == 42);
-  assert(out.back().type == &cidk::ops::Push);
-
-  assert(s.size() == 42);
-  assert(s.back().as_int == 41);
-  s.clear();
-  
-  cx.eval(p, out);
-  assert(s.size() == 42);
-  assert(s.back().as_int == 41);
   return 0;
 }

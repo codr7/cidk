@@ -42,10 +42,6 @@ namespace cidk {
     return s;
   }
 
-  void Cx::compile(const Pos &pos, const Stack &in, Ops &out) {
-    for (const Val &v: in) { v.compile(pos, out); }
-  }
-
   void Cx::eval(const Pos &pos, const Ops &in) {
     for (const Op &o: in) { o.eval(*this, pos); }
   }

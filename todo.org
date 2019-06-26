@@ -1,4 +1,3 @@
-* drop compile fns
 * add asm support
 ** bench/fib_rec.idk
 ** add Dup op

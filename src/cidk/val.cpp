@@ -32,10 +32,6 @@ namespace cidk {
     s.pop_back();
   }
 
-  void Val::compile(const Pos &pos, Ops &out) const {
-    type->compile(pos, *this, out);
-  }
-
   void Val::dup(const Pos &pos, Val &dst) const {
     type->dup(pos, dst, *this);
     dst.type = type;

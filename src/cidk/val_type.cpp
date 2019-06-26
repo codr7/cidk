@@ -29,11 +29,6 @@ namespace cidk {
     cx.stack.emplace_back(val);
   }
 
-  void ValType::compile(const Pos &pos, const Val &val, Ops &out) const {
-    cx.stack.push_back(val);
-    out.emplace_back(ops::Push, val);
-  }
-  
   void ValType::mark_refs(const Pos &pos, const Val &val) { }
 
   void ValType::splat(const Pos &pos, Val &val) {
