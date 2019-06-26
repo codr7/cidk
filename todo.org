@@ -1,3 +1,20 @@
+* add asm read/write support
+** bench/fib_rec.idk
+** add Ops Fun.body
+** add Dup op
+** add Swap op
+** add Call op
+*** allow multiple ids in reader
+**** generate separate ops
+*** pop fun from stack if no args
+** add Bench op
+*** reps1 & reps2 for outer/inner loop
+** add Dump op
+*** allow multiple args
+*** pop val from stack if no args
+** add If op
+** add Do op
+* ---
 * add ListType.clone override
 ** only clone list structure
 * move ValType.splat to env
@@ -8,7 +25,6 @@
 * add Fun.args (Args)
 ** init arg ids
 * add Fun.rets (Rets)
-* add Ops Fun.body
 * --
 * add Char type
 ** char32_t
@@ -19,7 +35,4 @@
 * --
 * add Env type
 * change env storage to sorted deque & compare perf
-* add asm read/write support
-** ident bodies
-** run bench/fib_rec.idk
       
