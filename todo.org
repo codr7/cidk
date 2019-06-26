@@ -6,8 +6,8 @@
 * remove dup method
 ** assign val struct
 * ---
-* move ValType.sweep to env
-** update Val.sweep()
+* move ValType.splat to env
+** update Val.splat()
 * rename MISSING to _
 * add Sym type
 * add Get op
