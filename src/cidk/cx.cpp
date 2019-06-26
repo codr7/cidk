@@ -1,4 +1,4 @@
-#include <iostream>
+//#include <iostream>
 
 #include "cidk/conf.hpp"
 #include "cidk/cx.hpp"
@@ -60,16 +60,18 @@ namespace cidk {
   bool Cx::sweep_refs(const Pos &pos) {
     bool ok(false);
     
-    for (auto i(refs.begin()); i != refs.end(); i++) {
+    for (auto i(refs.begin()); i != refs.end();) {
       Ref *r(*i);
-      
-      if (r->ref_state != RefState::mark) {
+
+      if (r->ref_state == RefState::mark) {
+        i++;
+      } else {
         i = refs.erase(i);
         r->sweep(pos);
         ok = true;
       }
     }
 
-    return ok;
+    return ok && !refs.empty();
   }
 }
