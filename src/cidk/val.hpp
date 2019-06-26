@@ -48,6 +48,7 @@ namespace cidk {
     void call(const Pos &pos);
     void clone(const Pos &pos, Val &dst) const;
     void compile(const Pos &pos, Ops &out) const;
+    void dup(const Pos &pos, Val &dst) const;
     bool eq(const Pos &pos, const Val &y) const;
     bool is(const Pos &pos, const Val &y) const;
     void mark_refs(const Pos &pos);

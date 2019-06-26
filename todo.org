@@ -18,5 +18,5 @@
 * --
 * change env storage to sorted deque & compare perf
 * add asm read/write support
-** treat anything indented more as body
+** lisp syntax
 ** port fib
