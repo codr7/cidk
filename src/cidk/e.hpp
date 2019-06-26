@@ -9,6 +9,7 @@ namespace cidk {
   using namespace std;
 
   struct Sym;
+  struct Type;
   
   struct E: exception {
     Pos pos;
@@ -43,10 +44,17 @@ namespace cidk {
     virtual void print(ostream &out) const override;
   };
 
-  struct UnknownId: E {
+  struct UnknownId: SysE {
     const Sym *id;
     
     UnknownId(const Pos &pos, const Sym *id);
+    virtual void print(ostream &out) const override;
+  };
+
+  struct WrongType: SysE {
+    Type *type;
+    
+    WrongType(const Pos &pos, const string &msg, Type *type);
     virtual void print(ostream &out) const override;
   };
 }

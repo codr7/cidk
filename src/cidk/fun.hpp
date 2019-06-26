@@ -5,6 +5,8 @@
 
 #include "cidk/arg.hpp"
 #include "cidk/def.hpp"
+#include "cidk/op.hpp"
+#include "cidk/ops.hpp"
 #include "cidk/ref.hpp"
 #include "cidk/stack.hpp"
 
@@ -19,13 +21,14 @@ namespace cidk {
 
     Env &env;
     Imp imp;
+    Ops body;
     
     Fun(Cx &cx,
         const Pos &pos,
         const string &id,
         initializer_list<Arg> args,
         initializer_list<Ret> rets,
-        Imp imp);
+        Imp imp = nullptr);
 
     virtual void sweep(const Pos &pos) override;
   };

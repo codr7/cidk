@@ -11,4 +11,6 @@ namespace cidk::ops {
     auto i(s.end());
     iter_swap(i-1, i);
   }
+
+  void init(Op &op, const ops::SwapType &type) { }
 }

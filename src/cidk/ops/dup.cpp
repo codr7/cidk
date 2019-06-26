@@ -10,4 +10,6 @@ namespace cidk::ops {
     Stack &s(cx.stack);
     s.emplace_back(s.back());
   }
+
+  void init(Op &op, const ops::DupType &type) { }
 }

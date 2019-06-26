@@ -11,12 +11,8 @@ namespace cidk::ops {
   };
 
   extern const DupType Dup;
-}
 
-
-namespace cidk {
-  template <>
-  inline void init(Op &op, const ops::DupType &type) { }
+  void init(Op &op, const ops::DupType &type);
 }
 
 #endif

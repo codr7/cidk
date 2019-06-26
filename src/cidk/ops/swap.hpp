@@ -11,12 +11,8 @@ namespace cidk::ops {
   };
 
   extern const SwapType Swap;
-}
 
-
-namespace cidk {
-  template <>
-  inline void init(Op &op, const ops::SwapType &type) { }
+  void init(Op &op, const ops::SwapType &type);
 }
 
 #endif

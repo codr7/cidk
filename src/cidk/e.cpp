@@ -41,10 +41,19 @@ namespace cidk {
     out << "Not implemented";
   }
 
-  UnknownId::UnknownId(const Pos &pos, const Sym *id): E(pos), id(id) { }
+  UnknownId::UnknownId(const Pos &pos, const Sym *id):
+    SysE(pos, "Unknown id: "), id(id) { }
 
   void UnknownId::print(ostream &out) const {
-    E::print(out);
-    out << "Unknown id: " << id;
+    SysE::print(out);
+    out << id;
+  }
+
+  WrongType::WrongType(const Pos &pos, const string &msg, Type *type):
+    SysE(pos, msg), type(type) { }
+
+  void WrongType::print(ostream &out) const {
+    SysE::print(out);
+    out << type->id;
   }
 }

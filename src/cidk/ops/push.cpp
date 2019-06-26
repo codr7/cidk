@@ -9,4 +9,8 @@ namespace cidk::ops {
   void PushType::eval(Cx &cx, const Op &op) const {
     cx.stack.push_back(op.as<Val>());
   }
+
+  void init(Op &op, const ops::PushType &type, const Val &val) {
+    op.data = val;
+  }
 }

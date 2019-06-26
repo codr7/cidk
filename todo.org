@@ -1,15 +1,15 @@
 * add asm support
 ** bench/fib_rec.idk
-** add Ops Fun.body
-** add Call op
-*** pop fun from stack if no arg
-*** allow multiple ids in reader
+** add Call macro
+*** allow multiple ids
 **** generate separate ops
 ** add Bench op
 *** reps1 & reps2 for outer/inner loop
 ** add Dump op
-*** allow multiple args
 *** pop val from stack if no args
+*** add Val.dump
+**** use env like clone/eq
+*** allow multiple args in reader
 ** add If op
 ** add Do op
 * ---
@@ -31,6 +31,5 @@
 *** https://stackoverflow.com/questions/16208079/how-to-work-with-utf-8-in-c-conversion-from-other-encodings-to-utf-8
 ** splat chars
 * --
-* add Env type
 * change env storage to sorted deque & compare perf
       

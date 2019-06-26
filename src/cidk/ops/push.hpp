@@ -11,14 +11,8 @@ namespace cidk::ops {
   };
 
   extern const PushType Push;
-}
-
-
-namespace cidk {
-  template <>
-  inline void init(Op &op, const ops::PushType &type, const Val &val) {
-    op.data = val;
-  }
+  
+  void init(Op &op, const ops::PushType &type, const Val &val);
 }
 
 #endif

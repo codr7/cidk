@@ -4,6 +4,8 @@
 #include <any>
 #include <string>
 
+#include "cidk/pos.hpp"
+
 namespace cidk {
   using namespace std;
 
@@ -18,11 +20,12 @@ namespace cidk {
   };
     
   struct Op {
+    Pos pos;
     const OpType *type;
     any data;
     
     template <typename T, typename...Args>
-    Op(const T &type, Args &&...args);
+    Op(const Pos &pos, const T &type, Args &&...args);
 
     template <typename T>
     T as() const;
@@ -30,12 +33,14 @@ namespace cidk {
     void eval(Cx &cx, const Pos &pos) const;
   };
 
+  namespace ops {
+    template <typename T>
+    void init(Op &op, const T &type);
+  }
+  
   template <typename T, typename...Args>
-  void init(Op &op, const T &type, Args &&...args);
-
-  template <typename T, typename...Args>
-  Op::Op(const T &type, Args &&...args): type(&type) {
-    init(*this, type, forward<Args>(args)...);
+  Op::Op(const Pos &pos, const T &type, Args &&...args): pos(pos), type(&type) {
+    ops::init(*this, type, forward<Args>(args)...);
   }
 
   template <typename T>
