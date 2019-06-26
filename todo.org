@@ -1,6 +1,5 @@
 * add asm support
 ** bench/fib_rec.idk
-** add Swap op
 ** add Ops Fun.body
 ** add Call op
 *** allow multiple ids in reader
