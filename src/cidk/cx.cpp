@@ -22,10 +22,7 @@ namespace cidk {
     env.clear();
     stack.clear();
     
-    for (;;) {
-      mark_refs(Pos::_);
-      if (!sweep_refs(Pos::_)) { break; }
-    }
+    do { mark_refs(Pos::_); } while (sweep_refs(Pos::_));
 
 #ifndef CIDK_USE_POOL
     for (auto &s: syms) { delete s.second; }
