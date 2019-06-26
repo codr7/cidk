@@ -13,7 +13,6 @@ namespace cidk {
   
   struct Ref {    
     Cx &cx;
-    list<Ref *>::iterator it;
     RefState ref_state;
 
     Ref(Cx &cx);
