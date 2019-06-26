@@ -34,10 +34,6 @@ namespace cidk {
     out.emplace_back(ops::Push, val);
   }
   
-  bool ValType::eq(const Pos &pos, const Val &x, const Val &y) const {
-    return is(pos, x, y);
-  }
-
   void ValType::mark_refs(const Pos &pos, const Val &val) { }
 
   void ValType::splat(const Pos &pos, Val &val) {

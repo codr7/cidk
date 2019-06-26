@@ -3,6 +3,8 @@
 * add Sym type
 * add Get op
 ** add support for recursive lookups
+* add List type
+** use std::list
 * add Fun.args (Args)
 ** init arg ids
 * add Fun.rets (Rets)
