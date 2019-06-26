@@ -5,11 +5,11 @@
 #include <map>
 
 #include "cidk/arg.hpp"
+#include "cidk/ref.hpp"
 
 namespace cidk {
   using namespace std;
 
-  struct Cx;
   struct Fun;
   struct Pos;
   struct Sym;
@@ -17,15 +17,13 @@ namespace cidk {
   struct Val;
   struct Var;
 
-  struct Env {
+  struct Env: Ref {
     using It = list<Env *>::iterator;
 
-    Cx &cx;
     It it;
     map<const Sym *, Var *> vars;
     
     Env(Cx &cx);
-    ~Env();
 
     bool add(const Pos &pos, const Sym *key, const Val &val, bool silent);
     
@@ -43,6 +41,7 @@ namespace cidk {
     bool get(const Pos &pos, const Sym *key, Val &out, bool silent);
     void mark_refs(const Pos &pos);
     bool set(const Pos &pos, const Sym *key, const Val &val, bool force);
+    virtual void sweep(const Pos &pos) override;
   };
 }
 

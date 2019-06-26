@@ -17,7 +17,7 @@ namespace cidk {
     RefState ref_state;
 
     Ref(Cx &cx);
-    virtual ~Ref();
+    virtual ~Ref() = default;
     
     virtual void sweep(const Pos &pos) = 0;
   };

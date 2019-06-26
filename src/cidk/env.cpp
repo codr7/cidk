@@ -3,12 +3,7 @@
 #include "cidk/env.hpp"
 
 namespace cidk {
-  Env::Env(Cx &cx): cx(cx), it(cx.envs.insert(cx.envs.end(), this)) { }
-
-  Env::~Env() {
-    cx.envs.erase(it);
-    for (auto &v: vars) { cx.var_pool.put(v.second); }
-  }
+  Env::Env(Cx &cx): Ref(cx), it(cx.envs.insert(cx.envs.end(), this)) { }
 
   bool Env::add(const Pos &pos, const Sym *key, const Val &val, bool silent) {
     if (vars.emplace(key, cx.var_pool.get(pos, this, val)).second) { return true; }
@@ -50,5 +45,11 @@ namespace cidk {
     }
 
     return true;
+  }
+
+  void Env::sweep(const Pos &pos) {
+    cx.envs.erase(it);
+    for (auto &v: vars) { cx.var_pool.put(v.second); }
+    cx.env_pool.put(this);
   }
 }

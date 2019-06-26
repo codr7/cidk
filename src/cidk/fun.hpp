@@ -5,19 +5,19 @@
 
 #include "cidk/arg.hpp"
 #include "cidk/def.hpp"
-#include "cidk/env.hpp"
 #include "cidk/ref.hpp"
 #include "cidk/stack.hpp"
 
 namespace cidk {
   struct Call;
+  struct Env;
   struct Pos;
   struct Val;
   
   struct Fun: Def {
     using Imp = function<void (Call &)>;
 
-    Env env;
+    Env &env;
     Imp imp;
     
     Fun(Cx &cx,

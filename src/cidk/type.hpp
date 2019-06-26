@@ -9,7 +9,7 @@ namespace cidk {
   struct Pos;
 
   struct Type: Def {
-    Env env;
+    Env &env;
     
     Type(Cx &cx, const Pos &pos, const string &id);
     virtual void init();
