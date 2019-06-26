@@ -33,14 +33,5 @@ int main() {
   cx.eval(p, out);
   assert(s.size() == 42);
   assert(s.back().as_int == 41);
-
-  cx.env.clear();
-  cx.stack.clear();
-  
-  cx.mark_refs(p);
-  cx.sweep_refs(p);
-
-  cx.mark_refs(p);
-  cx.sweep_refs(p);
   return 0;
 }

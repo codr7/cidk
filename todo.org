@@ -24,8 +24,6 @@
 *** https://stackoverflow.com/questions/16208079/how-to-work-with-utf-8-in-c-conversion-from-other-encodings-to-utf-8
 ** splat chars
 * --
-* remove call.cx
-** use call.target.cx instead
 * change env storage to sorted deque & compare perf
 * add asm read/write support
 ** treat anything indented more as body

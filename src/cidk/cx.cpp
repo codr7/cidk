@@ -17,6 +17,12 @@ namespace cidk {
   }
 
   Cx::~Cx() {
+    env.clear();
+    stack.clear();
+  
+    mark_refs(Pos::MISSING);
+    sweep_refs(Pos::MISSING);
+
 #ifndef CIDK_USE_POOL
     for (auto &s: syms) { delete s.second; }
 #endif
