@@ -1,8 +1,10 @@
+#include <iostream>
+
 #include "cidk/cx.hpp"
 #include "cidk/val.hpp"
 
 namespace cidk {
-  Val::Val(): pos(Pos::MISSING), type(nullptr) { }
+  Val::Val(): pos(Pos::_), type(nullptr) { }
   
   Val::Val(const Val &src): pos(src.pos), type(src.type) {
     src.dup(pos, *this);
@@ -55,6 +57,7 @@ namespace cidk {
   }
 
   void Val::mark_refs(const Pos &pos) {
+    cout << type->id << endl;
     type->ref_state = RefState::mark;
     type->mark_refs(pos, *this);
   }

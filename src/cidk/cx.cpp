@@ -6,22 +6,24 @@
 namespace cidk {
   Cx::Cx():
     env(*this),
-    Meta(env.add_type<MetaType>(Pos::MISSING, "Meta")),
-    Any(env.add_type<AnyType>(Pos::MISSING, "Any")),
-    Bool(env.add_type<BoolType>(Pos::MISSING, "Bool")),
-    Byte(env.add_type<ByteType>(Pos::MISSING, "Byte")),
-    Fun(env.add_type<FunType>(Pos::MISSING, "Fun")),
-    Int(env.add_type<IntType>(Pos::MISSING, "Int")),
+    Meta(env.add_type<MetaType>(Pos::_, "Meta")),
+    Any(env.add_type<AnyType>(Pos::_, "Any")),
+    Bool(env.add_type<BoolType>(Pos::_, "Bool")),
+    Byte(env.add_type<ByteType>(Pos::_, "Byte")),
+    Fun(env.add_type<FunType>(Pos::_, "Fun")),
+    Int(env.add_type<IntType>(Pos::_, "Int")),
     call(nullptr) {
-    init_types(Pos::MISSING);
+    init_types(Pos::_);
   }
 
   Cx::~Cx() {
     env.clear();
     stack.clear();
-  
-    mark_refs(Pos::MISSING);
-    sweep_refs(Pos::MISSING);
+    
+    for (int i(0); i < 10; i++) {
+      mark_refs(Pos::_);
+      sweep_refs(Pos::_);
+    }
 
 #ifndef CIDK_USE_POOL
     for (auto &s: syms) { delete s.second; }
@@ -58,7 +60,7 @@ namespace cidk {
 
     env.ref_state = RefState::mark;
     for (Env *e: envs) { e->mark_refs(pos); }
-    for (Val v: stack) { v.mark_refs(pos); }
+    for (Val &v: stack) { v.mark_refs(pos); }
   }
 
   void Cx::sweep_refs(const Pos &pos) {

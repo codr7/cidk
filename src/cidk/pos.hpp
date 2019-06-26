@@ -7,7 +7,7 @@ namespace cidk {
   using namespace std;
   
   struct Pos {
-    static const Pos MISSING;
+    static const Pos _;
     
     string src;
     int row, col;

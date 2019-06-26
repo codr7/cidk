@@ -8,7 +8,7 @@ int main() {
   cidk::Cx cx;
   auto &s(cx.stack);
   
-  auto p(cidk::Pos::MISSING);
+  auto p(cidk::Pos::_);
   
   cidk::Val v(p, cx.Int, cidk::Int(42));
   assert(v.as<cidk::Int>() == 42);

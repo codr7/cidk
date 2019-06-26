@@ -1,6 +1,5 @@
 * move ValType.splat to env
 ** update Val.splat()
-* rename MISSING to _
 * add Sym type
 * add Get op
 ** add support for recursive lookups
