@@ -6,13 +6,13 @@ fun fib(Int)(Int) {
   if {
     _
     do {
-      call --
+      call dec
       dup
       
       call fib
       
       swap
-      call -- fib +
+      call dec fib +
     }
   }
 }
