@@ -1,6 +1,3 @@
-* remove dup method
-** assign val struct
-* ---
 * move ValType.splat to env
 ** update Val.splat()
 * rename MISSING to _
