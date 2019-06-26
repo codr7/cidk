@@ -1,10 +1,10 @@
+* add ListType.clone override
+** only clone list structure
 * move ValType.splat to env
 ** update Val.splat()
 * add Sym type
 * add Get op
 ** add support for recursive lookups
-* add List type
-** use std::list
 * add Fun.args (Args)
 ** init arg ids
 * add Fun.rets (Rets)
@@ -17,6 +17,7 @@
 *** https://stackoverflow.com/questions/16208079/how-to-work-with-utf-8-in-c-conversion-from-other-encodings-to-utf-8
 ** splat chars
 * --
+* add Env type
 * change env storage to sorted deque & compare perf
 * add asm read/write support
 ** lisp syntax

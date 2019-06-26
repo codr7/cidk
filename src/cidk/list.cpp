@@ -1,0 +1,10 @@
+#include "cidk/cx.hpp"
+#include "cidk/list.hpp"
+
+namespace cidk {
+  List::List(Cx &cx): Ref(cx) { }
+
+  void List::sweep(const Pos &pos) {
+    cx.List.pool.put(this);
+  }
+}

@@ -12,6 +12,7 @@
 #include "cidk/types/byte.hpp"
 #include "cidk/types/fun.hpp"
 #include "cidk/types/int.hpp"
+#include "cidk/types/list.hpp"
 #include "cidk/types/meta.hpp"
 #include "cidk/var.hpp"
 
@@ -37,6 +38,7 @@ namespace cidk {
     ByteType &Byte;
     FunType &Fun;
     IntType &Int;
+    ListType &List;
 
     Stack stack;    
     Call *call;

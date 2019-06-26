@@ -14,6 +14,7 @@ namespace cidk {
     Byte(env.add_type<ByteType>(Pos::_, "Byte")),
     Fun(env.add_type<FunType>(Pos::_, "Fun")),
     Int(env.add_type<IntType>(Pos::_, "Int")),
+    List(env.add_type<ListType>(Pos::_, "List")),
     call(nullptr) {
     init_types(Pos::_);
   }
