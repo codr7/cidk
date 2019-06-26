@@ -8,13 +8,11 @@ fun fib(Int)(Int) {
     do {
       call --
       dup
-
-      call fib
-      swap
       
-      call --
       call fib
-      call +
+      
+      swap
+      call -- fib +
     }
   }
 }
