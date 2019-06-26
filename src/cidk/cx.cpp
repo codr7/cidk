@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "cidk/conf.hpp"
 #include "cidk/cx.hpp"
 #include "cidk/op.hpp"
@@ -20,9 +22,9 @@ namespace cidk {
     env.clear();
     stack.clear();
     
-    for (int i(0); i < 10; i++) {
+    for (;;) {
       mark_refs(Pos::_);
-      sweep_refs(Pos::_);
+      if (!sweep_refs(Pos::_)) { break; }
     }
 
 #ifndef CIDK_USE_POOL
@@ -63,15 +65,19 @@ namespace cidk {
     for (Val &v: stack) { v.mark_refs(pos); }
   }
 
-  void Cx::sweep_refs(const Pos &pos) {
+  bool Cx::sweep_refs(const Pos &pos) {
+    bool ok(false);
+    
     for (auto i(refs.begin()); i != refs.end(); i++) {
       Ref *r(*i);
       
       if (r->ref_state != RefState::mark) {
         i = refs.erase(i);
         r->sweep(pos);
-        break;
+        ok = true;
       }
     }
+
+    return ok;
   }
 }

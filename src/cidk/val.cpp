@@ -1,4 +1,4 @@
-#include <iostream>
+//#include <iostream>
 
 #include "cidk/cx.hpp"
 #include "cidk/val.hpp"
@@ -57,7 +57,6 @@ namespace cidk {
   }
 
   void Val::mark_refs(const Pos &pos) {
-    cout << type->id << endl;
     type->ref_state = RefState::mark;
     type->mark_refs(pos, *this);
   }

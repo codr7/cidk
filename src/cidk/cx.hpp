@@ -50,7 +50,7 @@ namespace cidk {
     void compile(const Pos &pos, const Stack &in, Ops &out);
     void eval(const Pos &pos, const Ops &in);
     void mark_refs(const Pos &pos);
-    void sweep_refs(const Pos &pos);
+    bool sweep_refs(const Pos &pos);
   };
 
   template <typename...Rest>
