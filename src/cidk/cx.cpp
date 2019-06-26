@@ -21,7 +21,6 @@ namespace cidk {
   Cx::~Cx() {
     env.clear();
     stack.clear();
-    
     do { mark_refs(Pos::_); } while (sweep_refs(Pos::_));
 
 #ifndef CIDK_USE_POOL
@@ -36,11 +35,7 @@ namespace cidk {
 
   const Sym *Cx::intern(const string &name) {
     auto ok(syms.find(name));
-
-    if (ok != syms.end()) {
-      return ok->second;
-    }
-
+    if (ok != syms.end()) { return ok->second; }
     auto s(sym_pool.get(name));
     syms.emplace(make_pair(name, s));
     return s;
