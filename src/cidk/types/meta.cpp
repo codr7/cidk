@@ -13,6 +13,10 @@ namespace cidk {
     return x.as_type == y.as_type;
   }
 
+  void MetaType::mark_refs(const Pos &pos, const Val &val) {
+    val.as_type->ref_state = RefState::mark;
+  }
+
   void MetaType::set(const Pos &pos, Val &dst, Type *val) const {
     dst.as_type = val;
   }

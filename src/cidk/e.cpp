@@ -27,6 +27,13 @@ namespace cidk {
 
   SysE::SysE(const Pos &pos, const string &msg): E(pos, msg) { }
 
+  DupVar::DupVar(const Pos &pos, const Sym *id): E(pos), id(id) { }
+
+  void DupVar::print(ostream &out) const {
+    E::print(out);
+    out << "Dup var: " << id;
+  }
+
   NotImplemented::NotImplemented(const Pos &pos): SysE(pos) { }
 
   void NotImplemented::print(ostream &out) const {

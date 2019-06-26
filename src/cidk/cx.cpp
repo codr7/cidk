@@ -5,15 +5,15 @@
 
 namespace cidk {
   Cx::Cx():
-    root_env(*this),
-    call(nullptr),
-    Any(*this, Pos::MISSING, "Any"),
-    Bool(*this, Pos::MISSING, "Bool"),
-    Byte(*this, Pos::MISSING, "Byte"),
-    Fun(*this, Pos::MISSING, "Fun"),
-    Int(*this, Pos::MISSING, "Int"),
-    Meta(*this, Pos::MISSING, "Meta") {
-    init_types();
+    env(*this),
+    Meta(env.add_type<MetaType>(Pos::MISSING, "Meta")),
+    Any(env.add_type<AnyType>(Pos::MISSING, "Any")),
+    Bool(env.add_type<BoolType>(Pos::MISSING, "Bool")),
+    Byte(env.add_type<ByteType>(Pos::MISSING, "Byte")),
+    Fun(env.add_type<FunType>(Pos::MISSING, "Fun")),
+    Int(env.add_type<IntType>(Pos::MISSING, "Int")),
+    call(nullptr) {
+    init_types(Pos::MISSING);
   }
 
   Cx::~Cx() {
@@ -22,7 +22,7 @@ namespace cidk {
 #endif
   }
 
-  void Cx::init_types() {
+  void Cx::init_types(const Pos &pos) {
     for (Type *t: types) { t->init(); }
     types.clear();
   }
@@ -48,7 +48,20 @@ namespace cidk {
   }
 
   void Cx::mark_refs(const Pos &pos) {
+    for (Ref *r: refs) { r->ref_state = RefState::_; }
     for (Env *e: envs) { e->mark_refs(pos); }
     for (Val v: stack) { v.mark_refs(pos); }
+  }
+
+  void Cx::sweep_refs(const Pos &pos) {
+    for (auto i(refs.begin()); i != refs.end(); i++) {
+      Ref *r(*i);
+      
+      if (r->ref_state != RefState::mark) {
+        i++;
+        r->sweep(pos);
+        break;
+      }
+    }
   }
 }

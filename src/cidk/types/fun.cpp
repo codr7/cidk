@@ -18,9 +18,8 @@ namespace cidk {
     return x.as_fun == y.as_fun;
   }
 
-  bool FunType::mark_refs(const Pos &pos, const Val &val) {
-    ref_state = RefState::mark;
-    return true;
+  void FunType::mark_refs(const Pos &pos, const Val &val) {
+    val.as_fun->ref_state = RefState::mark;
   }
 
   void FunType::set(const Pos &pos, Val &dst, Fun *val) const {

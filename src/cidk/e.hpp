@@ -31,6 +31,13 @@ namespace cidk {
     SysE(const Pos &pos, const string &msg = "");
   };
 
+  struct DupVar: E {
+    const Sym *id;
+    
+    DupVar(const Pos &pos, const Sym *id);
+    virtual void print(ostream &out) const override;
+  };
+
   struct NotImplemented: SysE {
     NotImplemented(const Pos &pos);
     virtual void print(ostream &out) const override;

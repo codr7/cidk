@@ -53,6 +53,7 @@ namespace cidk {
 
     void put(T *item) {
 #ifdef CIDK_USE_POOL
+      item->~T();
       free.push_back(item);
 #else
       delete item;

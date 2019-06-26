@@ -9,6 +9,7 @@ namespace cidk {
 
     virtual void dup(const Pos &pos, Val &dst, const Val &src) const override;
     virtual bool is(const Pos &pos, const Val &x, const Val &y) const override;
+    virtual void mark_refs(const Pos &pos, const Val &val) override;
     virtual void set(const Pos &pos, Val &dst, Type *val) const override;
     virtual void sweep(const Pos &pos, Val &val) override;
   };

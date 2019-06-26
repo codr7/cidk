@@ -1,10 +1,10 @@
+* debug sweep_refs
+** switch to storing references to env in cx/type/fun
+** add Ref support to Env
+*** mark root_env in cx.mark_refs
+*** mark type/fun envs
 * remove dup method
 ** assign val struct
-* add refs
-** add cx.sweep_refs()
-*** loop refs, call Val.sweep() unless ref_state == mark
-*** reset ref_state to _
-** valgrind
 * ---
 * move ValType.sweep to env
 ** update Val.sweep()

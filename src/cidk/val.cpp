@@ -54,8 +54,9 @@ namespace cidk {
     return type->is(pos, *this, y);
   }
 
-  bool Val::mark_refs(const Pos &pos) {
-    return type->mark_refs(pos, *this);
+  void Val::mark_refs(const Pos &pos) {
+    type->ref_state = RefState::mark;
+    type->mark_refs(pos, *this);
   }
 
   void Val::splat(const Pos &pos) {

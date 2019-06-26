@@ -16,7 +16,7 @@ namespace cidk {
     virtual void dup(const Pos &pos, Val &dst, const Val &src) const = 0;
     virtual bool eq(const Pos &pos, const Val &x, const Val &y) const;
     virtual bool is(const Pos &pos, const Val &x, const Val &y) const = 0;
-    virtual bool mark_refs(const Pos &pos, const Val &val);
+    virtual void mark_refs(const Pos &pos, const Val &val);
     virtual void splat(const Pos &pos, Val &val);
     virtual void sweep(const Pos &pos, Val &val);
   };

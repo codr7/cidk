@@ -51,7 +51,7 @@ namespace cidk {
     void dup(const Pos &pos, Val &dst) const;
     bool eq(const Pos &pos, const Val &y) const;
     bool is(const Pos &pos, const Val &y) const;
-    bool mark_refs(const Pos &pos);
+    void mark_refs(const Pos &pos);
 
     template <typename ValT>
     void reset(const Pos &pos, ValTType<ValT> &type, ValT val) {

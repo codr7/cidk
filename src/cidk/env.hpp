@@ -27,15 +27,21 @@ namespace cidk {
     Env(Cx &cx);
     ~Env();
 
+    bool add(const Pos &pos, const Sym *key, const Val &val, bool silent);
+    
     template <typename...Rest>
-    Fun *add_fun(const Pos &pos,
+    Fun &add_fun(const Pos &pos,
                  const string &id,
                  initializer_list<Arg> args,
                  initializer_list<Ret> rets,
                  Rest &&...rest);
-    
+
+    template <typename TypeT, typename...Rest>
+    TypeT &add_type(const Pos &pos, const string &id, Rest &&...rest);
+
+    void clear();
     bool get(const Pos &pos, const Sym *key, Val &out, bool silent);
-    bool mark_refs(const Pos &pos);
+    void mark_refs(const Pos &pos);
     bool set(const Pos &pos, const Sym *key, const Val &val, bool force);
   };
 }
