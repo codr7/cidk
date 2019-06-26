@@ -3,7 +3,7 @@ fun fib(Int)(Int) {
   push 2
   call <
   
-  if {
+  if
     _
     do {
       call dec
@@ -14,7 +14,6 @@ fun fib(Int)(Int) {
       swap
       call dec fib +
     }
-  }
 }
 
 bench 10 10 {
