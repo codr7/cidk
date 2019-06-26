@@ -21,7 +21,7 @@ namespace cidk {
   Cx::~Cx() {
     env.clear();
     stack.clear();
-    do { mark_refs(Pos::_); } while (sweep_refs(Pos::_));
+    do { mark_refs(Pos::_); } while (sweep_refs(Pos::_) && !refs.empty());
 
 #ifndef CIDK_USE_POOL
     for (auto &s: syms) { delete s.second; }
@@ -72,6 +72,6 @@ namespace cidk {
       }
     }
 
-    return ok && !refs.empty();
+    return ok;
   }
 }
