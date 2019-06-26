@@ -1,0 +1,21 @@
+fun fib(Int)(Int)
+  dup
+  push 2
+  call <
+  
+  if
+    _
+    do
+      call --
+      dup
+      call fib
+      swap
+      call --
+      call fib
+      call +
+
+bench 10 10
+  push 20
+  call fib
+
+dump

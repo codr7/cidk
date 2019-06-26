@@ -20,5 +20,6 @@
 * add Env type
 * change env storage to sorted deque & compare perf
 * add asm read/write support
-** lisp syntax
-** port fib
+** ident bodies
+** run bench/fib_rec.idk
+      
