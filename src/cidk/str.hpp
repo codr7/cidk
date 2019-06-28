@@ -7,18 +7,18 @@
 namespace cidk {
   using namespace std;
 
-  inline void append_args(ostream &s) { }
+  inline void append(ostream &s) { }
 
   template <typename A0, typename...Args>
-  void append_args(ostream &s, const A0 &a0, const Args &...args) {
+  void append(ostream &s, const A0 &a0, const Args &...args) {
     s << a0;
-    append_args(s, args...);
+    append(s, args...);
   }
 
   template <typename...Args>
   string str(const Args &...args) {
     stringstream out;
-    append_args(out, args...);
+    append(out, args...);
     return out.str();
   }
 }
