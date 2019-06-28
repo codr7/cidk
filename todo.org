@@ -6,7 +6,8 @@
 *** add read_num/read_id
 *** break read_val on \n
 * commit reader
-* add + fn to ValType env
+* add NumType with + 
+** derive IntType
 ** call '+/Int' etc if different type
 * build/test.ops
 * --
