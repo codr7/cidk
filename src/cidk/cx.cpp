@@ -2,6 +2,7 @@
 
 #include "cidk/conf.hpp"
 #include "cidk/cx.hpp"
+#include "cidk/libs/math.hpp"
 #include "cidk/op.hpp"
 #include "cidk/reader.hpp"
 #include "cidk/val.hpp"
@@ -11,7 +12,8 @@ namespace cidk {
     op_types(Op::types()),
     env(*this),
     Meta(env.add_type<MetaType>(Pos::_, "Meta")),
-    Any(env.add_type<AnyType>(Pos::_, "Any")),
+    Any(env.add_type<Type>(Pos::_, "Any")),
+    Num(env.add_type<Type>(Pos::_, "Num")),
     Bool(env.add_type<BoolType>(Pos::_, "Bool")),
     Byte(env.add_type<ByteType>(Pos::_, "Byte")),
     Fun(env.add_type<FunType>(Pos::_, "Fun")),
@@ -20,6 +22,7 @@ namespace cidk {
     OStream(env.add_type<OStreamType>(Pos::_, "OStream")),
     call(nullptr),
     stdin(cin), stdout(cout), stderr(cerr) {
+    libs::init_math(*this);
     init_types(Pos::_);
   }
 

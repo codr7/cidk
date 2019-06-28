@@ -7,7 +7,6 @@
 #include "cidk/env.hpp"
 #include "cidk/pool.hpp"
 #include "cidk/sym.hpp"
-#include "cidk/types/any.hpp"
 #include "cidk/types/bool.hpp"
 #include "cidk/types/byte.hpp"
 #include "cidk/types/fun.hpp"
@@ -35,7 +34,8 @@ namespace cidk {
     Env env;
     
     MetaType &Meta;
-    AnyType &Any;
+    Type &Any, &Num;
+    
     BoolType &Bool;
     ByteType &Byte;
     FunType &Fun;

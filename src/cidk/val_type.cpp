@@ -1,5 +1,6 @@
 #include "cidk/call.hpp"
 #include "cidk/cx.hpp"
+#include "cidk/e.hpp"
 #include "cidk/ops/push.hpp"
 #include "cidk/val_type.hpp"
 
@@ -34,6 +35,10 @@ namespace cidk {
     env.add_fun(pos, "clone", {Arg("it")}, {Ret(cx.Any)}, clone_imp);
     env.add_fun(pos, "dump", {Arg("val"), Arg("out")}, {}, dump_imp);
     env.add_fun(pos, "eq", {Arg("x"), Arg("y")}, {Ret(cx.Bool)}, eq_imp);
+  }
+
+  void ValType::add(const Pos &pos, const Val &x, const Val &y) const {
+    throw NotImplemented(pos);
   }
 
   void ValType::call(const Pos &pos, const Val &val) const {

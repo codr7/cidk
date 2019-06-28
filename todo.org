@@ -6,9 +6,6 @@
 *** add read_num/read_id
 *** break read_val on \n
 * commit reader
-* add NumType with + 
-** derive IntType
-** call '+/Int' etc if different type
 * build/test.ops
 * --
 * add asm support
@@ -37,4 +34,4 @@
 ** read as utf-8
 *** https://stackoverflow.com/questions/16208079/how-to-work-with-utf-8-in-c-conversion-from-other-encodings-to-utf-8
 ** splat chars
-      
+* derive Int from Num
