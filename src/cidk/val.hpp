@@ -12,6 +12,7 @@ namespace cidk {
 
   struct Fun;
   struct List;
+  struct OStream;
   struct ValType;
   
   template <typename ValT>
@@ -28,6 +29,7 @@ namespace cidk {
       Fun *as_fun;
       Int as_int;
       List *as_list;
+      OStream *as_ostream;
       Type *as_type;
     };
         
@@ -49,6 +51,7 @@ namespace cidk {
 
     void call(const Pos &pos);
     void clone(const Pos &pos, Val &dst) const;
+    void dump(const Pos &Pos, ostream &out) const;
     void dup(const Pos &pos, Val &dst) const;
     bool eq(const Pos &pos, const Val &y) const;
     bool is(const Pos &pos, const Val &y) const;

@@ -7,12 +7,12 @@
 namespace cidk::ops {
   struct PushType: OpType {
     PushType(string id);
+    void init(Op &op, const Val &val) const;
     virtual void eval(Cx &cx, const Op &op) const override;
+    virtual void read(Cx &cx, const Pos &pos, Reader &in, Ops &out) const override;
   };
 
   extern const PushType Push;
-  
-  void init(Op &op, const ops::PushType &type, const Val &val);
 }
 
 #endif

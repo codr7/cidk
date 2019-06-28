@@ -1,18 +1,23 @@
+* finish Reader.read_val()
+** track indent in Reader.indent
+*** add read -> char
+**** inc indent while space/tab on \n
+***** 2 spaces for tab
+*** add read_num/read_id
+*** break read_val on \n
+* commit reader
+* add + fn to ValType env
+** call '+/Int' etc if different type
+* build/test.ops
+* --
 * add asm support
-** bench/fib_rec.idk
-** add Call macro
-*** allow multiple ids
-**** generate separate ops
+** bench/fib_rec.ops
+* add multi arg support to call/dump/push readers
 ** add Bench op
 *** reps1 & reps2 for outer/inner loop
-** add Dump op
-*** pop val from stack if no args
-*** add Val.dump
-**** use env like clone/eq
-*** allow multiple args in reader
 ** add If op
 ** add Do op
-* ---
+* --
 * add ListType.clone override
 ** only clone list structure
 * move ValType.splat to env
@@ -23,6 +28,7 @@
 * add Fun.args (Args)
 ** init arg ids
 * add Fun.rets (Rets)
+* fix Fun dump
 * --
 * add Char type
 ** char32_t
@@ -30,6 +36,4 @@
 ** read as utf-8
 *** https://stackoverflow.com/questions/16208079/how-to-work-with-utf-8-in-c-conversion-from-other-encodings-to-utf-8
 ** splat chars
-* --
-* change env storage to sorted deque & compare perf
       

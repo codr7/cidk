@@ -1,12 +1,14 @@
-//#include <iostream>
+#include <fstream>
 
 #include "cidk/conf.hpp"
 #include "cidk/cx.hpp"
 #include "cidk/op.hpp"
+#include "cidk/reader.hpp"
 #include "cidk/val.hpp"
 
 namespace cidk {
   Cx::Cx():
+    op_types(Op::types()),
     env(*this),
     Meta(env.add_type<MetaType>(Pos::_, "Meta")),
     Any(env.add_type<AnyType>(Pos::_, "Any")),
@@ -15,7 +17,9 @@ namespace cidk {
     Fun(env.add_type<FunType>(Pos::_, "Fun")),
     Int(env.add_type<IntType>(Pos::_, "Int")),
     List(env.add_type<ListType>(Pos::_, "List")),
-    call(nullptr) {
+    OStream(env.add_type<OStreamType>(Pos::_, "OStream")),
+    call(nullptr),
+    stdin(cin), stdout(cout), stderr(cerr) {
     init_types(Pos::_);
   }
 
@@ -46,6 +50,11 @@ namespace cidk {
     for (const Op &o: in) { o.eval(*this, pos); }
   }
 
+  void Cx::load(const Pos &pos, const string &path, Ops &out) {
+    ifstream f(path);
+    Reader(*this, Pos(path), f).read_ops(out);
+  }
+
   void Cx::mark_refs(const Pos &pos) {
     for (Ref *r: refs) { r->ref_state = RefState::_; }
 
@@ -53,7 +62,7 @@ namespace cidk {
     for (Env *e: envs) { e->mark_refs(pos); }
     for (Val &v: stack) { v.mark_refs(pos); }
   }
-
+  
   bool Cx::sweep_refs(const Pos &pos) {
     bool ok(false);
     

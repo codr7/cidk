@@ -2,9 +2,12 @@
 #define CIDK_OP_HPP
 
 #include <any>
+#include <unordered_map>
 #include <string>
 
+#include "cidk/ops.hpp"
 #include "cidk/pos.hpp"
+#include "cidk/reader.hpp"
 
 namespace cidk {
   using namespace std;
@@ -13,13 +16,16 @@ namespace cidk {
   struct Op;
   struct Pos;
   
-  struct OpType {
+  struct OpType {    
     string id;
     OpType(const string &id);
     virtual void eval(Cx &cx, const Op &op) const = 0;
+    virtual void read(Cx &cx, const Pos &pos, Reader &in, Ops &out) const = 0;
   };
-    
+
   struct Op {
+    static unordered_map<string, OpType *> &types();
+
     Pos pos;
     const OpType *type;
     any data;
@@ -33,14 +39,9 @@ namespace cidk {
     void eval(Cx &cx, const Pos &pos) const;
   };
 
-  namespace ops {
-    template <typename T>
-    void init(Op &op, const T &type);
-  }
-  
   template <typename T, typename...Args>
   Op::Op(const Pos &pos, const T &type, Args &&...args): pos(pos), type(&type) {
-    ops::init(*this, type, forward<Args>(args)...);
+    type.init(*this, forward<Args>(args)...);
   }
 
   template <typename T>

@@ -1,9 +1,14 @@
+#include <iostream>
 #include "cidk/types/byte.hpp"
 #include "cidk/val.hpp"
 
 namespace cidk {
   ByteType::ByteType(Cx &cx, const Pos &pos, const string &id):
     ValTType<Byte>(cx, pos, id) { }
+
+  void ByteType::dump(const Pos &Pos, const Val &val, ostream &out) const {
+    out << val.as_byte;
+  }
 
   void ByteType::dup(const Pos &pos, Val &dst, const Val &src) const {
     dst.as_byte = src.as_byte;

@@ -7,12 +7,12 @@
 namespace cidk::ops {
   struct SwapType: OpType {
     SwapType(string id);
+    void init(Op &op) const;
     virtual void eval(Cx &cx, const Op &op) const override;
+    virtual void read(Cx &cx, const Pos &pos, Reader &in, Ops &out) const override;
   };
 
   extern const SwapType Swap;
-
-  void init(Op &op, const ops::SwapType &type);
 }
 
 #endif

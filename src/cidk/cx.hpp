@@ -1,8 +1,8 @@
 #ifndef CIDK_CX_HPP
 #define CIDK_CX_HPP
 
+#include <iostream>
 #include <string>
-#include <unordered_map>
 
 #include "cidk/env.hpp"
 #include "cidk/pool.hpp"
@@ -14,6 +14,7 @@
 #include "cidk/types/int.hpp"
 #include "cidk/types/list.hpp"
 #include "cidk/types/meta.hpp"
+#include "cidk/types/ostream.hpp"
 #include "cidk/var.hpp"
 
 namespace cidk {
@@ -29,6 +30,7 @@ namespace cidk {
     
     list<Ref *> refs;
     vector<Type *> types;
+    unordered_map<string, OpType *> op_types;
     list<Env *> envs;
     Env env;
     
@@ -39,9 +41,13 @@ namespace cidk {
     FunType &Fun;
     IntType &Int;
     ListType &List;
+    OStreamType &OStream;
 
     Stack stack;    
     Call *call;
+
+    istream &stdin;
+    ostream &stdout, &stderr;
     
     Cx();
     ~Cx();
@@ -50,6 +56,7 @@ namespace cidk {
 
     const Sym *intern(const string &name);
     void eval(const Pos &pos, const Ops &in);
+    void load(const Pos &pos, const string &path, Ops &out);
     void mark_refs(const Pos &pos);
     bool sweep_refs(const Pos &pos);
   };

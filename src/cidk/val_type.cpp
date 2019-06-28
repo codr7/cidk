@@ -8,7 +8,17 @@ namespace cidk {
     auto &s(call.cx.stack);
     s.emplace_back(s.back());
   }
-
+  
+  static void dump_imp(Call &call) {
+    auto &cx(call.cx);
+    auto &s(cx.stack);
+    auto out(s.back());
+    s.pop_back();
+    auto val(s.back());
+    s.pop_back();
+    val.type->dump(call.pos, val, out.as_ostream->imp);
+  }
+  
   static void eq_imp(Call &call) {
     auto &cx(call.cx);
     auto &s(cx.stack);
@@ -22,6 +32,7 @@ namespace cidk {
 
   void ValType::init() {
     env.add_fun(pos, "clone", {Arg("it")}, {Ret(cx.Any)}, clone_imp);
+    env.add_fun(pos, "dump", {Arg("val"), Arg("out")}, {}, dump_imp);
     env.add_fun(pos, "eq", {Arg("x"), Arg("y")}, {Ret(cx.Bool)}, eq_imp);
   }
 

@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "cidk/call.hpp"
 #include "cidk/types/fun.hpp"
 #include "cidk/val.hpp"
@@ -8,6 +10,10 @@ namespace cidk {
 
   void FunType::call(const Pos &pos, const Val &val) const {
     Call(cx, pos, *val.as_fun).eval();
+  }
+
+  void FunType::dump(const Pos &Pos, const Val &val, ostream &out) const {
+    out << val.as_fun->id << "()()";
   }
 
   void FunType::dup(const Pos &pos, Val &dst, const Val &src) const {

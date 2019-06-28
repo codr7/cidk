@@ -51,6 +51,13 @@ namespace cidk {
     virtual void print(ostream &out) const override;
   };
 
+  struct UnknownOp: SysE {
+    string id;
+    
+    UnknownOp(const Pos &pos, const string &id);
+    virtual void print(ostream &out) const override;
+  };
+
   struct WrongType: SysE {
     Type *type;
     

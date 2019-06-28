@@ -6,6 +6,19 @@ namespace cidk {
   ListType::ListType(Cx &cx, const Pos &pos, const string &id):
     ValTType<List *>(cx, pos, id) { }
 
+  void ListType::dump(const Pos &Pos, const Val &val, ostream &out) const {
+    out << '(';
+    char sep(0);
+    
+    for (auto &v: val.as_list->items) {
+      if (sep) { out << sep; }
+      v.dump(pos, out);
+      sep = ' ';
+    }
+
+    out << ')';
+  }
+
   void ListType::dup(const Pos &pos, Val &dst, const Val &src) const {
     dst.as_list = src.as_list;
   }

@@ -6,11 +6,15 @@ namespace cidk::ops {
 
   SwapType::SwapType(string id): OpType(id) { }
 
+  void SwapType::init(Op &op) const { }
+
   void SwapType::eval(Cx &cx, const Op &op) const {
     Stack &s(cx.stack);
     auto i(s.end());
     iter_swap(i-1, i);
   }
 
-  void init(Op &op, const ops::SwapType &type) { }
+  void SwapType::read(Cx &cx, const Pos &pos, Reader &in, Ops &out) const {
+    out.emplace_back(pos, *this);
+  }
 }

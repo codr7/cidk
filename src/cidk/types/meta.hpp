@@ -7,6 +7,7 @@ namespace cidk {
   struct MetaType: ValTType<Type *> {
     MetaType(Cx &cx, const Pos &pos, const string &id);
 
+    virtual void dump(const Pos &Pos, const Val &val, ostream &out) const override;
     virtual void dup(const Pos &pos, Val &dst, const Val &src) const override;
     virtual bool is(const Pos &pos, const Val &x, const Val &y) const override;
     virtual void mark_refs(const Pos &pos, const Val &val) override;

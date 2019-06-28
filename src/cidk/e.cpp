@@ -49,6 +49,14 @@ namespace cidk {
     out << id;
   }
 
+  UnknownOp::UnknownOp(const Pos &pos, const string &id):
+    SysE(pos, "Unknown op: "), id(id) { }
+
+  void UnknownOp::print(ostream &out) const {
+    SysE::print(out);
+    out << id;
+  }
+
   WrongType::WrongType(const Pos &pos, const string &msg, Type *type):
     SysE(pos, msg), type(type) { }
 

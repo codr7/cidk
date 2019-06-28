@@ -1,9 +1,14 @@
+#include <iostream>
 #include "cidk/types/meta.hpp"
 #include "cidk/val.hpp"
 
 namespace cidk {
   MetaType::MetaType(Cx &cx, const Pos &pos, const string &id):
     ValTType<Type *>(cx, pos, id) { }
+
+  void MetaType::dump(const Pos &Pos, const Val &val, ostream &out) const {
+    out << val.as_type->id;
+  }
 
   void MetaType::dup(const Pos &pos, Val &dst, const Val &src) const {
     dst.as_type = src.as_type;

@@ -4,6 +4,8 @@
 #include <vector>
 
 namespace cidk {
+  using namespace std;
+  
   struct Op;
   using Ops = vector<Op>;
 }

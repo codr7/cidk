@@ -6,10 +6,14 @@ namespace cidk::ops {
 
   DupType::DupType(string id): OpType(id) { }
 
+  void DupType::init(Op &op) const { }
+
   void DupType::eval(Cx &cx, const Op &op) const {
     Stack &s(cx.stack);
     s.emplace_back(s.back());
   }
 
-  void init(Op &op, const ops::DupType &type) { }
+  void DupType::read(Cx &cx, const Pos &pos, Reader &in, Ops &out) const {
+    out.emplace_back(pos, *this);
+  }
 }

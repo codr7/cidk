@@ -1,4 +1,5 @@
 #include "cidk/cx.hpp"
+#include "cidk/e.hpp"
 #include "cidk/ops/push.hpp"
 
 namespace cidk::ops {
@@ -6,11 +7,18 @@ namespace cidk::ops {
 
   PushType::PushType(string id): OpType(id) { }
 
+  void PushType::init(Op &op, const Val &val) const {
+    op.data = val;
+  }
+
   void PushType::eval(Cx &cx, const Op &op) const {
     cx.stack.push_back(op.as<Val>());
   }
 
-  void init(Op &op, const ops::PushType &type, const Val &val) {
-    op.data = val;
+  void PushType::read(Cx &cx, const Pos &pos, Reader &in, Ops &out) const {
+    auto p(pos);
+    auto v(in.read_val());
+    if (!v) { throw ReadE(p, "Missing push arg"); }
+    out.emplace_back(p, *this, *v);
   }
 }

@@ -8,6 +8,10 @@ namespace cidk::ops {
 
   CallType::CallType(string id): OpType(id) { }
 
+  void CallType::init(Op &op, Fun *fun) const {
+    op.data = fun;
+  }
+  
   void CallType::eval(Cx &cx, const Op &op) const {
     auto f(op.as<Fun *>());
 
@@ -25,7 +29,10 @@ namespace cidk::ops {
     cidk::Call(cx, op.pos, *f).eval();
   }
 
-  void init(Op &op, const ops::CallType &type, Fun *fun) {
-    op.data = fun;
+  void CallType::read(Cx &cx, const Pos &pos, Reader &in, Ops &out) const {
+    auto p(pos);
+    auto v(in.read_val());
+    Fun *f(v ? v->as_fun : nullptr);
+    out.emplace_back(p, *this, f);
   }
 }
