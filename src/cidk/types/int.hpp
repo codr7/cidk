@@ -11,6 +11,7 @@ namespace cidk {
   struct IntType: ValTType<Int> {
     IntType(Cx &cx, const Pos &pos, const string &id);
     
+    virtual void add(const Pos &pos, Val &x, const Val &y) const override;
     virtual void dump(const Pos &Pos, const Val &val, ostream &out) const override;
     virtual void dup(const Pos &pos, Val &dst, const Val &src) const override;
     virtual bool is(const Pos &pos, const Val &x, const Val &y) const override;

@@ -1,6 +1,6 @@
-* dup Cx.env in reader init
-* finish read_id/list
+* fix dump error
 * build/test.ops
+* finish read_list
 * --
 * add asm support
 ** bench/fib_rec.ops

@@ -6,6 +6,10 @@ namespace cidk {
   IntType::IntType(Cx &cx, const Pos &pos, const string &id):
     ValTType<Int>(cx, pos, id) { }
 
+  void IntType::add(const Pos &pos, Val &x, const Val &y) const {
+    x.as_int += y.as_int;
+  }
+
   void IntType::dump(const Pos &Pos, const Val &val, ostream &out) const {
     out << val.as_int;
   }

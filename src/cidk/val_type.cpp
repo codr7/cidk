@@ -37,7 +37,7 @@ namespace cidk {
     env.add_fun(pos, "eq", {Arg("x"), Arg("y")}, {Ret(cx.bool_type)}, eq_imp);
   }
 
-  void ValType::add(const Pos &pos, const Val &x, const Val &y) const {
+  void ValType::add(const Pos &pos, Val &x, const Val &y) const {
     throw NotImplemented(pos);
   }
 

@@ -10,12 +10,11 @@ namespace cidk::libs {
     auto &s(call.cx.stack);
 
     auto i(s.end()-1);
-    auto x(*i--);
-    auto y(*i);
+    auto y(*i--);
+    auto &x(*i);
     ValType *xt(x.type), *yt(y.type);
     
     if (xt == yt) {
-      s.pop_back();
       s.pop_back();
       xt->add(p, x, y);
     } else {
