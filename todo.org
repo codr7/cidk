@@ -1,26 +1,27 @@
-* finish read_list
 * bench/fib_rec.ops
 ** add Bench op
 *** reps1 & reps2 for outer/inner loop
 ** add If op
 ** add Do op
-* add multi arg support to call/dump/push readers
 * --
+* finish read_list
 * add ListType.clone override
 ** only clone list structure
 * move ValType.splat to env
 ** update Val.splat()
 * add Splat op
 ** optional arg, otherwise stack
+* --
 * add Fun.args (Args)
 ** init arg ids
 * add Fun.rets (Rets)
 * finish Fun dump
 * --
+* derive Int from Num
 * add Char type
 ** char32_t
 * add Str type
 ** read as utf-8
 *** https://stackoverflow.com/questions/16208079/how-to-work-with-utf-8-in-c-conversion-from-other-encodings-to-utf-8
 ** splat chars
-* derive Int from Num
+* add README with ops
