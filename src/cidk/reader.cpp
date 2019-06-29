@@ -9,8 +9,13 @@
 
 namespace cidk {
   Reader::Reader(Cx &cx, const Pos &pos, istream &in):
-    cx(cx), pos(pos), in(in), indent(0), env(cx.env) { }
-  
+    cx(cx), pos(pos), in(in), indent(0), env(cx.env) {
+  }
+
+  void Reader::read_ops(Ops &out) {
+    while (!in.eof()) { read_op(out); }
+  }
+
   void Reader::read_op(Ops &out) {
     indent = read_indent();
     const Pos p(pos);
@@ -22,17 +27,12 @@ namespace cidk {
     }
     
     auto id(idv->as_sym->name);
-    cout << "opc: " << id << endl;
     auto found(cx.op_types.find(id));
     if (found == cx.op_types.end()) { throw UnknownOp(pos, id); } 
     OpType &ot(*found->second);
     ot.read(cx, p, *this, out);
   }
   
-  void Reader::read_ops(Ops &out) {
-    while (!in.eof()) { read_op(out); }
-  }
-
   optional<Val> Reader::read_val() {
   next:
     char c = in.get();

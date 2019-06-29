@@ -1,14 +1,10 @@
-* fix dump error
-* build/test.ops
 * finish read_list
-* --
-* add asm support
-** bench/fib_rec.ops
-* add multi arg support to call/dump/push readers
+* bench/fib_rec.ops
 ** add Bench op
 *** reps1 & reps2 for outer/inner loop
 ** add If op
 ** add Do op
+* add multi arg support to call/dump/push readers
 * --
 * add ListType.clone override
 ** only clone list structure

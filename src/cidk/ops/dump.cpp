@@ -16,11 +16,11 @@ namespace cidk::ops {
 
     if (!v) {
       auto &s(cx.stack);
-      if (s.empty()) { ReadE(op.pos, "Missing dump arg"); }
-      *v = s.back();
+      if (s.empty()) { throw ReadE(op.pos, "Missing dump arg"); }
+      v.emplace(s.back());
       s.pop_back();
     }
-    
+
     v->dump(op.pos, cx.stderr);
     cx.stderr << endl;
   }

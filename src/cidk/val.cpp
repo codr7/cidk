@@ -1,5 +1,3 @@
-//#include <iostream>
-
 #include "cidk/cx.hpp"
 #include "cidk/val.hpp"
 
@@ -26,7 +24,7 @@ namespace cidk {
   void Val::clone(const Pos &pos, Val &dst) const {
     Cx &cx(type->cx);
     auto &s(cx.stack);
-    s.push_back(*this);
+    s.emplace_back(*this);
     type->call_env(pos, cx.intern("clone"));
     dst = s.back();
     s.pop_back();
@@ -35,11 +33,10 @@ namespace cidk {
   void Val::dump(const Pos &Pos, ostream &out) const {
     Cx &cx(type->cx);
     auto &s(cx.stack);
-    s.push_back(*this);
+    s.emplace_back(*this);
     auto &ot(cx.ostream_type);
     s.emplace_back(pos, ot, ot.pool.get(cx, out));
     type->call_env(pos, cx.intern("dump"));
-    out << endl;
   }
   
   void Val::dup(const Pos &pos, Val &dst) const {
