@@ -1,10 +1,5 @@
 * finish Reader.read_val()
-** track indent in Reader.indent
-*** add read -> char
-**** inc indent while space/tab on \n
-***** 2 spaces for tab
-*** add read_num/read_id
-*** break read_val on \n
+** finish read_id/list
 * commit reader
 * build/test.ops
 * --
