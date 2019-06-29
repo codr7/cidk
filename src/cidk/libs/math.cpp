@@ -24,7 +24,7 @@ namespace cidk::libs {
   }
 
   void init_math(Cx &cx) {
-    cx.env.add_fun(Pos::_, "+", {Arg("x"), Arg("y")}, {Ret(cx.Num)}, add_imp);
+    cx.env.add_fun(Pos::_, "+", {Arg("x"), Arg("y")}, {Ret(cx.num_type)}, add_imp);
   }
 }
 

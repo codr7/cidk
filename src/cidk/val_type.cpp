@@ -26,15 +26,15 @@ namespace cidk {
     auto y(s.back());
     s.pop_back();
     auto &x(s.back());
-    x.reset(call.pos, cx.Bool, x.is(call.pos, y));
+    x.reset(call.pos, cx.bool_type, x.is(call.pos, y));
   }
 
   ValType::ValType(Cx &cx, const Pos &pos, const string &id): Type(cx, pos, id) { }
 
   void ValType::init() {
-    env.add_fun(pos, "clone", {Arg("it")}, {Ret(cx.Any)}, clone_imp);
+    env.add_fun(pos, "clone", {Arg("it")}, {Ret(cx.any_type)}, clone_imp);
     env.add_fun(pos, "dump", {Arg("val"), Arg("out")}, {}, dump_imp);
-    env.add_fun(pos, "eq", {Arg("x"), Arg("y")}, {Ret(cx.Bool)}, eq_imp);
+    env.add_fun(pos, "eq", {Arg("x"), Arg("y")}, {Ret(cx.bool_type)}, eq_imp);
   }
 
   void ValType::add(const Pos &pos, const Val &x, const Val &y) const {

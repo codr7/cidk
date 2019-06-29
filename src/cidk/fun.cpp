@@ -12,6 +12,6 @@ namespace cidk {
     Def(cx, pos, id), env(*cx.env_pool.get(cx)), imp(imp) { }
 
   void Fun::sweep(const Pos &pos) {
-    cx.Fun.pool.put(this);
+    cx.fun_type.pool.put(this);
   }
 }

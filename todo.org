@@ -1,6 +1,5 @@
-* finish Reader.read_val()
-** finish read_id/list
-* commit reader
+* dup Cx.env in reader init
+* finish read_id/list
 * build/test.ops
 * --
 * add asm support
@@ -15,13 +14,12 @@
 ** only clone list structure
 * move ValType.splat to env
 ** update Val.splat()
-* add Sym type
-* add Get op
-** add support for recursive lookups
+* add Splat op
+** optional arg, otherwise stack
 * add Fun.args (Args)
 ** init arg ids
 * add Fun.rets (Rets)
-* fix Fun dump
+* finish Fun dump
 * --
 * add Char type
 ** char32_t

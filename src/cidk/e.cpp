@@ -1,12 +1,13 @@
 #include <sstream>
 
 #include "cidk/e.hpp"
+#include "cidk/sym.hpp"
 #include "cidk/type.hpp"
 
 namespace cidk {
   using namespace std;
   
-  E::E(const Pos &pos, const string &msg): pos(pos), msg(msg) { }
+  E::E(const Pos &pos, const string &msg): pos(pos), msg(msg), is_cached(false) { }
 
   void E::print(ostream &out) const {
     out <<
@@ -16,9 +17,15 @@ namespace cidk {
   }
 
   const char* E::what() const throw() {
-    stringstream buf;
-    print(buf);
-    return buf.str().c_str();
+    if (!is_cached) {
+      stringstream buf;
+      print(buf);
+      auto *t(const_cast<E *>(this));
+      t->msg = buf.str();
+      t->is_cached = true;
+    }
+
+    return msg.c_str();
   }
 
   ReadE::ReadE(const Pos &pos, const string &msg): E(pos, msg) { }

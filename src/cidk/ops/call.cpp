@@ -16,14 +16,14 @@ namespace cidk::ops {
     auto f(op.as<Fun *>());
 
     if (!f) {
-      auto v(cx.stack.back());
+      auto fv(cx.stack.back());
 
-      if (v.type != &cx.Fun) {
-        throw WrongType(op.pos, "Invalid call target: ", v.type);
+      if (fv.type != &cx.fun_type) {
+        throw WrongType(op.pos, "Invalid call target: ", fv.type);
       }
 
       cx.stack.pop_back();
-      f = v.as_fun;
+      f = fv.as_fun;
     }
     
     cidk::Call(cx, op.pos, *f).eval();
@@ -32,7 +32,19 @@ namespace cidk::ops {
   void CallType::read(Cx &cx, const Pos &pos, Reader &in, Ops &out) const {
     auto p(pos);
     auto v(in.read_val());
-    Fun *f(v ? v->as_fun : nullptr);
+    Fun *f(nullptr);
+    
+    if (v) {
+      Val fv;
+      in.env.get(p, v->as_sym, fv, false);
+      
+      if (fv.type != &cx.fun_type) {
+        throw WrongType(p, "Invalid call target: ", fv.type);
+      }
+
+      f = fv.as_fun;
+    }
+
     out.emplace_back(p, *this, f);
   }
 }

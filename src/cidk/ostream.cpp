@@ -5,6 +5,6 @@ namespace cidk {
   OStream::OStream (Cx &cx, ostream &imp): Ref(cx), imp(imp) { }
 
   void OStream::sweep(const Pos &pos) {
-    cx.OStream.pool.put(this);
+    cx.ostream_type.pool.put(this);
   }
 }

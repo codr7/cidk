@@ -8,7 +8,8 @@
 #include "cidk/str.hpp"
 
 namespace cidk {
-  Reader::Reader(Cx &cx, const Pos &pos, istream &in): cx(cx), pos(pos), in(in), indent(0) { }
+  Reader::Reader(Cx &cx, const Pos &pos, istream &in):
+    cx(cx), pos(pos), in(in), indent(0), env(cx) { }
   
   void Reader::read_op(Ops &out) {
     indent = read_indent();
@@ -64,18 +65,19 @@ namespace cidk {
   }
   
   optional<Val> Reader::read_num() {
-    auto p(pos);
+    const auto p(pos);
     stringstream out;
     char c(0);
     
     for (;;) {
       if (!in.get(c) || !isdigit(c)) { break; }
       out << c;
+      pos.col++;
     }
 
     if (!in.eof()) { in.unget();}
     Int n(strtoll(out.str().c_str(), NULL, 10));
-    return Val(p, cx.Int, n);
+    return Val(p, cx.int_type, n);
   }
 
   int Reader::read_indent() {
@@ -90,6 +92,7 @@ namespace cidk {
     }
 
     if (!in.eof()) { in.unget(); }
+    pos.col += n;
     return n;
   }
 }

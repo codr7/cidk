@@ -1,6 +1,7 @@
 #ifndef CIDK_READER_HPP
 #define CIDK_READER_HPP
 
+#include "cidk/env.hpp"
 #include "cidk/pos.hpp"
 #include "cidk/ops.hpp"
 
@@ -13,6 +14,7 @@ namespace cidk {
     Pos pos;
     istream &in;
     int indent;
+    Env env;
     
     Reader(Cx &cx, const Pos &pos, istream &in);
 

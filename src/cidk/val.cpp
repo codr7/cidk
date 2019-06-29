@@ -36,7 +36,8 @@ namespace cidk {
     Cx &cx(type->cx);
     auto &s(cx.stack);
     s.push_back(*this);
-    s.emplace_back(pos, cx.OStream, cx.OStream.pool.get(cx, out));
+    auto &ot(cx.ostream_type);
+    s.emplace_back(pos, ot, ot.pool.get(cx, out));
     type->call_env(pos, cx.intern("dump"));
     out << endl;
   }

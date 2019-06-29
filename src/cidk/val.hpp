@@ -30,6 +30,7 @@ namespace cidk {
       Int as_int;
       List *as_list;
       OStream *as_ostream;
+      const Sym *as_sym;
       Type *as_type;
     };
         

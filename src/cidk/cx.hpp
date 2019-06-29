@@ -14,6 +14,7 @@
 #include "cidk/types/list.hpp"
 #include "cidk/types/meta.hpp"
 #include "cidk/types/ostream.hpp"
+#include "cidk/types/sym.hpp"
 #include "cidk/var.hpp"
 
 namespace cidk {
@@ -33,16 +34,17 @@ namespace cidk {
     list<Env *> envs;
     Env env;
     
-    MetaType &Meta;
-    Type &Any, &Num;
+    MetaType &meta_type;
+    Type &any_type, &num_type;
     
-    BoolType &Bool;
-    ByteType &Byte;
-    FunType &Fun;
-    IntType &Int;
-    ListType &List;
-    OStreamType &OStream;
-
+    BoolType &bool_type;
+    ByteType &byte_type;
+    FunType &fun_type;
+    IntType &int_type;
+    ListType &list_type;
+    OStreamType &ostream_type;
+    SymType &sym_type;
+    
     Stack stack;    
     Call *call;
 
@@ -67,8 +69,9 @@ namespace cidk {
                     initializer_list<Arg> args,
                     initializer_list<Ret> rets,
                     Rest &&...rest) {
-    Fun *f(cx.Fun.pool.get(cx, pos, id, args, rets, forward<Rest>(rest)...));
-    set(pos, cx.intern(id), Val(pos, cx.Fun, f), true);
+    auto &ft(cx.fun_type);
+    Fun *f(ft.pool.get(cx, pos, id, args, rets, forward<Rest>(rest)...));
+    set(pos, cx.intern(id), Val(pos, ft, f), true);
     return *f;
   }
 
@@ -81,7 +84,7 @@ namespace cidk {
     set(pos,
         cx.intern(id),
         Val(pos,
-            (id == "Meta") ? *dynamic_cast<MetaType *>(t) : cx.Meta,
+            (id == "Meta") ? *dynamic_cast<MetaType *>(t) : cx.meta_type,
             dynamic_cast<Type *>(t)), true);
     
     return *t;

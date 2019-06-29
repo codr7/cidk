@@ -14,6 +14,7 @@ namespace cidk {
   struct E: exception {
     Pos pos;
     string msg;
+    bool is_cached;
 
     E(const Pos &pos, const string &msg = "");
     virtual const char* what() const throw() override;

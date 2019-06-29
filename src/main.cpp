@@ -11,7 +11,7 @@ void test(cidk::Cx &cx) {
   auto &s(cx.stack);
   auto p(cidk::Pos::_);
   
-  cidk::Val v(p, cx.Int, cidk::Int(42));
+  cidk::Val v(p, cx.int_type, cidk::Int(42));
   assert(v.as<cidk::Int>() == 42);
   assert(v.eq(p, v));
 
