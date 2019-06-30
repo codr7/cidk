@@ -55,7 +55,9 @@ namespace cidk {
     void dump(const Pos &Pos, ostream &out) const;
     void dup(const Pos &pos, Val &dst) const;
     bool eq(const Pos &pos, const Val &y) const;
+    void eval(Env &env) const;
     bool is(const Pos &pos, const Val &y) const;
+    bool _bool(const Pos &pos) const;
     void mark_refs(const Pos &pos);
 
     template <typename ValT>

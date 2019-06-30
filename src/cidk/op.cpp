@@ -10,7 +10,7 @@ namespace cidk {
     Op::types().emplace(id, this);
   }
 
-  void Op::eval(Cx &cx, const Pos &pos) const {
-    type->eval(cx, *this);
+  void Op::eval(Env &env) const {
+    type->eval(*this, env);
   }
 }

@@ -11,8 +11,8 @@ namespace cidk::ops {
     op.data = val;
   }
 
-  void PushType::eval(Cx &cx, const Op &op) const {
-    cx.stack.push_back(op.as<Val>());
+  void PushType::eval(const Op &op, Env &env) const {
+    env.cx.stack.push_back(op.as<Val>());
   }
 
   void PushType::read(Cx &cx, const Pos &pos, Reader &in, Ops &out) const {

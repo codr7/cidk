@@ -1,5 +1,15 @@
 * bench/fib_rec.ops
-** add If op
+** add stack refs
+*** change $0 to top, $1 next etc.
+*** pop vals on reference
+*** use for opt args (dump etc)
+** add Sym eval
+*** look up in env
+*** eval arg in dump/push
+*** change call to expect eval arg & expect Fun
+* --
+*** add read_expr
+**** add {} to read_id break cond
 ** add Fun op
 ** add Bench op
 *** reps1 & reps2 for outer/inner loop
@@ -24,4 +34,5 @@
 ** read as utf-8
 *** https://stackoverflow.com/questions/16208079/how-to-work-with-utf-8-in-c-conversion-from-other-encodings-to-utf-8
 ** splat chars
+* implement _bool where applicable
 * add README

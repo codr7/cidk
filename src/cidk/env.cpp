@@ -36,9 +36,10 @@ namespace cidk {
     auto found(vars.find(key));
     
     if (found == vars.end()) {
-      if (!force) { return false; }
       vars.emplace(key, cx.var_pool.get(pos, this, val));
     } else {
+      if (!force) { return false; }
+
       auto v(found->second);
       if (v->env == this) { v->val = val; }
       else { found->second = cx.var_pool.get(pos, this, val); }

@@ -8,7 +8,7 @@ namespace cidk::ops {
   struct DumpType: OpType {
     DumpType(string id);
     void init(Op &op, const optional<Val> &val) const;
-    virtual void eval(Cx &cx, const Op &op) const override;
+    virtual void eval(const Op &op, Env &env) const override;
     virtual void read(Cx &cx, const Pos &pos, Reader &in, Ops &out) const override;
   };
 

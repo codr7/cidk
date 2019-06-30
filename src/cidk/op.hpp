@@ -19,7 +19,7 @@ namespace cidk {
   struct OpType {    
     string id;
     OpType(const string &id);
-    virtual void eval(Cx &cx, const Op &op) const = 0;
+    virtual void eval(const Op &op, Env &env) const = 0;
     virtual void read(Cx &cx, const Pos &pos, Reader &in, Ops &out) const = 0;
   };
 
@@ -36,7 +36,7 @@ namespace cidk {
     template <typename T>
     T as() const;
 
-    void eval(Cx &cx, const Pos &pos) const;
+    void eval(Env &env) const;
   };
 
   template <typename T, typename...Args>

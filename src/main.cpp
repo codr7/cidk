@@ -22,13 +22,16 @@ void test(cidk::Cx &cx) {
 
 int main(int argc, char *argv[]) {
   auto p(cidk::Pos::_);
-  cidk::Cx cx;
-  test(cx);
 
+  cidk::Cx cx;
+  cidk::Env &env(*cx.env_pool.get(cx.env));
+
+  test(cx);
+  
   while (--argc && ++argv) {
     cidk::Ops ops;
     cx.load(p, *argv, ops);
-    cx.eval(p, ops);
+    cx.eval(ops, env);
   }
   
   return 0;

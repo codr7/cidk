@@ -37,6 +37,9 @@ namespace cidk {
     template <typename TypeT, typename...Rest>
     TypeT &add_type(const Pos &pos, const string &id, Rest &&...rest);
 
+    template <typename...Rest>
+    void add_var(const Pos &pos, const string &id, Rest &&...rest);
+
     void clear();
     bool get(const Pos &pos, const Sym *key, Val &out, bool silent);
     void mark_refs(const Pos &pos);

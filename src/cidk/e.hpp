@@ -25,8 +25,8 @@ namespace cidk {
     ReadE(const Pos &pos, const string &msg = "");
   };
 
-  struct RunE: E {
-    RunE(const Pos &pos, const string &msg = "");
+  struct EvalE: E {
+    EvalE(const Pos &pos, const string &msg = "");
   };
 
   struct SysE: E {

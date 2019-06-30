@@ -57,7 +57,7 @@ namespace cidk {
     void init_types(const Pos &pos);
 
     const Sym *intern(const string &name);
-    void eval(const Pos &pos, const Ops &in);
+    void eval(const Ops &in, Env &env);
     void load(const Pos &pos, const string &path, Ops &out);
     void mark_refs(const Pos &pos);
     bool sweep_refs(const Pos &pos);
@@ -71,7 +71,7 @@ namespace cidk {
                     Rest &&...rest) {
     auto &ft(cx.fun_type);
     Fun *f(ft.pool.get(cx, pos, id, args, rets, forward<Rest>(rest)...));
-    set(pos, cx.intern(id), Val(pos, ft, f), true);
+    set(pos, cx.intern(id), Val(pos, ft, f), false);
     return *f;
   }
 
@@ -85,9 +85,15 @@ namespace cidk {
         cx.intern(id),
         Val(pos,
             (id == "Meta") ? *dynamic_cast<MetaType *>(t) : cx.meta_type,
-            dynamic_cast<Type *>(t)), true);
+            dynamic_cast<Type *>(t)),
+        false);
     
     return *t;
+  }
+
+  template <typename...Rest>
+  void Env::add_var(const Pos &pos, const string &id, Rest &&...rest) {
+    set(Pos::_, cx.intern(id), Val(pos, forward<Rest>(rest)...), false);
   }
 }
 

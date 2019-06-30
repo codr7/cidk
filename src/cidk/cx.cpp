@@ -25,6 +25,8 @@ namespace cidk {
     stdin(cin), stdout(cout), stderr(cerr) {
     libs::init_math(*this);
     init_types(Pos::_);
+    env.add_var(Pos::_, "T", bool_type, true);
+    env.add_var(Pos::_, "F", bool_type, false);
   }
 
   Cx::~Cx() {
@@ -50,8 +52,8 @@ namespace cidk {
     return s;
   }
 
-  void Cx::eval(const Pos &pos, const Ops &in) {
-    for (const Op &o: in) { o.eval(*this, pos); }
+  void Cx::eval(const Ops &in, Env &env) {
+    for (const Op &o: in) { o.eval(env); }
   }
 
   void Cx::load(const Pos &pos, const string &path, Ops &out) {

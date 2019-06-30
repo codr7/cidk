@@ -12,18 +12,17 @@ namespace cidk::ops {
     op.data = fun;
   }
   
-  void CallType::eval(Cx &cx, const Op &op) const {
-    auto f(op.as<Fun *>());
+  void CallType::eval(const Op &op, Env &env) const {
+    Cx &cx(env.cx);
+    Pos p(op.pos);
+    Fun *f(op.as<Fun *>());
 
     if (!f) {
-      auto fv(cx.stack.back());
-
-      if (fv.type != &cx.fun_type) {
-        throw WrongType(op.pos, "Invalid call target: ", fv.type);
-      }
-
-      cx.stack.pop_back();
-      f = fv.as_fun;
+      Stack &s(cx.stack);
+      auto fv(pop(p, s, false));
+      Type *ft(fv->type);
+      if (ft != &cx.fun_type) { throw WrongType(p, "Invalid call target: ", ft); }
+      f = fv->as_fun;
     }
     
     cidk::Call(cx, op.pos, *f).eval();

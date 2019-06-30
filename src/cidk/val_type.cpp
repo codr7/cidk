@@ -5,6 +5,13 @@
 #include "cidk/val_type.hpp"
 
 namespace cidk {
+  static void bool_imp(Call &call) {
+    auto &cx(call.cx);
+    auto &s(cx.stack);
+    auto &v(s.back());
+    s.back().reset(call.pos, cx.bool_type, v.type->_bool(call.pos, v));
+  }
+ 
   static void clone_imp(Call &call) {
     auto &s(call.cx.stack);
     s.emplace_back(s.back());
@@ -32,6 +39,7 @@ namespace cidk {
   ValType::ValType(Cx &cx, const Pos &pos, const string &id): Type(cx, pos, id) { }
 
   void ValType::init() {
+    env.add_fun(pos, "bool", {Arg("val")}, {Ret(cx.bool_type)}, bool_imp);
     env.add_fun(pos, "clone", {Arg("it")}, {Ret(cx.any_type)}, clone_imp);
     env.add_fun(pos, "dump", {Arg("val"), Arg("out")}, {}, dump_imp);
     env.add_fun(pos, "eq", {Arg("x"), Arg("y")}, {Ret(cx.bool_type)}, eq_imp);
@@ -41,8 +49,16 @@ namespace cidk {
     throw NotImplemented(pos);
   }
 
+  bool ValType::_bool(const Pos &pos, const Val &val) const {
+    return true;
+  }
+
   void ValType::call(const Pos &pos, const Val &val) const {
     cx.stack.emplace_back(val);
+  }
+
+  void ValType::eval(const Val &val, Env &env) const {
+    env.cx.stack.emplace_back(val);
   }
 
   void ValType::mark_refs(const Pos &pos, const Val &val) { }

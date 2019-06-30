@@ -30,7 +30,7 @@ namespace cidk {
 
   ReadE::ReadE(const Pos &pos, const string &msg): E(pos, msg) { }
 
-  RunE::RunE(const Pos &pos, const string &msg): E(pos, msg) { }
+  EvalE::EvalE(const Pos &pos, const string &msg): E(pos, msg) { }
 
   SysE::SysE(const Pos &pos, const string &msg): E(pos, msg) { }
 

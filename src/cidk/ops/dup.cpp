@@ -8,8 +8,8 @@ namespace cidk::ops {
 
   void DupType::init(Op &op) const { }
 
-  void DupType::eval(Cx &cx, const Op &op) const {
-    Stack &s(cx.stack);
+  void DupType::eval(const Op &op, Env &env) const {
+    Stack &s(env.cx.stack);
     s.emplace_back(s.back());
   }
 

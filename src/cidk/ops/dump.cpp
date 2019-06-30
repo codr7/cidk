@@ -11,7 +11,8 @@ namespace cidk::ops {
     op.data = val;
   }
 
-  void DumpType::eval(Cx &cx, const Op &op) const {
+  void DumpType::eval(const Op &op, Env &env) const {
+    auto &cx(env.cx);
     auto v(op.as<optional<Val>>());
 
     if (!v) {
