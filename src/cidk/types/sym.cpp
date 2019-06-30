@@ -6,7 +6,7 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  SymType::SymType(Cx &cx, const Pos &pos, string id):
+  SymType::SymType(Cx &cx, const Pos &pos, const Sym *id):
     ValTType<const Sym *>(cx, pos, id) { }
 
   void SymType::dump(const Pos &Pos, const Val &val, ostream &out) const {

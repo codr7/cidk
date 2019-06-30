@@ -3,7 +3,7 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  ByteType::ByteType(Cx &cx, const Pos &pos, const string &id):
+  ByteType::ByteType(Cx &cx, const Pos &pos, const Sym *id):
     ValTType<Byte>(cx, pos, id) { }
 
   void ByteType::dump(const Pos &Pos, const Val &val, ostream &out) const {

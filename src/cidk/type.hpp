@@ -11,7 +11,7 @@ namespace cidk {
   struct Type: Def {
     Env &env;
     
-    Type(Cx &cx, const Pos &pos, const string &id);
+    Type(Cx &cx, const Pos &pos, const Sym *id);
     virtual void init();
 
     void call_env(const Pos &pos, const Sym *id);

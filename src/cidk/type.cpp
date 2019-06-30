@@ -3,7 +3,7 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  Type::Type(Cx &cx, const Pos &pos, const string &id):
+  Type::Type(Cx &cx, const Pos &pos, const Sym *id):
     Def(cx, pos, id), env(*cx.env_pool.get(cx)) {
     cx.types.push_back(this);
   }

@@ -5,7 +5,7 @@
 
 namespace cidk {  
   struct BoolType: ValTType<bool> {
-    BoolType(Cx &cx, const Pos &pos, const string &id);
+    BoolType(Cx &cx, const Pos &pos, const Sym *id);
     
     virtual void dump(const Pos &Pos, const Val &val, ostream &out) const override;
     virtual void dup(const Pos &pos, Val &dst, const Val &src) const override;

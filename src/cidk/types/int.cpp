@@ -3,7 +3,7 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  IntType::IntType(Cx &cx, const Pos &pos, const string &id):
+  IntType::IntType(Cx &cx, const Pos &pos, const Sym *id):
     ValTType<Int>(cx, pos, id) { }
 
   void IntType::add(const Pos &pos, Val &x, const Val &y) const {

@@ -8,7 +8,7 @@ namespace cidk {
   struct Val;
 
   struct ValType: Type {
-    ValType(Cx &cx, const Pos &pos, const string &id);
+    ValType(Cx &cx, const Pos &pos, const Sym *id);
     virtual void init() override;
     
     virtual void add(const Pos &pos, Val &x, const Val &y) const;
@@ -26,7 +26,7 @@ namespace cidk {
   
   template <typename ValT>
   struct ValTType: ValType {
-    ValTType(Cx &cx, const Pos &pos, const string &id): ValType(cx, pos, id) { }
+    ValTType(Cx &cx, const Pos &pos, const Sym *id): ValType(cx, pos, id) { }
     virtual void set(const Pos &pos, Val &dst, ValT val) const = 0;
   };
 }

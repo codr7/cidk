@@ -3,6 +3,7 @@
 
 #include <list>
 #include <map>
+#include <vector>
 
 #include "cidk/arg.hpp"
 #include "cidk/ref.hpp"
@@ -21,17 +22,18 @@ namespace cidk {
     using It = list<Env *>::iterator;
 
     It it;
-    map<const Sym *, Var *> vars;
+    map<const Sym *, Var *> items;
     
     Env(Cx &cx);
+    Env &operator =(const Env &);
 
     bool add(const Pos &pos, const Sym *key, const Val &val, bool silent);
     
     template <typename...Rest>
     Fun &add_fun(const Pos &pos,
                  const string &id,
-                 initializer_list<Arg> args,
-                 initializer_list<Ret> rets,
+                 const vector<Arg> &args,
+                 const vector<Ret> &rets,
                  Rest &&...rest);
 
     template <typename TypeT, typename...Rest>

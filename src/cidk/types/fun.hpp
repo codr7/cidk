@@ -11,7 +11,7 @@ namespace cidk {
   struct FunType: ValTType<Fun *> {
     Pool<Fun> pool;
     
-    FunType(Cx &cx, const Pos &pos, string id);
+    FunType(Cx &cx, const Pos &pos, const Sym *id);
 
     virtual void call(const Pos &pos, const Val &val) const override;
     virtual void dump(const Pos &Pos, const Val &val, ostream &out) const override;

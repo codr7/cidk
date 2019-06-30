@@ -37,7 +37,7 @@ namespace cidk {
     s.back().reset(call.pos, cx.bool_type, v.type->Bool(call.pos, v));
   }
 
-  ValType::ValType(Cx &cx, const Pos &pos, const string &id): Type(cx, pos, id) { }
+  ValType::ValType(Cx &cx, const Pos &pos, const Sym *id): Type(cx, pos, id) { }
 
   void ValType::init() {
     env.add_fun(pos, "clone", {Arg("it")}, {Ret(cx.any_type)}, clone_imp);

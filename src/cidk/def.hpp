@@ -15,7 +15,7 @@ namespace cidk {
     Pos pos;
     const Sym *id;
     
-    Def(Cx &cx, const Pos &pos, const string &id);
+    Def(Cx &cx, const Pos &pos, const Sym *id);
   };
 }
 

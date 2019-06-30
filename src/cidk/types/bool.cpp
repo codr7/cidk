@@ -3,7 +3,7 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  BoolType::BoolType(Cx &cx, const Pos &pos, const string &id):
+  BoolType::BoolType(Cx &cx, const Pos &pos, const Sym *id):
     ValTType<bool>(cx, pos, id) { }
 
   void BoolType::dump(const Pos &Pos, const Val &val, ostream &out) const {

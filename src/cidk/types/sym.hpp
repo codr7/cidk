@@ -6,7 +6,7 @@
 
 namespace cidk {  
   struct SymType: ValTType<const Sym *> {
-    SymType(Cx &cx, const Pos &pos, string id);
+    SymType(Cx &cx, const Pos &pos, const Sym *id);
 
     virtual void dump(const Pos &Pos, const Val &val, ostream &out) const override;
     virtual void dup(const Pos &pos, Val &dst, const Val &src) const override;

@@ -5,7 +5,7 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  FunType::FunType(Cx &cx, const Pos &pos, string id):
+  FunType::FunType(Cx &cx, const Pos &pos, const Sym *id):
     ValTType<Fun *>(cx, pos, id) { }
 
   void FunType::call(const Pos &pos, const Val &val) const {

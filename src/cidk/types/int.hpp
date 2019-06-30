@@ -9,7 +9,7 @@ namespace cidk {
   using Int = int64_t;
 
   struct IntType: ValTType<Int> {
-    IntType(Cx &cx, const Pos &pos, const string &id);
+    IntType(Cx &cx, const Pos &pos, const Sym *id);
     
     virtual void add(const Pos &pos, Val &x, const Val &y) const override;
     virtual void dump(const Pos &Pos, const Val &val, ostream &out) const override;

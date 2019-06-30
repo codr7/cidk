@@ -5,7 +5,7 @@
 #include "cidk/types/nil.hpp"
 
 namespace cidk::ops {
-  struct IfData {
+  struct Data {
     Val cond, x, y;
   };
 
@@ -14,7 +14,7 @@ namespace cidk::ops {
   IfType::IfType(string id): OpType(id) { }
   
   void IfType::init(Op &op, const Val &cond, const Val &x, const Val &y) const {
-    IfData d;
+    Data d;
     d.cond = cond;
     d.x = x;
     d.y = y;
@@ -24,7 +24,7 @@ namespace cidk::ops {
   void IfType::eval(const Op &op, Env &env) const {
     Cx &cx(env.cx);
     Stack &s(cx.stack);
-    IfData d(op.as<IfData>());
+    Data d(op.as<Data>());
     auto p(op.pos);
     Val cond((d.cond.type == &cx.nil_type) ? *pop(p, s, false) : d.cond);
     cond.eval(env);

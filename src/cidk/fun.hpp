@@ -6,28 +6,28 @@
 #include "cidk/arg.hpp"
 #include "cidk/def.hpp"
 #include "cidk/op.hpp"
-#include "cidk/ops.hpp"
 #include "cidk/ref.hpp"
 #include "cidk/stack.hpp"
+#include "cidk/val.hpp"
 
 namespace cidk {
   struct Call;
   struct Env;
   struct Pos;
-  struct Val;
   
   struct Fun: Def {
     using Imp = function<void (Call &)>;
 
     Env &env;
     Imp imp;
-    Ops body;
-    
+    Val body;
+
+    template <typename ArgsT, typename RetsT>
     Fun(Cx &cx,
         const Pos &pos,
-        const string &id,
-        initializer_list<Arg> args,
-        initializer_list<Ret> rets,
+        const Sym *id,
+        const ArgsT &args,
+        const RetsT &rets,
         Imp imp = nullptr);
 
     virtual void sweep(const Pos &pos) override;
