@@ -36,6 +36,7 @@ namespace cidk {
     stdin(cin), stdout(cout), stderr(cerr) {
     libs::init_math(*this);
     init_types(Pos::_);
+    env.add_var(Pos::_, "_", _);
     env.add_var(Pos::_, "T", T);
     env.add_var(Pos::_, "F", F);
   }

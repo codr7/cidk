@@ -45,6 +45,7 @@ namespace cidk {
     auto &ot(cx.ostream_type);
     s.emplace_back(pos, ot, ot.pool.get(cx, out));
     type->call_env(pos, cx.intern("dump"));
+    out << endl;
   }
   
   void Val::dup(const Pos &pos, Val &dst) const {

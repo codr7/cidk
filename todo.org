@@ -1,5 +1,6 @@
 * bench/fib_rec.ops
-** use cx._ as trigger to pop stack in dump/if/call
+** implement Bool method 
+*** Bool/Int/Byte/List/Nil
 ** add Sym eval
 *** look up in env
 *** eval arg in dump/push
@@ -32,5 +33,4 @@
 ** read as utf-8
 *** https://stackoverflow.com/questions/16208079/how-to-work-with-utf-8-in-c-conversion-from-other-encodings-to-utf-8
 ** splat chars
-* implement _bool where applicable
 * add README

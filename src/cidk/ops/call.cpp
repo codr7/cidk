@@ -34,8 +34,8 @@ namespace cidk::ops {
     Fun *f(nullptr);
     
     if (v) {
-      Val fv;
-      in.env.get(p, v->as_sym, fv, false);
+      v->eval(in.env);
+      Val fv(*pop(p, cx.stack, false));
       
       if (fv.type != &cx.fun_type) {
         throw WrongType(p, "Invalid call target: ", fv.type);
