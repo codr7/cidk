@@ -50,6 +50,8 @@ namespace cidk {
     template <typename ValT>
     ValT as() const { return any_cast<ValT>(as_any); }
 
+    bool Bool(const Pos &pos) const;
+
     void call(const Pos &pos);
     void clone(const Pos &pos, Val &dst) const;
     void dump(const Pos &Pos, ostream &out) const;
@@ -57,7 +59,6 @@ namespace cidk {
     bool eq(const Pos &pos, const Val &y) const;
     void eval(Env &env) const;
     bool is(const Pos &pos, const Val &y) const;
-    bool _bool(const Pos &pos) const;
     void mark_refs(const Pos &pos);
 
     template <typename ValT>

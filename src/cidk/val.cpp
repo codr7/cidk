@@ -19,6 +19,16 @@ namespace cidk {
     type->call(pos, *this);
   }
 
+  bool Val::Bool(const Pos &pos) const {
+    Cx &cx(type->cx);
+    auto &s(cx.stack);
+    s.emplace_back(*this);
+    type->call_env(pos, cx.intern("Bool"));
+    bool ok(s.back().as_bool);
+    s.pop_back();
+    return ok;
+  }
+
   void Val::clone(const Pos &pos, Val &dst) const {
     Cx &cx(type->cx);
     auto &s(cx.stack);
@@ -56,16 +66,6 @@ namespace cidk {
   void Val::eval(Env &env) const { return type->eval(*this, env); }
 
   bool Val::is(const Pos &pos, const Val &y) const { return type->is(pos, *this, y); }
-
-  bool Val::_bool(const Pos &pos) const {
-    Cx &cx(type->cx);
-    auto &s(cx.stack);
-    s.emplace_back(*this);
-    type->call_env(pos, cx.intern("bool"));
-    bool ok(s.back().as_bool);
-    s.pop_back();
-    return ok;
-  }
 
   void Val::mark_refs(const Pos &pos) {
     type->ref_state = RefState::mark;

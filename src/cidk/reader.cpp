@@ -6,6 +6,7 @@
 #include "cidk/e.hpp"
 #include "cidk/reader.hpp"
 #include "cidk/str.hpp"
+#include "cidk/types/sym.hpp"
 
 namespace cidk {
   Reader::Reader(Cx &cx, const Pos &pos, istream &in):

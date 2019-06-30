@@ -5,6 +5,13 @@
 #include "cidk/libs/math.hpp"
 #include "cidk/op.hpp"
 #include "cidk/reader.hpp"
+#include "cidk/types/bool.hpp"
+#include "cidk/types/byte.hpp"
+#include "cidk/types/int.hpp"
+#include "cidk/types/nil.hpp"
+#include "cidk/types/list.hpp"
+#include "cidk/types/meta.hpp"
+#include "cidk/types/sym.hpp"
 #include "cidk/val.hpp"
 
 namespace cidk {
@@ -19,14 +26,18 @@ namespace cidk {
     fun_type(env.add_type<FunType>(Pos::_, "Fun")),
     int_type(env.add_type<IntType>(Pos::_, "Int")),
     list_type(env.add_type<ListType>(Pos::_, "List")),
+    nil_type(env.add_type<NilType>(Pos::_, "Nil")),
     ostream_type(env.add_type<OStreamType>(Pos::_, "OStream")),
     sym_type(env.add_type<SymType>(Pos::_, "Sym")),
     call(nullptr),
+    _(Pos::_, nil_type),
+    T(Pos::_, bool_type, true),
+    F(Pos::_, bool_type, false),
     stdin(cin), stdout(cout), stderr(cerr) {
     libs::init_math(*this);
     init_types(Pos::_);
-    env.add_var(Pos::_, "T", bool_type, true);
-    env.add_var(Pos::_, "F", bool_type, false);
+    env.add_var(Pos::_, "T", T);
+    env.add_var(Pos::_, "F", F);
   }
 
   Cx::~Cx() {

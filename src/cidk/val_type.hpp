@@ -11,8 +11,9 @@ namespace cidk {
     ValType(Cx &cx, const Pos &pos, const string &id);
     virtual void init() override;
     
+    virtual bool Bool(const Pos &pos, const Val &val) const;
+
     virtual void add(const Pos &pos, Val &x, const Val &y) const;
-    virtual bool _bool(const Pos &pos, const Val &val) const;
     virtual void call(const Pos &pos, const Val &val) const;
     virtual void dump(const Pos &Pos, const Val &val, ostream &out) const = 0;
     virtual void dup(const Pos &pos, Val &dst, const Val &src) const = 0;

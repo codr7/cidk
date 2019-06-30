@@ -1,5 +1,6 @@
 #include "cidk/cx.hpp"
 #include "cidk/list.hpp"
+#include "cidk/types/list.hpp"
 
 namespace cidk {
   List::List(Cx &cx): Ref(cx) { }

@@ -1,8 +1,5 @@
 * bench/fib_rec.ops
-** add cx.nil_type
-*** add Var cx.T/F/_ fields
-*** use as trigger to pop stack in dump/if/call
-** rename bool/_bool methods to Bool()
+** use cx._ as trigger to pop stack in dump/if/call
 ** add Sym eval
 *** look up in env
 *** eval arg in dump/push

@@ -23,7 +23,7 @@ namespace cidk::ops {
     IfData d(op.as<IfData>());
     auto p(op.pos);
     auto cond(pop(p, env.cx.stack, false));
-    if (cond->_bool(p)) { d.x.eval(env); }
+    if (cond->Bool(p)) { d.x.eval(env); }
     else { d.y.eval(env); }
   }
 

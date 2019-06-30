@@ -11,6 +11,10 @@ namespace cidk {
     return false;
   }
 
+  void Env::add_var(const Pos &pos, const string &id, const Val &val) {
+    set(Pos::_, cx.intern(id), val, false);
+  }
+
   void Env::clear() {
     for (auto &v: vars) { cx.var_pool.put(v.second); }
     vars.clear();

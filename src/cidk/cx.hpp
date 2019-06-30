@@ -3,23 +3,25 @@
 
 #include <iostream>
 #include <string>
+#include <unordered_map>
 
 #include "cidk/env.hpp"
-#include "cidk/pool.hpp"
-#include "cidk/sym.hpp"
-#include "cidk/types/bool.hpp"
-#include "cidk/types/byte.hpp"
-#include "cidk/types/fun.hpp"
-#include "cidk/types/int.hpp"
-#include "cidk/types/list.hpp"
-#include "cidk/types/meta.hpp"
+#include "cidk/op.hpp"
 #include "cidk/types/ostream.hpp"
-#include "cidk/types/sym.hpp"
+#include "cidk/pool.hpp"
+#include "cidk/stack.hpp"
+#include "cidk/sym.hpp"
+#include "cidk/types/fun.hpp"
 #include "cidk/var.hpp"
 
 namespace cidk {
   struct Call;
+  struct BoolType;
+  struct ListType;
+  struct MetaType;
+  struct NilType;
   struct Ref;
+  struct SymType;
   
   struct Cx {
     Pool<Env> env_pool;
@@ -42,12 +44,15 @@ namespace cidk {
     FunType &fun_type;
     IntType &int_type;
     ListType &list_type;
+    NilType &nil_type;
     OStreamType &ostream_type;
     SymType &sym_type;
     
     Stack stack;    
     Call *call;
 
+    const Val _, T, F;
+    
     istream &stdin;
     ostream &stdout, &stderr;
     
@@ -93,7 +98,7 @@ namespace cidk {
 
   template <typename...Rest>
   void Env::add_var(const Pos &pos, const string &id, Rest &&...rest) {
-    set(Pos::_, cx.intern(id), Val(pos, forward<Rest>(rest)...), false);
+    add_var(pos, id, Val(pos, forward<Rest>(rest)...));
   }
 }
 
