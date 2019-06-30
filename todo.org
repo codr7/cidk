@@ -1,8 +1,8 @@
 * bench/fib_rec.ops
-** add stack refs
-*** change $0 to top, $1 next etc.
-*** pop vals on reference
-*** use for opt args (dump etc)
+** add cx.nil_type
+*** add Var cx.T/F/_ fields
+*** use as trigger to pop stack in dump/if/call
+** rename bool/_bool methods to Bool()
 ** add Sym eval
 *** look up in env
 *** eval arg in dump/push
@@ -14,6 +14,7 @@
 ** add Bench op
 *** reps1 & reps2 for outer/inner loop
 * --
+* add ValType.eq/clone & forward default like dump
 * finish read_list
 * add ListType.clone override
 ** only clone list structure
