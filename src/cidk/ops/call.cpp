@@ -34,6 +34,7 @@ namespace cidk::ops {
       auto v(in.read_val());
       if (!v) { throw ReadE(p, "Missing ;"); }
       if (v->is_eol()) { break; }
+
       v->eval(in.env);
       Val fv(*pop(p, cx.stack, false));
       
