@@ -57,6 +57,7 @@ namespace cidk {
     bool eq(const Pos &pos, const Val &y) const;
     void eval(Env &env) const;
     bool is(const Pos &pos, const Val &y) const;
+    bool is_eol() const;
     void mark_refs(const Pos &pos);
 
     template <typename ValT>

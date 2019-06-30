@@ -1,4 +1,5 @@
 #include "cidk/cx.hpp"
+#include "cidk/types/sym.hpp"
 #include "cidk/val.hpp"
 
 namespace cidk {
@@ -35,7 +36,6 @@ namespace cidk {
     auto &ot(cx.ostream_type);
     s.emplace_back(pos, ot, ot.pool.get(cx, out));
     type->call_env(pos, cx.intern("dump"));
-    out << endl;
   }
   
   void Val::dup(const Pos &pos, Val &dst) const {
@@ -58,6 +58,11 @@ namespace cidk {
 
   bool Val::is(const Pos &pos, const Val &y) const { return type->is(pos, *this, y); }
 
+  bool Val::is_eol() const {
+    auto &cx(type->cx);
+    return type == &cx.sym_type && as_sym == cx.EOL.as_sym;
+  }
+  
   void Val::mark_refs(const Pos &pos) {
     type->ref_state = RefState::mark;
     type->mark_refs(pos, *this);

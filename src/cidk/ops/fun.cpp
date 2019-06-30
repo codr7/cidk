@@ -34,13 +34,13 @@ namespace cidk::ops {
 
     auto body(in.read_val());
     if (!body) { throw ReadE(p, "Missing fun body"); }
+    in.read_eol();
 
     cidk::Fun *f(cx.fun_type.pool.get(cx, pos, 
                                       id->as_sym,
                                       args->as_list->items,
                                       rets->as_list->items));
     f->body = *body;
-    
     out.emplace_back(p, *this, f);
   }
 }

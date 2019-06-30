@@ -6,6 +6,7 @@
 #include "cidk/e.hpp"
 #include "cidk/reader.hpp"
 #include "cidk/str.hpp"
+#include "cidk/types/list.hpp"
 #include "cidk/types/sym.hpp"
 
 namespace cidk {
@@ -35,18 +36,19 @@ namespace cidk {
     if (found == cx.op_types.end()) { throw UnknownOp(pos, id); } 
     OpType &ot(*found->second);
     ot.read(cx, p, *this, out);
+    return true;
+  }
 
-    p = pos;
+  void Reader::read_eol() {
+    Pos p = pos;
     auto eol(read_val());
     if (!eol) { throw ReadE(p, "Missing ;"); }
 
     if (eol->type != &cx.sym_type || eol->as_sym != cx.EOL.as_sym) {
       throw ReadE(p, "Expected ;");
     }
-
-    return true;
   }
-  
+
   optional<Val> Reader::read_val() {
   next:
     char c = in.get();
@@ -65,6 +67,7 @@ namespace cidk {
       pos.col += 2;
       goto next;
     case '(':
+      pos.col++;
       return read_list();
     case ';':
       pos.col++;
@@ -79,7 +82,7 @@ namespace cidk {
     return {};
   }
 
-  optional<Val> Reader::read_id() {
+  Val Reader::read_id() {
     const Pos p(pos);
     stringstream out;
     
@@ -98,11 +101,24 @@ namespace cidk {
     return Val(p, cx.sym_type, cx.intern(out.str()));
   }
   
-  optional<Val> Reader::read_list() {
-    return {};
+  Val Reader::read_list() {
+    Pos p(pos);
+    List *out(cx.list_type.pool.get(cx));
+    
+    for (;;) {
+      char c(0);
+      if (!in.get(c)) { throw ReadE(pos, "Open list"); }
+      if (c == ')') { break; }
+      in.unget();
+      auto v(read_val());
+      if (!v) { throw ReadE(pos, "Open list"); }
+      out->items.push_back(*v);
+    }
+    
+    return Val(p, cx.list_type, out);
   }
   
-  optional<Val> Reader::read_num() {
+  Val Reader::read_num() {
     const Pos p(pos);
     stringstream out;
     

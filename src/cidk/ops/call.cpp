@@ -29,11 +29,11 @@ namespace cidk::ops {
   }
 
   void CallType::read(Cx &cx, const Pos &pos, Reader &in, Ops &out) const {
-    auto p(pos);
-    auto v(in.read_val());
-    Fun *f(nullptr);
-    
-    if (v) {
+    for (;;) {
+      Pos p(pos);
+      auto v(in.read_val());
+      if (!v) { throw ReadE(p, "Missing ;"); }
+      if (v->is_eol()) { break; }
       v->eval(in.env);
       Val fv(*pop(p, cx.stack, false));
       
@@ -41,9 +41,7 @@ namespace cidk::ops {
         throw WrongType(p, "Invalid call target: ", fv.type);
       }
 
-      f = fv.as_fun;
+      out.emplace_back(p, *this, fv.as_fun);
     }
-
-    out.emplace_back(p, *this, f);
   }
 }

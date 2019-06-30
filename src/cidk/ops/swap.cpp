@@ -15,6 +15,7 @@ namespace cidk::ops {
   }
 
   void SwapType::read(Cx &cx, const Pos &pos, Reader &in, Ops &out) const {
+    in.read_eol();
     out.emplace_back(pos, *this);
   }
 }

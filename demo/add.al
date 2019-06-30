@@ -1,4 +1,3 @@
-push 35;
-push 7;
+push 35 7;
 call +;
 dump _;

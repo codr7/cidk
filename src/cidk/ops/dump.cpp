@@ -24,13 +24,21 @@ namespace cidk::ops {
       v = *pop(p, s, false);
     }
 
-    v.dump(p, cx.stderr);
+    auto &out(cx.stderr);
+    v.dump(p, out);
+    out << endl;
   }
 
-  void DumpType::read(Cx &cx, const Pos &pos, Reader &in, Ops &out) const {
-    Pos p(pos);
-    auto v(in.read_val());
-    if (!v) { throw ReadE(p, "Missing dump arg"); }
-    out.emplace_back(p, *this, *v);
+  void DumpType::read(Cx &cx, const Pos &pos, Reader &in, Ops &out) const {    
+    Stack &s(cx.stack);
+    
+    for (;;) {
+      Pos p(pos);
+      auto v(in.read_val());
+      if (!v) { throw ReadE(p, "Missing ;"); }
+      if (v->is_eol()) { break; }
+      v->eval(in.env);
+      out.emplace_back(p, *this, *pop(p, s, false));
+    }
   }
 }

@@ -10,9 +10,7 @@ fun fib(Int)(Int) {
     call fib;
     swap;
     
-    call dec;
-    call fib;
-    call +;
+    call dec fib +;
   };
 };
 

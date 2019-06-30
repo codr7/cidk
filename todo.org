@@ -1,9 +1,8 @@
 * bench/fib_rec.al
-** finish read_list
-*** add read_expr
-*** add Expr type
-**** Ref with Ops body
-**** add {} to read_id break cond
+** add read_expr
+** add Expr type
+*** Ref with Ops body
+*** add {} to read_id break cond
 ** add Bench op
 *** i & j for outer/inner loop
 * add support for multiple call/push/dump args
@@ -13,6 +12,8 @@
 ** &{...}
 ** use anonymous Fun
 * --
+* rename ReadE to ERead etc.
+* rename ValTType to TValType
 * add ValType.eq/clone & forward default like dump
 * add ListType.clone override
 ** only clone list structure
@@ -21,8 +22,6 @@
 * add Splat op
 ** optional arg, otherwise stack
 * --
-* rename ReadE to ERead etc.
-* rename ValTType to TValType
 * add Fun.args (Args)
 ** init arg ids
 * add Fun.rets (Rets)

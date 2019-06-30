@@ -43,6 +43,7 @@ namespace cidk::ops {
 
     auto y(in.read_val());
     if (!y) { throw ReadE(p, "Missing else branch"); }
+    in.read_eol();
 
     out.emplace_back(p, *this, *cond, *x, *y);
   }

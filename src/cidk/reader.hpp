@@ -19,11 +19,12 @@ namespace cidk {
 
     void read_ops(Ops &out);
     bool read_op(Ops &out);
+    void read_eol();
     
     optional<Val> read_val();
-    optional<Val> read_id();
-    optional<Val> read_list();
-    optional<Val> read_num();
+    Val read_id();
+    Val read_list();
+    Val read_num();
   };
 }
 

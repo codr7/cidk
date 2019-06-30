@@ -16,9 +16,15 @@ namespace cidk::ops {
   }
 
   void PushType::read(Cx &cx, const Pos &pos, Reader &in, Ops &out) const {
-    auto p(pos);
-    auto v(in.read_val());
-    if (!v) { throw ReadE(p, "Missing push arg"); }
-    out.emplace_back(p, *this, *v);
+    Stack &s(cx.stack);
+
+    for (;;) {
+      auto p(pos);
+      auto v(in.read_val());
+      if (!v) { throw ReadE(p, "Missing ;"); }
+      if (v->is_eol()) { break; }
+      v->eval(in.env);
+      out.emplace_back(p, *this, *pop(p, s, false));
+    }
   }
 }
