@@ -1,14 +1,9 @@
 * bench/fib_rec.al
 ** implement Bool method 
 *** Bool/Int/Byte/List/Nil
-** add Sym eval
-*** look up in env
-*** eval arg in dump/push
-*** change call to expect eval arg & expect Fun
-* --
+** add Fun op
 *** add read_expr
 **** add {} to read_id break cond
-** add Fun op
 ** add Bench op
 *** reps1 & reps2 for outer/inner loop
 * --
