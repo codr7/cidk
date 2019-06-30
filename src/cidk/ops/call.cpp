@@ -21,7 +21,7 @@ namespace cidk::ops {
       Stack &s(cx.stack);
       auto fv(pop(p, s, false));
       Type *ft(fv->type);
-      if (ft != &cx.fun_type) { throw WrongType(p, "Invalid call target: ", ft); }
+      if (ft != &cx.fun_type) { throw EWrongType(p, "Invalid call target: ", ft); }
       f = fv->as_fun;
     }
     
@@ -32,14 +32,14 @@ namespace cidk::ops {
     for (;;) {
       Pos p(pos);
       auto v(in.read_val());
-      if (!v) { throw ReadE(p, "Missing ;"); }
+      if (!v) { throw ERead(p, "Missing ;"); }
       if (v->is_eop()) { break; }
 
       v->eval(in.env);
       Val fv(*pop(p, cx.stack, false));
       
       if (fv.type != &cx.fun_type) {
-        throw WrongType(p, "Invalid call target: ", fv.type);
+        throw EWrongType(p, "Invalid call target: ", fv.type);
       }
 
       out.emplace_back(p, *this, fv.as_fun);

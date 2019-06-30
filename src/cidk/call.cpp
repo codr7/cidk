@@ -9,21 +9,13 @@ namespace cidk {
   }
 
   Call::~Call() noexcept(false) {
-    if (cx.call != this) {
-      throw SysE(pos, "Calls ended out of order");
-    }
-
+    if (cx.call != this) { throw ESys(pos, "Calls ended out of order"); }
     cx.call = prev;
   }
 
   void Call::eval() {
     auto imp(target.imp);
-    
-    if (imp) {
-      imp(*this);
-    } else {
-      throw NotImplemented(pos);
-    }
+    if (imp) { imp(*this); }
+    else { target.body.eval(*cx.env_pool.get(target.env)); }
   }
-
 }

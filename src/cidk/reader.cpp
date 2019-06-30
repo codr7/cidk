@@ -24,16 +24,16 @@ namespace cidk {
 
     if (!idv) {
       if (in.eof()) { return false; }
-      throw ReadE(p, "Missing op code");
+      throw ERead(p, "Missing op code");
     }
 
     if (idv->type != &cx.sym_type) {
-      throw WrongType(p, "Invalid op code: ", idv->type);
+      throw EWrongType(p, "Invalid op code: ", idv->type);
     }
     
     auto id(idv->as_sym->name);
     auto found(cx.op_types.find(id));
-    if (found == cx.op_types.end()) { throw UnknownOp(pos, id); } 
+    if (found == cx.op_types.end()) { throw EUnknownOp(pos, id); } 
     OpType &ot(*found->second);
     ot.read(cx, p, *this, out);
     return true;
@@ -42,8 +42,8 @@ namespace cidk {
   void Reader::read_eop() {
     Pos p = pos;
     auto v(read_val());
-    if (!v) { throw ReadE(p, "Missing ;"); }
-    if (!v->is_eop()) { throw ReadE(p, "Expected ;"); }
+    if (!v) { throw ERead(p, "Missing ;"); }
+    if (!v->is_eop()) { throw ERead(p, "Expected ;"); }
   }
 
   optional<Val> Reader::read_val() {
@@ -73,7 +73,7 @@ namespace cidk {
       in.unget();
       if (isdigit(c)) { return read_num(); }
       if (isgraph(c)) { return read_id(); }
-      throw ReadE(str("Invalid input: ", c));
+      throw ERead(str("Invalid input: ", c));
     };
     
     return {};
@@ -104,11 +104,11 @@ namespace cidk {
     
     for (;;) {
       char c(0);
-      if (!in.get(c)) { throw ReadE(pos, "Open list"); }
+      if (!in.get(c)) { throw ERead(pos, "Open list"); }
       if (c == ')') { break; }
       in.unget();
       auto v(read_val());
-      if (!v) { throw ReadE(pos, "Open list"); }
+      if (!v) { throw ERead(pos, "Open list"); }
       out->items.push_back(*v);
     }
     

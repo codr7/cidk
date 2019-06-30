@@ -1,6 +1,7 @@
 #include <sstream>
 
 #include "cidk/e.hpp"
+#include "cidk/str.hpp"
 #include "cidk/sym.hpp"
 #include "cidk/type.hpp"
 
@@ -28,47 +29,45 @@ namespace cidk {
     return msg.c_str();
   }
 
-  ReadE::ReadE(const Pos &pos, const string &msg): E(pos, msg) { }
+  ERead::ERead(const Pos &pos, const string &msg): E(pos, msg) { }
 
-  EvalE::EvalE(const Pos &pos, const string &msg): E(pos, msg) { }
+  EEval::EEval(const Pos &pos, const string &msg): E(pos, msg) { }
 
-  SysE::SysE(const Pos &pos, const string &msg): E(pos, msg) { }
+  ESys::ESys(const Pos &pos, const string &msg): E(pos, msg) { }
 
-  DupVar::DupVar(const Pos &pos, const Sym *id): E(pos), id(id) { }
+  EDupVar::EDupVar(const Pos &pos, const Sym *id): E(pos), id(id) { }
 
-  void DupVar::print(ostream &out) const {
+  void EDupVar::print(ostream &out) const {
     E::print(out);
     out << "Dup var: " << id;
   }
 
-  NotImplemented::NotImplemented(const Pos &pos): SysE(pos) { }
+  ENotImplemented::ENotImplemented(const Pos &pos): ESys(pos, "Not implemented") { }
 
-  void NotImplemented::print(ostream &out) const {
-    E::print(out);
-    out << "Not implemented";
-  }
+  ENotSupported::ENotSupported(const Pos &pos, const string &msg):
+    ESys(pos, str("Not supported: ", msg)) { }
 
-  UnknownId::UnknownId(const Pos &pos, const Sym *id):
-    SysE(pos, "Unknown id: "), id(id) { }
+  EUnknownId::EUnknownId(const Pos &pos, const Sym *id):
+    ESys(pos, "Unknown id: "), id(id) { }
 
-  void UnknownId::print(ostream &out) const {
-    SysE::print(out);
+  void EUnknownId::print(ostream &out) const {
+    ESys::print(out);
     out << id;
   }
 
-  UnknownOp::UnknownOp(const Pos &pos, const string &id):
-    SysE(pos, "Unknown op: "), id(id) { }
+  EUnknownOp::EUnknownOp(const Pos &pos, const string &id):
+    ESys(pos, "Unknown op: "), id(id) { }
 
-  void UnknownOp::print(ostream &out) const {
-    SysE::print(out);
+  void EUnknownOp::print(ostream &out) const {
+    ESys::print(out);
     out << id;
   }
 
-  WrongType::WrongType(const Pos &pos, const string &msg, Type *type):
-    SysE(pos, msg), type(type) { }
+  EWrongType::EWrongType(const Pos &pos, const string &msg, Type *type):
+    ESys(pos, msg), type(type) { }
 
-  void WrongType::print(ostream &out) const {
-    SysE::print(out);
+  void EWrongType::print(ostream &out) const {
+    ESys::print(out);
     out << type->id;
   }
 }

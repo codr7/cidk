@@ -24,16 +24,16 @@ namespace cidk::ops {
     auto p(pos);
 
     auto id(in.read_val());
-    if (!id) { throw ReadE(p, "Missing fun id"); }
+    if (!id) { throw ERead(p, "Missing fun id"); }
 
     auto args(in.read_val());
-    if (!args) { throw ReadE(p, "Missing fun args"); }
+    if (!args) { throw ERead(p, "Missing fun args"); }
 
     auto rets(in.read_val());
-    if (!rets) { throw ReadE(p, "Missing fun rets"); }
+    if (!rets) { throw ERead(p, "Missing fun rets"); }
 
     auto body(in.read_val());
-    if (!body) { throw ReadE(p, "Missing fun body"); }
+    if (!body) { throw ERead(p, "Missing fun body"); }
     in.read_eop();
 
     cidk::Fun *f(cx.fun_type.pool.get(cx, pos, 

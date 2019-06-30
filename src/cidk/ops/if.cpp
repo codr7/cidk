@@ -36,13 +36,13 @@ namespace cidk::ops {
     auto p(pos);
 
     auto cond(in.read_val());
-    if (!cond) { throw ReadE(p, "Missing if cond"); }
+    if (!cond) { throw ERead(p, "Missing if cond"); }
 
     auto x(in.read_val());
-    if (!x) { throw ReadE(p, "Missing if branch"); }
+    if (!x) { throw ERead(p, "Missing if branch"); }
 
     auto y(in.read_val());
-    if (!y) { throw ReadE(p, "Missing else branch"); }
+    if (!y) { throw ERead(p, "Missing else branch"); }
     in.read_eop();
 
     out.emplace_back(p, *this, *cond, *x, *y);

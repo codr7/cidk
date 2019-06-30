@@ -1,7 +1,5 @@
-* rename ReadE to ERead etc.
 * rename ValTType to TValType
 * add ValType.eq/clone & forward default like dump
-* ---
 * bench/fib_rec.al
 ** add read_expr
 ** add Expr type

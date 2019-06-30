@@ -21,48 +21,51 @@ namespace cidk {
     virtual void print(ostream &out) const;
   };
 
-  struct ReadE: E {
-    ReadE(const Pos &pos, const string &msg = "");
+  struct ERead: E {
+    ERead(const Pos &pos, const string &msg = "");
   };
 
-  struct EvalE: E {
-    EvalE(const Pos &pos, const string &msg = "");
+  struct EEval: E {
+    EEval(const Pos &pos, const string &msg = "");
   };
 
-  struct SysE: E {
-    SysE(const Pos &pos, const string &msg = "");
+  struct ESys: E {
+    ESys(const Pos &pos, const string &msg = "");
   };
 
-  struct DupVar: E {
+  struct EDupVar: E {
     const Sym *id;
     
-    DupVar(const Pos &pos, const Sym *id);
+    EDupVar(const Pos &pos, const Sym *id);
     virtual void print(ostream &out) const override;
   };
 
-  struct NotImplemented: SysE {
-    NotImplemented(const Pos &pos);
-    virtual void print(ostream &out) const override;
+  struct ENotImplemented: ESys {
+    ENotImplemented(const Pos &pos);
   };
 
-  struct UnknownId: SysE {
+  struct ENotSupported: ESys {
+    ENotSupported(const Pos &pos, const string &msg);
+  };
+
+  struct EUnknownId: ESys {
     const Sym *id;
     
-    UnknownId(const Pos &pos, const Sym *id);
+    EUnknownId(const Pos &pos, const Sym *id);
     virtual void print(ostream &out) const override;
   };
 
-  struct UnknownOp: SysE {
+  struct EUnknownOp: ESys {
     string id;
     
-    UnknownOp(const Pos &pos, const string &id);
+    EUnknownOp(const Pos &pos, const string &id);
     virtual void print(ostream &out) const override;
   };
 
-  struct WrongType: SysE {
+  struct EWrongType: ESys {
     Type *type;
     
-    WrongType(const Pos &pos, const string &msg, Type *type);
+    EWrongType(const Pos &pos, const string &msg, Type *type);
     virtual void print(ostream &out) const override;
   };
 }

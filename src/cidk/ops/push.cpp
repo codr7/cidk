@@ -19,7 +19,7 @@ namespace cidk::ops {
     for (;;) {
       auto p(pos);
       auto v(in.read_val());
-      if (!v) { throw ReadE(p, "Missing ;"); }
+      if (!v) { throw ERead(p, "Missing ;"); }
       if (v->is_eop()) { break; }
       out.emplace_back(p, *this, *v);
     }

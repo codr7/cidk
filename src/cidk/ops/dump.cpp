@@ -20,7 +20,7 @@ namespace cidk::ops {
     auto v(*pop(p, s, false));
 
     if (v.type == &cx.nil_type) {
-      if (s.empty()) { throw ReadE(p, "Missing dump arg"); }
+      if (s.empty()) { throw ERead(p, "Missing dump arg"); }
       v = *pop(p, s, false);
     }
 
@@ -33,7 +33,7 @@ namespace cidk::ops {
     for (;;) {
       Pos p(pos);
       auto v(in.read_val());
-      if (!v) { throw ReadE(p, "Missing ;"); }
+      if (!v) { throw ERead(p, "Missing ;"); }
       if (v->is_eop()) { break; }
       out.emplace_back(p, *this, *v);
     }

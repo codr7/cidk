@@ -5,7 +5,7 @@
 namespace cidk {
   optional<Val> pop(const Pos &pos, Stack &s, bool silent) {
     if (s.empty()) {
-      if (!silent) { throw SysE(pos, "Stack is empty"); }
+      if (!silent) { throw ESys(pos, "Stack is empty"); }
       return {};
     }
     
