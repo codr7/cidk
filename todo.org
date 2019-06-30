@@ -1,4 +1,4 @@
-* bench/fib_rec.ops
+* bench/fib_rec.al
 ** implement Bool method 
 *** Bool/Int/Byte/List/Nil
 ** add Sym eval
