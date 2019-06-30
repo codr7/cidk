@@ -33,7 +33,7 @@ namespace cidk::ops {
       Pos p(pos);
       auto v(in.read_val());
       if (!v) { throw ReadE(p, "Missing ;"); }
-      if (v->is_eol()) { break; }
+      if (v->is_eop()) { break; }
 
       v->eval(in.env);
       Val fv(*pop(p, cx.stack, false));

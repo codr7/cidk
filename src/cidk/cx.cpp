@@ -30,10 +30,10 @@ namespace cidk {
     ostream_type(env.add_type<OStreamType>(Pos::_, "OStream")),
     sym_type(env.add_type<SymType>(Pos::_, "Sym")),
     call(nullptr),
-    EOL(Pos::_, sym_type, intern(";")),
     _(Pos::_, nil_type),
     T(Pos::_, bool_type, true),
     F(Pos::_, bool_type, false),
+    eop(Pos::_, sym_type, intern(";")),
     stdin(cin), stdout(cout), stderr(cerr) {
     libs::init_math(*this);
     init_types(Pos::_);

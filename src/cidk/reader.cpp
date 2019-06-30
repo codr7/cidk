@@ -39,14 +39,11 @@ namespace cidk {
     return true;
   }
 
-  void Reader::read_eol() {
+  void Reader::read_eop() {
     Pos p = pos;
-    auto eol(read_val());
-    if (!eol) { throw ReadE(p, "Missing ;"); }
-
-    if (eol->type != &cx.sym_type || eol->as_sym != cx.EOL.as_sym) {
-      throw ReadE(p, "Expected ;");
-    }
+    auto v(read_val());
+    if (!v) { throw ReadE(p, "Missing ;"); }
+    if (!v->is_eop()) { throw ReadE(p, "Expected ;"); }
   }
 
   optional<Val> Reader::read_val() {
@@ -71,7 +68,7 @@ namespace cidk {
       return read_list();
     case ';':
       pos.col++;
-      return cx.EOL;
+      return cx.eop;
     default:
       in.unget();
       if (isdigit(c)) { return read_num(); }

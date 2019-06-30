@@ -58,9 +58,9 @@ namespace cidk {
 
   bool Val::is(const Pos &pos, const Val &y) const { return type->is(pos, *this, y); }
 
-  bool Val::is_eol() const {
+  bool Val::is_eop() const {
     auto &cx(type->cx);
-    return type == &cx.sym_type && as_sym == cx.EOL.as_sym;
+    return type == &cx.sym_type && as_sym == cx.eop.as_sym;
   }
   
   void Val::mark_refs(const Pos &pos) {

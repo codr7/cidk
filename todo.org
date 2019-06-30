@@ -1,3 +1,7 @@
+* rename ReadE to ERead etc.
+* rename ValTType to TValType
+* add ValType.eq/clone & forward default like dump
+* ---
 * bench/fib_rec.al
 ** add read_expr
 ** add Expr type
@@ -12,9 +16,6 @@
 ** &{...}
 ** use anonymous Fun
 * --
-* rename ReadE to ERead etc.
-* rename ValTType to TValType
-* add ValType.eq/clone & forward default like dump
 * add ListType.clone override
 ** only clone list structure
 * move ValType.splat to env

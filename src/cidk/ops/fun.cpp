@@ -34,7 +34,7 @@ namespace cidk::ops {
 
     auto body(in.read_val());
     if (!body) { throw ReadE(p, "Missing fun body"); }
-    in.read_eol();
+    in.read_eop();
 
     cidk::Fun *f(cx.fun_type.pool.get(cx, pos, 
                                       id->as_sym,

@@ -14,7 +14,7 @@ namespace cidk::ops {
   }
 
   void DupType::read(Cx &cx, const Pos &pos, Reader &in, Ops &out) const {
-    in.read_eol();
+    in.read_eop();
     out.emplace_back(pos, *this);
   }
 }
