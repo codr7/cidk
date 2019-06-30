@@ -10,18 +10,21 @@
 
 namespace cidk {
   Reader::Reader(Cx &cx, const Pos &pos, istream &in):
-    cx(cx), pos(pos), in(in), indent(0), env(cx.env) {
+    cx(cx), pos(pos), in(in), env(cx.env) {
   }
 
   void Reader::read_ops(Ops &out) {
-    while (!in.eof()) { read_op(out); }
+    while (read_op(out));
   }
 
-  void Reader::read_op(Ops &out) {
-    indent = read_indent();
-    const Pos p(pos);
+  bool Reader::read_op(Ops &out) {
+    Pos p(pos);
     auto idv(read_val());
-    if (!idv) { throw ReadE(p, "Missing op code"); }
+
+    if (!idv) {
+      if (in.eof()) { return false; }
+      throw ReadE(p, "Missing op code");
+    }
 
     if (idv->type != &cx.sym_type) {
       throw WrongType(p, "Invalid op code: ", idv->type);
@@ -32,6 +35,16 @@ namespace cidk {
     if (found == cx.op_types.end()) { throw UnknownOp(pos, id); } 
     OpType &ot(*found->second);
     ot.read(cx, p, *this, out);
+
+    p = pos;
+    auto eol(read_val());
+    if (!eol) { throw ReadE(p, "Missing ;"); }
+
+    if (eol->type != &cx.sym_type || eol->as_sym != cx.EOL.as_sym) {
+      throw ReadE(p, "Expected ;");
+    }
+
+    return true;
   }
   
   optional<Val> Reader::read_val() {
@@ -44,13 +57,18 @@ namespace cidk {
     case '\n':
       pos.row++;
       pos.col = 0;
-      indent = read_indent();
       goto next;
     case ' ':
       pos.col++;
       goto next;
+    case '\t':
+      pos.col += 2;
+      goto next;
     case '(':
       return read_list();
+    case ';':
+      pos.col++;
+      return cx.EOL;
     default:
       in.unget();
       if (isdigit(c)) { return read_num(); }
@@ -69,7 +87,7 @@ namespace cidk {
       char c(0);
       
       if (!in.get(c) ||
-          c == '(' || c == ')' ||
+          c == '(' || c == ')' || c == ';' || 
           !isgraph(c)) { break; }
       
       out << c;
@@ -98,21 +116,5 @@ namespace cidk {
     if (!in.eof()) { in.unget();}
     Int n(strtoll(out.str().c_str(), NULL, 10));
     return Val(p, cx.int_type, n);
-  }
-
-  int Reader::read_indent() {
-    int n(0);
-    char c(0);
-    
-    for (;;) {
-      if (!in.get(c)) { break; }
-      if (c == ' ') { n++; }
-      else if (c == '\t') { n += 2; }
-      else { break; }
-    }
-
-    if (!in.eof()) { in.unget(); }
-    pos.col += n;
-    return n;
   }
 }

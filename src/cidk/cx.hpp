@@ -51,7 +51,7 @@ namespace cidk {
     Stack stack;    
     Call *call;
 
-    const Val _, T, F;
+    const Val EOL, _, T, F;
     
     istream &stdin;
     ostream &stdout, &stderr;

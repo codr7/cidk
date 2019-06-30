@@ -1,4 +1,4 @@
-push 35
-push 7
-call +
-dump
+push 35;
+push 7;
+call +;
+dump _;
