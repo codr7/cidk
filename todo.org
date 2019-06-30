@@ -1,5 +1,6 @@
 * bench/fib_rec.ops
 ** add If op
+** add Fun op
 ** add Bench op
 *** reps1 & reps2 for outer/inner loop
 * --
@@ -23,4 +24,4 @@
 ** read as utf-8
 *** https://stackoverflow.com/questions/16208079/how-to-work-with-utf-8-in-c-conversion-from-other-encodings-to-utf-8
 ** splat chars
-* add README with ops
+* add README
