@@ -3,17 +3,17 @@ fun fib(Int)(Int) {
   push 2
   call <
   
-  if
-    _
-    do {
-      call dec
-      dup
-      
-      call fib
-      
-      swap
-      call dec fib +
-    }
+  if _ {
+    call dec
+    dup
+
+    call fib      
+    swap
+    
+    call dec
+    call fib
+    call +
+  }
 }
 
 bench 10 10 {

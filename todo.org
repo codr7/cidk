@@ -1,8 +1,7 @@
 * bench/fib_rec.ops
+** add If op
 ** add Bench op
 *** reps1 & reps2 for outer/inner loop
-** add If op
-** add Do op
 * --
 * finish read_list
 * add ListType.clone override
