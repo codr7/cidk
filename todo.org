@@ -1,9 +1,11 @@
 * bench/fib_rec.al
 ** add Fun op
 *** add read_expr
+*** add Expr type
+**** Ref with Ops body
 **** add {} to read_id break cond
 ** add Bench op
-*** reps1 & reps2 for outer/inner loop
+*** i & j for outer/inner loop
 * --
 * add support for multiple call/push/dump args
 ** generate separate ops in reader
@@ -17,6 +19,8 @@
 * add Splat op
 ** optional arg, otherwise stack
 * --
+* rename ReadE to ERead etc.
+* rename ValTType to TValType
 * add Fun.args (Args)
 ** init arg ids
 * add Fun.rets (Rets)
