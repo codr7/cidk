@@ -23,10 +23,12 @@ namespace cidk::ops {
 
   void IfType::eval(const Op &op, Env &env) const {
     Cx &cx(env.cx);
+    Stack &s(cx.stack);
     IfData d(op.as<IfData>());
     auto p(op.pos);
-    Val cond((d.cond.type == &cx.nil_type) ? *pop(p, cx.stack, false) : d.cond);
-    if (cond.Bool(p)) { d.x.eval(env); }
+    Val cond((d.cond.type == &cx.nil_type) ? *pop(p, s, false) : d.cond);
+    cond.eval(env);
+    if (pop(p, s, false)->Bool(p)) { d.x.eval(env); }
     else { d.y.eval(env); }
   }
 

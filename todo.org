@@ -1,6 +1,4 @@
 * bench/fib_rec.al
-** implement Bool method 
-*** Bool/Int/Byte/List/Nil
 ** add Fun op
 *** add read_expr
 **** add {} to read_id break cond

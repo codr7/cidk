@@ -33,4 +33,6 @@ namespace cidk {
       s.emplace_back(pos, *this, i);
     }
   }
+
+  bool IntType::Bool(const Pos &pos, const Val &val) const { return val.as_int > 0; }
 }

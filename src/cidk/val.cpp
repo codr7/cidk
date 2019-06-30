@@ -19,16 +19,6 @@ namespace cidk {
     type->call(pos, *this);
   }
 
-  bool Val::Bool(const Pos &pos) const {
-    Cx &cx(type->cx);
-    auto &s(cx.stack);
-    s.emplace_back(*this);
-    type->call_env(pos, cx.intern("Bool"));
-    bool ok(s.back().as_bool);
-    s.pop_back();
-    return ok;
-  }
-
   void Val::clone(const Pos &pos, Val &dst) const {
     Cx &cx(type->cx);
     auto &s(cx.stack);
@@ -76,4 +66,14 @@ namespace cidk {
   void Val::splat(const Pos &pos) { return type->splat(pos, *this); }
 
   void Val::sweep(const Pos &pos) { return type->sweep(pos, *this); }
+
+  bool Val::Bool(const Pos &pos) const {
+    Cx &cx(type->cx);
+    auto &s(cx.stack);
+    s.emplace_back(*this);
+    type->call_env(pos, cx.intern("Bool"));
+    bool ok(s.back().as_bool);
+    s.pop_back();
+    return ok;
+  }
 }

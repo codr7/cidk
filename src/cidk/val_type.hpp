@@ -11,8 +11,6 @@ namespace cidk {
     ValType(Cx &cx, const Pos &pos, const string &id);
     virtual void init() override;
     
-    virtual bool Bool(const Pos &pos, const Val &val) const;
-
     virtual void add(const Pos &pos, Val &x, const Val &y) const;
     virtual void call(const Pos &pos, const Val &val) const;
     virtual void dump(const Pos &Pos, const Val &val, ostream &out) const = 0;
@@ -22,6 +20,8 @@ namespace cidk {
     virtual void mark_refs(const Pos &pos, const Val &val);
     virtual void splat(const Pos &pos, Val &val);
     virtual void sweep(const Pos &pos, Val &val);
+
+    virtual bool Bool(const Pos &pos, const Val &val) const;
   };
   
   template <typename ValT>

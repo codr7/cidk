@@ -18,6 +18,8 @@ namespace cidk {
     virtual void set(const Pos &pos, Val &dst, List *val) const override;
     virtual void splat(const Pos &pos, Val &val) override;
     virtual void sweep(const Pos &pos, Val &val) override;
+
+    virtual bool Bool(const Pos &pos, const Val &val) const override;
   };
 }
 

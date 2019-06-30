@@ -5,14 +5,7 @@
 #include "cidk/types/bool.hpp"
 #include "cidk/val_type.hpp"
 
-namespace cidk {
-  static void Bool_imp(Call &call) {
-    auto &cx(call.cx);
-    auto &s(cx.stack);
-    auto &v(s.back());
-    s.back().reset(call.pos, cx.bool_type, v.type->Bool(call.pos, v));
-  }
- 
+namespace cidk { 
   static void clone_imp(Call &call) {
     auto &s(call.cx.stack);
     s.emplace_back(s.back());
@@ -37,17 +30,20 @@ namespace cidk {
     x.reset(call.pos, cx.bool_type, x.is(call.pos, y));
   }
 
+  static void Bool_imp(Call &call) {
+    auto &cx(call.cx);
+    auto &s(cx.stack);
+    auto &v(s.back());
+    s.back().reset(call.pos, cx.bool_type, v.type->Bool(call.pos, v));
+  }
+
   ValType::ValType(Cx &cx, const Pos &pos, const string &id): Type(cx, pos, id) { }
 
   void ValType::init() {
-    env.add_fun(pos, "Bool", {Arg("val")}, {Ret(cx.bool_type)}, Bool_imp);
     env.add_fun(pos, "clone", {Arg("it")}, {Ret(cx.any_type)}, clone_imp);
     env.add_fun(pos, "dump", {Arg("val"), Arg("out")}, {}, dump_imp);
     env.add_fun(pos, "eq", {Arg("x"), Arg("y")}, {Ret(cx.bool_type)}, eq_imp);
-  }
-
-  bool ValType::Bool(const Pos &pos, const Val &val) const {
-    return true;
+    env.add_fun(pos, "Bool", {Arg("val")}, {Ret(cx.bool_type)}, Bool_imp);
   }
 
   void ValType::add(const Pos &pos, Val &x, const Val &y) const {
@@ -69,4 +65,8 @@ namespace cidk {
   }
 
   void ValType::sweep(const Pos &pos, Val &val) { }
+
+  bool ValType::Bool(const Pos &pos, const Val &val) const {
+    return true;
+  }
 }

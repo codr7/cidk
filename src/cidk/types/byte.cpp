@@ -21,4 +21,8 @@ namespace cidk {
   void ByteType::set(const Pos &pos, Val &dst, Byte val) const {
     dst.as_byte = val;
   }
+
+  bool ByteType::Bool(const Pos &pos, const Val &val) const {
+    return val.as_byte > 0;
+  }
 }

@@ -21,4 +21,6 @@ namespace cidk {
   void BoolType::set(const Pos &pos, Val &dst, bool val) const {
     dst.as_bool = val;
   }
+
+  bool BoolType::Bool(const Pos &pos, const Val &val) const { return val.as_bool; }
 }
