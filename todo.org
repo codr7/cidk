@@ -1,5 +1,7 @@
+* add 'push/call/dump;' as shorthand for 'X _;'
 * rename ValTType to TValType
 * add ValType.eq/clone & forward default like dump
+* move call_env to Env.call
 * bench/fib_rec.al
 ** add read_expr
 ** add Expr type
@@ -33,5 +35,4 @@
 ** read as utf-8
 *** https://stackoverflow.com/questions/16208079/how-to-work-with-utf-8-in-c-conversion-from-other-encodings-to-utf-8
 ** splat chars
-* move call_env to Env.call<
 * add README
