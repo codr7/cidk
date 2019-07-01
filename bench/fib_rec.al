@@ -19,4 +19,4 @@ bench 10 10 {
   call fib;
 };
 
-dump _;
+dump;

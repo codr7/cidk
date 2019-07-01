@@ -1,5 +1,5 @@
 if T 7 21;
-dump _;
+dump;
 push F;
 if _ 7 21;
-dump _;
+dump;

@@ -1,7 +1,6 @@
-* add 'push/call/dump;' as shorthand for 'X _;'
+* move call_env to Env.call
 * rename ValTType to TValType
 * add ValType.eq/clone & forward default like dump
-* move call_env to Env.call
 * bench/fib_rec.al
 ** add read_expr
 ** add Expr type

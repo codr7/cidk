@@ -16,12 +16,16 @@ namespace cidk::ops {
   }
 
   void PushType::read(Cx &cx, const Pos &pos, Reader &in, Ops &out) const {
+    auto p(pos);
+    int n(0);
+
     for (;;) {
-      auto p(pos);
       auto v(in.read_val());
       if (!v) { throw ERead(p, "Missing ;"); }
       if (v->is_eop()) { break; }
       out.emplace_back(p, *this, *v);
     }
+
+    if (!n) { out.emplace_back(p, *this, cx._); }
   }
 }
