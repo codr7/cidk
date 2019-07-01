@@ -79,7 +79,12 @@ namespace cidk {
     for (;;) {
       skip_ws();
       if (!in.get(c)) { throw ERead(pos, "Open expr"); }
-      if (c == '}') { break; }
+
+      if (c == '}') {
+        pos.col++;
+        break;
+      }
+      
       in.unget();
       if (!read_op(env, out->body)) { throw ERead(pos, "Open expr"); }
     }
@@ -112,7 +117,12 @@ namespace cidk {
     
     for (;;) {
       if (!in.get(c)) { throw ERead(pos, "Open list"); }
-      if (c == ')') { break; }
+
+      if (c == ')') {
+        pos.col++;
+        break;
+      }
+      
       in.unget();
       auto v(read_val(env));
       if (!v) { throw ERead(pos, "Open list"); }

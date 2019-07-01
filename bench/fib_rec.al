@@ -1,7 +1,7 @@
 fun fib(Int)(Int) {
   dup; push 2; call <;
   
-  if _ {
+  if _ _ {
     call dec; dup;
     call fib; swap;
     call dec fib +;

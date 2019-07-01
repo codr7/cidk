@@ -41,9 +41,15 @@ namespace cidk::libs {
     }
   }
 
+  static void dec_imp(Call &call) {
+    call.cx.stack.back().as_int--;
+  }
+
   void init_math(Cx &cx) {
     cx.env.add_fun(Pos::_, "+", {Arg("x"), Arg("y")}, {Ret(cx.num_type)}, add_imp);
     cx.env.add_fun(Pos::_, "<", {Arg("x"), Arg("y")}, {Ret(cx.bool_type)}, lt_imp);
+    
+    cx.env.add_fun(Pos::_, "dec", {Arg("v")}, {Ret(cx.int_type)}, dec_imp);
   }
 }
 

@@ -1,7 +1,7 @@
 * bench/fib_rec.al
-** add dec fun to math lib
 ** add Bench op
 *** i & j for outer/inner loop
+* enable mem pools & compare
 * add ListType.clone override
 ** only clone list structure
 * add ValType.eq/clone & forward default like dump
