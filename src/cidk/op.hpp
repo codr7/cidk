@@ -20,7 +20,12 @@ namespace cidk {
     string id;
     OpType(const string &id);
     virtual void eval(const Op &op, Env &env) const = 0;
-    virtual void read(Cx &cx, const Pos &pos, Reader &in, Ops &out) const = 0;
+
+    virtual void read(Cx &cx, 
+                      const Pos &pos, 
+                      Reader &in, 
+                      Env &env, 
+                      Ops &out) const = 0;
   };
 
   struct Op {

@@ -15,7 +15,11 @@ namespace cidk {
 
   void Call::eval() {
     auto imp(target.imp);
+    
     if (imp) { imp(*this); }
-    else { target.body.eval(*cx.env_pool.get(target.env)); }
+    else {
+      Env &env(*cx.env_pool.get(*target.env));
+      target.body.eval(env);
+    }
   }
 }

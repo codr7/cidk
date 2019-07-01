@@ -110,7 +110,7 @@ namespace cidk {
            const ArgsT &args,
            const RetsT &rets,
            Imp imp):
-    Def(cx, pos, id), env(*cx.env_pool.get(cx)), imp(imp), body(cx._) { }
+    Def(cx, pos, id), env(nullptr), imp(imp), body(cx._) { }
 }
 
 #endif

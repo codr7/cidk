@@ -14,8 +14,8 @@ namespace cidk::ops {
     iter_swap(i-1, i);
   }
 
-  void SwapType::read(Cx &cx, const Pos &pos, Reader &in, Ops &out) const {
-    in.read_eop();
+  void SwapType::read(Cx &cx, const Pos &pos, Reader &in, Env &env, Ops &out) const {
+    in.read_eop(env);
     out.emplace_back(pos, *this);
   }
 }

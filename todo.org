@@ -1,6 +1,8 @@
 * move call_env to Env.call
 * rename ValTType to TValType
 * bench/fib_rec.al
+** test fun op
+** add <
 ** add Bench op
 *** i & j for outer/inner loop
 * add ListType.clone override

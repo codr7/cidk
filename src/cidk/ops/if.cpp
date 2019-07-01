@@ -32,18 +32,18 @@ namespace cidk::ops {
     else { d.y.eval(env); }
   }
 
-  void IfType::read(Cx &cx, const Pos &pos, Reader &in, Ops &out) const {
+  void IfType::read(Cx &cx, const Pos &pos, Reader &in, Env &env, Ops &out) const {
     auto p(pos);
 
-    auto cond(in.read_val());
+    auto cond(in.read_val(env));
     if (!cond) { throw ERead(p, "Missing if cond"); }
 
-    auto x(in.read_val());
+    auto x(in.read_val(env));
     if (!x) { throw ERead(p, "Missing if branch"); }
 
-    auto y(in.read_val());
+    auto y(in.read_val(env));
     if (!y) { throw ERead(p, "Missing else branch"); }
-    in.read_eop();
+    in.read_eop(env);
 
     out.emplace_back(p, *this, *cond, *x, *y);
   }

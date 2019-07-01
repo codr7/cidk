@@ -15,12 +15,12 @@ namespace cidk::ops {
     op.as<Val>().eval(env);
   }
 
-  void PushType::read(Cx &cx, const Pos &pos, Reader &in, Ops &out) const {
+  void PushType::read(Cx &cx, const Pos &pos, Reader &in, Env &env, Ops &out) const {
     auto p(pos);
     int n(0);
 
     for (;; n++) {
-      auto v(in.read_val());
+      auto v(in.read_val(env));
       if (!v) { throw ERead(p, "Missing ;"); }
       if (v->is_eop()) { break; }
       out.emplace_back(p, *this, *v);

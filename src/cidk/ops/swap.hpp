@@ -9,7 +9,12 @@ namespace cidk::ops {
     SwapType(string id);
     void init(Op &op) const;
     virtual void eval(const Op &op, Env &env) const override;
-    virtual void read(Cx &cx, const Pos &pos, Reader &in, Ops &out) const override;
+
+    virtual void read(Cx &cx,
+                      const Pos &pos,
+                      Reader &in,
+                      Env &env,
+                      Ops &out) const override;
   };
 
   extern const SwapType Swap;

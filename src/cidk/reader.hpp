@@ -13,19 +13,20 @@ namespace cidk {
     Cx &cx;
     Pos pos;
     istream &in;
-    Env env;
     
     Reader(Cx &cx, const Pos &pos, istream &in);
 
-    void read_ops(Ops &out);
-    bool read_op(Ops &out);
-    void read_eop();
+    void read_ops(Env &env, Ops &out);
+    bool read_op(Env &env, Ops &out);
+    void read_eop(Env &env);
     
-    optional<Val> read_val();
-    Val read_expr();
-    Val read_id();
-    Val read_list();
-    Val read_num();
+    optional<Val> read_val(Env &env);
+    Val read_expr(Env &env);
+    Val read_id(Env &env);
+    Val read_list(Env &env);
+    Val read_num(Env &env);
+
+    void skip_ws();
   };
 }
 

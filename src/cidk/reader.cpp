@@ -12,16 +12,14 @@
 
 namespace cidk {
   Reader::Reader(Cx &cx, const Pos &pos, istream &in):
-    cx(cx), pos(pos), in(in), env(cx.env) {
+    cx(cx), pos(pos), in(in) {
   }
 
-  void Reader::read_ops(Ops &out) {
-    while (read_op(out));
-  }
+  void Reader::read_ops(Env &env, Ops &out) { while (read_op(env, out)); }
 
-  bool Reader::read_op(Ops &out) {
+  bool Reader::read_op(Env &env, Ops &out) {
     Pos p(pos);
-    auto idv(read_val());
+    auto idv(read_val(env));
 
     if (!idv) {
       if (in.eof()) { return false; }
@@ -37,91 +35,64 @@ namespace cidk {
     if (id == "") { throw exception(); }
     if (found == cx.op_types.end()) { throw EUnknownOp(pos, id); } 
     OpType &ot(*found->second);
-    ot.read(cx, p, *this, out);
+    ot.read(cx, p, *this, env, out);
     return true;
   }
 
-  void Reader::read_eop() {
+  void Reader::read_eop(Env &env) {
     Pos p = pos;
-    auto v(read_val());
+    auto v(read_val(env));
     if (!v) { throw ERead(p, "Missing ;"); }
     if (!v->is_eop()) { throw ERead(p, "Expected ;"); }
   }
 
-  optional<Val> Reader::read_val() {
-  next:
-    char c = in.get();
+  optional<Val> Reader::read_val(Env &env) {
+    skip_ws();
     
-    switch (c) {
-    case EOF:
-      break;
-    case '\n':
-      pos.row++;
-      pos.col = 0;
-      goto next;
-    case ' ':
-      pos.col++;
-      goto next;
-    case '\t':
-      pos.col += 2;
-      goto next;
-    case '(':
-      pos.col++;
-      return read_list();
-    case '{':
-      pos.col++;
-      return read_expr();
-    case ';':
-      pos.col++;
-      return cx.eop;
-    default:
-      in.unget();
-      if (isdigit(c)) { return read_num(); }
-      if (isgraph(c)) { return read_id(); }
-      throw ERead(str("Invalid input: ", c));
-    };
+    if (char c(0); in.get(c)) {
+      switch (c) {
+      case '(':
+        pos.col++;
+        return read_list(env);
+      case '{':
+        pos.col++;
+        return read_expr(env);
+      case ';':
+        pos.col++;
+        return cx.eop;
+      default:
+        in.unget();
+        if (isdigit(c)) { return read_num(env); }
+        if (isgraph(c)) { return read_id(env); }
+        throw ERead(str("Invalid input: ", c));
+      };
+    }
     
     return {};
   }
 
-  Val Reader::read_expr() {
+  Val Reader::read_expr(Env &env) {
     Pos p(pos);
     Expr *out(cx.expr_type.pool.get(cx));
+    char c(0);
     
     for (;;) {
-      char c(0);
-      
-      while (in.get(c) && isspace(c)) {
-        switch (c) {
-        case ' ':
-          pos.col++;
-          break;
-        case '\t':
-          pos.col += 2;
-          break;
-        case '\n':
-          pos.row++;
-          pos.col = 0;
-        };
-      }
-
-      if (!isspace(c)) { in.unget(); }
+      skip_ws();
       if (!in.get(c)) { throw ERead(pos, "Open expr"); }
       if (c == '}') { break; }
       in.unget();
-      if (!read_op(out->body)) { throw ERead(pos, "Open expr"); }
+      if (!read_op(env, out->body)) { throw ERead(pos, "Open expr"); }
     }
     
     return Val(p, cx.expr_type, out);
   }
 
-  Val Reader::read_id() {
+  Val Reader::read_id(Env &env) {
     const Pos p(pos);
     stringstream out;
+    char c(0);
     
-    for (;;) {
-      char c(0);
-      
+    for (;;) {  
       if (!in.get(c) ||
           c == '(' || c == ')' || c == '{' || c == '}' || c == ';' || 
           !isgraph(c)) { break; }
@@ -134,16 +105,16 @@ namespace cidk {
     return Val(p, cx.sym_type, cx.intern(out.str()));
   }
   
-  Val Reader::read_list() {
+  Val Reader::read_list(Env &env) {
     Pos p(pos);
     List *out(cx.list_type.pool.get(cx));
+    char c(0);
     
     for (;;) {
-      char c(0);
       if (!in.get(c)) { throw ERead(pos, "Open list"); }
       if (c == ')') { break; }
       in.unget();
-      auto v(read_val());
+      auto v(read_val(env));
       if (!v) { throw ERead(pos, "Open list"); }
       out->items.push_back(*v);
     }
@@ -151,12 +122,12 @@ namespace cidk {
     return Val(p, cx.list_type, out);
   }
   
-  Val Reader::read_num() {
+  Val Reader::read_num(Env &env) {
     const Pos p(pos);
     stringstream out;
+    char c(0);
     
     for (;;) {
-      char c(0);
       if (!in.get(c) || !isdigit(c)) { break; }
       out << c;
       pos.col++;
@@ -165,5 +136,25 @@ namespace cidk {
     if (!in.eof()) { in.unget();}
     Int n(strtoll(out.str().c_str(), NULL, 10));
     return Val(p, cx.int_type, n);
+  }
+
+  void Reader::skip_ws() {
+    char c(0);
+
+    while (in.get(c) && isspace(c)) {
+      switch (c) {
+      case ' ':
+        pos.col++;
+        break;
+      case '\t':
+        pos.col += 2;
+        break;
+      case '\n':
+        pos.row++;
+        pos.col = 0;
+      };
+    }
+    
+    if (!isspace(c)) { in.unget(); }
   }
 }

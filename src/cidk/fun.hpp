@@ -18,7 +18,7 @@ namespace cidk {
   struct Fun: Def {
     using Imp = function<void (Call &)>;
 
-    Env &env;
+    Env *env;
     Imp imp;
     Val body;
 

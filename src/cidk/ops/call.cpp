@@ -28,16 +28,16 @@ namespace cidk::ops {
     cidk::Call(cx, op.pos, *f).eval();
   }
 
-  void CallType::read(Cx &cx, const Pos &pos, Reader &in, Ops &out) const {
+  void CallType::read(Cx &cx, const Pos &pos, Reader &in, Env &env, Ops &out) const {
     Pos p(pos);
     int n(0);
     
     for (;; n++) {
-      auto v(in.read_val());
+      auto v(in.read_val(env));
       if (!v) { throw ERead(p, "Missing ;"); }
       if (v->is_eop()) { break; }
 
-      v->eval(in.env);
+      v->eval(env);
       Val fv(*pop(p, cx.stack, false));
       
       if (fv.type != &cx.fun_type) {
