@@ -22,6 +22,7 @@ namespace cidk {
     void read_eop();
     
     optional<Val> read_val();
+    Val read_expr();
     Val read_id();
     Val read_list();
     Val read_num();

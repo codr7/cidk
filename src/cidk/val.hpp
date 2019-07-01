@@ -10,6 +10,7 @@
 namespace cidk {
   using namespace std;
 
+  struct Expr;
   struct Fun;
   struct List;
   struct OStream;
@@ -26,6 +27,7 @@ namespace cidk {
       any as_any;
       bool as_bool;
       Byte as_byte;
+      Expr *as_expr;
       Fun *as_fun;
       Int as_int;
       List *as_list;

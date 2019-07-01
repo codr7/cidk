@@ -6,6 +6,7 @@
 #include "cidk/e.hpp"
 #include "cidk/reader.hpp"
 #include "cidk/str.hpp"
+#include "cidk/types/expr.hpp"
 #include "cidk/types/list.hpp"
 #include "cidk/types/sym.hpp"
 
@@ -33,6 +34,7 @@ namespace cidk {
     
     auto id(idv->as_sym->name);
     auto found(cx.op_types.find(id));
+    if (id == "") { throw exception(); }
     if (found == cx.op_types.end()) { throw EUnknownOp(pos, id); } 
     OpType &ot(*found->second);
     ot.read(cx, p, *this, out);
@@ -66,6 +68,9 @@ namespace cidk {
     case '(':
       pos.col++;
       return read_list();
+    case '{':
+      pos.col++;
+      return read_expr();
     case ';':
       pos.col++;
       return cx.eop;
@@ -79,6 +84,37 @@ namespace cidk {
     return {};
   }
 
+  Val Reader::read_expr() {
+    Pos p(pos);
+    Expr *out(cx.expr_type.pool.get(cx));
+    
+    for (;;) {
+      char c(0);
+      
+      while (in.get(c) && isspace(c)) {
+        switch (c) {
+        case ' ':
+          pos.col++;
+          break;
+        case '\t':
+          pos.col += 2;
+          break;
+        case '\n':
+          pos.row++;
+          pos.col = 0;
+        };
+      }
+
+      if (!isspace(c)) { in.unget(); }
+      if (!in.get(c)) { throw ERead(pos, "Open expr"); }
+      if (c == '}') { break; }
+      in.unget();
+      if (!read_op(out->body)) { throw ERead(pos, "Open expr"); }
+    }
+    
+    return Val(p, cx.expr_type, out);
+  }
+
   Val Reader::read_id() {
     const Pos p(pos);
     stringstream out;
@@ -87,7 +123,7 @@ namespace cidk {
       char c(0);
       
       if (!in.get(c) ||
-          c == '(' || c == ')' || c == ';' || 
+          c == '(' || c == ')' || c == '{' || c == '}' || c == ';' || 
           !isgraph(c)) { break; }
       
       out << c;

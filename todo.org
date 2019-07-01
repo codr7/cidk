@@ -1,15 +1,11 @@
 * move call_env to Env.call
 * rename ValTType to TValType
-* add ValType.eq/clone & forward default like dump
 * bench/fib_rec.al
-** add read_expr
-** add Expr type
-*** Ref with Ops body
-*** add {} to read_id break cond
 ** add Bench op
 *** i & j for outer/inner loop
 * add ListType.clone override
 ** only clone list structure
+* add ValType.eq/clone & forward default like dump
 * add Fun.args (Args)
 ** init arg ids
 * add Fun.rets (Rets)

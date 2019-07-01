@@ -17,6 +17,7 @@
 namespace cidk {
   struct Call;
   struct BoolType;
+  struct ExprType;
   struct ListType;
   struct MetaType;
   struct NilType;
@@ -41,6 +42,7 @@ namespace cidk {
     
     BoolType &bool_type;
     ByteType &byte_type;
+    ExprType &expr_type;
     FunType &fun_type;
     IntType &int_type;
     ListType &list_type;
