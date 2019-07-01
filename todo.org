@@ -1,3 +1,5 @@
+* mark call stack funs in cx.sweep_refs
+** also mark env
 * bench/fib_rec.al
 ** add Bench op
 *** i & j for outer/inner loop
