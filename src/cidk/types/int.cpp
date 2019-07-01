@@ -22,9 +22,11 @@ namespace cidk {
     return x.as_int == y.as_int;
   }
 
-  void IntType::set(const Pos &pos, Val &dst, Int val) const {
-    dst.as_int = val;
+  bool IntType::lt(const Pos &pos, Val &x, const Val &y) const {
+    return x.as_int < y.as_int;
   }
+
+  void IntType::set(const Pos &pos, Val &dst, Int val) const { dst.as_int = val; }
 
   void IntType::splat(const Pos &pos, Val &val) {
     auto &s(cx.stack);

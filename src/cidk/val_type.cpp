@@ -58,6 +58,10 @@ namespace cidk {
     env.cx.stack.emplace_back(val);
   }
 
+  bool ValType::lt(const Pos &pos, Val &x, const Val &y) const {
+    throw ENotSupported(pos, "<");  
+  }
+
   void ValType::mark_refs(const Pos &pos, const Val &val) { }
 
   void ValType::splat(const Pos &pos, Val &val) {

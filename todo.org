@@ -1,7 +1,5 @@
 * bench/fib_rec.al
-** add <
-*** add val_type.lt/gt
-**** default-imp gt based on lt
+** add dec fun to math lib
 ** add Bench op
 *** i & j for outer/inner loop
 * add ListType.clone override
@@ -25,4 +23,7 @@
 ** read as utf-8
 *** https://stackoverflow.com/questions/16208079/how-to-work-with-utf-8-in-c-conversion-from-other-encodings-to-utf-8
 ** splat chars
+* add >
+** add val_type.gt
+** default using lt
 * add README
