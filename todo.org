@@ -8,26 +8,19 @@
 *** add {} to read_id break cond
 ** add Bench op
 *** i & j for outer/inner loop
-* add support for multiple call/push/dump args
-** generate separate ops in reader
-** update bench/fib_rec.al
-* add lambda support
-** &{...}
-** use anonymous Fun
-* --
 * add ListType.clone override
 ** only clone list structure
-* move ValType.splat to env
-** update Val.splat()
-* add Splat op
-** optional arg, otherwise stack
-* --
 * add Fun.args (Args)
 ** init arg ids
 * add Fun.rets (Rets)
 * finish Fun dump
-* --
+* move ValType.splat to env
+** update Val.splat()
+** add Splat op
 * derive Int from Num
+* add lambda support
+** &{...}
+** use anonymous Fun
 * add Char type
 ** char32_t
 * add Str type
