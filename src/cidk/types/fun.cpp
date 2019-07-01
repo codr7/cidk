@@ -6,7 +6,7 @@
 
 namespace cidk {
   FunType::FunType(Cx &cx, const Pos &pos, const Sym *id):
-    ValTType<Fun *>(cx, pos, id) { }
+    TValType<Fun *>(cx, pos, id) { }
 
   void FunType::call(const Pos &pos, const Val &val) const {
     Call(cx, pos, *val.as_fun).eval();

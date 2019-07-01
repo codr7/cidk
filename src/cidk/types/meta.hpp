@@ -4,7 +4,7 @@
 #include "cidk/val_type.hpp"
 
 namespace cidk {  
-  struct MetaType: ValTType<Type *> {
+  struct MetaType: TValType<Type *> {
     MetaType(Cx &cx, const Pos &pos, const Sym *id);
 
     virtual void dump(const Pos &Pos, const Val &val, ostream &out) const override;

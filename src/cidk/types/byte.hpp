@@ -8,7 +8,7 @@
 namespace cidk {  
   using Byte = uint8_t;
 
-  struct ByteType: ValTType<Byte> {
+  struct ByteType: TValType<Byte> {
     ByteType(Cx &cx, const Pos &pos, const Sym *id);
     
     virtual void dump(const Pos &Pos, const Val &val, ostream &out) const override;

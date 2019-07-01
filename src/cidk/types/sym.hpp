@@ -5,7 +5,7 @@
 #include "cidk/val_type.hpp"
 
 namespace cidk {  
-  struct SymType: ValTType<const Sym *> {
+  struct SymType: TValType<const Sym *> {
     SymType(Cx &cx, const Pos &pos, const Sym *id);
 
     virtual void dump(const Pos &Pos, const Val &val, ostream &out) const override;

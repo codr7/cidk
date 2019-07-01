@@ -17,7 +17,7 @@ namespace cidk {
   struct ValType;
   
   template <typename ValT>
-  struct ValTType;
+  struct TValType;
   
   struct Val {
     Pos pos;
@@ -41,7 +41,7 @@ namespace cidk {
     Val(const Pos &pos, ValType &type);
 
     template <typename ValT>
-    Val(const Pos &pos, ValTType<ValT> &type, ValT val): pos(pos), type(&type) {
+    Val(const Pos &pos, TValType<ValT> &type, ValT val): pos(pos), type(&type) {
       type.set(pos, *this, val);
     }
     
@@ -63,7 +63,7 @@ namespace cidk {
     void mark_refs(const Pos &pos);
 
     template <typename ValT>
-    void reset(const Pos &pos, ValTType<ValT> &type, ValT val) {
+    void reset(const Pos &pos, TValType<ValT> &type, ValT val) {
       this->pos = pos;
       this->type = &type;
       type.set(pos, *this, val);

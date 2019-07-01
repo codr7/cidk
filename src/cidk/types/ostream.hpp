@@ -6,7 +6,7 @@
 #include "cidk/val_type.hpp"
 
 namespace cidk {  
-  struct OStreamType: ValTType<OStream *> {
+  struct OStreamType: TValType<OStream *> {
     Pool<OStream> pool;
     
     OStreamType(Cx &cx, const Pos &pos, const Sym *id);

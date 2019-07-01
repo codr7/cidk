@@ -4,7 +4,7 @@
 
 namespace cidk {
   ByteType::ByteType(Cx &cx, const Pos &pos, const Sym *id):
-    ValTType<Byte>(cx, pos, id) { }
+    TValType<Byte>(cx, pos, id) { }
 
   void ByteType::dump(const Pos &Pos, const Val &val, ostream &out) const {
     out << val.as_byte;

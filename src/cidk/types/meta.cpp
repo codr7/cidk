@@ -4,7 +4,7 @@
 
 namespace cidk {
   MetaType::MetaType(Cx &cx, const Pos &pos, const Sym *id):
-    ValTType<Type *>(cx, pos, id) { }
+    TValType<Type *>(cx, pos, id) { }
 
   void MetaType::dump(const Pos &Pos, const Val &val, ostream &out) const {
     out << val.as_type->id;

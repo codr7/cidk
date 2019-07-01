@@ -1,5 +1,3 @@
-* move call_env to Env.call
-* rename ValTType to TValType
 * bench/fib_rec.al
 ** test fun op
 ** add <

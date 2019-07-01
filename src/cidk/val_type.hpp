@@ -25,8 +25,8 @@ namespace cidk {
   };
   
   template <typename ValT>
-  struct ValTType: ValType {
-    ValTType(Cx &cx, const Pos &pos, const Sym *id): ValType(cx, pos, id) { }
+  struct TValType: ValType {
+    TValType(Cx &cx, const Pos &pos, const Sym *id): ValType(cx, pos, id) { }
     virtual void set(const Pos &pos, Val &dst, ValT val) const = 0;
   };
 }

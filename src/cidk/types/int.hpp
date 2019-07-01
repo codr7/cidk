@@ -8,7 +8,7 @@
 namespace cidk {  
   using Int = int64_t;
 
-  struct IntType: ValTType<Int> {
+  struct IntType: TValType<Int> {
     IntType(Cx &cx, const Pos &pos, const Sym *id);
     
     virtual void add(const Pos &pos, Val &x, const Val &y) const override;

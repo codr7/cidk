@@ -6,7 +6,7 @@
 #include "cidk/val_type.hpp"
 
 namespace cidk {
-  struct ListType: ValTType<List *> {
+  struct ListType: TValType<List *> {
     Pool<List> pool;
 
     ListType(Cx &cx, const Pos &pos, const Sym *id);

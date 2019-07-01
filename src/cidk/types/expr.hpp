@@ -6,7 +6,7 @@
 #include "cidk/val_type.hpp"
 
 namespace cidk {
-  struct ExprType: ValTType<Expr *> {
+  struct ExprType: TValType<Expr *> {
     Pool<Expr> pool;
 
     ExprType(Cx &cx, const Pos &pos, const Sym *id);

@@ -4,7 +4,7 @@
 
 namespace cidk {
   ListType::ListType(Cx &cx, const Pos &pos, const Sym *id):
-    ValTType<List *>(cx, pos, id) { }
+    TValType<List *>(cx, pos, id) { }
 
   void ListType::dump(const Pos &Pos, const Val &val, ostream &out) const {
     out << '(';

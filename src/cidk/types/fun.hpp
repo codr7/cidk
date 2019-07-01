@@ -8,7 +8,7 @@
 namespace cidk {  
   struct Fun;
   
-  struct FunType: ValTType<Fun *> {
+  struct FunType: TValType<Fun *> {
     Pool<Fun> pool;
     
     FunType(Cx &cx, const Pos &pos, const Sym *id);

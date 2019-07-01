@@ -4,7 +4,7 @@
 
 namespace cidk {
   IntType::IntType(Cx &cx, const Pos &pos, const Sym *id):
-    ValTType<Int>(cx, pos, id) { }
+    TValType<Int>(cx, pos, id) { }
 
   void IntType::add(const Pos &pos, Val &x, const Val &y) const {
     x.as_int += y.as_int;
@@ -28,10 +28,7 @@ namespace cidk {
 
   void IntType::splat(const Pos &pos, Val &val) {
     auto &s(cx.stack);
-    
-    for (Int i = 0; i < val.as_int; i++) {
-      s.emplace_back(pos, *this, i);
-    }
+    for (Int i = 0; i < val.as_int; i++) { s.emplace_back(pos, *this, i); }
   }
 
   bool IntType::Bool(const Pos &pos, const Val &val) const { return val.as_int > 0; }

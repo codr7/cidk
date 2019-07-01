@@ -4,7 +4,7 @@
 
 namespace cidk {
   ExprType::ExprType(Cx &cx, const Pos &pos, const Sym *id):
-    ValTType<Expr *>(cx, pos, id) { }
+    TValType<Expr *>(cx, pos, id) { }
 
   void ExprType::dump(const Pos &Pos, const Val &val, ostream &out) const {
     out << "{\n";
