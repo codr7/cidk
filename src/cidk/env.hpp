@@ -44,6 +44,8 @@ namespace cidk {
 
     void add_var(const Pos &pos, const string &id, const Val &val);
 
+    void call(const Pos &pos, const Sym *id);
+    
     void clear();
     bool get(const Pos &pos, const Sym *key, Val &out, bool silent);
     void mark_refs(const Pos &pos);

@@ -10,13 +10,5 @@ namespace cidk {
 
   void Type::init() { }
 
-  void Type::call_env(const Pos &pos, const Sym *id) {
-    Val target;
-    env.get(pos, id, target, false);
-    target.call(pos);
-  }
-
-  void Type::sweep(const Pos &pos) {
-    delete this;
-  }
+  void Type::sweep(const Pos &pos) { delete this; }
 }

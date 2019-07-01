@@ -14,7 +14,6 @@ namespace cidk {
     Type(Cx &cx, const Pos &pos, const Sym *id);
     virtual void init();
 
-    void call_env(const Pos &pos, const Sym *id);
     virtual void sweep(const Pos &pos) override;
   };
 }

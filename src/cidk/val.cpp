@@ -24,7 +24,7 @@ namespace cidk {
     Cx &cx(type->cx);
     auto &s(cx.stack);
     s.emplace_back(*this);
-    type->call_env(pos, cx.intern("clone"));
+    type->env.call(pos, cx.intern("clone"));
     dst = s.back();
     s.pop_back();
   }
@@ -35,7 +35,7 @@ namespace cidk {
     s.emplace_back(*this);
     auto &ot(cx.ostream_type);
     s.emplace_back(pos, ot, ot.pool.get(cx, out));
-    type->call_env(pos, cx.intern("dump"));
+    type->env.call(pos, cx.intern("dump"));
   }
   
   void Val::dup(const Pos &pos, Val &dst) const {
@@ -48,7 +48,7 @@ namespace cidk {
     auto &s(cx.stack);
     s.emplace_back(*this);
     s.emplace_back(y);
-    type->call_env(pos, cx.intern("eq"));
+    type->env.call(pos, cx.intern("eq"));
     bool ok(s.back().as_bool);
     s.pop_back();
     return ok;
@@ -76,7 +76,7 @@ namespace cidk {
     Cx &cx(type->cx);
     auto &s(cx.stack);
     s.emplace_back(*this);
-    type->call_env(pos, cx.intern("Bool"));
+    type->env.call(pos, cx.intern("Bool"));
     bool ok(s.back().as_bool);
     s.pop_back();
     return ok;

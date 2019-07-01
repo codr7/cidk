@@ -18,7 +18,7 @@ namespace cidk::libs {
       s.pop_back();
       xt->add(p, x, y);
     } else {
-      xt->call_env(p, cx.intern(str("+/", yt->id)));
+      xt->env.call(p, cx.intern(str("+/", yt->id)));
     }
   }
 

@@ -3,6 +3,8 @@
 * bench/fib_rec.al
 ** test fun op
 ** add <
+*** add val_type.lt/gt
+**** default-imp gt based on lt
 ** add Bench op
 *** i & j for outer/inner loop
 * add ListType.clone override

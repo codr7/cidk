@@ -23,6 +23,12 @@ namespace cidk {
     set(Pos::_, cx.intern(id), val, false);
   }
 
+  void Env::call(const Pos &pos, const Sym *id) {
+    Val target;
+    get(pos, id, target, false);
+    target.call(pos);
+  }
+
   void Env::clear() {
     for (auto &v: items) { cx.var_pool.put(v.second); }
     items.clear();
