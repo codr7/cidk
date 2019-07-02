@@ -1,9 +1,15 @@
+* add $-reader
+** add types/Pop
+*** do nothing on eval
+** switch ops/examples to use $ instead of _
 * mark call stack funs in cx.sweep_refs
 ** also mark env
 * bench/fib_rec.al
 ** add Bench op
 *** i & j for outer/inner loop
 * enable mem pools & compare
+* add fib_rec
+* --
 * add ListType.clone override
 ** only clone list structure
 * add ValType.eq/clone & forward default like dump
