@@ -30,6 +30,7 @@ namespace cidk {
         const RetsT &rets,
         Imp imp = nullptr);
 
+    void mark(const Pos &pos);
     virtual void sweep(const Pos &pos) override;
   };
 }

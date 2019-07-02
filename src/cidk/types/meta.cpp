@@ -19,9 +19,7 @@ namespace cidk {
   }
 
   void MetaType::mark_refs(const Pos &pos, const Val &val) {
-    Type &t(*val.as_type);
-    t.ref_state = RefState::mark;
-    t.env.ref_state = RefState::mark;
+    val.as_type->mark(pos);
   }
 
   void MetaType::set(const Pos &pos, Val &dst, Type *val) const {

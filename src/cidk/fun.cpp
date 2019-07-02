@@ -3,5 +3,11 @@
 #include "cidk/fun.hpp"
 
 namespace cidk {
+  void Fun::mark(const Pos &pos) {
+    ref_state = RefState::mark;
+    env.ref_state = RefState::mark;
+    env.mark_refs(pos);
+  }  
+
   void Fun::sweep(const Pos &pos) { cx.fun_type.pool.put(this); }
 }
