@@ -8,9 +8,7 @@ namespace cidk::ops {
 
   DumpType::DumpType(string id): OpType(id) { }
 
-  void DumpType::init(Op &op, const Val &val) const {
-    op.data = val;
-  }
+  void DumpType::init(Op &op, const Val &val) const { op.data = val; }
 
   void DumpType::eval(const Op &op, Env &env) const {
     auto &cx(env.cx);
@@ -18,12 +16,6 @@ namespace cidk::ops {
     Pos p(op.pos);
     op.as<Val>().eval(env);
     auto v(*pop(p, s, false));
-
-    if (v.type == &cx.nil_type) {
-      if (s.empty()) { throw ERead(p, "Missing dump arg"); }
-      v = *pop(p, s, false);
-    }
-
     auto &out(cx.stderr);
     v.dump(p, out);
     out << endl;
