@@ -14,8 +14,9 @@ namespace cidk::ops {
     auto &cx(env.cx);
     Pos p(op.pos);
     auto f(op.as<cidk::Fun *>());
-    if (f->id) { env.set(p, f->id, Val(p, cx.fun_type, f), false); }
     f->env = env;
+
+    if (f->id) { env.set(p, f->id, Val(p, cx.fun_type, f), false); }
   }
 
   void FunType::read(Cx &cx, const Pos &pos, Reader &in, Env &env, Ops &out) const {
