@@ -17,6 +17,10 @@
 * enable mem pools & compare
 * add fib_rec
 * --
+* add 'include' op
+** vararg like 'call'
+** load ops on read and store in data
+** eval on eval
 * add Quote type
 ** struct with embedded Val
 ** add '-reader
