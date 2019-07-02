@@ -29,10 +29,7 @@ namespace cidk {
     target.call(pos);
   }
 
-  void Env::clear() {
-    for (auto &v: items) { cx.var_pool.put(v.second); }
-    items.clear();
-  }
+  void Env::clear() { items.clear(); }
   
   bool Env::get(const Pos &pos, const Sym *key, Val &out, bool silent) {
     auto found(items.find(key));
@@ -47,7 +44,7 @@ namespace cidk {
   }
 
   void Env::mark_refs(const Pos &pos) {
-    for (auto &v: items) { v.second->val.mark_refs(pos); }
+    for (auto &v: items) { v.second->mark(pos); }
   }
 
   bool Env::set(const Pos &pos, const Sym *key, const Val &val, bool force) {
@@ -71,7 +68,6 @@ namespace cidk {
 
   void Env::sweep(const Pos &pos) {
     cx.envs.erase(it);
-    for (auto &v: items) { cx.var_pool.put(v.second); }
     cx.env_pool.put(this);
   }
 }

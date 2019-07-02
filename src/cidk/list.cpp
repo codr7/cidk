@@ -5,7 +5,5 @@
 namespace cidk {
   List::List(Cx &cx): Ref(cx) { }
 
-  void List::sweep(const Pos &pos) {
-    cx.list_type.pool.put(this);
-  }
+  void List::sweep(const Pos &pos) { cx.list_type.pool.put(this); }
 }

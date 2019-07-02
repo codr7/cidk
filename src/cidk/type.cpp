@@ -11,9 +11,11 @@ namespace cidk {
   void Type::init() { }
 
   void Type::mark(const Pos &pos) {
-    ref_state = RefState::mark;
-    env.ref_state = RefState::mark;
-    env.mark_refs(pos);
+    if (ref_state == RefState::_) {
+      ref_state = RefState::mark;
+      env.ref_state = RefState::mark;
+      env.mark_refs(pos);
+    }
   }
   
   void Type::sweep(const Pos &pos) { delete this; }
