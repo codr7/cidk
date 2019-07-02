@@ -91,7 +91,7 @@ namespace cidk {
     for (Ref *r: refs) { r->ref_state = RefState::_; }
 
     env.ref_state = RefState::mark;
-    for (Env *e: envs) { e->mark_refs(pos); }
+    for (Env *e: envs) { e->mark_items(pos); }
     for (Val &v: stack) { v.mark_refs(pos); }
   }
   

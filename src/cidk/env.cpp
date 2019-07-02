@@ -43,7 +43,14 @@ namespace cidk {
     return true;
   }
 
-  void Env::mark_refs(const Pos &pos) {
+  void Env::mark(const Pos &pos) {
+    if (ref_state == RefState::_) {
+      ref_state = RefState::mark;
+      mark_items(pos);
+    }
+  }
+  
+  void Env::mark_items(const Pos &pos) {
     for (auto &v: items) { v.second->mark(pos); }
   }
 

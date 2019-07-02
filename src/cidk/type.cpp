@@ -13,10 +13,7 @@ namespace cidk {
   void Type::mark(const Pos &pos) {
     if (ref_state == RefState::_) {
       ref_state = RefState::mark;
-      if (env.ref_state == RefState::_) {
-        env.ref_state = RefState::mark;
-        env.mark_refs(pos);
-      }
+      env.mark(pos);
     }
   }
   

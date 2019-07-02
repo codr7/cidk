@@ -1,3 +1,5 @@
+* drop val.pos field
+** use pos args
 * add const
 ** cx.consts map
 ** check read syms and replace with val clone
@@ -10,8 +12,6 @@
 ** also mark env
 * remove add-method from ValType
 ** override in Int Env
-* drop val.pos field
-** use pos args
 * --
 * bench/fib_rec.al
 ** add Bench op
