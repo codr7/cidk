@@ -4,7 +4,6 @@
 #include <any>
 
 #include "cidk/pos.hpp"
-#include "cidk/types/byte.hpp"
 #include "cidk/types/int.hpp"
 
 namespace cidk {
@@ -26,7 +25,6 @@ namespace cidk {
     union {
       any as_any;
       bool as_bool;
-      Byte as_byte;
       Expr *as_expr;
       Fun *as_fun;
       Int as_int;
@@ -75,11 +73,6 @@ namespace cidk {
     bool Bool(const Pos &pos) const;
   };
   
-  template <>
-  inline Byte Val::as() const {
-    return as_byte;
-  }
-
   template <>
   inline Int Val::as() const {
     return as_int;

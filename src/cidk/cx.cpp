@@ -8,7 +8,6 @@
 #include "cidk/reader.hpp"
 #include "cidk/str.hpp"
 #include "cidk/types/bool.hpp"
-#include "cidk/types/byte.hpp"
 #include "cidk/types/expr.hpp"
 #include "cidk/types/int.hpp"
 #include "cidk/types/nil.hpp"
@@ -26,7 +25,6 @@ namespace cidk {
     any_type(env.add_type<Type>(Pos::_, "Any")),
     num_type(env.add_type<Type>(Pos::_, "Num")),
     bool_type(env.add_type<BoolType>(Pos::_, "Bool")),
-    byte_type(env.add_type<ByteType>(Pos::_, "Byte")),
     expr_type(env.add_type<ExprType>(Pos::_, "Expr")),
     fun_type(env.add_type<FunType>(Pos::_, "Fun")),
     int_type(env.add_type<IntType>(Pos::_, "Int")),

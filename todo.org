@@ -3,13 +3,16 @@
 ** commit
 * add const
 ** cx.consts map
-** check read syms and replace with val
+** check read syms and replace with val clone
+** include in cx.mark
 ** add const(id val) op
 ** convert $ to const
 ** convert nil/_ to const
 *** remove cx field/init
 * mark call stack funs in cx.sweep_refs
 ** also mark env
+* remove add-method from ValType
+** override in Env
 * drop val.pos field
 ** use pos args
 * --
