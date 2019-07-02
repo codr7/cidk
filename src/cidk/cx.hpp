@@ -71,7 +71,7 @@ namespace cidk {
     void eval(const Ops &in, Env &env);
     void load(const Pos &pos, const string &path, Ops &out);
     void mark(const Pos &pos);
-    bool sweep(const Pos &pos);
+    void sweep(const Pos &pos);
   };
 
   template <typename...Rest>
