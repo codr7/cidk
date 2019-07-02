@@ -50,7 +50,11 @@ namespace cidk {
   Cx::~Cx() {
     env.clear();
     stack.clear();
-    do { mark(Pos::_); } while (sweep(Pos::_) && !refs.empty());
+
+    while (!refs.empty()) {
+      mark(Pos::_);
+      if (!sweep(Pos::_)) { break; }
+    }
 
 #ifndef CIDK_USE_POOL
     for (auto &s: syms) { delete s.second; }

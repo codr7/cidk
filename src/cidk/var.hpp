@@ -8,6 +8,7 @@ namespace cidk {
   struct Env;
   
   struct Var: Ref {
+    Cx &cx;
     Pos pos;
     Env *env;
     Val val;
