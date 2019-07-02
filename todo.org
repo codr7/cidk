@@ -19,6 +19,9 @@
 * enable mem pools & compare
 * add fib_rec
 * --
+* fix Fun memleak
+** break circular link in Fun.env
+** valgrind --leak-check=full ./cidk ../demo/fun.al
 * add Quote type
 ** struct with embedded Val
 ** add '-reader

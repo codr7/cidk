@@ -6,8 +6,11 @@ namespace cidk {
   void Fun::mark(const Pos &pos) {
     if (ref_state == RefState::_) {
       ref_state = RefState::mark;
-      env.ref_state = RefState::mark;
-      env.mark_refs(pos);
+
+      if (env.ref_state == RefState::_) {
+        env.ref_state = RefState::mark;
+        env.mark_refs(pos);
+      }
     }
   }  
 
