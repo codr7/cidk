@@ -29,8 +29,11 @@ namespace cidk {
 
   void ListType::mark_refs(const Pos &pos, const Val &val) {
     List &l(*val.as_list);
-    l.ref_state = RefState::mark;
-    for (auto &v: l.items) { v.mark_refs(pos); }
+
+    if (l.ref_state == RefState::_) {
+      l.ref_state = RefState::mark;
+      for (auto &v: l.items) { v.mark_refs(pos); }
+    }
   }
 
   void ListType::set(const Pos &pos, Val &dst, List *val) const {

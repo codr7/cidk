@@ -24,6 +24,8 @@ namespace cidk {
   struct Ref;
   struct SymType;
   
+  enum struct EvalState { go, recall };
+    
   struct Cx {
     Pool<Env> env_pool;
     Pool<Sym> sym_pool;    
@@ -49,10 +51,11 @@ namespace cidk {
     NilType &nil_type;
     OStreamType &ostream_type;
     SymType &sym_type;
-    
-    Stack stack;    
-    Call *call;
 
+    EvalState eval_state;
+    Stack stack;
+    Call *call;
+    
     const Val _, T, F, eop;
     
     istream &stdin;

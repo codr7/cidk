@@ -33,6 +33,7 @@ namespace cidk {
     nil_type(env.add_type<NilType>(Pos::_, "Nil")),
     ostream_type(env.add_type<OStreamType>(Pos::_, "OStream")),
     sym_type(env.add_type<SymType>(Pos::_, "Sym")),
+    eval_state(EvalState::go),
     call(nullptr),
     _(Pos::_, nil_type),
     T(Pos::_, bool_type, true),
@@ -70,7 +71,10 @@ namespace cidk {
   }
 
   void Cx::eval(const Ops &in, Env &env) {
-    for (const Op &o: in) { o.eval(env); }
+    for (const Op &o: in) { 
+      o.eval(env); 
+      if (eval_state != EvalState::go) { break; }
+    }
   }
 
   void Cx::load(const Pos &pos, const string &path, Ops &out) {
