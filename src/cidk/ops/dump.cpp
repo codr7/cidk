@@ -2,6 +2,7 @@
 #include "cidk/e.hpp"
 #include "cidk/ops/dump.hpp"
 #include "cidk/types/nil.hpp"
+#include "cidk/types/pop.hpp"
 
 namespace cidk::ops {
   const DumpType Dump("dump");
@@ -32,6 +33,6 @@ namespace cidk::ops {
       out.emplace_back(p, *this, *v);
     }
 
-    if (!n) { out.emplace_back(p, *this, cx._); }
+    if (!n) { out.emplace_back(p, *this, Val(p, cx.pop_type)); }
   }
 }

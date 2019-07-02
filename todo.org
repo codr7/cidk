@@ -1,6 +1,6 @@
 * switch ops/examples to use $ instead of _
-** DONE: dump-op fun-op if-op
-** DONE: add.al recall.al stack.al
+** DONE: call-op dump-op fun-op if-op
+** DONE: add.al fun.al recall.al stack.al
 ** commit
 * add const
 ** cx.consts map

@@ -7,7 +7,7 @@
 namespace cidk::ops {
   struct CallType: OpType {
     CallType(string id);
-    void init(Op &op, Fun *fun) const;
+    void init(Op &op, const Val &target) const;
     virtual void eval(const Op &op, Env &env) const override;
 
     virtual void read(Cx &cx,
