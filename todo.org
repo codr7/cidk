@@ -1,13 +1,12 @@
 * switch ops/examples to use $ instead of _
-* commit
+** DONE: if-op recall.al
+** commit
 * convert nil/_ to reader like $
 ** remove cx field/init
 * mark call stack funs in cx.sweep_refs
 ** also mark env
 * drop val.pos field
 ** use pos args
-* drop reader cx field
-** use env args
 * --
 * bench/fib_rec.al
 ** add Bench op
