@@ -1,3 +1,6 @@
+* demo/recall.al
+** move Var to Env.Item and turn into Ref
+** mark in env.mark_refs()
 * add const
 ** cx.consts map
 ** check read syms and replace with val clone
