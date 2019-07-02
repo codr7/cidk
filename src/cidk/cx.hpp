@@ -87,7 +87,6 @@ namespace cidk {
                        pos,
                        cx.intern(id),
                        args, rets,
-                       *this,
                        forward<Rest>(rest)...));
     
     set(pos, f->id, Val(pos, ft, f), false);
@@ -121,9 +120,8 @@ namespace cidk {
            const Sym *id,
            const ArgsT &args,
            const RetsT &rets,
-           Env &env,
            Imp imp):
-    Def(cx, pos, id), env(*cx.env_pool.get(env)), imp(imp), body(cx._) { }
+    Def(cx, pos, id), env(*cx.env_pool.get(cx)), imp(imp), body(cx._) { }
 }
 
 #endif

@@ -28,7 +28,6 @@ namespace cidk {
         const Sym *id,
         const ArgsT &args,
         const RetsT &rets,
-        Env &env,
         Imp imp = nullptr);
 
     virtual void sweep(const Pos &pos) override;

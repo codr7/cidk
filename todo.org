@@ -1,8 +1,13 @@
 * switch ops/examples to use $ instead of _
 ** DONE: if-op recall.al
 ** commit
-* convert nil/_ to reader like $
-** remove cx field/init
+* add const
+** cx.consts map
+** check read syms and replace with val
+** add const(id val) op
+** convert $ to const
+** convert nil/_ to const
+*** remove cx field/init
 * mark call stack funs in cx.sweep_refs
 ** also mark env
 * drop val.pos field
