@@ -26,8 +26,7 @@ namespace cidk::ops {
     Stack &s(cx.stack);
     Data d(op.as<Data>());
     auto p(op.pos);
-    Val cond((d.cond.type == &cx.nil_type) ? *pop(p, s, false) : d.cond);
-    cond.eval(env);
+    d.cond.eval(env);
     if (pop(p, s, false)->Bool(p)) { d.x.eval(env); }
     else { d.y.eval(env); }
   }

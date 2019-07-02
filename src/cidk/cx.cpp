@@ -14,6 +14,7 @@
 #include "cidk/types/nil.hpp"
 #include "cidk/types/list.hpp"
 #include "cidk/types/meta.hpp"
+#include "cidk/types/pop.hpp"
 #include "cidk/types/sym.hpp"
 #include "cidk/val.hpp"
 
@@ -32,6 +33,7 @@ namespace cidk {
     list_type(env.add_type<ListType>(Pos::_, "List")),
     nil_type(env.add_type<NilType>(Pos::_, "Nil")),
     ostream_type(env.add_type<OStreamType>(Pos::_, "OStream")),
+    pop_type(env.add_type<PopType>(Pos::_, "Pop")),
     sym_type(env.add_type<SymType>(Pos::_, "Sym")),
     eval_state(EvalState::go),
     call(nullptr),

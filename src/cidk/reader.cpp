@@ -8,12 +8,12 @@
 #include "cidk/str.hpp"
 #include "cidk/types/expr.hpp"
 #include "cidk/types/list.hpp"
+#include "cidk/types/pop.hpp"
 #include "cidk/types/sym.hpp"
 
 namespace cidk {
   Reader::Reader(Cx &cx, const Pos &pos, istream &in):
-    cx(cx), pos(pos), in(in) {
-  }
+    cx(cx), pos(pos), in(in) { }
 
   void Reader::read_ops(Env &env, Ops &out) { while (read_op(env, out)); }
 
@@ -51,6 +51,8 @@ namespace cidk {
     
     if (char c(0); in.get(c)) {
       switch (c) {
+      case '$':
+        return read_pop(env);
       case '(':
         pos.col++;
         return read_list(env);
@@ -70,7 +72,7 @@ namespace cidk {
     
     return {};
   }
-
+  
   Val Reader::read_expr(Env &env) {
     Pos p(pos);
     Expr *out(cx.expr_type.pool.get(cx));
@@ -146,6 +148,12 @@ namespace cidk {
     if (!in.eof()) { in.unget();}
     Int n(strtoll(out.str().c_str(), NULL, 10));
     return Val(p, cx.int_type, n);
+  }
+
+  Val Reader::read_pop(Env &env) {
+    Val v(pos, cx.pop_type);
+    pos.col++;
+    return v;
   }
 
   void Reader::skip_ws() {

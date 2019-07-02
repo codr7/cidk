@@ -25,6 +25,7 @@ namespace cidk {
     Val read_id(Env &env);
     Val read_list(Env &env);
     Val read_num(Env &env);
+    Val read_pop(Env &env);
 
     void skip_ws();
   };

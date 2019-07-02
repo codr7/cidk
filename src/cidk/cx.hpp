@@ -21,6 +21,7 @@ namespace cidk {
   struct ListType;
   struct MetaType;
   struct NilType;
+  struct PopType;
   struct Ref;
   struct SymType;
   
@@ -50,6 +51,7 @@ namespace cidk {
     ListType &list_type;
     NilType &nil_type;
     OStreamType &ostream_type;
+    PopType &pop_type;
     SymType &sym_type;
 
     EvalState eval_state;
