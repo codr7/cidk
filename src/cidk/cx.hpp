@@ -70,8 +70,8 @@ namespace cidk {
     const Sym *intern(const string &name);
     void eval(const Ops &in, Env &env);
     void load(const Pos &pos, const string &path, Ops &out);
-    void mark_refs(const Pos &pos);
-    bool sweep_refs(const Pos &pos);
+    void mark(const Pos &pos);
+    bool sweep(const Pos &pos);
   };
 
   template <typename...Rest>

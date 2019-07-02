@@ -50,7 +50,7 @@ namespace cidk {
   Cx::~Cx() {
     env.clear();
     stack.clear();
-    do { mark_refs(Pos::_); } while (sweep_refs(Pos::_) && !refs.empty());
+    do { mark(Pos::_); } while (sweep(Pos::_) && !refs.empty());
 
 #ifndef CIDK_USE_POOL
     for (auto &s: syms) { delete s.second; }
@@ -83,7 +83,7 @@ namespace cidk {
     Reader(*this, Pos(path), f).read_ops(*env_pool.get(env), out);
   }
 
-  void Cx::mark_refs(const Pos &pos) {
+  void Cx::mark(const Pos &pos) {
     for (Ref *r: refs) { r->ref_state = RefState::_; }
 
     env.ref_state = RefState::mark;
@@ -91,7 +91,7 @@ namespace cidk {
     for (Val &v: stack) { v.mark_refs(pos); }
   }
   
-  bool Cx::sweep_refs(const Pos &pos) {
+  bool Cx::sweep(const Pos &pos) {
     bool ok(false);
     
     for (auto i(refs.begin()); i != refs.end();) {

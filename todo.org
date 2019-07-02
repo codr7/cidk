@@ -40,6 +40,9 @@
 * add lambda support
 ** &{...}
 ** use anonymous Fun
+* add mark/sweep ops
+* add README
+* --
 * add Char type
 ** char32_t
 * add Str type
@@ -47,6 +50,4 @@
 *** https://stackoverflow.com/questions/16208079/how-to-work-with-utf-8-in-c-conversion-from-other-encodings-to-utf-8
 ** splat chars
 * add >
-** add val_type.gt
 ** default using lt
-* add README
