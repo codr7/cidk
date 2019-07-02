@@ -82,7 +82,14 @@ namespace cidk {
                     const vector<Ret> &rets,
                     Rest &&...rest) {
     auto &ft(cx.fun_type);
-    Fun *f(ft.pool.get(cx, pos, cx.intern(id), args, rets, forward<Rest>(rest)...));
+    
+    Fun *f(ft.pool.get(cx,
+                       pos,
+                       cx.intern(id),
+                       args, rets,
+                       *this,
+                       forward<Rest>(rest)...));
+    
     set(pos, f->id, Val(pos, ft, f), false);
     return *f;
   }
@@ -114,8 +121,9 @@ namespace cidk {
            const Sym *id,
            const ArgsT &args,
            const RetsT &rets,
+           Env &env,
            Imp imp):
-    Def(cx, pos, id), env(nullptr), imp(imp), body(cx._) { }
+    Def(cx, pos, id), env(*cx.env_pool.get(env)), imp(imp), body(cx._) { }
 }
 
 #endif

@@ -49,6 +49,7 @@ namespace cidk {
     void clear();
     bool get(const Pos &pos, const Sym *key, Val &out, bool silent);
     void mark_refs(const Pos &pos);
+    void merge(Env &src);
     bool set(const Pos &pos, const Sym *key, const Val &val, bool force);
     virtual void sweep(const Pos &pos) override;
   };

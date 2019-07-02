@@ -18,12 +18,12 @@ namespace cidk {
     
     if (imp) { imp(*this); }
     else {
-      Env &env(*cx.env_pool.get(*target.env));
+      Env &env(*cx.env_pool.get(target.env));
     recall:
       target.body.eval(env);
       
       if (cx.eval_state == EvalState::recall) {
-        env = *target.env;
+        env = target.env;
         cx.eval_state = EvalState::go;
         goto recall;
       }

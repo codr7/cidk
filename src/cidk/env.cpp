@@ -50,6 +50,11 @@ namespace cidk {
     for (auto &v: items) { v.second->val.mark_refs(pos); }
   }
 
+  void Env::merge(Env &src) {
+    src.items.insert(items.begin(), items.end());
+    swap(src.items, items);
+  }
+  
   bool Env::set(const Pos &pos, const Sym *key, const Val &val, bool force) {
     auto found(items.find(key));
     

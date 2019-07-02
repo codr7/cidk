@@ -28,6 +28,14 @@ namespace cidk {
 #ifndef CIDK_USE_POOL
       return new T(forward<Args>(args)...);
 #endif
+      
+      return new (alloc()) T(forward<Args>(args)...);
+    }
+
+    T *alloc() {
+#ifndef CIDK_USE_POOL
+      return reinterpret_cast<T *>(new Item());
+#endif
       T *p(nullptr);
       
       if (free.empty()) {
@@ -48,7 +56,7 @@ namespace cidk {
         free.pop_back();
       }
       
-      return new (p) T(forward<Args>(args)...);
+      return p;
     }
 
     void put(T *item) {

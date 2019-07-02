@@ -27,7 +27,7 @@ namespace cidk {
   void FunType::mark_refs(const Pos &pos, const Val &val) {
     Fun &f(*val.as_fun);
     f.ref_state = RefState::mark;
-    if (f.env) { f.env->ref_state = RefState::mark; }
+    f.env.ref_state = RefState::mark;
   }
 
   void FunType::set(const Pos &pos, Val &dst, Fun *val) const {

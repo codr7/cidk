@@ -8,16 +8,11 @@ namespace cidk::ops {
 
   FunType::FunType(string id): OpType(id) { }
 
-  void FunType::init(Op &op, cidk::Fun *fun) const {
-    op.data = fun;
-  }
+  void FunType::init(Op &op, cidk::Fun *fun) const { op.data = fun; }
 
   void FunType::eval(const Op &op, Env &env) const {
-    auto &cx(env.cx);
-    Pos p(op.pos);
     auto f(op.as<cidk::Fun *>());
-    if (f->id) { env.set(p, f->id, Val(p, cx.fun_type, f), false); }
-    f->env = cx.env_pool.get(env);
+    f->env.merge(env);
   }
 
   void FunType::read(Cx &cx, const Pos &pos, Reader &in, Env &env, Ops &out) const {
@@ -32,14 +27,16 @@ namespace cidk::ops {
     auto rets(in.read_val(env));
     if (!rets) { throw ERead(p, "Missing fun rets"); }
 
-    cidk::Fun *f(cx.fun_type.pool.get(cx, pos, 
-                                      id->as_sym,
-                                      args->as_list->items,
-                                      rets->as_list->items));
+    cidk::Fun *f(cx.fun_type.pool.alloc());
+    env.set(p, id->as_sym, Val(p, cx.fun_type, f), false);
 
-    env.set(p, f->id, Val(p, cx.fun_type, f), false);
-    Env &body_env(*cx.env_pool.get(env));
-    auto body(in.read_val(body_env));
+    new (f) cidk::Fun(cx, pos, 
+                      id->as_sym,
+                      args->as_list->items,
+                      rets->as_list->items,
+                      env);
+      
+    auto body(in.read_val(f->env));
     if (!body) { throw ERead(p, "Missing fun body"); }
     in.read_eop(env);
     f->body = *body;
