@@ -1,11 +1,11 @@
-if T 7 21;
+if F 21 7;
 dump;
 
-push F; 
+push 42; 
 
-if _ 7 {
+if $ {
   push 7 7 7; 
   call + +;
-}; 
+} 7; 
 
 dump;
