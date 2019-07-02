@@ -9,7 +9,7 @@
 ** convert $ to const
 ** convert nil/_ to const
 *** remove cx field/init
-* mark call stack funs in cx.sweep_refs
+* mark call stack funs in cx.sweep
 ** also mark env
 * remove add-method from ValType
 ** override in Env
