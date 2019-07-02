@@ -35,7 +35,7 @@ namespace cidk {
     sym_type(env.add_type<SymType>(Pos::_, "Sym")),
     eval_state(EvalState::go),
     call(nullptr),
-    _(Pos::_, nil_type),
+    _(nil_type),
     T(Pos::_, bool_type, true),
     F(Pos::_, bool_type, false),
     eop(Pos::_, sym_type, intern(";")),

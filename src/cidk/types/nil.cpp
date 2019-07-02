@@ -10,9 +10,9 @@ namespace cidk {
     out << '_';
   }
 
-  void NilType::dup(const Pos &pos, Val &dst, const Val &src) const { }
+  void NilType::dup(Val &dst, const Val &src) const { }
 
-  void NilType::eval(const Val &val, Env &env) const { }
+  void NilType::eval(const Pos &pos, const Val &val, Env &env) const { }
 
   bool NilType::is(const Pos &pos, const Val &x, const Val &y) const { return true; }
 

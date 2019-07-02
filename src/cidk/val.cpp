@@ -3,16 +3,16 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  Val::Val(): pos(Pos::_), type(nullptr) { }
+  Val::Val(): type(nullptr) { }
   
-  Val::Val(const Val &src): pos(src.pos), type(src.type) { src.dup(pos, *this); }
+  Val::Val(const Val &src): type(src.type) { src.dup(*this); }
 
-  Val::Val(const Pos &pos, ValType &type): pos(pos), type(&type) { }
+  Val::Val(ValType &type): type(&type) { }
 
   Val::~Val() { }
 
   const Val &Val::operator =(const Val &src) {
-    src.dup(pos, *this);
+    src.dup(*this);
     return *this;
   }
 
@@ -29,7 +29,7 @@ namespace cidk {
     s.pop_back();
   }
 
-  void Val::dump(const Pos &Pos, ostream &out) const {
+  void Val::dump(const Pos &pos, ostream &out) const {
     Cx &cx(type->cx);
     auto &s(cx.stack);
     s.emplace_back(*this);
@@ -38,8 +38,8 @@ namespace cidk {
     type->env.call(pos, cx.intern("dump"));
   }
   
-  void Val::dup(const Pos &pos, Val &dst) const {
-    type->dup(pos, dst, *this);
+  void Val::dup(Val &dst) const {
+    type->dup(dst, *this);
     dst.type = type;
   }
 
@@ -54,7 +54,9 @@ namespace cidk {
     return ok;
   }
 
-  void Val::eval(Env &env) const { return type->eval(*this, env); }
+  void Val::eval(const Pos &pos, Env &env) const {
+    return type->eval(pos, *this, env);
+  }
 
   bool Val::is(const Pos &pos, const Val &y) const { return type->is(pos, *this, y); }
 

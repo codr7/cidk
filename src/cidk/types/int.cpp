@@ -14,7 +14,7 @@ namespace cidk {
     out << val.as_int;
   }
 
-  void IntType::dup(const Pos &pos, Val &dst, const Val &src) const {
+  void IntType::dup(Val &dst, const Val &src) const {
     dst.as_int = src.as_int;
   }
 

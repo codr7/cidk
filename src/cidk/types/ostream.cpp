@@ -11,7 +11,7 @@ namespace cidk {
     out << "OStream(" << &val.as_ostream->imp << ')';
   }
 
-  void OStreamType::dup(const Pos &pos, Val &dst, const Val &src) const {
+  void OStreamType::dup(Val &dst, const Val &src) const {
     dst.as_ostream = src.as_ostream;
   }
 

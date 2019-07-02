@@ -13,13 +13,13 @@ namespace cidk {
     out << val.as_sym;
   }
 
-  void SymType::dup(const Pos &pos, Val &dst, const Val &src) const {
+  void SymType::dup(Val &dst, const Val &src) const {
     dst.as_sym = src.as_sym;
   }
 
-  void SymType::eval(const Val &val, Env &env) const {
+  void SymType::eval(const Pos &pos, const Val &val, Env &env) const {
     Val out;
-    env.get(val.pos, val.as_sym, out, false);
+    env.get(pos, val.as_sym, out, false);
     cx.stack.push_back(out);
   }
     

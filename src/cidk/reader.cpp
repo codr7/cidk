@@ -151,7 +151,7 @@ namespace cidk {
   }
 
   Val Reader::read_pop(Env &env) {
-    Val v(pos, cx.pop_type);
+    Val v(cx.pop_type);
     pos.col++;
     return v;
   }

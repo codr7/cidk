@@ -54,7 +54,7 @@ namespace cidk {
     cx.stack.emplace_back(val);
   }
 
-  void ValType::eval(const Val &val, Env &env) const {
+  void ValType::eval(const Pos &pos, const Val &val, Env &env) const {
     env.cx.stack.emplace_back(val);
   }
 

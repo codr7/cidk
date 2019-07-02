@@ -10,7 +10,7 @@ namespace cidk {
     out << val.as_type->id;
   }
 
-  void MetaType::dup(const Pos &pos, Val &dst, const Val &src) const {
+  void MetaType::dup(Val &dst, const Val &src) const {
     dst.as_type = src.as_type;
   }
 

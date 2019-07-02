@@ -16,7 +16,7 @@ namespace cidk {
     out << val.as_fun->id << "()()";
   }
 
-  void FunType::dup(const Pos &pos, Val &dst, const Val &src) const {
+  void FunType::dup(Val &dst, const Val &src) const {
     dst.as_fun = src.as_fun;
   }
 

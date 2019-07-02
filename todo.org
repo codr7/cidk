@@ -1,5 +1,3 @@
-* drop val.pos field
-** use pos args
 * add const
 ** cx.consts map
 ** check read syms and replace with val clone

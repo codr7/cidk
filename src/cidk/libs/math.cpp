@@ -11,7 +11,7 @@ namespace cidk::libs {
     auto &s(call.cx.stack);
 
     auto i(s.end()-1);
-    auto y(*i--);
+    Val y(*i--);
     auto &x(*i);
     ValType *xt(x.type), *yt(y.type);
     
@@ -29,7 +29,7 @@ namespace cidk::libs {
     auto &s(call.cx.stack);
 
     auto i(s.end()-1);
-    auto y(*i--);
+    Val y(*i--);
     auto &x(*i);
     ValType *xt(x.type), *yt(y.type);
     

@@ -19,7 +19,6 @@ namespace cidk {
   struct TValType;
   
   struct Val {
-    Pos pos;
     ValType *type;
     
     union {
@@ -36,10 +35,10 @@ namespace cidk {
         
     Val();
     Val(const Val &src);
-    Val(const Pos &pos, ValType &type);
+    Val(ValType &type);
 
     template <typename ValT>
-    Val(const Pos &pos, TValType<ValT> &type, ValT val): pos(pos), type(&type) {
+    Val(const Pos &pos, TValType<ValT> &type, ValT val): type(&type) {
       type.set(pos, *this, val);
     }
     
@@ -52,17 +51,16 @@ namespace cidk {
 
     void call(const Pos &pos);
     void clone(const Pos &pos, Val &dst) const;
-    void dump(const Pos &Pos, ostream &out) const;
-    void dup(const Pos &pos, Val &dst) const;
+    void dump(const Pos &pos, ostream &out) const;
+    void dup(Val &dst) const;
     bool eq(const Pos &pos, const Val &y) const;
-    void eval(Env &env) const;
+    void eval(const Pos &pos, Env &env) const;
     bool is(const Pos &pos, const Val &y) const;
     bool is_eop() const;
     void mark_refs(const Pos &pos);
 
     template <typename ValT>
     void reset(const Pos &pos, TValType<ValT> &type, ValT val) {
-      this->pos = pos;
       this->type = &type;
       type.set(pos, *this, val);
     }

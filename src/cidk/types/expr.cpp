@@ -12,11 +12,11 @@ namespace cidk {
     out << "}\n";
   }
 
-  void ExprType::dup(const Pos &pos, Val &dst, const Val &src) const {
+  void ExprType::dup(Val &dst, const Val &src) const {
     dst.as_expr = src.as_expr;
   }
 
-  void ExprType::eval(const Val &val, Env &env) const {
+  void ExprType::eval(const Pos &pos, const Val &val, Env &env) const {
     cx.eval(val.as_expr->body, env);
   }
 

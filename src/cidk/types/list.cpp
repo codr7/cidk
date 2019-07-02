@@ -19,7 +19,7 @@ namespace cidk {
     out << ')';
   }
 
-  void ListType::dup(const Pos &pos, Val &dst, const Val &src) const {
+  void ListType::dup(Val &dst, const Val &src) const {
     dst.as_list = src.as_list;
   }
 

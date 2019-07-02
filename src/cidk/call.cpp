@@ -20,7 +20,7 @@ namespace cidk {
     else {
       Env &env(*cx.env_pool.get(target.env));
     recall:
-      target.body.eval(env);
+      target.body.eval(pos, env);
       
       if (cx.eval_state == EvalState::recall) {
         env = target.env;

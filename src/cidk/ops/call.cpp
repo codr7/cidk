@@ -14,7 +14,7 @@ namespace cidk::ops {
   void CallType::eval(const Op &op, Env &env) const {
     Cx &cx(env.cx);
     Pos p(op.pos);
-    op.as<Val>().eval(env);
+    op.as<Val>().eval(p, env);
     auto f(*pop(p, cx.stack, false));
     Type *ft(f.type);
     if (ft != &cx.fun_type) { throw EWrongType(p, "Invalid call target: ", ft); }
@@ -31,7 +31,7 @@ namespace cidk::ops {
       if (v->is_eop()) { break; }
 
       if (v->type != &cx.pop_type) {
-        v->eval(env);
+        v->eval(p, env);
         Val fv(*pop(p, cx.stack, false));
       
         if (fv.type != &cx.fun_type) {
@@ -44,6 +44,6 @@ namespace cidk::ops {
       out.emplace_back(p, *this, *v);
     }
 
-    if (!n) { out.emplace_back(p, *this, Val(p, cx.pop_type)); }
+    if (!n) { out.emplace_back(p, *this, Val(cx.pop_type)); }
   }
 }

@@ -10,7 +10,7 @@ namespace cidk {
     out << (val.as_bool ? 'T' : 'F');
   }
 
-  void BoolType::dup(const Pos &pos, Val &dst, const Val &src) const {
+  void BoolType::dup(Val &dst, const Val &src) const {
     dst.as_bool = src.as_bool;
   }
 

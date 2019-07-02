@@ -14,8 +14,8 @@ namespace cidk {
     virtual void add(const Pos &pos, Val &x, const Val &y) const;
     virtual void call(const Pos &pos, const Val &val) const;
     virtual void dump(const Pos &Pos, const Val &val, ostream &out) const = 0;
-    virtual void dup(const Pos &pos, Val &dst, const Val &src) const = 0;
-    virtual void eval(const Val &val, Env &env) const;
+    virtual void dup(Val &dst, const Val &src) const = 0;
+    virtual void eval(const Pos &pos, const Val &val, Env &env) const;
     virtual bool is(const Pos &pos, const Val &x, const Val &y) const = 0;
     virtual bool lt(const Pos &pos, Val &x, const Val &y) const;
     virtual void mark_refs(const Pos &pos, const Val &val);

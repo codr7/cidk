@@ -12,10 +12,10 @@ namespace cidk {
     out << '$';
   }
 
-  void PopType::dup(const Pos &pos, Val &dst, const Val &src) const { }
+  void PopType::dup(Val &dst, const Val &src) const { }
 
-  void PopType::eval(const Val &val, Env &env) const {
-    pop(val.pos, env.cx.stack, false)->eval(env);
+  void PopType::eval(const Pos &pos, const Val &val, Env &env) const {
+    pop(pos, env.cx.stack, false)->eval(pos, env);
   }
 
   bool PopType::is(const Pos &pos, const Val &x, const Val &y) const { return true; }

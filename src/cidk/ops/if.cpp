@@ -26,9 +26,9 @@ namespace cidk::ops {
     Stack &s(cx.stack);
     Data d(op.as<Data>());
     auto p(op.pos);
-    d.cond.eval(env);
-    if (pop(p, s, false)->Bool(p)) { d.x.eval(env); }
-    else { d.y.eval(env); }
+    d.cond.eval(p, env);
+    if (pop(p, s, false)->Bool(p)) { d.x.eval(p, env); }
+    else { d.y.eval(p, env); }
   }
 
   void IfType::read(Cx &cx, const Pos &pos, Reader &in, Env &env, Ops &out) const {

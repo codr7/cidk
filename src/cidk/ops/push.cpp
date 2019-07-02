@@ -12,7 +12,7 @@ namespace cidk::ops {
   }
 
   void PushType::eval(const Op &op, Env &env) const {
-    op.as<Val>().eval(env);
+    op.as<Val>().eval(op.pos, env);
   }
 
   void PushType::read(Cx &cx, const Pos &pos, Reader &in, Env &env, Ops &out) const {

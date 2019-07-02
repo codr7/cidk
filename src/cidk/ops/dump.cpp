@@ -15,7 +15,7 @@ namespace cidk::ops {
     auto &cx(env.cx);
     auto &s(cx.stack);
     Pos p(op.pos);
-    op.as<Val>().eval(env);
+    op.as<Val>().eval(p, env);
     auto v(*pop(p, s, false));
     auto &out(cx.stderr);
     v.dump(p, out);
@@ -33,6 +33,6 @@ namespace cidk::ops {
       out.emplace_back(p, *this, *v);
     }
 
-    if (!n) { out.emplace_back(p, *this, Val(p, cx.pop_type)); }
+    if (!n) { out.emplace_back(p, *this, Val(cx.pop_type)); }
   }
 }
