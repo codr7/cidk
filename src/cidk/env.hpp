@@ -25,7 +25,11 @@ namespace cidk {
     map<const Sym *, Var *> items;
     
     Env(Cx &cx);
+    Env(const Env &src);
+    Env(Env &&) = delete;
+
     Env &operator =(const Env &);
+    Env &operator =(Env &&) = delete;
 
     bool add(const Pos &pos, const Sym *key, const Val &val, bool silent);
     

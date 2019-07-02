@@ -1,4 +1,3 @@
-* fix demo/recall.al
 * add const
 ** cx.consts map
 ** check read syms and replace with val clone
