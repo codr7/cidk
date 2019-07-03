@@ -33,6 +33,13 @@ namespace cidk {
     ESys(const Pos &pos, const string &msg = "");
   };
 
+  struct EDupConst: E {
+    const Sym *id;
+    
+    EDupConst(const Pos &pos, const Sym *id);
+    virtual void print(ostream &out) const override;
+  };
+
   struct EDupVar: E {
     const Sym *id;
     

@@ -36,15 +36,17 @@ namespace cidk {
     eval_state(EvalState::go),
     call(nullptr),
     _(nil_type),
+    S(pop_type),
     T(Pos::_, bool_type, true),
     F(Pos::_, bool_type, false),
     eop(Pos::_, sym_type, intern(";")),
     stdin(cin), stdout(cout), stderr(cerr) {
     libs::init_math(*this);
     init_types(Pos::_);
-    env.add_var(Pos::_, "_", _);
-    env.add_var(Pos::_, "T", T);
-    env.add_var(Pos::_, "F", F);
+    add_const(Pos::_, "_", _);
+    add_const(Pos::_, "$", S);
+    add_const(Pos::_, "T", T);
+    add_const(Pos::_, "F", F);
   }
 
   Cx::~Cx() {
@@ -66,12 +68,9 @@ namespace cidk {
     types.clear();
   }
 
-  const Sym *Cx::intern(const string &name) {
-    auto ok(syms.find(name));
-    if (ok != syms.end()) { return ok->second; }
-    auto s(sym_pool.get(name));
-    syms.emplace(make_pair(name, s));
-    return s;
+  void Cx::add_const(const Pos &pos, const string &id, const Val &val) {
+    auto sid(intern(id));
+    if (!consts.emplace(sid, val).second) { throw EDupConst(pos, sid); }
   }
 
   void Cx::eval(const Ops &in, Env &env) {
@@ -79,6 +78,23 @@ namespace cidk {
       o.eval(env); 
       if (eval_state != EvalState::go) { break; }
     }
+  }
+
+  optional<Val> Cx::get_const(const Pos &pos, const Sym *id) {
+    if (auto c(consts.find(id)); c != consts.end()) {
+      Val v;
+      return c->second.clone(pos, v);
+    }
+
+    return {};
+  }
+  
+  const Sym *Cx::intern(const string &name) {
+    auto ok(syms.find(name));
+    if (ok != syms.end()) { return ok->second; }
+    auto s(sym_pool.get(name));
+    syms.emplace(make_pair(name, s));
+    return s;
   }
 
   void Cx::load(const Pos &pos, const string &path, Ops &out) {

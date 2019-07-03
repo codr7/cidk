@@ -50,9 +50,9 @@ namespace cidk {
     ValT as() const { return any_cast<ValT>(as_any); }
 
     void call(const Pos &pos);
-    void clone(const Pos &pos, Val &dst) const;
+    Val &clone(const Pos &pos, Val &dst) const;
     void dump(const Pos &pos, ostream &out) const;
-    void dup(Val &dst) const;
+    Val &dup(Val &dst) const;
     bool eq(const Pos &pos, const Val &y) const;
     void eval(const Pos &pos, Env &env) const;
     bool is(const Pos &pos, const Val &y) const;

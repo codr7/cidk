@@ -33,6 +33,7 @@ namespace cidk {
     Pool<Var> var_pool;
 
     unordered_map<string, const Sym *> syms;
+    unordered_map<const Sym *, Val> consts;
     
     list<Ref *> refs;
     vector<Type *> types;
@@ -57,7 +58,7 @@ namespace cidk {
     Stack stack;
     Call *call;
     
-    const Val _, T, F, eop;
+    const Val _, S, T, F, eop;
     
     istream &stdin;
     ostream &stdout, &stderr;
@@ -67,8 +68,10 @@ namespace cidk {
 
     void init_types(const Pos &pos);
 
-    const Sym *intern(const string &name);
+    void add_const(const Pos &pos, const string &id, const Val &val);
     void eval(const Ops &in, Env &env);
+    optional<Val> get_const(const Pos &pos, const Sym *id);
+    const Sym *intern(const string &name);
     void load(const Pos &pos, const string &path, Ops &out);
     void mark(const Pos &pos);
     void sweep(const Pos &pos);

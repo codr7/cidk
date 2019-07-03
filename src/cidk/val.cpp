@@ -20,13 +20,14 @@ namespace cidk {
     type->call(pos, *this);
   }
 
-  void Val::clone(const Pos &pos, Val &dst) const {
+  Val &Val::clone(const Pos &pos, Val &dst) const {
     Cx &cx(type->cx);
     auto &s(cx.stack);
     s.emplace_back(*this);
     type->env.call(pos, cx.intern("clone"));
     dst = s.back();
     s.pop_back();
+    return dst;
   }
 
   void Val::dump(const Pos &pos, ostream &out) const {
@@ -38,9 +39,10 @@ namespace cidk {
     type->env.call(pos, cx.intern("dump"));
   }
   
-  void Val::dup(Val &dst) const {
+  Val &Val::dup(Val &dst) const {
     type->dup(dst, *this);
     dst.type = type;
+    return dst;
   }
 
   bool Val::eq(const Pos &pos, const Val &y) const {

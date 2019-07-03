@@ -1,13 +1,7 @@
-* add const
-** cx.consts map
-** check read syms and replace with val clone
-** include in cx.mark
-** add const(id val) op
-** convert $ to const
-** convert nil/_ to const
-*** remove cx field/init
-* mark call stack funs in cx.sweep
-** also mark env
+* add 'const id val' op
+** use add_const
+* mark cx.consts in cx.mark()
+* mark call stack funs in cx.mark()
 * remove add-method from ValType
 ** override in Int Env
 * --
@@ -32,6 +26,7 @@
 ** init arg ids
 * add Fun.rets (Rets)
 * finish Fun dump
+* switch Env.get to return optional<Val>
 * move ValType.splat to env
 ** update Val.splat()
 ** add Splat op

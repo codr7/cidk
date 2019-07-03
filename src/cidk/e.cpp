@@ -35,6 +35,13 @@ namespace cidk {
 
   ESys::ESys(const Pos &pos, const string &msg): E(pos, msg) { }
 
+  EDupConst::EDupConst(const Pos &pos, const Sym *id): E(pos), id(id) { }
+
+  void EDupConst::print(ostream &out) const {
+    E::print(out);
+    out << "Dup var: " << id;
+  }
+
   EDupVar::EDupVar(const Pos &pos, const Sym *id): E(pos), id(id) { }
 
   void EDupVar::print(ostream &out) const {

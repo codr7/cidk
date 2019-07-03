@@ -51,8 +51,6 @@ namespace cidk {
     
     if (char c(0); in.get(c)) {
       switch (c) {
-      case '$':
-        return read_pop(env);
       case '(':
         pos.col++;
         return read_list(env);
@@ -109,7 +107,9 @@ namespace cidk {
     }
 
     if (!in.eof()) { in.unget();}
-    return Val(p, cx.sym_type, cx.intern(out.str()));
+    auto id(cx.intern(out.str()));
+    if (auto v(cx.get_const(p, id)); v) { return *v; }
+    return Val(p, cx.sym_type, id);
   }
   
   Val Reader::read_list(Env &env) {
@@ -148,12 +148,6 @@ namespace cidk {
     if (!in.eof()) { in.unget();}
     Int n(strtoll(out.str().c_str(), NULL, 10));
     return Val(p, cx.int_type, n);
-  }
-
-  Val Reader::read_pop(Env &env) {
-    Val v(cx.pop_type);
-    pos.col++;
-    return v;
   }
 
   void Reader::skip_ws() {
