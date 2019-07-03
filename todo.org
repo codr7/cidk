@@ -1,7 +1,5 @@
 * add 'const id val' op
 ** use add_const
-* add is/eq ops
-** ==/=
 * mark call stack funs in cx.mark()
 * bench/fib_rec.al
 ** add Bench op
