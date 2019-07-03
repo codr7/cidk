@@ -1,10 +1,14 @@
 * store consts in env
 ** remove cx.consts
-** add ConstType
-*** clone on eval
+** add ConstType<ValT>
+*** wrap original type
+*** forward dup
+*** clone val in eval
+*** mark val in mark_refs
+*** Const/List, Const/Fun etc.
 ** move add_const to env
 ** remove get_const
-** add ConstType *ValType.const_type
+** add ConstType<ValT> *TValType.const_type
 *** null default
 *** lazy init in add_const
 * add 'const id val' op
@@ -42,7 +46,7 @@
 * derive Int from Num
 * add lambda support
 ** &{...}
-** use anonymous Fun
+** anonymous Fun
 * add mark/sweep ops
 * --
 * add Char type
