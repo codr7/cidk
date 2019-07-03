@@ -5,19 +5,24 @@
 #include "cidk/ops.hpp"
 
 namespace cidk {
+  struct ConstType;
   struct Val;
 
   struct ValType: Type {
-    ValType(Cx &cx, const Pos &pos, const Sym *id);
-    virtual void init() override;
+    bool is_const;
+    ConstType *_const_type;
     
-    virtual void add(const Pos &pos, Val &x, const Val &y) const;
+    ValType(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents);
+
+    ConstType &const_type(const Pos &pos);
+    
     virtual void call(const Pos &pos, const Val &val) const;
+    virtual void clone(const Pos &pos, Val &dst, const Val &src) const;
     virtual void dump(const Pos &Pos, const Val &val, ostream &out) const = 0;
     virtual void dup(Val &dst, const Val &src) const = 0;
+    virtual bool eq(const Pos &pos, const Val &x, const Val &y) const;
     virtual void eval(const Pos &pos, const Val &val, Env &env) const;
     virtual bool is(const Pos &pos, const Val &x, const Val &y) const = 0;
-    virtual bool lt(const Pos &pos, Val &x, const Val &y) const;
     virtual void mark_refs(const Pos &pos, const Val &val);
     virtual void splat(const Pos &pos, Val &val);
     virtual void sweep(const Pos &pos, Val &val);
@@ -27,7 +32,9 @@ namespace cidk {
   
   template <typename ValT>
   struct TValType: ValType {
-    TValType(Cx &cx, const Pos &pos, const Sym *id): ValType(cx, pos, id) { }
+    TValType(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents):
+      ValType(cx, pos, id, parents) { }
+    
     virtual void set(const Pos &pos, Val &dst, ValT val) const = 0;
   };
 }

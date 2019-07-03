@@ -3,13 +3,13 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  Type::Type(Cx &cx, const Pos &pos, const Sym *id):
+  Type::Type(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents):
     Def(cx, pos, id), env(*cx.env_pool.get(cx)) {
-    cx.types.push_back(this);
+    for (auto pt: parents) { derive(*pt); }
   }
-
-  void Type::init() { }
-
+  
+  void Type::derive(Type &parent) { env.merge(parent.env); }
+  
   void Type::mark(const Pos &pos) {
     if (!is_marked) {
       is_marked = true;

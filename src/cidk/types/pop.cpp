@@ -5,8 +5,11 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  PopType::PopType(Cx &cx, const Pos &pos, const Sym *id):
-    ValType(cx, pos, id) { }
+  PopType::PopType(Cx &cx,
+                   const Pos &pos,
+                   const Sym *id,
+                   const vector<Type *> &parents):
+    ValType(cx, pos, id, parents) { }
 
   void PopType::dump(const Pos &Pos, const Val &val, ostream &out) const {
     out << '$';

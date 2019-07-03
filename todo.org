@@ -1,29 +1,16 @@
-* store consts in env
-** remove cx.consts
-** add ConstType<ValT>
-*** wrap original type
-*** forward dup
-*** clone val in eval
-*** mark val in mark_refs
-*** Const/List, Const/Fun etc.
-** move add_const to env
-** remove get_const
-** add ConstType<ValT> *TValType.const_type
-*** null default
-*** lazy init in add_const
 * add 'const id val' op
 ** use add_const
-* mark cx.consts in cx.mark()
-* ---
+* add is/eq ops
+** ==/=
 * mark call stack funs in cx.mark()
-* remove add-method from ValType
-** override in Int Env
 * bench/fib_rec.al
 ** add Bench op
 *** i & j for outer/inner loop
 * enable mem pools & compare
 * add fib_tail from snigl
 * --
+* add env.update(is, function<void>(Val &))
+** use setter (set-X in current env) if available
 * add 'include' op
 ** vararg like 'call'
 ** load ops on read and store in data

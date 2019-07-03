@@ -110,7 +110,11 @@ namespace cidk {
 
     if (!in.eof()) { in.unget();}
     auto id(cx.intern(out.str()));
-    if (auto v(cx.get_const(p, id)); v) { return *v; }
+
+    if (auto v(env.get(p, id, true)); v && v->type->is_const) {
+      return v->clone(p, *v);
+    }
+    
     return Val(p, cx.sym_type, id);
   }
   

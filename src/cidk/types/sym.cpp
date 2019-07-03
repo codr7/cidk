@@ -6,8 +6,11 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  SymType::SymType(Cx &cx, const Pos &pos, const Sym *id):
-    TValType<const Sym *>(cx, pos, id) { }
+  SymType::SymType(Cx &cx,
+                   const Pos &pos,
+                   const Sym *id,
+                   const vector<Type *> &parents):
+    TValType<const Sym *>(cx, pos, id, parents) { }
 
   void SymType::dump(const Pos &Pos, const Val &val, ostream &out) const {
     out << val.as_sym;
@@ -18,9 +21,7 @@ namespace cidk {
   }
 
   void SymType::eval(const Pos &pos, const Val &val, Env &env) const {
-    Val out;
-    env.get(pos, val.as_sym, out, false);
-    cx.stack.push_back(out);
+    cx.stack.emplace_back(*env.get(pos, val.as_sym, false));
   }
     
   bool SymType::is(const Pos &pos, const Val &x, const Val &y) const {

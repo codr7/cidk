@@ -5,8 +5,11 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  FunType::FunType(Cx &cx, const Pos &pos, const Sym *id):
-    TValType<Fun *>(cx, pos, id) { }
+  FunType::FunType(Cx &cx,
+                   const Pos &pos,
+                   const Sym *id,
+                   const vector<Type *> &parents):
+    TValType<Fun *>(cx, pos, id, parents) { }
 
   void FunType::call(const Pos &pos, const Val &val) const {
     Call(cx, pos, *val.as_fun).eval();

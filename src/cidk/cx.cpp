@@ -1,5 +1,6 @@
 #include <fstream>
 
+#include "cidk/call.hpp"
 #include "cidk/conf.hpp"
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
@@ -18,21 +19,28 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
+  static void Bool_imp(Call &call) {
+    auto &cx(call.cx);
+    auto &s(cx.stack);
+    auto &v(s.back());
+    s.back().reset(call.pos, cx.bool_type, v.type->Bool(call.pos, v));
+  }
+  
   Cx::Cx():
     op_types(Op::types()),
     env(*this),
     meta_type(env.add_type<MetaType>(Pos::_, "Meta")),
     any_type(env.add_type<Type>(Pos::_, "Any")),
     num_type(env.add_type<Type>(Pos::_, "Num")),
-    bool_type(env.add_type<BoolType>(Pos::_, "Bool")),
-    expr_type(env.add_type<ExprType>(Pos::_, "Expr")),
-    fun_type(env.add_type<FunType>(Pos::_, "Fun")),
-    int_type(env.add_type<IntType>(Pos::_, "Int")),
-    list_type(env.add_type<ListType>(Pos::_, "List")),
-    nil_type(env.add_type<NilType>(Pos::_, "Nil")),
-    ostream_type(env.add_type<OStreamType>(Pos::_, "OStream")),
-    pop_type(env.add_type<PopType>(Pos::_, "Pop")),
-    sym_type(env.add_type<SymType>(Pos::_, "Sym")),
+    bool_type(env.add_type<BoolType>(Pos::_, "Bool", {&any_type})),
+    expr_type(env.add_type<ExprType>(Pos::_, "Expr", {&any_type})),
+    fun_type(env.add_type<FunType>(Pos::_, "Fun", {&any_type})),
+    int_type(env.add_type<IntType>(Pos::_, "Int", {&any_type, &num_type})),
+    list_type(env.add_type<ListType>(Pos::_, "List", {&any_type})),
+    nil_type(env.add_type<NilType>(Pos::_, "Nil", {&any_type})),
+    ostream_type(env.add_type<OStreamType>(Pos::_, "OStream", {&any_type})),
+    pop_type(env.add_type<PopType>(Pos::_, "Pop", {&any_type})),
+    sym_type(env.add_type<SymType>(Pos::_, "Sym", {&any_type})),
     eval_state(EvalState::go),
     call(nullptr),
     _(nil_type),
@@ -42,11 +50,11 @@ namespace cidk {
     eop(Pos::_, sym_type, intern(";")),
     stdin(cin), stdout(cout), stderr(cerr) {
     libs::init_math(*this);
-    init_types(Pos::_);
-    add_const(Pos::_, "_", _);
-    add_const(Pos::_, "$", S);
-    add_const(Pos::_, "T", T);
-    add_const(Pos::_, "F", F);
+    env.add_const(Pos::_, "_", _);
+    env.add_const(Pos::_, "$", S);
+    env.add_const(Pos::_, "T", T);
+    env.add_const(Pos::_, "F", F);
+    env.add_fun(Pos::_, "Bool", {Arg("val")}, {Ret(bool_type)}, Bool_imp);
   }
 
   Cx::~Cx() {
@@ -63,17 +71,6 @@ namespace cidk {
 #endif
   }
 
-  void Cx::init_types(const Pos &pos) {
-    for (Type *t: types) { t->init(); }
-    types.clear();
-  }
-
-  void Cx::add_const(const Pos &pos, const string &id, const Val &val) {
-    if (!consts.emplace(intern(id), val).second) {
-      throw ESys(pos, "Dup const: ", id);
-    }
-  }
-
   void Cx::eval(const Ops &in, Env &env) {
     for (const Op &o: in) { 
       o.eval(env); 
@@ -81,15 +78,6 @@ namespace cidk {
     }
   }
 
-  optional<Val> Cx::get_const(const Pos &pos, const Sym *id) {
-    if (auto c(consts.find(id)); c != consts.end()) {
-      Val v;
-      return c->second.clone(pos, v);
-    }
-
-    return {};
-  }
-  
   const Sym *Cx::intern(const string &name) {
     auto ok(syms.find(name));
     if (ok != syms.end()) { return ok->second; }

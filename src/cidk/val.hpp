@@ -72,9 +72,7 @@ namespace cidk {
   };
   
   template <>
-  inline Int Val::as() const {
-    return as_int;
-  }
+  inline Int Val::as() const { return as_int; }
 }
 
 #endif

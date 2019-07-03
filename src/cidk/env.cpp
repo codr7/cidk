@@ -1,3 +1,4 @@
+#include "cidk/const_type.hpp"
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
 #include "cidk/env.hpp"
@@ -19,28 +20,31 @@ namespace cidk {
     return false;
   }
 
+  void Env::add_const(const Pos &pos, const string &id, const Val &val) {
+    auto v(val);
+    v.type = &v.type->const_type(pos);
+    add(pos, cx.intern(id), v, false);
+  }
+
   void Env::add_var(const Pos &pos, const string &id, const Val &val) {
     set(Pos::_, cx.intern(id), val, false);
   }
 
   void Env::call(const Pos &pos, const Sym *id) {
-    Val target;
-    get(pos, id, target, false);
-    target.call(pos);
+    get(pos, id, false)->call(pos);
   }
 
   void Env::clear() { items.clear(); }
   
-  bool Env::get(const Pos &pos, const Sym *key, Val &out, bool silent) {
+  optional<Val> Env::get(const Pos &pos, const Sym *key, bool silent) {
     auto found(items.find(key));
 
     if (found == items.end()) {
       if (!silent) { throw ESys(pos, "Unknown id: ", key); }
-      return false;
+      return {};
     }
 
-    out = found->second->val;
-    return true;
+    return found->second->val;
   }
 
   void Env::mark(const Pos &pos) {
@@ -52,6 +56,11 @@ namespace cidk {
   
   void Env::mark_items(const Pos &pos) {
     for (auto &v: items) { v.second->mark(pos); }
+  }
+
+  void Env::merge(Env &src) {
+    src.items.insert(items.begin(), items.end());
+    std::swap(src.items, items);
   }
 
   bool Env::set(const Pos &pos, const Sym *key, const Val &val, bool force) {

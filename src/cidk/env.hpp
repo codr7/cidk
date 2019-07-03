@@ -32,7 +32,9 @@ namespace cidk {
     Env &operator =(Env &&) = delete;
 
     bool add(const Pos &pos, const Sym *key, const Val &val, bool silent);
-    
+
+    void add_const(const Pos &pos, const string &id, const Val &val);
+
     template <typename...Rest>
     Fun &add_fun(const Pos &pos,
                  const string &id,
@@ -41,7 +43,10 @@ namespace cidk {
                  Rest &&...rest);
 
     template <typename TypeT, typename...Rest>
-    TypeT &add_type(const Pos &pos, const string &id, Rest &&...rest);
+    TypeT &add_type(const Pos &pos,
+                    const string &id,
+                    const vector<Type *> parents = {},
+                    Rest &&...rest);
 
     template <typename...Rest>
     void add_var(const Pos &pos, const string &id, Rest &&...rest);
@@ -51,9 +56,11 @@ namespace cidk {
     void call(const Pos &pos, const Sym *id);
     
     void clear();
-    bool get(const Pos &pos, const Sym *key, Val &out, bool silent);
+    optional<Val> get(const Pos &pos, const Sym *key, bool silent);
     void mark(const Pos &pos);
     void mark_items(const Pos &pos);
+    void merge(Env &src);
+    
     bool set(const Pos &pos, const Sym *key, const Val &val, bool force);
     virtual void sweep(const Pos &pos) override;
   };

@@ -3,8 +3,11 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  ListType::ListType(Cx &cx, const Pos &pos, const Sym *id):
-    TValType<List *>(cx, pos, id) { }
+  ListType::ListType(Cx &cx,
+                     const Pos &pos,
+                     const Sym *id,
+                     const vector<Type *> &parents):
+    TValType<List *>(cx, pos, id, parents) { }
 
   void ListType::dump(const Pos &Pos, const Val &val, ostream &out) const {
     out << '(';

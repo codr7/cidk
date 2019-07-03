@@ -4,8 +4,11 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  OStreamType::OStreamType(Cx &cx, const Pos &pos, const Sym *id):
-    TValType<OStream *>(cx, pos, id) { }
+  OStreamType::OStreamType(Cx &cx,
+                           const Pos &pos,
+                           const Sym *id,
+                           const vector<Type *> &parents):
+    TValType<OStream *>(cx, pos, id, parents) { }
 
   void OStreamType::dump(const Pos &Pos, const Val &val, ostream &out) const {
     out << "OStream(" << &val.as_ostream->imp << ')';

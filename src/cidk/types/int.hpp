@@ -9,13 +9,11 @@ namespace cidk {
   using Int = int64_t;
 
   struct IntType: TValType<Int> {
-    IntType(Cx &cx, const Pos &pos, const Sym *id);
+    IntType(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents);
     
-    virtual void add(const Pos &pos, Val &x, const Val &y) const override;
     virtual void dump(const Pos &Pos, const Val &val, ostream &out) const override;
     virtual void dup(Val &dst, const Val &src) const override;
     virtual bool is(const Pos &pos, const Val &x, const Val &y) const override;
-    virtual bool lt(const Pos &pos, Val &x, const Val &y) const override;
     virtual void set(const Pos &pos, Val &dst, Int val) const override;
     virtual void splat(const Pos &pos, Val &val) override;
 

@@ -3,8 +3,11 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  BoolType::BoolType(Cx &cx, const Pos &pos, const Sym *id):
-    TValType<bool>(cx, pos, id) { }
+  BoolType::BoolType(Cx &cx,
+                     const Pos &pos,
+                     const Sym *id,
+                     const vector<Type *> &parents):
+    TValType<bool>(cx, pos, id, parents) { }
 
   void BoolType::dump(const Pos &Pos, const Val &val, ostream &out) const {
     out << (val.as_bool ? 'T' : 'F');

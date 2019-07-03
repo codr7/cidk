@@ -3,8 +3,11 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  MetaType::MetaType(Cx &cx, const Pos &pos, const Sym *id):
-    TValType<Type *>(cx, pos, id) { }
+  MetaType::MetaType(Cx &cx,
+                     const Pos &pos,
+                     const Sym *id,
+                     const vector<Type *> &parents):
+    TValType<Type *>(cx, pos, id, parents) { }
 
   void MetaType::dump(const Pos &Pos, const Val &val, ostream &out) const {
     out << val.as_type->id;

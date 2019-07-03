@@ -33,10 +33,8 @@ namespace cidk {
     Pool<Var> var_pool;
 
     unordered_map<string, const Sym *> syms;
-    unordered_map<const Sym *, Val> consts;
     
     list<Ref *> refs;
-    vector<Type *> types;
     unordered_map<string, OpType *> op_types;
     list<Env *> envs;
     Env env;
@@ -66,11 +64,7 @@ namespace cidk {
     Cx();
     ~Cx();
 
-    void init_types(const Pos &pos);
-
-    void add_const(const Pos &pos, const string &id, const Val &val);
     void eval(const Ops &in, Env &env);
-    optional<Val> get_const(const Pos &pos, const Sym *id);
     const Sym *intern(const string &name);
     void load(const Pos &pos, const string &path, Ops &out);
     void mark(const Pos &pos);
@@ -98,8 +92,9 @@ namespace cidk {
   template <typename TypeT, typename...Rest>
   TypeT &Env::add_type(const Pos &pos,
                        const string &id,
+                       const vector<Type *> parents,
                        Rest &&...rest) {
-    TypeT *t(new TypeT(cx, pos, cx.intern(id), forward<Rest>(rest)...));
+    TypeT *t(new TypeT(cx, pos, cx.intern(id), parents, forward<Rest>(rest)...));
     
     set(pos,
         t->id,

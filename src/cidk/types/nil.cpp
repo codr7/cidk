@@ -3,8 +3,11 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  NilType::NilType(Cx &cx, const Pos &pos, const Sym *id):
-    ValType(cx, pos, id) { }
+  NilType::NilType(Cx &cx,
+                   const Pos &pos,
+                   const Sym *id,
+                   const vector<Type *> &parents):
+    ValType(cx, pos, id, parents) { }
 
   void NilType::dump(const Pos &Pos, const Val &val, ostream &out) const {
     out << '_';

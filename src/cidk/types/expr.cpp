@@ -3,8 +3,11 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  ExprType::ExprType(Cx &cx, const Pos &pos, const Sym *id):
-    TValType<Expr *>(cx, pos, id) { }
+  ExprType::ExprType(Cx &cx,
+                     const Pos &pos,
+                     const Sym *id,
+                     const vector<Type *> &parents):
+    TValType<Expr *>(cx, pos, id, parents) { }
 
   void ExprType::dump(const Pos &Pos, const Val &val, ostream &out) const {
     out << "{\n";

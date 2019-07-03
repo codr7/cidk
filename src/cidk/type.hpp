@@ -11,9 +11,9 @@ namespace cidk {
   struct Type: Def {
     Env &env;
     
-    Type(Cx &cx, const Pos &pos, const Sym *id);
-    virtual void init();
+    Type(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents);
 
+    void derive(Type &parent);
     void mark(const Pos &pos);
     virtual void sweep(const Pos &pos) override;
   };

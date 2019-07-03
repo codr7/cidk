@@ -3,12 +3,11 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  IntType::IntType(Cx &cx, const Pos &pos, const Sym *id):
-    TValType<Int>(cx, pos, id) { }
-
-  void IntType::add(const Pos &pos, Val &x, const Val &y) const {
-    x.as_int += y.as_int;
-  }
+  IntType::IntType(Cx &cx,
+                   const Pos &pos,
+                   const Sym *id,
+                   const vector<Type *> &parents):
+    TValType<Int>(cx, pos, id, parents) { }
 
   void IntType::dump(const Pos &Pos, const Val &val, ostream &out) const {
     out << val.as_int;
@@ -20,10 +19,6 @@ namespace cidk {
 
   bool IntType::is(const Pos &pos, const Val &x, const Val &y) const {
     return x.as_int == y.as_int;
-  }
-
-  bool IntType::lt(const Pos &pos, Val &x, const Val &y) const {
-    return x.as_int < y.as_int;
   }
 
   void IntType::set(const Pos &pos, Val &dst, Int val) const { dst.as_int = val; }
