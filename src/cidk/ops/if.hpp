@@ -8,12 +8,13 @@ namespace cidk::ops {
   struct IfType: OpType {
     IfType(string id);
     void init(Op &op, const Val &cond, const Val &x, const Val &y) const;
-    virtual void eval(const Op &op, Env &env) const override;
+    virtual void eval(const Op &op, Env &env, Stack &stack) const override;
 
     virtual void read(Cx &cx,
                       Pos &pos,
                       istream &in,
                       Env &env,
+                      Stack &stack,
                       Ops &out) const override;
   };
 

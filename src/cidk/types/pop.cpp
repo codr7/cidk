@@ -17,8 +17,8 @@ namespace cidk {
 
   void PopType::dup(Val &dst, const Val &src) const { }
 
-  void PopType::eval(const Pos &pos, const Val &val, Env &env) const {
-    pop(pos, env.cx.stack, false)->eval(pos, env);
+  void PopType::eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
+    pop(pos, stack, false)->eval(pos, env, stack);
   }
 
   bool PopType::is(const Pos &pos, const Val &x, const Val &y) const { return true; }

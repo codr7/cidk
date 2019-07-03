@@ -9,13 +9,17 @@ namespace cidk::ops {
 
   void DupType::init(Op &op) const { }
 
-  void DupType::eval(const Op &op, Env &env) const {
-    Stack &s(env.cx.stack);
-    s.emplace_back(s.back());
+  void DupType::eval(const Op &op, Env &env, Stack &stack) const {
+    stack.emplace_back(stack.back());
   }
 
-  void DupType::read(Cx &cx, Pos &pos, istream &in, Env &env, Ops &out) const {
-    read_eop(pos, in, env);
+  void DupType::read(Cx &cx,
+                     Pos &pos,
+                     istream &in,
+                     Env &env,
+                     Stack &stack,
+                     Ops &out) const {
+    read_eop(pos, in, env, stack);
     out.emplace_back(pos, *this);
   }
 }

@@ -3,6 +3,10 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
+  void mark_items(Pos &pos, Stack &s) {
+    for (Val &v: s) { v.mark_refs(pos); }
+  }
+
   optional<Val> pop(const Pos &pos, Stack &s, bool silent) {
     if (s.empty()) {
       if (!silent) { throw ESys(pos, "Stack is empty"); }

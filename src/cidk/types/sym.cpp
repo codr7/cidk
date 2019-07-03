@@ -1,6 +1,5 @@
 #include <iostream>
 
-#include "cidk/call.hpp"
 #include "cidk/cx.hpp"
 #include "cidk/types/sym.hpp"
 #include "cidk/val.hpp"
@@ -20,8 +19,8 @@ namespace cidk {
     dst.as_sym = src.as_sym;
   }
 
-  void SymType::eval(const Pos &pos, const Val &val, Env &env) const {
-    cx.stack.emplace_back(*env.get(pos, val.as_sym, false));
+  void SymType::eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
+    stack.emplace_back(*env.get(pos, val.as_sym, false));
   }
     
   bool SymType::is(const Pos &pos, const Val &x, const Val &y) const {

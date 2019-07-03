@@ -19,11 +19,10 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  static void Bool_imp(Call &call) {
+  static void Bool_imp(Call &call, Env &env, Stack &stack) {
     auto &cx(call.cx);
-    auto &s(cx.stack);
-    auto &v(s.back());
-    s.back().reset(call.pos, cx.bool_type, v.type->Bool(call.pos, v));
+    auto &v(stack.back());
+    v.reset(call.pos, cx.bool_type, v.type->Bool(call.pos, v));
   }
   
   Cx::Cx():
@@ -59,7 +58,6 @@ namespace cidk {
 
   Cx::~Cx() {
     env.clear();
-    stack.clear();
 
     while (refs.size() > 1) {
       mark(Pos::_);
@@ -71,9 +69,9 @@ namespace cidk {
 #endif
   }
 
-  void Cx::eval(const Ops &in, Env &env) {
+  void Cx::eval(const Ops &in, Env &env, Stack &stack) {
     for (const Op &o: in) { 
-      o.eval(env); 
+      o.eval(env, stack); 
       if (eval_state != EvalState::go) { break; }
     }
   }
@@ -91,15 +89,15 @@ namespace cidk {
     if (f.fail()) { throw ESys(pos, "File not found: ", path); }
 
     Pos p(path);
-    read_ops(p, f, *env_pool.get(env), out);
+    Stack stack;
+    read_ops(p, f, *env_pool.get(env), stack, out);
   }
 
   void Cx::mark(const Pos &pos) {
     for (Ref *r: refs) { r->is_marked = false; }
-
+    
     env.is_marked = true;
     for (Env *e: envs) { e->mark_items(pos); }
-    for (Val &v: stack) { v.mark_refs(pos); }
   }
   
   void Cx::sweep(const Pos &pos) {

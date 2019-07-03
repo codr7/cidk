@@ -16,7 +16,7 @@ namespace cidk {
   struct Pos;
   
   struct Fun: Def {
-    using Imp = function<void (Call &)>;
+    using Imp = function<void (Call &, Env &, Stack &)>;
 
     Env &env;
     Imp imp;

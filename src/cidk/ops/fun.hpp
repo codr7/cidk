@@ -8,12 +8,13 @@ namespace cidk::ops {
   struct FunType: OpType {
     FunType(string id);
     void init(Op &op, Fun *fun) const;
-    virtual void eval(const Op &op, Env &env) const override;
+    virtual void eval(const Op &op, Env &env, Stack &stack) const override;
 
     virtual void read(Cx &cx,
                       Pos &pos,
                       istream &in,
                       Env &env,
+                      Stack &stack,
                       Ops &out) const override;
   };
 

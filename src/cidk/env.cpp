@@ -30,8 +30,8 @@ namespace cidk {
     set(Pos::_, cx.intern(id), val, false);
   }
 
-  void Env::call(const Pos &pos, const Sym *id) {
-    get(pos, id, false)->call(pos);
+  void Env::call(const Pos &pos, const Sym *id, Env &env, Stack &stack) {
+    get(pos, id, false)->call(pos, env, stack);
   }
 
   void Env::clear() { items.clear(); }

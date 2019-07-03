@@ -7,6 +7,7 @@
 
 #include "cidk/arg.hpp"
 #include "cidk/ref.hpp"
+#include "cidk/stack.hpp"
 
 namespace cidk {
   using namespace std;
@@ -53,7 +54,7 @@ namespace cidk {
 
     void add_var(const Pos &pos, const string &id, const Val &val);
 
-    void call(const Pos &pos, const Sym *id);
+    void call(const Pos &pos, const Sym *id, Env &env, Stack &stack);
     
     void clear();
     optional<Val> get(const Pos &pos, const Sym *key, bool silent);

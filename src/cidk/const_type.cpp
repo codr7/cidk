@@ -24,10 +24,10 @@ namespace cidk {
 
   void ConstType::dup(Val &dst, const Val &src) const { val_type.dup(dst, src); }
 
-  void ConstType::eval(const Pos &pos, const Val &val, Env &env) const {
+  void ConstType::eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
     Val v;
     clone(pos, v, val);
-    cx.stack.emplace_back(v);
+    stack.emplace_back(v);
   }
 
   bool ConstType::is(const Pos &pos, const Val &x, const Val &y) const {

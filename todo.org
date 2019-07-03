@@ -1,5 +1,3 @@
-* remove cx.stack
-** pass ref as arg instead
 * add do-env/stack ops
 * add 'const id val' op
 ** use add_const

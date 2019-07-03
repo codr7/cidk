@@ -7,10 +7,13 @@
 namespace cidk {
   using namespace std;
 
+  struct Pos;
   struct Val;
   
   using Stack = vector<Val>;
 
+  void mark_items(Pos &pos, Stack &s);
+  
   optional<Val> pop(const Pos &pos, Stack &s, bool silent);
 }
 

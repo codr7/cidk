@@ -13,14 +13,14 @@ namespace cidk {
     cx.call = prev;
   }
 
-  void Call::eval() {
+  void Call::eval(Env &env, Stack &stack) {
     auto imp(target.imp);
     
-    if (imp) { imp(*this); }
+    if (imp) { imp(*this, env, stack); }
     else {
       Env &env(*cx.env_pool.get(target.env));
     recall:
-      target.body.eval(pos, env);
+      target.body.eval(pos, env, stack);
       
       if (cx.eval_state == EvalState::recall) {
         env = target.env;

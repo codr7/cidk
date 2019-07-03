@@ -22,28 +22,31 @@ namespace cidk::ops {
     op.data = d;
   }
 
-  void IfType::eval(const Op &op, Env &env) const {
-    Cx &cx(env.cx);
-    Stack &s(cx.stack);
+  void IfType::eval(const Op &op, Env &env, Stack &stack) const {
     Data d(op.as<Data>());
     auto p(op.pos);
-    d.cond.eval(p, env);
-    if (pop(p, s, false)->Bool(p)) { d.x.eval(p, env); }
-    else { d.y.eval(p, env); }
+    d.cond.eval(p, env, stack);
+    if (pop(p, stack, false)->Bool(p)) { d.x.eval(p, env, stack); }
+    else { d.y.eval(p, env, stack); }
   }
 
-  void IfType::read(Cx &cx, Pos &pos, istream &in, Env &env, Ops &out) const {
+  void IfType::read(Cx &cx,
+                    Pos &pos,
+                    istream &in,
+                    Env &env,
+                    Stack &stack,
+                    Ops &out) const {
     auto p(pos);
 
-    auto cond(read_val(pos, in, env));
+    auto cond(read_val(pos, in, env, stack));
     if (!cond) { throw ESys(p, "Missing if cond"); }
 
-    auto x(read_val(pos, in, env));
+    auto x(read_val(pos, in, env, stack));
     if (!x) { throw ESys(p, "Missing if branch"); }
 
-    auto y(read_val(pos, in, env));
+    auto y(read_val(pos, in, env, stack));
     if (!y) { throw ESys(p, "Missing else branch"); }
-    read_eop(pos, in, env);
+    read_eop(pos, in, env, stack);
 
     out.emplace_back(p, *this, *cond, *x, *y);
   }

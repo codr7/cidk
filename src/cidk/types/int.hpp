@@ -15,7 +15,7 @@ namespace cidk {
     virtual void dup(Val &dst, const Val &src) const override;
     virtual bool is(const Pos &pos, const Val &x, const Val &y) const override;
     virtual void set(const Pos &pos, Val &dst, Int val) const override;
-    virtual void splat(const Pos &pos, Val &val) override;
+    virtual void splat(const Pos &pos, Val &val, Env &env, Stack &stack) override;
 
     virtual bool Bool(const Pos &pos, const Val &val) const override;
   };

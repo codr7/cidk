@@ -19,8 +19,8 @@ namespace cidk {
     dst.as_expr = src.as_expr;
   }
 
-  void ExprType::eval(const Pos &pos, const Val &val, Env &env) const {
-    cx.eval(val.as_expr->body, env);
+  void ExprType::eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
+    cx.eval(val.as_expr->body, env, stack);
   }
 
   bool ExprType::is(const Pos &pos, const Val &x, const Val &y) const {

@@ -11,8 +11,8 @@ namespace cidk {
                    const vector<Type *> &parents):
     TValType<Fun *>(cx, pos, id, parents) { }
 
-  void FunType::call(const Pos &pos, const Val &val) const {
-    Call(cx, pos, *val.as_fun).eval();
+  void FunType::call(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
+    Call(cx, pos, *val.as_fun).eval(env, stack);
   }
 
   void FunType::dump(const Pos &Pos, const Val &val, ostream &out) const {

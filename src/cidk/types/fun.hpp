@@ -13,7 +13,11 @@ namespace cidk {
     
     FunType(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents);
 
-    virtual void call(const Pos &pos, const Val &val) const override;
+    virtual void call(const Pos &pos,
+                      const Val &val,
+                      Env &env,
+                      Stack &stack) const override;
+    
     virtual void dump(const Pos &Pos, const Val &val, ostream &out) const override;
     virtual void dup(Val &dst, const Val &src) const override;
     virtual bool is(const Pos &pos, const Val &x, const Val &y) const override;

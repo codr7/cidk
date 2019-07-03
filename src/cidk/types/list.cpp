@@ -32,9 +32,8 @@ namespace cidk {
 
   void ListType::set(const Pos &pos, Val &dst, List *val) const { dst.as_list = val; }
 
-  void ListType::splat(const Pos &pos, Val &val) {
-    auto &s(cx.stack);
-    for (auto &v: val.as_list->items) { s.emplace_back(v); }
+  void ListType::splat(const Pos &pos, Val &val, Env &env, Stack &stack) {
+    for (auto &v: val.as_list->items) { stack.emplace_back(v); }
   }
 
   void ListType::sweep(const Pos &pos, Val &val) { val.as_list->sweep(pos); }

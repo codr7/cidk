@@ -5,58 +5,51 @@
 #include "cidk/types/bool.hpp"
 
 namespace cidk::libs {
-  static void add_imp(Call &call) {
+  static void add_imp(Call &call, Env &env, Stack &stack) {
     auto &cx(call.cx);
     auto p(call.pos);
-    auto &s(cx.stack);
 
-    auto i(s.end()-1);
-    Val y(*i--);
-    auto &x(*i);
+    auto i(stack.end()-1);
+    Val y(*i--), &x(*i);
     ValType *xt(x.type), *yt(y.type);
     
     if (xt == yt) {
-      xt->env.call(p, cx.intern("+"));
+      xt->env.call(p, cx.intern("+"), env, stack);
     } else {
-      xt->env.call(p, cx.intern(str("+/", yt->id)));
+      xt->env.call(p, cx.intern(str("+/", yt->id)), env, stack);
     }
   }
 
-  static void int_add_imp(Call &call) {
-    auto &cx(call.cx);
+  static void int_add_imp(Call &call, Env &env, Stack &stack) {
     auto p(call.pos);
-    auto &s(cx.stack);    
-    Val y(*pop(p, s, false)), &x(s.back());
+    Val y(*pop(p, stack, false)), &x(stack.back());
     x.as_int += y.as_int;
   }
 
-  static void lt_imp(Call &call) {
+  static void lt_imp(Call &call, Env &env, Stack &stack) {
     auto &cx(call.cx);
     auto p(call.pos);
-    auto &s(cx.stack);
 
-    auto i(s.end()-1);
-    Val y(*i--);
-    auto &x(*i);
+    auto i(stack.end()-1);
+    Val y(*i--), &x(*i);
     ValType *xt(x.type), *yt(y.type);
     
     if (xt == yt) {
-      xt->env.call(p, cx.intern("<"));
+      xt->env.call(p, cx.intern("<"), env, stack);
     } else {
-      xt->env.call(p, cx.intern(str("</", yt->id)));
+      xt->env.call(p, cx.intern(str("</", yt->id)), env, stack);
     }
   }
 
-  static void int_lt_imp(Call &call) {
+  static void int_lt_imp(Call &call, Env &env, Stack &stack) {
     auto &cx(call.cx);
     auto p(call.pos);
-    auto &s(cx.stack);
-    Val y(*pop(p, s, false)), &x(s.back());
+    Val y(*pop(p, stack, false)), &x(stack.back());
     x.reset(p, cx.bool_type, x.as_int < y.as_int);
   }
 
-  static void int_dec_imp(Call &call) {
-    call.cx.stack.back().as_int--;
+  static void int_dec_imp(Call &call, Env &env, Stack &stack) {
+    stack.back().as_int--;
   }
 
   void init_math(Cx &cx) {

@@ -8,14 +8,15 @@
 using namespace std;
 
 void test(cidk::Cx &cx) {
-  auto &s(cx.stack);
+  cidk::Stack s;
+  
   auto p(cidk::Pos::_);
   
   cidk::Val v(p, cx.int_type, cidk::Int(42));
   assert(v.as<cidk::Int>() == 42);
   assert(v.eq(p, v));
 
-  v.splat(p);
+  v.splat(p, cx.env, s);
   assert(s.size() == 42);
   assert(s.back().as_int == 41);
 }
@@ -24,14 +25,14 @@ int main(int argc, char *argv[]) {
   auto p(cidk::Pos::_);
 
   cidk::Cx cx;
-  cidk::Env &env(*cx.env_pool.get(cx.env));
-
   test(cx);
   
   while (--argc && ++argv) {
     cidk::Ops ops;
     cx.load(p, *argv, ops);
-    cx.eval(ops, env);
+
+    cidk::Stack stack;
+    cx.eval(ops, cx.env, stack);
   }
   
   return 0;

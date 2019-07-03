@@ -53,7 +53,6 @@ namespace cidk {
     SymType &sym_type;
 
     EvalState eval_state;
-    Stack stack;
     Call *call;
     
     const Val _, S, T, F, eop;
@@ -64,7 +63,7 @@ namespace cidk {
     Cx();
     ~Cx();
 
-    void eval(const Ops &in, Env &env);
+    void eval(const Ops &in, Env &env, Stack &stack);
     const Sym *intern(const string &name);
     void load(const Pos &pos, const string &path, Ops &out);
     void mark(const Pos &pos);

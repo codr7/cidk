@@ -16,7 +16,9 @@ namespace cidk {
     return *this;
   }
 
-  void Val::call(const Pos &pos) { type->call(pos, *this); }
+  void Val::call(const Pos &pos, Env &env, Stack &stack) {
+    type->call(pos, *this, env, stack);
+  }
 
   Val &Val::clone(const Pos &pos, Val &dst) const {
     dst.type = type;
@@ -34,8 +36,8 @@ namespace cidk {
 
   bool Val::eq(const Pos &pos, const Val &y) const { return type->eq(pos, *this, y); }
 
-  void Val::eval(const Pos &pos, Env &env) const {
-    return type->eval(pos, *this, env);
+  void Val::eval(const Pos &pos, Env &env, Stack &stack) const {
+    return type->eval(pos, *this, env, stack);
   }
 
   bool Val::is(const Pos &pos, const Val &y) const { return type->is(pos, *this, y); }
@@ -50,7 +52,9 @@ namespace cidk {
     type->mark_refs(pos, *this);
   }
 
-  void Val::splat(const Pos &pos) { return type->splat(pos, *this); }
+  void Val::splat(const Pos &pos, Env &env, Stack &stack) {
+    return type->splat(pos, *this, env, stack);
+  }
 
   void Val::sweep(const Pos &pos) { return type->sweep(pos, *this); }
 

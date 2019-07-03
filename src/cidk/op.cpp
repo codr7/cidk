@@ -10,7 +10,7 @@ namespace cidk {
     Op::types().emplace(id, this);
   }
 
-  void Op::eval(Env &env) const {
-    type->eval(*this, env);
+  void Op::eval(Env &env, Stack &stack) const {
+    type->eval(*this, env, stack);
   }
 }
