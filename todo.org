@@ -10,6 +10,7 @@
 * enable mem pools & compare
 * add fib_tail from snigl
 * --
+* add repl
 * add env.update(is, function<void>(Val &))
 ** use setter (set-X in current env) if available
 * add 'include' op

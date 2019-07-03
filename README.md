@@ -21,6 +21,14 @@ Welcome to cidk! This project aims to implement a stack machine devkit with inte
 ### Opcode Reference
 
 #### call fun+
+Calls functions in specified order.
+
+```
+  push 7 14 21;
+  call + +;
+
+42
+```
 
 #### const [id val]+
 Defines env-scoped compile time constants.
