@@ -23,16 +23,12 @@
 ** init arg ids
 * add Fun.rets (Rets)
 * finish Fun dump
-* change Env.get to return optional<Val>
-* move ValType.splat to env
-** update Val.splat()
-** add Splat op
+* add Splat op
 * derive Int from Num
 * add lambda support
 ** &{...}
 ** anonymous Fun
 * add mark/sweep ops
-* --
 * add Char type
 ** char32_t
 * add Str type
