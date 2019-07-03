@@ -35,7 +35,6 @@
 ** &{...}
 ** use anonymous Fun
 * add mark/sweep ops
-* add README
 * --
 * add Char type
 ** char32_t
