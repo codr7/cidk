@@ -23,7 +23,7 @@ Welcome to cidk! This project aims to implement a stack machine devkit with inte
 #### call fun+
 
 #### const [id val]+
-Defines `env`-scoped compile time constants.
+Defines env-scoped compile time constants.
 
 ```
   do-env {
@@ -41,12 +41,16 @@ Unknown id: foo
 ```
 
 #### do-env expr
+Evaluates expression in separate environment.
 
 #### do-stack expr
+Evaluates expression on a fresh stack.
 
 #### dump val+
+Dumps values to stderr.
 
 #### push val+
+Pushes values on stack.
 
 ### License
 MIT
