@@ -18,13 +18,12 @@
 ** add '-reader
 * add ListType.clone override
 ** only clone list structure
-* add ValType.eq/clone & forward default like dump
-** add List eq
+* add List eq
 * add Fun.args (Args)
 ** init arg ids
 * add Fun.rets (Rets)
 * finish Fun dump
-* switch Env.get to return optional<Val>
+* change Env.get to return optional<Val>
 * move ValType.splat to env
 ** update Val.splat()
 ** add Splat op
