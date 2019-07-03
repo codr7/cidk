@@ -9,7 +9,7 @@
 ** add Bench op
 *** i & j for outer/inner loop
 * enable mem pools & compare
-* add fib_rec
+* add fib_tail from snigl
 * --
 * add 'include' op
 ** vararg like 'call'
