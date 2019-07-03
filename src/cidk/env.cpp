@@ -44,8 +44,8 @@ namespace cidk {
   }
 
   void Env::mark(const Pos &pos) {
-    if (ref_state == RefState::_) {
-      ref_state = RefState::mark;
+    if (!is_marked) {
+      is_marked = true;
       mark_items(pos);
     }
   }

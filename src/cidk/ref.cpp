@@ -2,5 +2,5 @@
 #include "cidk/ref.hpp"
 
 namespace cidk {
-  Ref::Ref(Cx &cx): cx(cx), ref_state(RefState::mark) { cx.refs.push_back(this); }
+  Ref::Ref(Cx &cx): cx(cx), is_marked(true) { cx.refs.push_back(this); }
 }

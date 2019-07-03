@@ -25,8 +25,7 @@ namespace cidk {
   }
 
   void ExprType::mark_refs(const Pos &pos, const Val &val) {
-    Expr &e(*val.as_expr);
-    e.ref_state = RefState::mark;
+    val.as_expr->is_marked = true;
   }
 
   void ExprType::set(const Pos &pos, Val &dst, Expr *val) const {

@@ -105,9 +105,9 @@ namespace cidk {
   }
 
   void Cx::mark(const Pos &pos) {
-    for (Ref *r: refs) { r->ref_state = RefState::_; }
+    for (Ref *r: refs) { r->is_marked = false; }
 
-    env.ref_state = RefState::mark;
+    env.is_marked = true;
     for (Env *e: envs) { e->mark_items(pos); }
     for (Val &v: stack) { v.mark_refs(pos); }
   }
@@ -116,7 +116,7 @@ namespace cidk {
     for (auto i(refs.begin()); i != refs.end();) {
       Ref *r(*i);
 
-      if (r->ref_state == RefState::mark) {
+      if (r->is_marked) {
         i++;
       } else {
         i = refs.erase(i);

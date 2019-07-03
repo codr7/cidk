@@ -68,7 +68,7 @@ namespace cidk {
   }
   
   void Val::mark_refs(const Pos &pos) {
-    type->ref_state = RefState::mark;
+    type->is_marked = true;
     type->mark_refs(pos, *this);
   }
 

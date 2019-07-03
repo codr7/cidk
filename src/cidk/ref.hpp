@@ -1,19 +1,15 @@
 #ifndef CIDK_REF_HPP
 #define CIDK_REF_HPP
 
-#include <list>
-
 namespace cidk {
   using namespace std;
 
   struct Cx;
   struct Pos;
 
-  enum struct RefState { _, mark, sweep };
-  
   struct Ref {    
     Cx &cx;
-    RefState ref_state;
+    bool is_marked;
 
     Ref(Cx &cx);
     virtual ~Ref() = default;

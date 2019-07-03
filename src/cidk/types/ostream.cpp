@@ -20,7 +20,7 @@ namespace cidk {
   }
 
   void OStreamType::mark_refs(const Pos &pos, const Val &val) {
-    val.as_ostream->ref_state = RefState::mark;
+    val.as_ostream->is_marked = true;
   }
 
   void OStreamType::set(const Pos &pos, Val &dst, OStream *val) const {

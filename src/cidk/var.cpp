@@ -6,7 +6,7 @@ namespace cidk {
     Ref(env->cx), cx(env->cx), pos(pos), env(env), val(val) { }
 
   void Var::mark(const Pos &pos) {
-    ref_state = RefState::mark;
+    is_marked = true;
     val.mark_refs(pos);
   }
   
