@@ -1,10 +1,19 @@
+* store consts in env
+** remove cx.consts
+** add ConstType
+*** clone on eval
+** move add_const to env
+** remove get_const
+** add ConstType *ValType.const_type
+*** null default
+*** lazy init in add_const
 * add 'const id val' op
 ** use add_const
 * mark cx.consts in cx.mark()
+* ---
 * mark call stack funs in cx.mark()
 * remove add-method from ValType
 ** override in Int Env
-* --
 * bench/fib_rec.al
 ** add Bench op
 *** i & j for outer/inner loop

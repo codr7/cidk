@@ -16,7 +16,7 @@ dump;
 ```
 
 ### Intro
-Welcome to cidk! This project aims to implement a stack machine devkit with integrated assembler. While most virtual machines resemble physical CPU's to some degree; cidk is designed to cater to the specific needs of dynamic languages, and therefore operates at a higher level.
+Welcome to cidk! This project aims to implement a stack machine devkit with integrated assembler in C++. While most virtual machines resemble physical CPUs to some degree; cidk is designed to cater to the specific needs of dynamic languages, and therefore operates at a higher level.
 
 ### License
 MIT
