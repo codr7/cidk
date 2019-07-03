@@ -49,13 +49,13 @@ Unknown id: foo
 ```
 
 #### do-env expr
-Evaluates expression in separate environment.
+Evaluates expression in new environment.
 
 #### do-stack expr
-Evaluates expression on a fresh stack.
+Evaluates expression on new stack.
 
 #### dump val+
-Dumps values to stderr.
+Dumps values to `stderr`.
 
 #### push val+
 Pushes values on stack.
