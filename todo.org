@@ -1,6 +1,11 @@
+* remove cx.stack
+** pass ref as arg instead
+* add do-env/stack ops
 * add 'const id val' op
 ** use add_const
+* test const-example from README
 * mark call stack funs in cx.mark()
+* --
 * bench/fib_rec.al
 ** add Bench op
 *** i & j for outer/inner loop
