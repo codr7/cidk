@@ -23,17 +23,17 @@ namespace cidk {
 
     if (!idv) {
       if (in.eof()) { return false; }
-      throw ERead(p, "Missing op code");
+      throw ESys(p, "Missing op code");
     }
 
     if (idv->type != &cx.sym_type) {
-      throw EWrongType(p, "Invalid op code: ", idv->type);
+      throw ESys(p, "Invalid op code: ", idv->type->id);
     }
     
     auto id(idv->as_sym->name);
     auto found(cx.op_types.find(id));
     if (id == "") { throw exception(); }
-    if (found == cx.op_types.end()) { throw EUnknownOp(pos, id); } 
+    if (found == cx.op_types.end()) { throw ESys(pos, "Unknown op: ", id); } 
     OpType &ot(*found->second);
     ot.read(cx, p, *this, env, out);
     return true;
@@ -42,8 +42,7 @@ namespace cidk {
   void Reader::read_eop(Env &env) {
     Pos p = pos;
     auto v(read_val(env));
-    if (!v) { throw ERead(p, "Missing ;"); }
-    if (!v->is_eop()) { throw ERead(p, "Expected ;"); }
+    if (!v || !v->is_eop()) { throw ESys(p, "Missing ;"); }
   }
 
   optional<Val> Reader::read_val(Env &env) {
@@ -64,7 +63,7 @@ namespace cidk {
         in.unget();
         if (isdigit(c)) { return read_num(env); }
         if (isgraph(c)) { return read_id(env); }
-        throw ERead(str("Invalid input: ", c));
+        throw ESys(pos, "Invalid input: ", c);
       };
     }
     
@@ -78,7 +77,7 @@ namespace cidk {
     
     for (;;) {
       skip_ws();
-      if (!in.get(c)) { throw ERead(pos, "Open expr"); }
+      if (!in.get(c)) { throw ESys(pos, "Open expr"); }
 
       if (c == '}') {
         pos.col++;
@@ -86,7 +85,7 @@ namespace cidk {
       }
       
       in.unget();
-      if (!read_op(env, out->body)) { throw ERead(pos, "Open expr"); }
+      if (!read_op(env, out->body)) { throw ESys(pos, "Open expr"); }
     }
     
     return Val(p, cx.expr_type, out);
@@ -118,7 +117,7 @@ namespace cidk {
     char c(0);
     
     for (;;) {
-      if (!in.get(c)) { throw ERead(pos, "Open list"); }
+      if (!in.get(c)) { throw ESys(pos, "Open list"); }
 
       if (c == ')') {
         pos.col++;
@@ -127,7 +126,7 @@ namespace cidk {
       
       in.unget();
       auto v(read_val(env));
-      if (!v) { throw ERead(pos, "Open list"); }
+      if (!v) { throw ESys(pos, "Open list"); }
       out->items.push_back(*v);
     }
     

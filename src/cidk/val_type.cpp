@@ -47,7 +47,7 @@ namespace cidk {
   }
 
   void ValType::add(const Pos &pos, Val &x, const Val &y) const {
-    throw ENotSupported(pos, "+");
+    throw ESys(pos, "Not supported: +");
   }
 
   void ValType::call(const Pos &pos, const Val &val) const {
@@ -59,7 +59,7 @@ namespace cidk {
   }
 
   bool ValType::lt(const Pos &pos, Val &x, const Val &y) const {
-    throw ENotSupported(pos, "<");  
+    throw ESys(pos, "Not supported: <");  
   }
 
   void ValType::mark_refs(const Pos &pos, const Val &val) { }

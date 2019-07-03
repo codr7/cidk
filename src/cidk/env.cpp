@@ -15,7 +15,7 @@ namespace cidk {
 
   bool Env::add(const Pos &pos, const Sym *key, const Val &val, bool silent) {
     if (items.emplace(key, cx.var_pool.get(pos, this, val)).second) { return true; }
-    if (!silent) { throw EDupVar(pos, key); }
+    if (!silent) { throw ESys(pos, "Dup var: ", key); }
     return false;
   }
 
@@ -35,7 +35,7 @@ namespace cidk {
     auto found(items.find(key));
 
     if (found == items.end()) {
-      if (!silent) { throw EUnknownId(pos, key); }
+      if (!silent) { throw ESys(pos, "Unknown id: ", key); }
       return false;
     }
 

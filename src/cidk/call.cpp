@@ -9,7 +9,7 @@ namespace cidk {
   }
 
   Call::~Call() noexcept(false) {
-    if (cx.call != this) { throw ESys(pos, "Calls ended out of order"); }
+    if (cx.call != this) { throw ESys(pos, "Call ended out of order"); }
     cx.call = prev;
   }
 

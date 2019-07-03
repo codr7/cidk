@@ -69,8 +69,9 @@ namespace cidk {
   }
 
   void Cx::add_const(const Pos &pos, const string &id, const Val &val) {
-    auto sid(intern(id));
-    if (!consts.emplace(sid, val).second) { throw EDupConst(pos, sid); }
+    if (!consts.emplace(intern(id), val).second) {
+      throw ESys(pos, "Dup const: ", id);
+    }
   }
 
   void Cx::eval(const Ops &in, Env &env) {
@@ -99,7 +100,7 @@ namespace cidk {
 
   void Cx::load(const Pos &pos, const string &path, Ops &out) {
     ifstream f(path);
-    if (f.fail()) { throw ESys(pos, str("File not found: ", path)); }
+    if (f.fail()) { throw ESys(pos, "File not found: ", path); }
     Reader(*this, Pos(path), f).read_ops(*env_pool.get(env), out);
   }
 

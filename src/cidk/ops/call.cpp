@@ -17,7 +17,7 @@ namespace cidk::ops {
     op.as<Val>().eval(p, env);
     auto f(*pop(p, cx.stack, false));
     Type *ft(f.type);
-    if (ft != &cx.fun_type) { throw EWrongType(p, "Invalid call target: ", ft); }
+    if (ft != &cx.fun_type) { throw ESys(p, "Invalid call target: ", ft->id); }
     cidk::Call(cx, op.pos, *f.as_fun).eval();
   }
 
@@ -27,7 +27,7 @@ namespace cidk::ops {
     
     for (;; n++) {
       auto v(in.read_val(env));
-      if (!v) { throw ERead(p, "Missing ;"); }
+      if (!v) { throw ESys(p, "Missing ;"); }
       if (v->is_eop()) { break; }
 
       if (v->type != &cx.pop_type) {
@@ -35,7 +35,7 @@ namespace cidk::ops {
         Val fv(*pop(p, cx.stack, false));
       
         if (fv.type != &cx.fun_type) {
-          throw EWrongType(p, "Invalid call target: ", fv.type);
+          throw ESys(p, "Invalid call target: ", fv.type->id);
         }
 
         v.emplace(fv);

@@ -23,13 +23,13 @@ namespace cidk::ops {
     auto p(pos);
 
     auto id(in.read_val(env));
-    if (!id) { throw ERead(p, "Missing fun id"); }
+    if (!id) { throw ESys(p, "Missing fun id"); }
 
     auto args(in.read_val(env));
-    if (!args) { throw ERead(p, "Missing fun args"); }
+    if (!args) { throw ESys(p, "Missing fun args"); }
 
     auto rets(in.read_val(env));
-    if (!rets) { throw ERead(p, "Missing fun rets"); }
+    if (!rets) { throw ESys(p, "Missing fun rets"); }
 
     cidk::Fun *f(cx.fun_type.pool.get(cx, pos, 
                                       id->as_sym,
@@ -39,7 +39,7 @@ namespace cidk::ops {
     env.set(p, f->id, Val(p, cx.fun_type, f), false);
     Env &body_env(*cx.env_pool.get(env));
     auto body(in.read_val(body_env));
-    if (!body) { throw ERead(p, "Missing fun body"); }
+    if (!body) { throw ESys(p, "Missing fun body"); }
     in.read_eop(env);
     f->body = *body;
     out.emplace_back(p, *this, f);

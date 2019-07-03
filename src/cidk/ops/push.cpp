@@ -21,7 +21,7 @@ namespace cidk::ops {
 
     for (;; n++) {
       auto v(in.read_val(env));
-      if (!v) { throw ERead(p, "Missing ;"); }
+      if (!v) { throw ESys(p, "Missing ;"); }
       if (v->is_eop()) { break; }
       out.emplace_back(p, *this, *v);
     }

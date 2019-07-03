@@ -35,13 +35,13 @@ namespace cidk::ops {
     auto p(pos);
 
     auto cond(in.read_val(env));
-    if (!cond) { throw ERead(p, "Missing if cond"); }
+    if (!cond) { throw ESys(p, "Missing if cond"); }
 
     auto x(in.read_val(env));
-    if (!x) { throw ERead(p, "Missing if branch"); }
+    if (!x) { throw ESys(p, "Missing if branch"); }
 
     auto y(in.read_val(env));
-    if (!y) { throw ERead(p, "Missing else branch"); }
+    if (!y) { throw ESys(p, "Missing else branch"); }
     in.read_eop(env);
 
     out.emplace_back(p, *this, *cond, *x, *y);
