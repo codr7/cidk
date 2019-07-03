@@ -1,5 +1,6 @@
 #include "cidk/cx.hpp"
 #include "cidk/ops/swap.hpp"
+#include "cidk/read.hpp"
 
 namespace cidk::ops {
   const SwapType Swap("swap");
@@ -14,8 +15,8 @@ namespace cidk::ops {
     iter_swap(i-1, i);
   }
 
-  void SwapType::read(Cx &cx, const Pos &pos, Reader &in, Env &env, Ops &out) const {
-    in.read_eop(env);
+  void SwapType::read(Cx &cx, Pos &pos, istream &in, Env &env, Ops &out) const {
+    read_eop(pos, in, env);
     out.emplace_back(pos, *this);
   }
 }

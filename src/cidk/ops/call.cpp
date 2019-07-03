@@ -2,6 +2,7 @@
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
 #include "cidk/ops/call.hpp"
+#include "cidk/read.hpp"
 #include "cidk/types/pop.hpp"
 
 namespace cidk::ops {
@@ -21,12 +22,12 @@ namespace cidk::ops {
     cidk::Call(cx, op.pos, *f.as_fun).eval();
   }
 
-  void CallType::read(Cx &cx, const Pos &pos, Reader &in, Env &env, Ops &out) const {
+  void CallType::read(Cx &cx, Pos &pos, istream &in, Env &env, Ops &out) const {
     Pos p(pos);
     int n(0);
     
     for (;; n++) {
-      auto v(in.read_val(env));
+      auto v(read_val(pos, in, env));
       if (!v) { throw ESys(p, "Missing ;"); }
       if (v->is_eop()) { break; }
 

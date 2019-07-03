@@ -1,5 +1,6 @@
 #include "cidk/cx.hpp"
 #include "cidk/ops/recall.hpp"
+#include "cidk/read.hpp"
 
 namespace cidk::ops {
   const RecallType Recall("recall");
@@ -13,11 +14,11 @@ namespace cidk::ops {
   }
 
   void RecallType::read(Cx &cx,
-                        const Pos &pos,
-                        Reader &in,
+                        Pos &pos,
+                        istream &in,
                         Env &env,
                         Ops &out) const {
-    in.read_eop(env);
+    read_eop(pos, in, env);
     out.emplace_back(pos, *this);
   }
 }

@@ -1,6 +1,7 @@
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
 #include "cidk/ops/if.hpp"
+#include "cidk/read.hpp"
 #include "cidk/stack.hpp"
 #include "cidk/types/nil.hpp"
 
@@ -31,18 +32,18 @@ namespace cidk::ops {
     else { d.y.eval(p, env); }
   }
 
-  void IfType::read(Cx &cx, const Pos &pos, Reader &in, Env &env, Ops &out) const {
+  void IfType::read(Cx &cx, Pos &pos, istream &in, Env &env, Ops &out) const {
     auto p(pos);
 
-    auto cond(in.read_val(env));
+    auto cond(read_val(pos, in, env));
     if (!cond) { throw ESys(p, "Missing if cond"); }
 
-    auto x(in.read_val(env));
+    auto x(read_val(pos, in, env));
     if (!x) { throw ESys(p, "Missing if branch"); }
 
-    auto y(in.read_val(env));
+    auto y(read_val(pos, in, env));
     if (!y) { throw ESys(p, "Missing else branch"); }
-    in.read_eop(env);
+    read_eop(pos, in, env);
 
     out.emplace_back(p, *this, *cond, *x, *y);
   }

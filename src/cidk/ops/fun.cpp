@@ -2,6 +2,7 @@
 #include "cidk/e.hpp"
 #include "cidk/list.hpp"
 #include "cidk/ops/fun.hpp"
+#include "cidk/read.hpp"
 
 namespace cidk::ops {
   const FunType Fun("fun");
@@ -19,16 +20,16 @@ namespace cidk::ops {
     if (f->id) { env.set(p, f->id, Val(p, cx.fun_type, f), false); }
   }
 
-  void FunType::read(Cx &cx, const Pos &pos, Reader &in, Env &env, Ops &out) const {
+  void FunType::read(Cx &cx, Pos &pos, istream &in, Env &env, Ops &out) const {
     auto p(pos);
 
-    auto id(in.read_val(env));
+    auto id(read_val(pos, in, env));
     if (!id) { throw ESys(p, "Missing fun id"); }
 
-    auto args(in.read_val(env));
+    auto args(read_val(pos, in, env));
     if (!args) { throw ESys(p, "Missing fun args"); }
 
-    auto rets(in.read_val(env));
+    auto rets(read_val(pos, in, env));
     if (!rets) { throw ESys(p, "Missing fun rets"); }
 
     cidk::Fun *f(cx.fun_type.pool.get(cx, pos, 
@@ -38,9 +39,9 @@ namespace cidk::ops {
 
     env.set(p, f->id, Val(p, cx.fun_type, f), false);
     Env &body_env(*cx.env_pool.get(env));
-    auto body(in.read_val(body_env));
+    auto body(read_val(pos, in, body_env));
     if (!body) { throw ESys(p, "Missing fun body"); }
-    in.read_eop(env);
+    read_eop(pos, in, env);
     f->body = *body;
     out.emplace_back(p, *this, f);
   }

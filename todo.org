@@ -2,10 +2,6 @@
 ** use add_const
 * mark cx.consts in cx.mark()
 * mark call stack funs in cx.mark()
-* drop Reader struct
-** add pos/in to functions + op types
-** use env.cx
-** rename files to read.h/cpp
 * remove add-method from ValType
 ** override in Int Env
 * --

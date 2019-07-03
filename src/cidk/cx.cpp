@@ -5,7 +5,7 @@
 #include "cidk/e.hpp"
 #include "cidk/libs/math.hpp"
 #include "cidk/op.hpp"
-#include "cidk/reader.hpp"
+#include "cidk/read.hpp"
 #include "cidk/str.hpp"
 #include "cidk/types/bool.hpp"
 #include "cidk/types/expr.hpp"
@@ -101,7 +101,9 @@ namespace cidk {
   void Cx::load(const Pos &pos, const string &path, Ops &out) {
     ifstream f(path);
     if (f.fail()) { throw ESys(pos, "File not found: ", path); }
-    Reader(*this, Pos(path), f).read_ops(*env_pool.get(env), out);
+
+    Pos p(path);
+    read_ops(p, f, *env_pool.get(env), out);
   }
 
   void Cx::mark(const Pos &pos) {

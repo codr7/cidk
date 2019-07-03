@@ -1,6 +1,7 @@
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
 #include "cidk/ops/push.hpp"
+#include "cidk/read.hpp"
 
 namespace cidk::ops {
   const PushType Push("push");
@@ -15,12 +16,12 @@ namespace cidk::ops {
     op.as<Val>().eval(op.pos, env);
   }
 
-  void PushType::read(Cx &cx, const Pos &pos, Reader &in, Env &env, Ops &out) const {
+  void PushType::read(Cx &cx, Pos &pos, istream &in, Env &env, Ops &out) const {
     auto p(pos);
     int n(0);
 
     for (;; n++) {
-      auto v(in.read_val(env));
+      auto v(read_val(pos, in, env));
       if (!v) { throw ESys(p, "Missing ;"); }
       if (v->is_eop()) { break; }
       out.emplace_back(p, *this, *v);

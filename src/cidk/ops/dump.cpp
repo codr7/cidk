@@ -1,6 +1,7 @@
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
 #include "cidk/ops/dump.hpp"
+#include "cidk/read.hpp"
 #include "cidk/types/nil.hpp"
 #include "cidk/types/pop.hpp"
 
@@ -22,12 +23,12 @@ namespace cidk::ops {
     out << endl;
   }
 
-  void DumpType::read(Cx &cx, const Pos &pos, Reader &in, Env &env, Ops &out) const {
+  void DumpType::read(Cx &cx, Pos &pos, istream &in, Env &env, Ops &out) const {
     Pos p(pos);
     int n(0);
     
     for (;; n++) {
-      auto v(in.read_val(env));
+      auto v(read_val(pos, in, env));
       if (!v) { throw ESys(p, "Missing ;"); }
       if (v->is_eop()) { break; }
       out.emplace_back(p, *this, *v);

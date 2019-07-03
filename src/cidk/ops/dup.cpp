@@ -1,5 +1,6 @@
 #include "cidk/cx.hpp"
 #include "cidk/ops/dup.hpp"
+#include "cidk/read.hpp"
 
 namespace cidk::ops {
   const DupType Dup("dup");
@@ -13,8 +14,8 @@ namespace cidk::ops {
     s.emplace_back(s.back());
   }
 
-  void DupType::read(Cx &cx, const Pos &pos, Reader &in, Env &env, Ops &out) const {
-    in.read_eop(env);
+  void DupType::read(Cx &cx, Pos &pos, istream &in, Env &env, Ops &out) const {
+    read_eop(pos, in, env);
     out.emplace_back(pos, *this);
   }
 }

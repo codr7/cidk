@@ -7,12 +7,12 @@
 
 #include "cidk/ops.hpp"
 #include "cidk/pos.hpp"
-#include "cidk/reader.hpp"
 
 namespace cidk {
   using namespace std;
 
   struct Cx;
+  struct Env;
   struct Op;
   struct Pos;
   
@@ -22,8 +22,8 @@ namespace cidk {
     virtual void eval(const Op &op, Env &env) const = 0;
 
     virtual void read(Cx &cx, 
-                      const Pos &pos, 
-                      Reader &in, 
+                      Pos &pos, 
+                      istream &in, 
                       Env &env, 
                       Ops &out) const = 0;
   };

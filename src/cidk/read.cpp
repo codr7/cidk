@@ -4,7 +4,7 @@
 
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
-#include "cidk/reader.hpp"
+#include "cidk/read.hpp"
 #include "cidk/str.hpp"
 #include "cidk/types/expr.hpp"
 #include "cidk/types/list.hpp"
@@ -12,14 +12,14 @@
 #include "cidk/types/sym.hpp"
 
 namespace cidk {
-  Reader::Reader(Cx &cx, const Pos &pos, istream &in):
-    cx(cx), pos(pos), in(in) { }
+  void read_ops(Pos &pos, istream &in, Env &env, Ops &out) {
+    while (read_op(pos, in, env, out));
+  }
 
-  void Reader::read_ops(Env &env, Ops &out) { while (read_op(env, out)); }
-
-  bool Reader::read_op(Env &env, Ops &out) {
+  bool read_op(Pos &pos, istream &in, Env &env, Ops &out) {
+    Cx &cx(env.cx);
     Pos p(pos);
-    auto idv(read_val(env));
+    auto idv(read_val(pos, in, env));
 
     if (!idv) {
       if (in.eof()) { return false; }
@@ -35,34 +35,35 @@ namespace cidk {
     if (id == "") { throw exception(); }
     if (found == cx.op_types.end()) { throw ESys(pos, "Unknown op: ", id); } 
     OpType &ot(*found->second);
-    ot.read(cx, p, *this, env, out);
+    ot.read(cx, pos, in, env, out);
     return true;
   }
 
-  void Reader::read_eop(Env &env) {
+  void read_eop(Pos &pos, istream &in, Env &env) {
     Pos p = pos;
-    auto v(read_val(env));
+    auto v(read_val(pos, in, env));
     if (!v || !v->is_eop()) { throw ESys(p, "Missing ;"); }
   }
 
-  optional<Val> Reader::read_val(Env &env) {
-    skip_ws();
+  optional<Val> read_val(Pos &pos, istream &in, Env &env) {
+    Cx &cx(env.cx);
+    skip_ws(pos, in);
     
     if (char c(0); in.get(c)) {
       switch (c) {
       case '(':
         pos.col++;
-        return read_list(env);
+        return read_list(pos, in, env);
       case '{':
         pos.col++;
-        return read_expr(env);
+        return read_expr(pos, in, env);
       case ';':
         pos.col++;
         return cx.eop;
       default:
         in.unget();
-        if (isdigit(c)) { return read_num(env); }
-        if (isgraph(c)) { return read_id(env); }
+        if (isdigit(c)) { return read_num(pos, in, env); }
+        if (isgraph(c)) { return read_id(pos, in, env); }
         throw ESys(pos, "Invalid input: ", c);
       };
     }
@@ -70,13 +71,14 @@ namespace cidk {
     return {};
   }
   
-  Val Reader::read_expr(Env &env) {
+  Val read_expr(Pos &pos, istream &in, Env &env) {
+    Cx &cx(env.cx);
     Pos p(pos);
     Expr *out(cx.expr_type.pool.get(cx));
     char c(0);
     
     for (;;) {
-      skip_ws();
+      skip_ws(pos, in);
       if (!in.get(c)) { throw ESys(pos, "Open expr"); }
 
       if (c == '}') {
@@ -85,14 +87,15 @@ namespace cidk {
       }
       
       in.unget();
-      if (!read_op(env, out->body)) { throw ESys(pos, "Open expr"); }
+      if (!read_op(pos, in, env, out->body)) { throw ESys(pos, "Open expr"); }
     }
     
     return Val(p, cx.expr_type, out);
   }
 
-  Val Reader::read_id(Env &env) {
-    const Pos p(pos);
+  Val read_id(Pos &pos, istream &in, Env &env) {
+    Cx &cx(env.cx);
+    Pos p(pos);
     stringstream out;
     char c(0);
     
@@ -111,7 +114,8 @@ namespace cidk {
     return Val(p, cx.sym_type, id);
   }
   
-  Val Reader::read_list(Env &env) {
+  Val read_list(Pos &pos, istream &in, Env &env) {    
+    Cx &cx(env.cx);
     Pos p(pos);
     List *out(cx.list_type.pool.get(cx));
     char c(0);
@@ -125,7 +129,7 @@ namespace cidk {
       }
       
       in.unget();
-      auto v(read_val(env));
+      auto v(read_val(pos, in, env));
       if (!v) { throw ESys(pos, "Open list"); }
       out->items.push_back(*v);
     }
@@ -133,8 +137,9 @@ namespace cidk {
     return Val(p, cx.list_type, out);
   }
   
-  Val Reader::read_num(Env &env) {
-    const Pos p(pos);
+  Val read_num(Pos &pos, istream &in, Env &env) {
+    Cx &cx(env.cx);
+    Pos p(pos);
     stringstream out;
     char c(0);
     
@@ -149,7 +154,7 @@ namespace cidk {
     return Val(p, cx.int_type, n);
   }
 
-  void Reader::skip_ws() {
+  void skip_ws(Pos &pos, istream &in) {
     char c(0);
 
     while (in.get(c) && isspace(c)) {
