@@ -57,8 +57,8 @@ namespace cidk {
     
     const Val _, S, T, F, eop;
     
-    istream &stdin;
-    ostream &stdout, &stderr;
+    istream *stdin;
+    ostream *stdout, *stderr;
     
     Cx();
     ~Cx();

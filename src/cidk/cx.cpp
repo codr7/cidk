@@ -47,7 +47,7 @@ namespace cidk {
     T(Pos::_, bool_type, true),
     F(Pos::_, bool_type, false),
     eop(Pos::_, sym_type, intern(";")),
-    stdin(cin), stdout(cout), stderr(cerr) {
+    stdin(&cin), stdout(&cout), stderr(&cerr) {
     libs::init_math(*this);
     env.add_const(Pos::_, "_", _);
     env.add_const(Pos::_, "$", S);

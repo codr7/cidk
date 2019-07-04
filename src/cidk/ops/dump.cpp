@@ -17,7 +17,7 @@ namespace cidk::ops {
     Pos p(op.pos);
     op.as<Val>().eval(p, env, stack);
     auto v(*pop(p, stack, false));
-    auto &out(cx.stderr);
+    auto &out(*cx.stderr);
     v.dump(p, out);
     out << endl;
   }

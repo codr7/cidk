@@ -32,7 +32,7 @@ $ ./cidk ../demo/stack.al
 ```
 
 ### Syntax
-Each statement starts with an opcode and ends with a semicolon, arguments are separated by whitespace.
+Each statement starts with an opcode and ends with semicolon, arguments are separated by whitespace.
 
 ```
   push 35 7;
