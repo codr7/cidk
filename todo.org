@@ -1,3 +1,10 @@
+* skip fun env copy unless used
+** add bool OpType.modifies_env
+*** set in const/fun/macro types
+*** check in fun body when read
+*** set Fun.modifies_env
+**** use in Call to trigger copy
+* ---
 * add stack accessor like env
 ** op + macro
 ** push as list & move items
