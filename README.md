@@ -88,8 +88,8 @@ Evaluates body in environment. Passing `_` creates a new empty environment, whil
 ()
 ```
 
-#### do-stack init? body
-Evaluates body on stack. Passing `_` creates a new empty stack, while `T` moves the current stack.
+#### do-stack stack? body
+Evaluates body on stack. Passing `_` creates a new empty stack.
 
 #### dump val+
 Dumps values to `stderr`.
