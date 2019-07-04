@@ -21,9 +21,13 @@ namespace cidk {
   }
 
   void Env::add_const(const Pos &pos, const string &id, const Val &val) {
+    add_const(pos, cx.intern(id), val);
+  }
+
+  void Env::add_const(const Pos &pos, const Sym *id, const Val &val) {
     auto v(val);
     v.type = &v.type->const_type(pos);
-    add(pos, cx.intern(id), v, false);
+    add(pos, id, v, false);
   }
 
   void Env::add_var(const Pos &pos, const string &id, const Val &val) {

@@ -1,12 +1,12 @@
-#ifndef CIDK_OP_CALL_HPP
-#define CIDK_OP_CALL_HPP
+#ifndef CIDK_OP_DO_ENV_HPP
+#define CIDK_OP_DO_ENV_HPP
 
 #include "cidk/op.hpp"
 
 namespace cidk::ops {
-  struct CallType: OpType {
-    CallType(string id);
-    void init(Op &op, const Val &target) const;
+  struct DoEnvType: OpType {
+    DoEnvType(string id);
+    void init(Op &op, const Val &body) const;
     virtual void eval(const Op &op, Env &env, Stack &stack) const override;
 
     virtual void read(Cx &cx,
@@ -17,7 +17,7 @@ namespace cidk::ops {
                       Ops &out) const override;
   };
 
-  extern const CallType Call;
+  extern const DoEnvType DoEnv;
 }
 
 #endif

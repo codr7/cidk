@@ -1,7 +1,8 @@
-* add do-env/stack ops
-* add 'const id val' op
-** use add_const
-* test const-example from README
+* add this-env
+** add Env type
+* add do-stack op
+* add this-stack
+** move to list
 * mark call stack funs in cx.mark()
 * --
 * bench/fib_rec.al
@@ -20,6 +21,8 @@
 * add Quote type
 ** struct with embedded Val
 ** add '-reader
+* add List eval
+** eval items on separate stack and swap
 * add ListType.clone override
 ** only clone list structure
 * add List eq

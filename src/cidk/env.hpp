@@ -35,6 +35,7 @@ namespace cidk {
     bool add(const Pos &pos, const Sym *key, const Val &val, bool silent);
 
     void add_const(const Pos &pos, const string &id, const Val &val);
+    void add_const(const Pos &pos, const Sym *id, const Val &val);
 
     template <typename...Rest>
     Fun &add_fun(const Pos &pos,

@@ -1,12 +1,13 @@
-#ifndef CIDK_OP_CALL_HPP
-#define CIDK_OP_CALL_HPP
+#ifndef CIDK_OP_CONST_HPP
+#define CIDK_OP_CONST_HPP
 
 #include "cidk/op.hpp"
+#include "cidk/val.hpp"
 
 namespace cidk::ops {
-  struct CallType: OpType {
-    CallType(string id);
-    void init(Op &op, const Val &target) const;
+  struct ConstType: OpType {
+    ConstType(string id);
+    void init(Op &op, const Val &val) const;
     virtual void eval(const Op &op, Env &env, Stack &stack) const override;
 
     virtual void read(Cx &cx,
@@ -17,7 +18,7 @@ namespace cidk::ops {
                       Ops &out) const override;
   };
 
-  extern const CallType Call;
+  extern const ConstType Const;
 }
 
 #endif
