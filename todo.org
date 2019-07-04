@@ -6,7 +6,6 @@
 * add do-stack op
 ** add init arg
 *** empty if _
-*** move if T
 *** splat otherwise
 * add stack op
 ** push stack as list
