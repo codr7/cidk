@@ -13,10 +13,17 @@
 * enable mem pools & compare
 * add fib_tail from snigl
 * --
+* add mark/sweep ops
 * add repl
 ** launch if no args
 ** only eval if last char is ;
 ** clear stack on empty input
+* add Fun.args (Args)
+** init arg ids
+* add Fun.rets (Rets)
+* --
+* add >
+** default using lt
 * add env.update(is, function<void>(Val &))
 ** use setter (set-X in current env) if available
 * add 'include' op
@@ -26,21 +33,14 @@
 * add Quote type
 ** struct with embedded Val
 ** add '-reader
-* add Fun.args (Args)
-** init arg ids
-* add Fun.rets (Rets)
 * add Splat op
-* derive Int from Num
 * add lambda support
 ** &{...}
 ** anonymous Fun
-* add mark/sweep ops
 * add Char type
 ** char32_t
 * add Str type
 ** read as utf-8
 *** https://stackoverflow.com/questions/16208079/how-to-work-with-utf-8-in-c-conversion-from-other-encodings-to-utf-8
 ** splat chars
-* add >
-** default using lt
 * add optional offset args to dup/swap ops
