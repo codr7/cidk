@@ -27,6 +27,7 @@ namespace cidk {
   }
   
   Cx::Cx():
+    debug(false),
     op_types(Op::types()),
     env(*this),
     meta_type(env.add_type<MetaType>(Pos::_, "Meta")),
@@ -59,7 +60,7 @@ namespace cidk {
     env.add_fun(Pos::_, "Bool", {Arg("val")}, {Ret(bool_type)}, Bool_imp);
   }
 
-  Cx::~Cx() {
+  void Cx::deinit() {
     env.clear();
 
     while (refs.size() > 1) {

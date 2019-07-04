@@ -81,7 +81,7 @@ Unknown id: foo
 Evaluates body in new environment.
 
 #### do-stack body
-Evaluates body on new< stack.
+Evaluates body on new stack.
 
 #### dump val+
 Dumps values to `stderr`.

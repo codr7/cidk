@@ -28,12 +28,18 @@ int main(int argc, char *argv[]) {
   test(cx);
   
   while (--argc && ++argv) {
-    cidk::Ops ops;
-    cx.load(p, *argv, ops);
+    string a(*argv);
 
-    cidk::Stack stack;
-    cx.eval(ops, cx.env, stack);
+    if (a == "-debug") { cx.debug = true; }
+    else {
+      cidk::Ops ops;
+      cx.load(p, a, ops);
+      
+      cidk::Stack stack;
+      cx.eval(ops, cx.env, stack);
+    }
   }
-  
+
+  if (cx.debug) { cx.deinit(); }
   return 0;
 }

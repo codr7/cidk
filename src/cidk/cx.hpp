@@ -29,6 +29,8 @@ namespace cidk {
   enum struct EvalState { go, recall };
     
   struct Cx {
+    bool debug;
+    
     Pool<Env> env_pool;
     Pool<Sym> sym_pool;    
     Pool<Var> var_pool;
@@ -64,8 +66,8 @@ namespace cidk {
     ostream *stdout, *stderr;
     
     Cx();
-    ~Cx();
 
+    void deinit();
     void eval(const Ops &in, Env &env, Stack &stack);
     const Sym *intern(const string &name);
     void load(const Pos &pos, const string &path, Ops &out);
