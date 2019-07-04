@@ -1,12 +1,7 @@
-* add do-stack op
-** add init arg
-*** empty if _
-*** splat otherwise
 * add stack accessor like env
 ** op + macro
 ** push as list & move items
 * mark call stack funs in cx.mark()
-* --
 * bench/fib_rec.al
 ** add Bench op
 *** i & j for outer/inner loop

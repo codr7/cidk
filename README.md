@@ -72,13 +72,19 @@ Evaluates body in environment. Passing `_` creates a new empty environment, whil
 `env` evaluates to the current environment.
 
 ```
-  do-env _ {dump env;};
+  do-env _ {push env;};
   
-()
+[... ()]
 ```
 
 #### do-stack in? body
 Evaluates body on stack. Passing `_` creates a new empty stack.
+
+```
+  do-stack (35 7) {call +;};
+
+[... 42]
+```
 
 #### dump val*
 Dumps values to `stderr`, or pops value from stack if no arguments.
