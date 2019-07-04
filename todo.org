@@ -1,4 +1,8 @@
+* add optional env arg to do-env
+** _ for new
 * add do-stack op
+** add init arg
+*** splat in new stack
 * add stack op
 ** push stack as list
 *** move items
