@@ -1,2 +1,2 @@
-dump env;
-do-env {dump env;};
+do-env _ {dump env;};
+do-env T {dump env;};

@@ -6,7 +6,7 @@
 namespace cidk::ops {
   struct DoEnvType: OpType {
     DoEnvType(string id);
-    void init(Op &op, const Val &body) const;
+    void init(Op &op, const Val &in, const Val &body) const;
     virtual void eval(const Op &op, Env &env, Stack &stack) const override;
 
     virtual void read(Cx &cx,

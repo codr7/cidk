@@ -72,7 +72,7 @@ Error in 'test.al' on row 1, col 5:
 Unknown id: foo
 ```
 
-#### do-env env? body
+#### do-env in? body
 Evaluates body in environment. Passing `_` creates a new empty environment, while `T` creates one derived from the current.
 
 `env` evaluates to the current environment.
@@ -83,7 +83,7 @@ Evaluates body in environment. Passing `_` creates a new empty environment, whil
 ()
 ```
 
-#### do-stack stack? body
+#### do-stack in? body
 Evaluates body on stack. Passing `_` creates a new empty stack.
 
 #### dump val+
