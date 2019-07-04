@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "cidk/call.hpp"
+#include "cidk/sym.hpp"
 #include "cidk/types/fun.hpp"
 #include "cidk/val.hpp"
 

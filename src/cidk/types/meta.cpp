@@ -1,4 +1,5 @@
 #include <iostream>
+#include "cidk/sym.hpp"
 #include "cidk/types/meta.hpp"
 #include "cidk/val.hpp"
 
@@ -10,7 +11,7 @@ namespace cidk {
     TValType<Type *>(cx, pos, id, parents) { }
 
   void MetaType::dump(const Pos &Pos, const Val &val, ostream &out) const {
-    out << val.as_type->id;
+    out << "type/" << val.as_type->id;
   }
 
   void MetaType::dup(Val &dst, const Val &src) const {

@@ -9,6 +9,7 @@
 #include "cidk/read.hpp"
 #include "cidk/str.hpp"
 #include "cidk/types/bool.hpp"
+#include "cidk/types/env.hpp"
 #include "cidk/types/expr.hpp"
 #include "cidk/types/int.hpp"
 #include "cidk/types/nil.hpp"
@@ -32,6 +33,7 @@ namespace cidk {
     any_type(env.add_type<Type>(Pos::_, "Any")),
     num_type(env.add_type<Type>(Pos::_, "Num")),
     bool_type(env.add_type<BoolType>(Pos::_, "Bool", {&any_type})),
+    env_type(env.add_type<EnvType>(Pos::_, "Env", {&any_type})),
     expr_type(env.add_type<ExprType>(Pos::_, "Expr", {&any_type})),
     fun_type(env.add_type<FunType>(Pos::_, "Fun", {&any_type})),
     int_type(env.add_type<IntType>(Pos::_, "Int", {&any_type, &num_type})),
@@ -42,6 +44,7 @@ namespace cidk {
     sym_type(env.add_type<SymType>(Pos::_, "Sym", {&any_type})),
     eval_state(EvalState::go),
     call(nullptr),
+    env_sym(intern("env")),
     _(nil_type),
     S(pop_type),
     T(Pos::_, bool_type, true),

@@ -17,6 +17,7 @@
 namespace cidk {
   struct Call;
   struct BoolType;
+  struct EnvType;
   struct ExprType;
   struct ListType;
   struct MetaType;
@@ -43,6 +44,7 @@ namespace cidk {
     Type &any_type, &num_type;
     
     BoolType &bool_type;
+    EnvType &env_type;
     ExprType &expr_type;
     FunType &fun_type;
     IntType &int_type;
@@ -55,6 +57,7 @@ namespace cidk {
     EvalState eval_state;
     Call *call;
     
+    const Sym *env_sym;
     const Val _, S, T, F, eop;
     
     istream *stdin;

@@ -24,6 +24,7 @@ namespace cidk {
     union {
       any as_any;
       bool as_bool;
+      Env *as_env;
       Expr *as_expr;
       Fun *as_fun;
       Int as_int;

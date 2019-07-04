@@ -1,8 +1,7 @@
-* add this-env
-** add Env type
 * add do-stack op
-* add this-stack
-** move to list
+* add stack op
+** push stack as list
+*** move items
 * mark call stack funs in cx.mark()
 * --
 * bench/fib_rec.al
@@ -13,6 +12,7 @@
 * --
 * add repl
 ** launch if no args
+** only eval if last char is ;
 ** clear stack on empty input
 * add env.update(is, function<void>(Val &))
 ** use setter (set-X in current env) if available
@@ -23,8 +23,6 @@
 * add Quote type
 ** struct with embedded Val
 ** add '-reader
-* add List eval
-** eval items on separate stack and swap
 * add Fun.args (Args)
 ** init arg ids
 * add Fun.rets (Rets)

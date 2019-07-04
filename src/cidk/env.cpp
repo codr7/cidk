@@ -7,7 +7,8 @@ namespace cidk {
   Env::Env(Cx &cx): Ref(cx), it(cx.envs.insert(cx.envs.end(), this)) { }
 
   Env::Env(const Env &src):
-    Ref(src.cx), it(cx.envs.insert(cx.envs.end(), this)), items(src.items) { }
+    Ref(src.cx), it(cx.envs.insert(cx.envs.end(), this)), items(src.items) {
+  }
 
   Env &Env::operator =(const Env &src) {
     items = src.items;
