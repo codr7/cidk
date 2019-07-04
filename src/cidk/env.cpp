@@ -2,13 +2,14 @@
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
 #include "cidk/env.hpp"
+#include "cidk/ops/env.hpp"
+#include "cidk/types/expr.hpp"
 
-namespace cidk {
+namespace cidk {  
   Env::Env(Cx &cx): Ref(cx), it(cx.envs.insert(cx.envs.end(), this)) { }
 
   Env::Env(const Env &src):
-    Ref(src.cx), it(cx.envs.insert(cx.envs.end(), this)), items(src.items) {
-  }
+    Ref(src.cx), it(cx.envs.insert(cx.envs.end(), this)), items(src.items) { }
 
   Env &Env::operator =(const Env &src) {
     items = src.items;
@@ -17,7 +18,7 @@ namespace cidk {
 
   bool Env::add(const Pos &pos, const Sym *key, const Val &val, bool silent) {
     if (items.emplace(key, cx.var_pool.get(pos, this, val)).second) { return true; }
-    if (!silent) { throw ESys(pos, "Dup var: ", key); }
+    if (!silent) { throw ESys(pos, "Dup binding: ", key); }
     return false;
   }
 

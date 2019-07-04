@@ -6,6 +6,7 @@
 #include "cidk/e.hpp"
 #include "cidk/libs/math.hpp"
 #include "cidk/op.hpp"
+#include "cidk/ops/env.hpp"
 #include "cidk/read.hpp"
 #include "cidk/str.hpp"
 #include "cidk/types/bool.hpp"
@@ -20,6 +21,13 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
+  static void env_imp(const Macro &m,
+                      Pos &pos,
+                      istream &in,
+                      Env &env,
+                      Stack &stack,
+                      Ops &out) { out.emplace_back(pos, ops::Env); }
+  
   static void Bool_imp(Call &call, Env &env, Stack &stack) {
     auto &cx(call.cx);
     auto &v(stack.back());
@@ -39,13 +47,13 @@ namespace cidk {
     fun_type(env.add_type<FunType>(Pos::_, "Fun", {&any_type})),
     int_type(env.add_type<IntType>(Pos::_, "Int", {&any_type, &num_type})),
     list_type(env.add_type<ListType>(Pos::_, "List", {&any_type})),
+    macro_type(env.add_type<MacroType>(Pos::_, "Macro", {&any_type})),
     nil_type(env.add_type<NilType>(Pos::_, "Nil", {&any_type})),
     ostream_type(env.add_type<OStreamType>(Pos::_, "OStream", {&any_type})),
     pop_type(env.add_type<PopType>(Pos::_, "Pop", {&any_type})),
     sym_type(env.add_type<SymType>(Pos::_, "Sym", {&any_type})),
     eval_state(EvalState::go),
     call(nullptr),
-    env_sym(intern("env")),
     _(nil_type),
     S(pop_type),
     T(Pos::_, bool_type, true),
@@ -57,6 +65,9 @@ namespace cidk {
     env.add_const(Pos::_, "$", S);
     env.add_const(Pos::_, "T", T);
     env.add_const(Pos::_, "F", F);
+    
+    env.add_macro(Pos::_, "env", env_imp);
+    
     env.add_fun(Pos::_, "Bool", {Arg("val")}, {Ret(bool_type)}, Bool_imp);
   }
 

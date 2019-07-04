@@ -1,13 +1,9 @@
-* add env op
-** remove cx.env_sym + eval hack
-** push env from eval
-** bind 'env' to expr that calls op
-*** cache expr in cx
 * add do-stack op
 ** add init arg
 *** empty if _
 *** splat otherwise
 * add stack accessor like env
+** op + macro
 ** push as list & move items
 * mark call stack funs in cx.mark()
 * --
@@ -33,7 +29,6 @@
 * add Fun.args (Args)
 ** init arg ids
 * add Fun.rets (Rets)
-* finish Fun dump
 * add Splat op
 * derive Int from Num
 * add lambda support

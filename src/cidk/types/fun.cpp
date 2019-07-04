@@ -17,7 +17,7 @@ namespace cidk {
   }
 
   void FunType::dump(const Pos &Pos, const Val &val, ostream &out) const {
-    out << val.as_fun->id << "()()";
+    out << "fun/" << val.as_fun->id;
   }
 
   void FunType::dup(Val &dst, const Val &src) const {

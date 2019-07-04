@@ -21,11 +21,7 @@ namespace cidk {
   }
 
   void SymType::eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
-    Cx &cx(env.cx);
-    auto s(val.as_sym);
-    
-    if (s == cx.env_sym) { stack.emplace_back(pos, cx.env_type, &env); }
-    else { stack.emplace_back(*env.get(pos, s, false)); }
+    stack.emplace_back(*env.get(pos, val.as_sym, false));
   }
     
   bool SymType::is(const Pos &pos, const Val &x, const Val &y) const {

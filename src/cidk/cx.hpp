@@ -12,6 +12,7 @@
 #include "cidk/stack.hpp"
 #include "cidk/sym.hpp"
 #include "cidk/types/fun.hpp"
+#include "cidk/types/macro.hpp"
 #include "cidk/var.hpp"
 
 namespace cidk {
@@ -51,6 +52,7 @@ namespace cidk {
     FunType &fun_type;
     IntType &int_type;
     ListType &list_type;
+    MacroType &macro_type;
     NilType &nil_type;
     OStreamType &ostream_type;
     PopType &pop_type;
@@ -59,7 +61,6 @@ namespace cidk {
     EvalState eval_state;
     Call *call;
     
-    const Sym *env_sym;
     const Val _, S, T, F, eop;
     
     istream *stdin;
@@ -91,6 +92,19 @@ namespace cidk {
     
     set(pos, f->id, Val(pos, ft, f), false);
     return *f;
+  }
+
+  template <typename...Rest>
+  Macro &Env::add_macro(const Pos &pos, const string &id, Rest &&...rest) {
+    auto &t(cx.macro_type);
+    
+    Macro *m(t.pool.get(cx,
+                        pos,
+                        cx.intern(id),
+                        forward<Rest>(rest)...));
+    
+    set(pos, m->id, Val(pos, t, m), false);
+    return *m;
   }
 
   template <typename TypeT, typename...Rest>

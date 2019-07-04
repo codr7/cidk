@@ -5,7 +5,5 @@
 namespace cidk {
   Expr::Expr(Cx &cx): Ref(cx) { }
 
-  void Expr::sweep(const Pos &pos) {
-    cx.expr_type.pool.put(this);
-  }
+  void Expr::sweep(const Pos &pos) { cx.expr_type.pool.put(this); }
 }

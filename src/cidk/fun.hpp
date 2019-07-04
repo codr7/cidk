@@ -5,8 +5,6 @@
 
 #include "cidk/arg.hpp"
 #include "cidk/def.hpp"
-#include "cidk/op.hpp"
-#include "cidk/ref.hpp"
 #include "cidk/stack.hpp"
 #include "cidk/val.hpp"
 
