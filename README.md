@@ -10,9 +10,6 @@ fun fib(Int)(Int) {
     call dec fib +;
   };
 };
-
-bench 10 10 {push 20; call fib;};
-dump;
 ```
 
 ### Intro
