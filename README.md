@@ -36,7 +36,7 @@ Each statement starts with an opcode and ends with semicolon, arguments are sepa
 [... 42]
 ```
 
-### Opcode Reference
+### Opcodes
 
 #### call fun+
 Calls functions in specified order.
