@@ -36,12 +36,6 @@ Each statement starts with an opcode and ends with semicolon, arguments are sepa
 [... 42]
 ```
 
-Curly braces may be used to treat statements as values.
-
-```
-  do-env {this-env; dump;};
-```
-
 ### Opcode Reference
 
 #### call fun+
