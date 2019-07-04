@@ -47,7 +47,7 @@ Calls functions in specified order.
 ```
 
 #### const [id val]+
-Defines env-scoped compile time constants.
+Defines compile time constants.
 
 ```
   do-env {
