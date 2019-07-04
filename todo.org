@@ -2,9 +2,8 @@
 ** add init arg
 *** empty if _
 *** splat otherwise
-* add stack op
-** push stack as list
-*** move items
+* add cx.stack_sym & handle in Sym eval like 'env'
+** push stack as list & move items
 * mark call stack funs in cx.mark()
 * --
 * bench/fib_rec.al
