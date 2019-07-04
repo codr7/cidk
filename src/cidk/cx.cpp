@@ -21,8 +21,8 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  static void env_imp(const Macro &m,
-                      Pos &pos,
+  static void env_imp(Pos &pos,
+                      const Macro &m,
                       istream &in,
                       Env &env,
                       Stack &stack,

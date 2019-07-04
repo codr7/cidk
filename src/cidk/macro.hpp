@@ -12,8 +12,8 @@ namespace cidk {
   struct Pos;
   
   struct Macro: Def {
-    using Imp = function<void (const Macro &,
-                               Pos &,
+    using Imp = function<void (Pos &,
+                               const Macro &,
                                istream &,
                                Env &, Stack &,
                                Ops &)>;
