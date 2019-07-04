@@ -1,8 +1,13 @@
 * add optional env arg to do-env
-** _ for new
+** _ for new empty
+** T for new derived
+** derived from arg otherwise
+** test README example
 * add do-stack op
 ** add init arg
-*** splat in new stack
+*** empty if _
+*** move if T
+*** splat otherwise
 * add stack op
 ** push stack as list
 *** move items

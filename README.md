@@ -77,11 +77,19 @@ Error in 'test.al' on row 1, col 5:
 Unknown id: foo
 ```
 
-#### do-env body
-Evaluates body in new environment.
+#### do-env env? body
+Evaluates body in environment. Passing `_` creates a new empty environment, while `T` creates one derived from the current.
 
-#### do-stack body
-Evaluates body on new stack.
+`env` evaluates to the current environment.
+
+```
+  do-env _ {dump env;};
+  
+()
+```
+
+#### do-stack init? body
+Evaluates body on stack. Passing `_` creates a new empty stack, while `T` moves the current stack.
 
 #### dump val+
 Dumps values to `stderr`.
