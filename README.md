@@ -18,6 +18,19 @@ dump;
 ### Intro
 Welcome to cidk! This project aims to implement a stack machine devkit with integrated assembler in C++. While most virtual machines resemble physical CPUs to some degree; cidk is designed to cater to the needs of dynamic languages, and therefore operates at a higher level.
 
+### Setup
+cidk requires CMake and a C++17-capable compiler to build.
+
+```
+$ git clone https://github.com/codr7/cidk.git
+$ cd cidk
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+$ ./cidk ../demo/stack.al
+```
+
 ### Syntax
 Each statement starts with an opcode and ends with a semicolon, arguments are separated by whitespace.
 
@@ -25,7 +38,7 @@ Each statement starts with an opcode and ends with a semicolon, arguments are se
   push 35 7;
   call +;
 
-[42]
+[... 42]
 ```
 
 Curly braces may be used to treat statements as values.
