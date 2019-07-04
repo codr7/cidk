@@ -15,8 +15,6 @@ namespace cidk {
 
   void NilType::dup(Val &dst, const Val &src) const { }
 
-  void NilType::eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const { }
-
   bool NilType::is(const Pos &pos, const Val &x, const Val &y) const { return true; }
 
   bool NilType::Bool(const Pos &pos, const Val &val) const { return false; }
