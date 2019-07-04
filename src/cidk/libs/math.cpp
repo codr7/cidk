@@ -31,9 +31,9 @@ namespace cidk::libs {
     auto p(call.pos);
 
     auto i(stack.end()-1);
-    Val y(*i--), &x(*i);
+    Val &y(*i--), &x(*i);
     ValType *xt(x.type), *yt(y.type);
-    
+
     if (xt == yt) {
       xt->env.call(p, cx.intern("<"), env, stack);
     } else {

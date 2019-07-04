@@ -10,7 +10,7 @@
 namespace cidk::ops {
   struct Data {
     Val in, body;
-    Data(Val in, Val body): in(in), body(body) { }
+    Data(const Val &in, const Val &body): in(in), body(body) { }
   };
   
   const DoEnvType DoEnv("do-env");

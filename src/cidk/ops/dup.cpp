@@ -10,7 +10,8 @@ namespace cidk::ops {
   void DupType::init(Op &op) const { }
 
   void DupType::eval(const Op &op, Env &env, Stack &stack) const {
-    stack.emplace_back(stack.back());
+    Val v(stack.back());
+    stack.emplace_back(v);
   }
 
   void DupType::read(Cx &cx,

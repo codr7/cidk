@@ -1,12 +1,8 @@
 * add stack accessor like env
 ** op + macro
 ** push as list & move items
-* mark call stack funs in cx.mark()
-* bench/fib_rec.al
-** add Bench op
-*** i & j for outer/inner loop
-* enable mem pools & compare
 * add fib_tail from snigl
+* mark call stack funs in cx.mark()
 * --
 * add mark/sweep ops
 * add repl
@@ -38,4 +34,7 @@
 ** read as utf-8
 *** https://stackoverflow.com/questions/16208079/how-to-work-with-utf-8-in-c-conversion-from-other-encodings-to-utf-8
 ** splat chars
-* add optional offset args to dup/swap ops
+* add optional dup op offs arg
+* add optional swap op offs arg
+* add drop op nvals arg
+

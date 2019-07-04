@@ -1,12 +1,10 @@
 fun fib(Int)(Int) {
-  dup;
-    
-  if {push 2; call <;} _ {
+  if {dup; push 2; call <;} _ {
     call dec; dup;
     call fib; swap;
     call dec fib +;
   };
 };
 
-bench 10 10 {push 20; call fib;};
+bench 10 {push 20; call fib; drop;};
 dump;
