@@ -38,8 +38,8 @@ Each statement starts with an opcode and ends with semicolon, arguments are sepa
 
 ### Opcodes
 
-#### call fun+
-Calls functions in specified order.
+#### call fun*
+Calls functions in specified order, or pops function from stack if no arguments.
 
 ```
   push 7 14 21;
@@ -48,8 +48,8 @@ Calls functions in specified order.
 [... F]
 ```
 
-#### const [id val]+
-Defines compile time constants.
+#### const [id val]*
+Defines compile time constants for pairs of keys and values, or pops key and value from stack if no arguments.
 
 ```
   do-env {
@@ -80,8 +80,8 @@ Evaluates body in environment. Passing `_` creates a new empty environment, whil
 #### do-stack in? body
 Evaluates body on stack. Passing `_` creates a new empty stack.
 
-#### dump val+
-Dumps values to `stderr`.
+#### dump val*
+Dumps values to `stderr`, or pops value from stack if no arguments.
 
 #### push val+
 Pushes values on stack.

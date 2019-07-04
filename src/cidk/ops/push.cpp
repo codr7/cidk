@@ -32,6 +32,6 @@ namespace cidk::ops {
       out.emplace_back(p, *this, *v);
     }
 
-    if (!n) { out.emplace_back(p, *this, cx._); }
+    if (!n) { throw ESys(p, "Missing push value"); }
   }
 }
