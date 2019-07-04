@@ -49,3 +49,4 @@
 ** splat chars
 * add >
 ** default using lt
+* add optional offset args to dup/swap ops
