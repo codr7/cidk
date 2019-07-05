@@ -11,7 +11,7 @@ namespace cidk {
 
   struct Call {
     Cx &cx;
-    Pos pos;
+    const Pos &pos;
     Call *prev;
     Fun &target;
 
