@@ -35,7 +35,14 @@ namespace cidk::ops {
       if (d.y.type != &cx.nil_type) { d.y.eval(p, env, stack); }
     }
   }
-  
+
+  void IfType::get_ids(const Op &op, IdSet &out) const {
+    Data d(op.as<Data>());
+    d.cond.get_ids(out);
+    d.x.get_ids(out);
+    d.y.get_ids(out);
+  }
+
   void IfType::read(Cx &cx,
                     Pos &pos,
                     istream &in,

@@ -19,6 +19,7 @@ namespace cidk {
                       Env &env,
                       Stack &stack) const override;
 
+    virtual void get_ids(const Val &val, IdSet &out) const override;
     virtual bool is(const Pos &pos, const Val &x, const Val &y) const override;
     virtual void mark_refs(const Pos &pos, const Val &val) override;
     virtual void set(const Pos &pos, Val &dst, Expr *val) const override;

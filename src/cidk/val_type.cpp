@@ -34,6 +34,8 @@ namespace cidk {
     stack.emplace_back(val);
   }
 
+  void ValType::get_ids(const Val &val, IdSet &out) const { }
+
   void ValType::mark_refs(const Pos &pos, const Val &val) { }
 
   void ValType::splat(const Pos &pos, Val &val, Env &env, Stack &stack) {

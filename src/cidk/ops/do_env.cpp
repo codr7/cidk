@@ -41,6 +41,12 @@ namespace cidk::ops {
     d.body.eval(op.pos, *de, stack);
   }
 
+  void DoEnvType::get_ids(const Op &op, IdSet &out) const {
+    Data d(op.as<Data>());
+    d.in.get_ids(out);
+    d.body.get_ids(out);
+  }
+
   void DoEnvType::read(Cx &cx, Pos &pos,
                       istream &in,
                       Env &env,

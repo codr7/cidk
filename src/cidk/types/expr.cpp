@@ -9,10 +9,8 @@ namespace cidk {
                      const vector<Type *> &parents):
     TValType<Expr *>(cx, pos, id, parents) { }
 
-  void ExprType::dump(const Pos &Pos, const Val &val, ostream &out) const {
-    out << "{\n";
-    for (auto &op: val.as_expr->body) { out << op.type->id << ";\n"; }
-    out << "}\n";
+  void ExprType::dump(const Pos &Pos, const Val &val, ostream &out) const {    
+    out << "expr:" << val.as_expr;
   }
 
   void ExprType::dup(Val &dst, const Val &src) const {
@@ -21,6 +19,10 @@ namespace cidk {
 
   void ExprType::eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
     cx.eval(val.as_expr->body, env, stack);
+  }
+
+  void ExprType::get_ids(const Val &val, IdSet &out) const {
+    for (auto &op: val.as_expr->body) { op.get_ids(out); }
   }
 
   bool ExprType::is(const Pos &pos, const Val &x, const Val &y) const {

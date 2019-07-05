@@ -15,9 +15,13 @@ namespace cidk::ops {
     auto &cx(env.cx);
     Pos p(op.pos);
     auto f(op.as<cidk::Fun *>());
-    f->env = env;
-
+    f->env.use(p, env, f->body_ids);
     if (f->id) { env.set(p, f->id, Val(p, cx.fun_type, f), false); }
+  }
+
+  void FunType::get_ids(const Op &op, IdSet &out) const {
+    IdSet &bs(op.as<cidk::Fun *>()->body_ids);
+    out.insert(bs.begin(), bs.end());
   }
 
   void FunType::read(Cx &cx,
@@ -48,6 +52,8 @@ namespace cidk::ops {
     if (!body) { throw ESys(p, "Missing fun body"); }
     read_eop(pos, in, env, stack);
     f->body = *body;
+    f->body.get_ids(f->body_ids);
+    f->env.use(p, env, f->body_ids);
     out.emplace_back(p, *this, f);
   }
 }

@@ -8,6 +8,7 @@
 #include "cidk/ops.hpp"
 #include "cidk/pos.hpp"
 #include "cidk/stack.hpp"
+#include "cidk/sym.hpp"
 
 namespace cidk {
   using namespace std;
@@ -21,7 +22,8 @@ namespace cidk {
     string id;
     OpType(const string &id);
     virtual void eval(const Op &op, Env &env, Stack &stack) const = 0;
-
+    virtual void get_ids(const Op &op, IdSet &out) const;
+    
     virtual void read(Cx &cx, 
                       Pos &pos, 
                       istream &in, 
@@ -44,6 +46,7 @@ namespace cidk {
     T as() const;
 
     void eval(Env &env, Stack &stack) const;
+    void get_ids(IdSet &out) const;
   };
 
   template <typename T, typename...Args>

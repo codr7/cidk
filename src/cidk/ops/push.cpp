@@ -8,12 +8,14 @@ namespace cidk::ops {
 
   PushType::PushType(string id): OpType(id) { }
 
-  void PushType::init(Op &op, const Val &val) const {
-    op.data = val;
-  }
+  void PushType::init(Op &op, const Val &val) const { op.data = val; }
 
   void PushType::eval(const Op &op, Env &env, Stack &stack) const {
     op.as<Val>().eval(op.pos, env, stack);
+  }
+
+  void PushType::get_ids(const Op &op, IdSet &out) const {
+    op.as<Val>().get_ids(out);
   }
 
   void PushType::read(Cx &cx,

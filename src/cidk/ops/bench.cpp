@@ -37,6 +37,12 @@ namespace cidk::ops {
     stack.emplace_back(p, cx.int_type, Int(t.ms()));
   }
 
+  void BenchType::get_ids(const Op &op, IdSet &out) const {
+    Data d(op.as<Data>());
+    d.nreps.get_ids(out);
+    d.body.get_ids(out);
+  }
+
   void BenchType::read(Cx &cx, Pos &pos,
                       istream &in,
                       Env &env,

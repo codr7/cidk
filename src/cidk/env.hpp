@@ -8,6 +8,7 @@
 #include "cidk/arg.hpp"
 #include "cidk/ref.hpp"
 #include "cidk/stack.hpp"
+#include "cidk/sym.hpp"
 
 namespace cidk {
   using namespace std;
@@ -68,6 +69,7 @@ namespace cidk {
     
     bool set(const Pos &pos, const Sym *key, const Val &val, bool force);
     virtual void sweep(const Pos &pos) override;
+    void use(const Pos &pos, Env &src, IdSet &ids);
   };
 }
 

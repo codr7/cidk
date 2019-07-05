@@ -3,6 +3,7 @@
 
 #include "cidk/ops.hpp"
 #include "cidk/stack.hpp"
+#include "cidk/sym.hpp"
 #include "cidk/type.hpp"
 
 namespace cidk {
@@ -23,6 +24,7 @@ namespace cidk {
     virtual void dup(Val &dst, const Val &src) const = 0;
     virtual bool eq(const Pos &pos, const Val &x, const Val &y) const;
     virtual void eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const;
+    virtual void get_ids(const Val &val, IdSet &out) const;
     virtual bool is(const Pos &pos, const Val &x, const Val &y) const = 0;
     virtual void mark_refs(const Pos &pos, const Val &val);
     virtual void splat(const Pos &pos, Val &val, Env &env, Stack &stack);

@@ -9,6 +9,7 @@ namespace cidk::ops {
     FunType(string id);
     void init(Op &op, Fun *fun) const;
     virtual void eval(const Op &op, Env &env, Stack &stack) const override;
+    virtual void get_ids(const Op &op, IdSet &out) const override;
 
     virtual void read(Cx &cx,
                       Pos &pos,

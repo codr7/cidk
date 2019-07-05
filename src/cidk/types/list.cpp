@@ -48,6 +48,10 @@ namespace cidk {
     stack.emplace_back(pos, cx.list_type, cx.list_type.pool.get(cx, out));
   }
 
+  void ListType::get_ids(const Val &val, IdSet &out) const {
+    for (auto &v: val.as_list->items) { v.get_ids(out); }
+  }
+
   bool ListType::is(const Pos &pos, const Val &x, const Val &y) const {
     return x.as_list == y.as_list;
   }

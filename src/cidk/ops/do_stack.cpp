@@ -34,6 +34,12 @@ namespace cidk::ops {
     copy(ds.begin(), ds.end(), back_inserter(stack));
   }
 
+  void DoStackType::get_ids(const Op &op, IdSet &out) const {
+    Data d(op.as<Data>());
+    d.in.get_ids(out);
+    d.body.get_ids(out);
+  }
+
   void DoStackType::read(Cx &cx, Pos &pos,
                       istream &in,
                       Env &env,

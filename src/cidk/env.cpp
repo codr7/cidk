@@ -92,4 +92,16 @@ namespace cidk {
     cx.envs.erase(it);
     cx.env_pool.put(this);
   }
+
+  void Env::use(const Pos &pos, Env &src, IdSet &ids) {
+    for (auto i(ids.begin()); i != ids.end(); i++) {
+      auto id(*i);
+      auto v(src.get(pos, id, true));
+
+      if (v) {
+        add(pos, id, *v, true);
+        ids.erase(i);
+      }
+    }
+  }
 }

@@ -19,7 +19,8 @@ namespace cidk {
     Env &env;
     Imp imp;
     Val body;
-
+    IdSet body_ids;
+    
     template <typename ArgsT, typename RetsT>
     Fun(Cx &cx,
         const Pos &pos,

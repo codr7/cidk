@@ -5,7 +5,7 @@
 
 namespace cidk {
   ConstType::ConstType(Cx &cx, const Pos &pos, ValType &val_type):
-    ValType(cx, pos, cx.intern(str("Const/", val_type.id)), {&cx.any_type}),
+    ValType(cx, pos, cx.intern(str("Const", val_type.id)), {&cx.any_type}),
     val_type(val_type) {
     is_const = true;
     _const_type = this;
@@ -17,7 +17,7 @@ namespace cidk {
   }
 
   void ConstType::dump(const Pos &Pos, const Val &val, ostream &out) const {
-    out << "const/";
+    out << "const:";
     val_type.dump(pos, val, out);
   }
 
@@ -27,6 +27,10 @@ namespace cidk {
     Val v;
     clone(pos, v, val);
     stack.emplace_back(v);
+  }
+
+  void ConstType::get_ids(const Val &val, IdSet &out) const {
+    val_type.get_ids(val, out);
   }
 
   bool ConstType::is(const Pos &pos, const Val &x, const Val &y) const {
