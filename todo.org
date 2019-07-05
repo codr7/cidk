@@ -1,3 +1,7 @@
+* add stack accessor like env
+** op + macro
+** push as list & move items
+* --
 * only copy used syms to fun env
 ** add Syms type (unordered_set<const Sym *>)
 ** add Val/ValType.get_syms(Syms &out)
@@ -6,21 +10,18 @@
 *** init by analyzing body in Fun op reader
 *** remove when copied
 *** copy as many as possible from reader env
-* ---
+* --
 * skip fun env copy unless used
 ** add bool OpType.modifies_env(const Op &)
 *** implement for const/fun/macro/call ops
 *** check in fun op reader
 *** set Fun.modifies_env
 **** use in Call.eval() to trigger copy
-* ---
-* add stack accessor like env
-** op + macro
-** push as list & move items
-* add fib_tail from snigl
-* mark call stack funs in cx.mark()
 * --
+* add fib_tail from snigl
 * add mark/sweep ops
+** mark call stack funs in cx.mark()
+* --
 * add repl
 ** launch if no args
 ** only eval if last char is ;
