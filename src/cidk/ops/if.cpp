@@ -24,8 +24,8 @@ namespace cidk::ops {
 
   void IfType::eval(const Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
+    const Pos &p(op.pos);
     Data d(op.as<Data>());
-    auto p(op.pos);
 
     d.cond.eval(p, env, stack);
     
@@ -49,7 +49,7 @@ namespace cidk::ops {
                     Env &env,
                     Stack &stack,
                     Ops &out) const {
-    auto p(pos);
+    Pos p(pos);
 
     auto cond(read_val(pos, in, env, stack));
     if (!cond) { throw ESys(p, "Missing if cond"); }

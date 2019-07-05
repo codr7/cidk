@@ -23,10 +23,11 @@ namespace cidk::ops {
   
   void DoEnvType::eval(const Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
+    const Pos &p(op.pos);
     Data d(op.as<Data>());
     Env *de(nullptr);
-    d.in.eval(op.pos, env, stack);
-    auto in(*pop(op.pos, stack, false));
+    d.in.eval(p, env, stack);
+    auto in(*pop(p, stack, false));
     
     if (in.type == &cx.nil_type) {
       de = env.cx.env_pool.get(cx);
@@ -35,10 +36,10 @@ namespace cidk::ops {
     } else if (in.type == &cx.env_type) {
       de = in.as_env;
     } else {
-      throw ESys(op.pos, "Invalid do-env input: ", in.type->id);
+      throw ESys(p, "Invalid do-env input: ", in.type->id);
     }
     
-    d.body.eval(op.pos, *de, stack);
+    d.body.eval(p, *de, stack);
   }
 
   void DoEnvType::get_ids(const Op &op, IdSet &out) const {

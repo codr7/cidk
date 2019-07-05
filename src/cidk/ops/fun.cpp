@@ -13,7 +13,7 @@ namespace cidk::ops {
 
   void FunType::eval(const Op &op, Env &env, Stack &stack) const {
     auto &cx(env.cx);
-    Pos p(op.pos);
+    const Pos &p(op.pos);
     auto f(op.as<cidk::Fun *>());
     f->env.use(p, env, f->body_ids);
     if (f->id) { env.set(p, f->id, Val(p, cx.fun_type, f), false); }
@@ -30,7 +30,7 @@ namespace cidk::ops {
                      Env &env,
                      Stack &stack,
                      Ops &out) const {
-    auto p(pos);
+    Pos p(pos);
 
     auto id(read_val(pos, in, env, stack));
     if (!id) { throw ESys(p, "Missing fun id"); }

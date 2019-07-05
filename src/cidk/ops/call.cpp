@@ -14,7 +14,7 @@ namespace cidk::ops {
   
   void CallType::eval(const Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
-    Pos p(op.pos);
+    const Pos &p(op.pos);
     op.as<Val>().eval(p, env, stack);
     auto f(*pop(p, stack, false));
     Type *ft(f.type);

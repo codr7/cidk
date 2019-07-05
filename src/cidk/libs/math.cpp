@@ -7,10 +7,10 @@
 namespace cidk::libs {
   static void add_imp(Call &call, Env &env, Stack &stack) {
     auto &cx(call.cx);
-    auto p(call.pos);
+    auto &p(call.pos);
 
     auto i(stack.end()-1);
-    Val y(*i--), &x(*i);
+    Val &y(*i--), &x(*i);
     ValType *xt(x.type), *yt(y.type);
     
     if (xt == yt) {
@@ -21,14 +21,14 @@ namespace cidk::libs {
   }
 
   static void int_add_imp(Call &call, Env &env, Stack &stack) {
-    auto p(call.pos);
+    auto &p(call.pos);
     Val y(*pop(p, stack, false)), &x(stack.back());
     x.as_int += y.as_int;
   }
 
   static void lt_imp(Call &call, Env &env, Stack &stack) {
     auto &cx(call.cx);
-    auto p(call.pos);
+    auto &p(call.pos);
 
     auto i(stack.end()-1);
     Val &y(*i--), &x(*i);
@@ -43,7 +43,7 @@ namespace cidk::libs {
 
   static void int_lt_imp(Call &call, Env &env, Stack &stack) {
     auto &cx(call.cx);
-    auto p(call.pos);
+    auto &p(call.pos);
     Val y(*pop(p, stack, false)), &x(stack.back());
     x.reset(p, cx.bool_type, x.as_int < y.as_int);
   }

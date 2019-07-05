@@ -17,7 +17,7 @@ namespace cidk::ops {
                       Env &env,
                       Stack &stack,
                       Ops &out) const {
-    auto p(pos);
+    Pos p(pos);
     int n(0);
     
     for (;;) {
