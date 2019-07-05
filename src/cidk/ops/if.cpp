@@ -31,8 +31,8 @@ namespace cidk::ops {
     
     if (pop(p, stack, false)->Bool(p)) {
       if (d.x.type != &cx.nil_type) { d.x.eval(p, env, stack); }
-    } else {
-      if (d.y.type != &cx.nil_type) { d.y.eval(p, env, stack); }
+    } else if (d.y.type != &cx.nil_type) {
+      d.y.eval(p, env, stack);
     }
   }
 

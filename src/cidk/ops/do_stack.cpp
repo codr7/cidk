@@ -26,8 +26,8 @@ namespace cidk::ops {
 
     if (d.in.type != &cx.nil_type) {
       d.in.eval(op.pos, env, stack);
-      auto in(*pop(op.pos, stack, false));
-      in.splat(p, env, ds);
+      auto in(pop(op.pos, stack, false));
+      in->splat(p, env, ds);
     }
 
     d.body.eval(op.pos, env, ds);

@@ -16,10 +16,10 @@ namespace cidk::ops {
     Cx &cx(env.cx);
     const Pos &p(op.pos);
     op.as<Val>().eval(p, env, stack);
-    auto f(*pop(p, stack, false));
-    Type *ft(f.type);
+    auto f(pop(p, stack, false));
+    Type *ft(f->type);
     if (ft != &cx.fun_type) { throw ESys(p, "Invalid call target: ", ft->id); }
-    cidk::Call(cx, op.pos, *f.as_fun).eval(env, stack);
+    cidk::Call(cx, op.pos, *f->as_fun).eval(env, stack);
   }
 
   void CallType::get_ids(const Op &op, IdSet &out) const {

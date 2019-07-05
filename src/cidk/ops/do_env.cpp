@@ -27,16 +27,16 @@ namespace cidk::ops {
     Data d(op.as<Data>());
     Env *de(nullptr);
     d.in.eval(p, env, stack);
-    auto in(*pop(p, stack, false));
+    auto in(pop(p, stack, false));
     
-    if (in.type == &cx.nil_type) {
+    if (in->type == &cx.nil_type) {
       de = env.cx.env_pool.get(cx);
-    } else if (in.type == &cx.bool_type && in.as_bool) {
+    } else if (in->type == &cx.bool_type && in->as_bool) {
       de = env.cx.env_pool.get(env);
-    } else if (in.type == &cx.env_type) {
-      de = in.as_env;
+    } else if (in->type == &cx.env_type) {
+      de = in->as_env;
     } else {
-      throw ESys(p, "Invalid do-env input: ", in.type->id);
+      throw ESys(p, "Invalid do-env input: ", in->type->id);
     }
     
     d.body.eval(p, *de, stack);

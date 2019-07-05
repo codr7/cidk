@@ -26,14 +26,14 @@ namespace cidk::ops {
     Stack bs;
 
     d.nreps.eval(op.pos, env, stack);
-    auto nreps(*pop(op.pos, stack, false));
+    auto nreps(pop(op.pos, stack, false));
 
-    if (nreps.type != &cx.int_type) {
-      throw ESys(p, "Invalid nreps: ", nreps.type->id);
+    if (nreps->type != &cx.int_type) {
+      throw ESys(p, "Invalid nreps: ", nreps->type->id);
     }
 
     Timer t;
-    for (int i(0); i < nreps.as_int; i++) { d.body.eval(op.pos, env, bs); }
+    for (int i(0); i < nreps->as_int; i++) { d.body.eval(op.pos, env, bs); }
     stack.emplace_back(p, cx.int_type, Int(t.ms()));
   }
 
