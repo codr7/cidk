@@ -1,5 +1,8 @@
-* switch Env.items to sorted deque or vector
+* stop interning syms in lt/add
 * fix clang++ errors
+* return ref from op.as()
+** change op evals to store ref
+* switch Env.items to sorted deque or vector
 * rename fun op to fun:
 * rename const op to const:
 * add fib_tail from snigl

@@ -22,8 +22,9 @@ namespace cidk::libs {
 
   static void int_add_imp(Call &call, Env &env, Stack &stack) {
     auto &p(call.pos);
-    Val y(*pop(p, stack, false)), &x(stack.back());
-    x.as_int += y.as_int;
+    auto y(pop(p, stack, false));
+    Val &x(stack.back());
+    x.as_int += y->as_int;
   }
 
   static void lt_imp(Call &call, Env &env, Stack &stack) {
@@ -44,8 +45,9 @@ namespace cidk::libs {
   static void int_lt_imp(Call &call, Env &env, Stack &stack) {
     auto &cx(call.cx);
     auto &p(call.pos);
-    Val y(*pop(p, stack, false)), &x(stack.back());
-    x.reset(p, cx.bool_type, x.as_int < y.as_int);
+    auto y(pop(p, stack, false));
+    Val &x(stack.back());
+    x.reset(p, cx.bool_type, x.as_int < y->as_int);
   }
 
   static void int_dec_imp(Call &call, Env &env, Stack &stack) {
