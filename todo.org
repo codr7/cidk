@@ -1,9 +1,18 @@
+* only copy used syms to fun env
+** add Syms type (unordered_set<const Sym *>)
+** add Val/ValType.get_syms(Syms &out)
+** add OpType.get_syms(Syms &out)
+** add Fun.syms
+*** init by analyzing body in Fun op reader
+*** remove when copied
+*** copy as many as possible from reader env
+* ---
 * skip fun env copy unless used
-** add bool OpType.modifies_env
-*** set in const/fun/macro types
-*** check in fun body when read
+** add bool OpType.modifies_env(const Op &)
+*** implement for const/fun/macro/call ops
+*** check in fun op reader
 *** set Fun.modifies_env
-**** use in Call to trigger copy
+**** use in Call.eval() to trigger copy
 * ---
 * add stack accessor like env
 ** op + macro
