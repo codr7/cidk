@@ -1,8 +1,6 @@
 #ifndef CIDK_VAL_HPP
 #define CIDK_VAL_HPP
 
-#include <any>
-
 #include "cidk/pos.hpp"
 #include "cidk/types/int.hpp"
 
@@ -23,7 +21,6 @@ namespace cidk {
     ValType *type;
     
     union {
-      any as_any;
       bool as_bool;
       Env *as_env;
       Expr *as_expr;
@@ -49,9 +46,6 @@ namespace cidk {
 
     const Val &operator =(const Val &src);
     
-    template <typename ValT>
-    ValT as() const { return any_cast<ValT>(as_any); }
-
     void call(const Pos &pos, Env &env, Stack &stack);
     Val &clone(const Pos &pos, Val &dst) const;
     void dump(const Pos &pos, ostream &out) const;
@@ -74,9 +68,6 @@ namespace cidk {
 
     bool Bool(const Pos &pos) const;
   };
-  
-  template <>
-  inline Int Val::as() const { return as_int; }
 }
 
 #endif

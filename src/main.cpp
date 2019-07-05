@@ -13,7 +13,7 @@ void test(cidk::Cx &cx) {
   auto p(cidk::Pos::_);
   
   cidk::Val v(p, cx.int_type, cidk::Int(42));
-  assert(v.as<cidk::Int>() == 42);
+  assert(v.as_int == 42);
   assert(v.eq(p, v));
 
   v.splat(p, cx.env, s);
