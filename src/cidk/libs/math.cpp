@@ -14,7 +14,7 @@ namespace cidk::libs {
     ValType *xt(x.type), *yt(y.type);
     
     if (xt == yt) {
-      xt->env.call(p, cx.intern("+"), env, stack);
+      xt->env.call(p, cx.add_id, env, stack);
     } else {
       xt->env.call(p, cx.intern(str("+/", yt->id)), env, stack);
     }
@@ -36,7 +36,7 @@ namespace cidk::libs {
     ValType *xt(x.type), *yt(y.type);
 
     if (xt == yt) {
-      xt->env.call(p, cx.intern("<"), env, stack);
+      xt->env.call(p, cx.lt_id, env, stack);
     } else {
       xt->env.call(p, cx.intern(str("</", yt->id)), env, stack);
     }
