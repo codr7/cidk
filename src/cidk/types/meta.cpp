@@ -22,7 +22,7 @@ namespace cidk {
     return x.as_type == y.as_type;
   }
 
-  void MetaType::mark_refs(const Pos &pos, const Val &val) {
+  void MetaType::mark_refs(const Pos &pos, const Val &val) const {
     val.as_type->mark(pos);
   }
 

@@ -26,8 +26,10 @@ namespace cidk {
     virtual void eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const;
     virtual void get_ids(const Val &val, IdSet &out) const;
     virtual bool is(const Pos &pos, const Val &x, const Val &y) const = 0;
-    virtual void mark_refs(const Pos &pos, const Val &val);
-    virtual void splat(const Pos &pos, Val &val, Env &env, Stack &stack);
+    virtual void mark_refs(const Pos &pos, const Val &val) const;
+    virtual void splat(const Pos &pos, const Val &val, Env &env, Stack &stack) const;
+    
+    using Type::sweep;
     virtual void sweep(const Pos &pos, Val &val);
 
     virtual bool Bool(const Pos &pos, const Val &val) const;

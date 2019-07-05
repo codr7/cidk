@@ -15,7 +15,6 @@
 #include "cidk/types/int.hpp"
 #include "cidk/types/nil.hpp"
 #include "cidk/types/list.hpp"
-#include "cidk/types/meta.hpp"
 #include "cidk/types/pop.hpp"
 #include "cidk/types/sym.hpp"
 #include "cidk/val.hpp"

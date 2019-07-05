@@ -23,8 +23,8 @@ namespace cidk {
 
   void IntType::set(const Pos &pos, Val &dst, Int val) const { dst.as_int = val; }
 
-  void IntType::splat(const Pos &pos, Val &val, Env &env, Stack &stack) {
-    for (Int i = 0; i < val.as_int; i++) { stack.emplace_back(pos, *this, i); }
+  void IntType::splat(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
+    for (Int i = 0; i < val.as_int; i++) { stack.emplace_back(pos, cx.int_type, i); }
   }
 
   bool IntType::Bool(const Pos &pos, const Val &val) const { return val.as_int > 0; }

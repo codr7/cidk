@@ -54,7 +54,7 @@ namespace cidk {
     type->mark_refs(pos, *this);
   }
 
-  void Val::splat(const Pos &pos, Env &env, Stack &stack) {
+  void Val::splat(const Pos &pos, Env &env, Stack &stack) const {
     return type->splat(pos, *this, env, stack);
   }
 

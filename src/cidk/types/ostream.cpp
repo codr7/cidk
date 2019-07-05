@@ -22,7 +22,7 @@ namespace cidk {
     return x.as_ostream == y.as_ostream;
   }
 
-  void OStreamType::mark_refs(const Pos &pos, const Val &val) {
+  void OStreamType::mark_refs(const Pos &pos, const Val &val) const {
     val.as_ostream->is_marked = true;
   }
 

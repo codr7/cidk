@@ -1,4 +1,3 @@
-* stop interning syms in lt/add
 * fix clang++ errors
 * return ref from op.as()
 ** change op evals to store ref

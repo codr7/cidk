@@ -56,11 +56,13 @@ namespace cidk {
     return x.as_list == y.as_list;
   }
 
-  void ListType::mark_refs(const Pos &pos, const Val &val) { val.as_list->mark(pos); }
+  void ListType::mark_refs(const Pos &pos, const Val &val) const {
+    val.as_list->mark(pos);
+  }
 
   void ListType::set(const Pos &pos, Val &dst, List *val) const { dst.as_list = val; }
 
-  void ListType::splat(const Pos &pos, Val &val, Env &env, Stack &stack) {
+  void ListType::splat(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
     for (auto &v: val.as_list->items) { stack.emplace_back(v); }
   }
 

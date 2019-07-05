@@ -63,7 +63,7 @@ namespace cidk {
       type.set(pos, *this, val);
     }
 
-    void splat(const Pos &pos, Env &env, Stack &stack);
+    void splat(const Pos &pos, Env &env, Stack &stack) const;
     void sweep(const Pos &pos);
 
     bool Bool(const Pos &pos) const;

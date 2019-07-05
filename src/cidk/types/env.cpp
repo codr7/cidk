@@ -48,7 +48,9 @@ namespace cidk {
     return x.as_env == y.as_env;
   }
 
-  void EnvType::mark_refs(const Pos &pos, const Val &val) { val.as_env->mark(pos); }
+  void EnvType::mark_refs(const Pos &pos, const Val &val) const {
+    val.as_env->mark(pos);
+  }
 
   void EnvType::set(const Pos &pos, Val &dst, Env *val) const { dst.as_env = val; }
 

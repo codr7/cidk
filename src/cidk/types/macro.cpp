@@ -21,7 +21,7 @@ namespace cidk {
     return x.as_macro == y.as_macro;
   }
 
-  void MacroType::mark_refs(const Pos &pos, const Val &val) {
+  void MacroType::mark_refs(const Pos &pos, const Val &val) const {
     val.as_macro->mark(pos);
   }
 

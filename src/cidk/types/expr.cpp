@@ -29,7 +29,7 @@ namespace cidk {
     return x.as_expr == y.as_expr;
   }
 
-  void ExprType::mark_refs(const Pos &pos, const Val &val) {
+  void ExprType::mark_refs(const Pos &pos, const Val &val) const {
     val.as_expr->is_marked = true;
   }
 

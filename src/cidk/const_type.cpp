@@ -37,7 +37,7 @@ namespace cidk {
     return val_type.is(pos, x, y);
   }
 
-  void ConstType::mark_refs(const Pos &pos, const Val &val) {
+  void ConstType::mark_refs(const Pos &pos, const Val &val) const {
     val_type.mark_refs(pos, val);
   }
 

@@ -13,6 +13,7 @@
 #include "cidk/sym.hpp"
 #include "cidk/types/fun.hpp"
 #include "cidk/types/macro.hpp"
+#include "cidk/types/meta.hpp"
 #include "cidk/var.hpp"
 
 namespace cidk {
@@ -21,7 +22,6 @@ namespace cidk {
   struct EnvType;
   struct ExprType;
   struct ListType;
-  struct MetaType;
   struct NilType;
   struct PopType;
   struct Ref;
