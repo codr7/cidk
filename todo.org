@@ -1,15 +1,16 @@
-* add Env.prune(Env &org)
-** loop in parallel
-*** replace var if same key, otherwise erase this
 * switch Env.items to sorted deque or vector
 * fix clang++ errors
 * rename fun op to fun:
 * rename const op to const:
+* add fib_tail from snigl
+* add Env.prune(Env &org)
+** loop in parallel
+*** replace var if same key, otherwise erase this
+** use on recall in Call.eval instead of copy
 * add stack accessor like env
 ** op + macro
 ** push as list & move items
 * --
-* add fib_tail from snigl
 * add mark/sweep ops
 ** mark call stack funs in cx.mark()
 * --
