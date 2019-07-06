@@ -5,6 +5,7 @@
 *** inc/dec state.env_depth around do_env
 *** set env_escape in env op unless env_depth > 0
 *** copy reader.state to Fun.body_opts
+* split pop() into Val pop(s) and optional<Val> try_pop(s)
 * add mark/sweep ops
 ** mark call stack funs in cx.mark()
 ** call mark/sweep in fib_rec bench body & compare
