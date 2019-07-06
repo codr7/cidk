@@ -1,4 +1,3 @@
-* rename const op to const:
 * switch Env.items to sorted deque or vector
 * add fib_tail from snigl
 * add Env.restore(Env &org)

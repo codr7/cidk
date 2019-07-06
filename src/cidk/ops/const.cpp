@@ -5,7 +5,7 @@
 #include "cidk/types/sym.hpp"
 
 namespace cidk::ops {
-  const ConstType Const("const");
+  const ConstType Const("const:");
 
   ConstType::ConstType(string id): OpType(id) { }
 
