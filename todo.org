@@ -1,7 +1,9 @@
-* switch Fun.body to Expr
 * skip env copy in Call.eval if not modified
 ** collect copied env immediately unless leaked
 *** check for Env-ops
+** add ReadState &state arg to read fns before out
+*** add CIDK_READ_DO_ENV around do_env
+*** add CIDK_READ_ENV_ESCAPE in env op unless CIDK_READ_DO_ENV
 * add mark/sweep ops
 ** mark call stack funs in cx.mark()
 * switch Env.items to sorted deque or vector
