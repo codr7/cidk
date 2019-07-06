@@ -40,24 +40,19 @@ namespace cidk {
     any data;
     
     template <typename T, typename...Args>
-    Op(const Pos &pos, const T &type, Args &&...args);
+    Op(const Pos &pos, const T &type, Args &&...args): pos(pos), type(&type) {
+      type.init(*this, forward<Args>(args)...);
+    }
 
     template <typename T>
-    T as() const;
+    T &as() { return any_cast<T &>(data); }
+
+    template <typename T>
+    const T &as() const { return any_cast<const T &>(data); }
 
     void eval(Env &env, Stack &stack) const;
     void get_ids(IdSet &out) const;
   };
-
-  template <typename T, typename...Args>
-  Op::Op(const Pos &pos, const T &type, Args &&...args): pos(pos), type(&type) {
-    type.init(*this, forward<Args>(args)...);
-  }
-
-  template <typename T>
-  T Op::as() const {
-    return any_cast<T>(data);
-  }
 }
 
 #endif

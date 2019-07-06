@@ -24,7 +24,7 @@ namespace cidk::ops {
   void DoEnvType::eval(const Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
     const Pos &p(op.pos);
-    Data d(op.as<Data>());
+    const Data &d(op.as<Data>());
     Env *de(nullptr);
     d.in.eval(p, env, stack);
     auto in(pop(p, stack, false));

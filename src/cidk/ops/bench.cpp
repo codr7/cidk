@@ -22,7 +22,7 @@ namespace cidk::ops {
   void BenchType::eval(const Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
     const Pos &p(op.pos);
-    Data d(op.as<Data>());
+    const Data &d(op.as<Data>());
     Stack bs;
 
     d.nreps.eval(op.pos, env, stack);

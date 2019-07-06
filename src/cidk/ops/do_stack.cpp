@@ -21,7 +21,7 @@ namespace cidk::ops {
   void DoStackType::eval(const Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
     const Pos &p(op.pos);
-    Data d(op.as<Data>());
+    const Data &d(op.as<Data>());
     Stack ds;
 
     if (d.in.type != &cx.nil_type) {

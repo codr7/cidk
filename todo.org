@@ -1,14 +1,12 @@
-* fix clang++ errors
-* return ref from op.as()
-** change op evals to store ref
-* switch Env.items to sorted deque or vector
 * rename fun op to fun:
 * rename const op to const:
+* switch Env.items to sorted deque or vector
 * add fib_tail from snigl
-* add Env.prune(Env &org)
+* add Env.restore(Env &org)
 ** loop in parallel
 *** replace var if same key, otherwise erase this
 ** use on recall in Call.eval instead of copy
+** bench
 * add stack accessor like env
 ** op + macro
 ** push as list & move items
