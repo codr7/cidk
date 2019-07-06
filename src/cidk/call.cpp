@@ -18,14 +18,20 @@ namespace cidk {
 
     if (imp) { imp(*this, env, stack); }
     else {
-      Env &e(*cx.env_pool.get(target.env));
+      const ReadState &opt(target.body_opts);
+      Env &e(opt.env_extend ? *cx.env_pool.get(target.env) : target.env);
     recall:
       target.body.eval(pos, e, stack);
       
       if (cx.eval_state == EvalState::recall) {
-        e = target.env;
+        if (opt.env_extend) { e = target.env; }
         cx.eval_state = EvalState::go;
         goto recall;
+      }
+
+      if (opt.env_extend && !opt.env_escape) {
+        cx.refs.erase(e.ref_it);
+        e.sweep(pos);
       }
     }
   }

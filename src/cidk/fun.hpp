@@ -5,6 +5,7 @@
 
 #include "cidk/arg.hpp"
 #include "cidk/def.hpp"
+#include "cidk/read_state.hpp"
 #include "cidk/stack.hpp"
 #include "cidk/val.hpp"
 
@@ -20,6 +21,7 @@ namespace cidk {
     Imp imp;
     Val body;
     IdSet body_ids;
+    ReadState body_opts;
     
     template <typename ArgsT, typename RetsT>
     Fun(Cx &cx,
