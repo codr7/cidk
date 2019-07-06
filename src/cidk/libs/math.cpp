@@ -16,7 +16,7 @@ namespace cidk::libs {
     if (xt == yt) {
       xt->env.call(p, cx.add_id, env, stack);
     } else {
-      xt->env.call(p, cx.intern(str("+/", yt->id)), env, stack);
+      xt->env.call(p, cx.intern(str("+:", yt->id)), env, stack);
     }
   }
 
@@ -38,7 +38,7 @@ namespace cidk::libs {
     if (xt == yt) {
       xt->env.call(p, cx.lt_id, env, stack);
     } else {
-      xt->env.call(p, cx.intern(str("</", yt->id)), env, stack);
+      xt->env.call(p, cx.intern(str("<:", yt->id)), env, stack);
     }
   }
 
