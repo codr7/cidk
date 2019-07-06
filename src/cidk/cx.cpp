@@ -73,8 +73,8 @@ namespace cidk {
   }
 
   void Cx::deinit() {
-    env.clear();
     for (Ref *r: refs) { r->is_marked = false; }
+    env.clear();
     sweep(Pos::_);
 
 #ifndef CIDK_USE_POOL
