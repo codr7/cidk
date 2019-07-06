@@ -25,6 +25,9 @@ int main(int argc, char *argv[]) {
   auto p(cidk::Pos::_);
 
   cidk::Cx cx;
+  cidk::Env &env(*cx.env_pool.get(cx.env));
+  cidk::Stack stack;
+
   test(cx);
   
   while (--argc && ++argv) {
@@ -33,10 +36,8 @@ int main(int argc, char *argv[]) {
     if (a == "-debug") { cx.debug = true; }
     else {
       cidk::Ops ops;
-      cx.load(p, a, ops);
-      
-      cidk::Stack stack;
-      cx.eval(ops, cx.env, stack);
+      cx.load(p, a, ops);    
+      cx.eval(ops, env, stack);
     }
   }
 
