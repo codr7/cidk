@@ -9,7 +9,7 @@ namespace cidk {
                Imp imp): Def(cx, pos, id), imp(imp) { }
 
   void Macro::call(Pos &pos, istream &in, Env &env, Stack &stack, Ops &out) const {
-    imp(pos, *this, in,env, stack, out);
+    imp(pos, *this, in, env, stack, out);
   }
 
   void Macro::mark(const Pos &pos) { is_marked = true; }

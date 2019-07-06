@@ -1,7 +1,5 @@
-* fix valgrind errors in pool/debug mode
 * add mark/sweep ops
 ** mark call stack funs in cx.mark()
-** call in fib_rec bench body
 * switch Env.items to sorted deque or vector
 * add fib_tail from snigl
 * add Env.restore(Env &org)

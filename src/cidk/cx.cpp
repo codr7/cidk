@@ -74,11 +74,8 @@ namespace cidk {
 
   void Cx::deinit() {
     env.clear();
-
-    while (refs.size() > 1) {
-      mark(Pos::_);
-      sweep(Pos::_);
-    }
+    for (Ref *r: refs) { r->is_marked = false; }
+    sweep(Pos::_);
 
 #ifndef CIDK_USE_POOL
     for (auto &s: syms) { delete s.second; }
@@ -117,13 +114,14 @@ namespace cidk {
   }
   
   void Cx::sweep(const Pos &pos) {
-    for (auto i(refs.begin()); i != refs.end();) {
+    for (auto i(--refs.end()); i != refs.end();) {
       Ref *r(*i);
 
       if (r->is_marked) {
-        i++;
+        i--;
       } else {
-        i = refs.erase(i);
+        auto j(i--);
+        refs.erase(j);
         r->sweep(pos);
       }
     }
