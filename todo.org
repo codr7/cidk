@@ -1,3 +1,7 @@
+* switch Fun.body to Expr
+* skip env copy in Call.eval if not modified
+** collect copied env immediately unless leaked
+*** check for Env-ops
 * add mark/sweep ops
 ** mark call stack funs in cx.mark()
 * switch Env.items to sorted deque or vector

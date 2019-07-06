@@ -7,6 +7,7 @@ namespace cidk {
     if (!is_marked) {
       is_marked = true;
       env.mark(pos);
+      body.mark_refs(pos);
     }
   }  
 
