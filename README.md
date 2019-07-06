@@ -1,7 +1,7 @@
 ![Logo](logo.png)
   
 ```
-fun fib(Int)(Int) {
+fun: fib(Int)(Int) {
   if {dup; push 2; call <;} _ {
     call dec; dup;
     call fib; swap;
@@ -23,7 +23,8 @@ $ mkdir build
 $ cd build
 $ cmake ..
 $ make
-$ ./cidk ../demo/stack.al
+$ ./cidk ../bench/fib_rec.al
+124
 ```
 
 ### Syntax

@@ -5,7 +5,7 @@
 #include "cidk/read.hpp"
 
 namespace cidk::ops {
-  const FunType Fun("fun");
+  const FunType Fun("fun:");
 
   FunType::FunType(string id): OpType(id) { }
 
