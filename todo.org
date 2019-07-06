@@ -1,3 +1,7 @@
+* fix valgrind errors in pool/debug mode
+* add mark/sweep ops
+** mark call stack funs in cx.mark()
+** call in fib_rec bench body
 * switch Env.items to sorted deque or vector
 * add fib_tail from snigl
 * add Env.restore(Env &org)
@@ -5,26 +9,14 @@
 *** replace var if same key, otherwise erase this
 ** use on recall in Call.eval instead of copy
 ** bench
+* --
 * add stack accessor like env
 ** op + macro
 ** push as list & move items
-* --
-* add mark/sweep ops
-** mark call stack funs in cx.mark()
-* --
 * add repl
 ** launch if no args
 ** only eval if last char is ;
 ** clear stack on empty input
-* add threads
-** add Thread type
-*** move call from Cx to Thread
-*** add Cx.main_thread
-*** add lock around intern
-** add thread: id? body op
-* add Chan
-** atomic fast paths
-** Chan.new
 * add Fun.args (Args)
 ** init arg ids
 * add Fun.rets (Rets)

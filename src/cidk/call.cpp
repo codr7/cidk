@@ -15,7 +15,7 @@ namespace cidk {
 
   void Call::eval(Env &env, Stack &stack) {
     auto imp(target.imp);
-    
+
     if (imp) { imp(*this, env, stack); }
     else {
       Env &e(*cx.env_pool.get(target.env));
