@@ -1,11 +1,16 @@
+* add mark/sweep ops
+** mark call stack funs in cx.mark()
+** call mark/sweep in fib_rec bench body & compare
 * skip env copy in Call.eval if not modified
 ** collect copied env immediately unless leaked
 *** check for Env-ops
-** add ReadState &state arg to read fns before out
-*** add CIDK_READ_DO_ENV around do_env
-*** add CIDK_READ_ENV_ESCAPE in env op unless CIDK_READ_DO_ENV
-* add mark/sweep ops
-** mark call stack funs in cx.mark()
+** add Reader type
+*** move pos & src (in) to fields
+*** grep istream & replace with Reader
+** add ReadState Reader.state
+*** add CIDK_DO_ENV around do_env
+*** add CIDK_ENV_ESCAPE in env op unless CIDK_DO_ENV
+*** log reader state as Fun.body_opts
 * switch Env.items to sorted deque or vector
 * add fib_tail from snigl
 * add Env.restore(Env &org)
