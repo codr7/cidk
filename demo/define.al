@@ -1,5 +1,5 @@
 do-env _ {
-  const: foo 42;
+  define: foo 42;
   dump foo;
 };
 
