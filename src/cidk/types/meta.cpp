@@ -18,7 +18,7 @@ namespace cidk {
     dst.as_type = src.as_type;
   }
 
-  bool MetaType::is(const Pos &pos, const Val &x, const Val &y) const {
+  bool MetaType::is(const Val &x, const Val &y) const {
     return x.as_type == y.as_type;
   }
 

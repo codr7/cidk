@@ -1,22 +1,30 @@
-* skip env copy in Call.eval if not modified
-** add Reader type
-*** move pos, src & state to fields
-*** grep istream & replace with Reader
-*** inc/dec state.env_depth around do_env
-*** set env_escape in env op unless env_depth > 0
-*** copy reader.state to Fun.body_opts
+* add fib_tail
+** add Fun.arg_list
+*** add ArgList.parse
+*** parse pairs of id/type
+**** use _ to skip id / type
+**** update existing funs
+*** init id from id_name if null
+** switch fun body to Expr
+*** validate in Fun op
+*** emit code to bind args to fun body in constructor
+** commit fib_tail
+* --
 * split pop() into Val pop(s) and optional<Val> try_pop(s)
+* grep 'env_pool.get' and sweep manually like Call.eval()
+
+* --
+* add Reader type
+** move pos, src & state to fields
+** grep istream & replace with Reader
+** inc/dec state.env_depth around do_env
+** set env_escape in env op unless env_depth > 0
+** copy reader.state to Fun.body_opts
 * add mark/sweep ops
 ** mark call stack funs in cx.mark()
 ** call mark/sweep in fib_rec bench body & compare
 
 * switch Env.items to sorted deque or vector
-* add fib_tail from snigl
-* add Env.restore(Env &org)
-** loop in parallel
-*** replace var if same key, otherwise erase this
-** use on recall in Call.eval instead of copy
-** bench
 * --
 * add stack accessor like env
 ** op + macro
@@ -25,12 +33,6 @@
 ** launch if no args
 ** only eval if last char is ;
 ** clear stack on empty input
-* add Fun.args (Args)
-** init arg ids
-* add Fun.rets (Rets)
-* --
-* add >
-** default using lt
 * add env.update(is, function<void>(Val &))
 ** use setter (set-X in current env) if available
 * add 'include' op
@@ -50,7 +52,16 @@
 ** read as utf-8
 *** https://stackoverflow.com/questions/16208079/how-to-work-with-utf-8-in-c-conversion-from-other-encodings-to-utf-8
 ** splat chars
+* add >
+** default using lt
 * add optional dup op offs arg
 * add optional swap op offs arg
 * add drop op nvals arg
+* add Fun.rets (Rets)
 
+(fun f (n (a 0) (b 1))
+  (if n 
+    (if (= n 1)
+      b
+      (recall (- n 1) b (+ a b)))
+    a))

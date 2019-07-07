@@ -24,7 +24,7 @@ namespace cidk {
     dst.as_fun = src.as_fun;
   }
 
-  bool FunType::is(const Pos &pos, const Val &x, const Val &y) const {
+  bool FunType::is(const Val &x, const Val &y) const {
     return x.as_fun == y.as_fun;
   }
 

@@ -27,7 +27,7 @@ namespace cidk {
   }
 
   bool ValType::eq(const Pos &pos, const Val &x, const Val &y) const {
-    return is(pos, x, y);
+    return is(x, y);
   }
 
   void ValType::eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
@@ -44,7 +44,5 @@ namespace cidk {
 
   void ValType::sweep(const Pos &pos, Val &val) { }
 
-  bool ValType::Bool(const Pos &pos, const Val &val) const {
-    return true;
-  }
+  bool ValType::Bool(const Pos &pos, const Val &val) const { return true; }
 }

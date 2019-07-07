@@ -13,7 +13,7 @@ namespace cidk {
 
     virtual void dump(const Pos &Pos, const Val &val, ostream &out) const override;
     virtual void dup(Val &dst, const Val &src) const override;
-    virtual bool is(const Pos &pos, const Val &x, const Val &y) const override;
+    virtual bool is(const Val &x, const Val &y) const override;
     virtual void mark_refs(const Pos &pos, const Val &val) const override;
     virtual void set(const Pos &pos, Val &dst, OStream *val) const override;
     virtual void sweep(const Pos &pos, Val &val) override;

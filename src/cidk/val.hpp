@@ -53,7 +53,7 @@ namespace cidk {
     bool eq(const Pos &pos, const Val &y) const;
     void eval(const Pos &pos, Env &env, Stack &stack) const;
     void get_ids(IdSet &out) const;
-    bool is(const Pos &pos, const Val &y) const;
+    bool is(const Val &y) const;
     bool is_eop() const;
     void mark_refs(const Pos &pos);
 

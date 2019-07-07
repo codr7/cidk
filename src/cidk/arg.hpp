@@ -14,6 +14,7 @@ namespace cidk {
     const Sym *id;
     Type *type;
     
+    Arg(const Sym *id, Type *type);
     Arg(string id, Type *type = nullptr);
   };
 

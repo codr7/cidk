@@ -18,7 +18,7 @@ namespace cidk {
     dst.as_ostream = src.as_ostream;
   }
 
-  bool OStreamType::is(const Pos &pos, const Val &x, const Val &y) const {
+  bool OStreamType::is(const Val &x, const Val &y) const {
     return x.as_ostream == y.as_ostream;
   }
 

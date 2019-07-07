@@ -25,7 +25,7 @@ namespace cidk {
     for (auto &op: val.as_expr->body) { op.get_ids(out); }
   }
 
-  bool ExprType::is(const Pos &pos, const Val &x, const Val &y) const {
+  bool ExprType::is(const Val &x, const Val &y) const {
     return x.as_expr == y.as_expr;
   }
 

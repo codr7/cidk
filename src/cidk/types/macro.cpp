@@ -17,7 +17,7 @@ namespace cidk {
     dst.as_macro = src.as_macro;
   }
 
-  bool MacroType::is(const Pos &pos, const Val &x, const Val &y) const {
+  bool MacroType::is(const Val &x, const Val &y) const {
     return x.as_macro == y.as_macro;
   }
 

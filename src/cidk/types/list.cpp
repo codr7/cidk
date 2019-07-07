@@ -52,7 +52,7 @@ namespace cidk {
     for (auto &v: val.as_list->items) { v.get_ids(out); }
   }
 
-  bool ListType::is(const Pos &pos, const Val &x, const Val &y) const {
+  bool ListType::is(const Val &x, const Val &y) const {
     return x.as_list == y.as_list;
   }
 

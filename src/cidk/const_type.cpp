@@ -33,8 +33,8 @@ namespace cidk {
     val_type.get_ids(val, out);
   }
 
-  bool ConstType::is(const Pos &pos, const Val &x, const Val &y) const {
-    return val_type.is(pos, x, y);
+  bool ConstType::is(const Val &x, const Val &y) const {
+    return val_type.is(x, y);
   }
 
   void ConstType::mark_refs(const Pos &pos, const Val &val) const {

@@ -16,9 +16,7 @@ namespace cidk {
     out << val.as_sym;
   }
 
-  void SymType::dup(Val &dst, const Val &src) const {
-    dst.as_sym = src.as_sym;
-  }
+  void SymType::dup(Val &dst, const Val &src) const { dst.as_sym = src.as_sym; }
 
   void SymType::eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
     stack.emplace_back(*env.get(pos, val.as_sym, false));
@@ -26,9 +24,7 @@ namespace cidk {
 
   void SymType::get_ids(const Val &val, IdSet &out) const { out.emplace(val.as_sym); }
 
-  bool SymType::is(const Pos &pos, const Val &x, const Val &y) const {
-    return x.as_sym == y.as_sym;
-  }
+  bool SymType::is(const Val &x, const Val &y) const { return x.as_sym == y.as_sym; }
 
   void SymType::set(const Pos &pos, Val &dst, const Sym *val) const {
     dst.as_sym = val;

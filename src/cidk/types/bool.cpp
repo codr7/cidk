@@ -17,7 +17,7 @@ namespace cidk {
     dst.as_bool = src.as_bool;
   }
 
-  bool BoolType::is(const Pos &pos, const Val &x, const Val &y) const {
+  bool BoolType::is(const Val &x, const Val &y) const {
     return x.as_bool == y.as_bool;
   }
 

@@ -44,7 +44,7 @@ namespace cidk {
     return true;
   }
 
-  bool EnvType::is(const Pos &pos, const Val &x, const Val &y) const {
+  bool EnvType::is(const Val &x, const Val &y) const {
     return x.as_env == y.as_env;
   }
 

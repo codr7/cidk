@@ -17,7 +17,7 @@ namespace cidk {
     dst.as_int = src.as_int;
   }
 
-  bool IntType::is(const Pos &pos, const Val &x, const Val &y) const {
+  bool IntType::is(const Val &x, const Val &y) const {
     return x.as_int == y.as_int;
   }
 

@@ -21,5 +21,5 @@ namespace cidk {
     pop(pos, stack, false)->eval(pos, env, stack);
   }
 
-  bool PopType::is(const Pos &pos, const Val &x, const Val &y) const { return true; }
+  bool PopType::is(const Val &x, const Val &y) const { return true; }
 }
