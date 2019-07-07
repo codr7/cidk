@@ -7,7 +7,7 @@
 *** init id from id_name if null
 ** switch fun body to Expr
 *** validate in Fun op
-*** emit code to bind args to fun body in constructor
+*** emit Let ops to body in Fun()
 ** commit fib_tail
 * --
 * split pop() into Val pop(s) and optional<Val> try_pop(s)
@@ -42,6 +42,8 @@
 * add Quote type
 ** struct with embedded Val
 ** add '-reader
+** add Splice support
+*** splice list items automagially
 * add Splat op
 * add lambda support
 ** &{...}

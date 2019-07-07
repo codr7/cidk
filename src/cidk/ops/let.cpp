@@ -1,0 +1,62 @@
+#include "cidk/cx.hpp"
+#include "cidk/e.hpp"
+#include "cidk/ops/let.hpp"
+#include "cidk/read.hpp"
+#include "cidk/types/sym.hpp"
+
+namespace cidk::ops {
+  struct Data {
+    Val key, val;
+    Data(const Val &key, const Val &val): key(key), val(val) { }
+  };
+
+  const LetType Let("let:");
+
+  LetType::LetType(const string &id): OpType(id) { }
+
+  void LetType::init(Op &op, const Val &key, const Val &val) const {
+    op.data = Data(key, val);
+  }
+
+  void LetType::eval(const Op &op, Env &env, Stack &stack) const {
+    const Pos &p(op.pos);
+    const Data &d(op.as<Data>());
+    d.val.eval(p, env, stack);
+    env.set(p, d.key.as_sym, *pop(p, stack, false), false);
+  }
+
+  void LetType::get_ids(const Op &op, IdSet &out) const {
+    const Data &d(op.as<Data>());
+    d.val.get_ids(out);
+  }
+
+  void LetType::read(Cx &cx,
+                     Pos &pos,
+                     istream &in,
+                     Env &env,
+                     Stack &stack,
+                     Ops &out) const {
+    Pos p(pos);
+    int n(0);
+    
+    for (;;) {
+      auto k(read_val(pos, in, env, stack));
+      if (!k) { throw ESys(p, "Missing ;"); }
+      if (k->is_eop()) { break; }
+
+      if (k->type != &cx.sym_type) {
+        throw ESys(p, "Invalid let id: ", k->type->id);
+      }
+
+      auto v(read_val(pos, in, env, stack));
+      if (!v) { throw ESys(p, "Missing let value"); }
+      out.emplace_back(p, *this, *k, *v);
+      n++;
+    }
+
+    if (!n) {
+      auto v(pop(p, stack, false)), k(pop(p, stack, false));
+      out.emplace_back(p, *this, *k, *v);
+    }
+  }
+}

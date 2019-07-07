@@ -26,11 +26,11 @@ namespace cidk::ops {
       if (k->is_eop()) { break; }
 
       if (k->type != &cx.sym_type) {
-        throw ESys(p, "Invalid const id, expected Sym: ", k->type->id);
+        throw ESys(p, "Invalid const id: ", k->type->id);
       }
 
       auto v(read_val(pos, in, env, stack));
-      if (!v) { throw ESys(p, "Missing const val"); }
+      if (!v) { throw ESys(p, "Missing const value"); }
       env.add_const(p, k->as_sym, *v);
       n++;
     }
