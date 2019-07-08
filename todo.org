@@ -16,6 +16,9 @@
 * add stack accessor like env
 ** op + macro
 ** push as list & move items
+* add check op
+** check (foo bar) {push foo bar 42; call + =;};
+** first arg is optional context that's evaluated and printed on fail
 * add repl
 ** launch if no args
 ** only eval if last char is ;
@@ -47,10 +50,3 @@
 * add optional swap op offs arg
 * add drop op nvals arg
 * add Fun.rets (Rets)
-
-(fun f (n (a 0) (b 1))
-  (if n 
-    (if (= n 1)
-      b
-      (recall (- n 1) b (+ a b)))
-    a))
