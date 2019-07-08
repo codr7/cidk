@@ -69,6 +69,16 @@ namespace cidk {
     std::swap(src.items, items);
   }
 
+  void Env::prune() {
+    for (auto i(items.begin()); i != items.end();) {
+      if (i->second->env == this) {
+        i = items.erase(i);
+      } else {
+        i++;
+      }
+    }
+  }
+
   bool Env::set(const Pos &pos, const Sym *key, const Val &val, bool force) {
     auto found(items.find(key));
     

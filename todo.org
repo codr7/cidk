@@ -1,6 +1,3 @@
-* add Env.prune()
-** remove all owned vars
-** call instead of assigning env on recall
 * split pop() into Val pop(s) and optional<Val> try_pop(s)
 * grep 'env_pool.get' and sweep manually like Call.eval()
 * add ReadState &state arg to all readers

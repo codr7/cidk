@@ -25,7 +25,7 @@ namespace cidk {
       cx.eval(target.body, e, stack);
       
       if (cx.eval_state == EvalState::recall) {
-        if (opt.env_extend) { e = target.env; }
+        if (opt.env_extend) { e.prune(); }
         cx.eval_state = EvalState::go;
         goto recall;
       }
