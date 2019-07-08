@@ -1,4 +1,4 @@
-fun: foo(Int)() { call dec; dup; if $ {recall;} _; };
+defun foo(Int)() { call dec; dup; if $ {recall;} _; };
 
 push 42;
 call foo;

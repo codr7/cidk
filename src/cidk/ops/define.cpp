@@ -5,7 +5,7 @@
 #include "cidk/types/sym.hpp"
 
 namespace cidk::ops {
-  const DefineType Define("define:");
+  const DefineType Define("define");
 
   DefineType::DefineType(string id): OpType(id) { }
 

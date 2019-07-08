@@ -1,4 +1,4 @@
-fun: fib(n Int a Int b Int)(Int) {
+defun fib(n Int a Int b Int)(Int) {
   if {is n 0;} a {
     if {is n 1;} b {
       push n; 
@@ -10,5 +10,5 @@ fun: fib(n Int a Int b Int)(Int) {
   };
 };
 
-bench 10 {push 20 0 1; call fib; drop;};
+clock 10 {push 20 0 1; call fib; drop;};
 dump;

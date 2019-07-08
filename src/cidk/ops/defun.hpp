@@ -1,13 +1,13 @@
-#ifndef CIDK_OP_BENCH_HPP
-#define CIDK_OP_BENCH_HPP
+#ifndef CIDK_OP_DEFUN_HPP
+#define CIDK_OP_DEFUN_HPP
 
 #include "cidk/op.hpp"
+#include "cidk/val.hpp"
 
 namespace cidk::ops {
-  struct BenchType: OpType {
-    BenchType(string id);
-
-    void init(Op &op, const Val &nreps, const Val &body) const;
+  struct DefunType: OpType {
+    DefunType(string id);
+    void init(Op &op, Fun *fun) const;
     virtual void eval(const Op &op, Env &env, Stack &stack) const override;
     virtual void get_ids(const Op &op, IdSet &out) const override;
 
@@ -19,7 +19,7 @@ namespace cidk::ops {
                       Ops &out) const override;
   };
 
-  extern const BenchType Bench;
+  extern const DefunType Defun;
 }
 
 #endif

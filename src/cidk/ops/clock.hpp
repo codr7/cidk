@@ -1,13 +1,13 @@
-#ifndef CIDK_OP_FUN_HPP
-#define CIDK_OP_FUN_HPP
+#ifndef CIDK_OP_CLOCK_HPP
+#define CIDK_OP_CLOCK_HPP
 
 #include "cidk/op.hpp"
-#include "cidk/val.hpp"
 
 namespace cidk::ops {
-  struct FunType: OpType {
-    FunType(string id);
-    void init(Op &op, Fun *fun) const;
+  struct ClockType: OpType {
+    ClockType(string id);
+
+    void init(Op &op, const Val &nreps, const Val &body) const;
     virtual void eval(const Op &op, Env &env, Stack &stack) const override;
     virtual void get_ids(const Op &op, IdSet &out) const override;
 
@@ -19,7 +19,7 @@ namespace cidk::ops {
                       Ops &out) const override;
   };
 
-  extern const FunType Fun;
+  extern const ClockType Clock;
 }
 
 #endif

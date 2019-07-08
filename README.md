@@ -1,7 +1,7 @@
 ![Logo](logo.png)
   
 ```
-fun: fib(Int)(Int) {
+defun fib(Int)(Int) {
   if {dup; push 2; call <;} _ {
     call dec; dup;
     call fib; swap;
@@ -49,12 +49,12 @@ Calls functions in specified order, or pops function from stack if no arguments.
 [... F]
 ```
 
-#### define: [id val]*
+#### define [id val]*
 Defines compile time constants for pairs of keys and values, or pops key and value from stack if no arguments.
 
 ```
   do-env {
-    define: foo 35 bar 7;
+    define foo 35 bar 7;
     push foo bar;
     call +;
   };

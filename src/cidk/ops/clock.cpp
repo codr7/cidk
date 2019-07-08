@@ -1,6 +1,6 @@
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
-#include "cidk/ops/bench.hpp"
+#include "cidk/ops/clock.hpp"
 #include "cidk/read.hpp"
 #include "cidk/timer.hpp"
 
@@ -11,15 +11,15 @@ namespace cidk::ops {
     Data(const Val &nreps, const Val &body): nreps(nreps), body(body) { }
   };
   
-  const BenchType Bench("bench");
+  const ClockType Clock("clock");
 
-  BenchType::BenchType(string id): OpType(id) { }
+  ClockType::ClockType(string id): OpType(id) { }
 
-  void BenchType::init(Op &op, const Val &nreps, const Val &body) const {
+  void ClockType::init(Op &op, const Val &nreps, const Val &body) const {
     op.data = Data(nreps, body);
   }
   
-  void BenchType::eval(const Op &op, Env &env, Stack &stack) const {
+  void ClockType::eval(const Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
     const Pos &p(op.pos);
     const Data &d(op.as<Data>());
@@ -37,13 +37,13 @@ namespace cidk::ops {
     stack.emplace_back(p, cx.int_type, Int(t.ms()));
   }
 
-  void BenchType::get_ids(const Op &op, IdSet &out) const {
+  void ClockType::get_ids(const Op &op, IdSet &out) const {
     Data d(op.as<Data>());
     d.nreps.get_ids(out);
     d.body.get_ids(out);
   }
 
-  void BenchType::read(Cx &cx, Pos &pos,
+  void ClockType::read(Cx &cx, Pos &pos,
                       istream &in,
                       Env &env,
                       Stack &stack,
@@ -51,10 +51,10 @@ namespace cidk::ops {
     Pos p(pos);
 
     auto nreps(read_val(pos, in, env, stack));
-    if (!nreps) { throw ESys(p, "Missing bench nreps"); }
+    if (!nreps) { throw ESys(p, "Missing clock nreps"); }
 
     auto body(read_val(pos, in, env, stack));
-    if (!body) { throw ESys(p, "Missing bench body"); }
+    if (!body) { throw ESys(p, "Missing clock body"); }
     read_eop(pos, in, env, stack);
     
     out.emplace_back(p, *this, *nreps, *body);
