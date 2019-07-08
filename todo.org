@@ -1,17 +1,15 @@
-* grep 'pool.get' and sweep manually like Call.eval()
 * add ReadState &state arg to all readers
 ** after 'in'
 ** inc/dec state.env_depth around do_env
 ** set env_escape in env op unless env_depth > 0
 ** read Defun body with fun.body_opts
 *** propagate out to state arg
-* --
-* add OpType.mark_refs()
-** implement for ops
-** call from mark_refs(Ops)
 * add mark/sweep ops
 ** mark call stack funs in cx.mark()
 ** call mark/sweep in benchmarks & compare
+* add OpType.mark_refs()
+** implement for ops
+** call from mark_refs(Ops)
 * add stack accessor like env
 ** op + macro
 ** push as list & move items
