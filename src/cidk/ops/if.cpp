@@ -29,7 +29,7 @@ namespace cidk::ops {
 
     d.cond.eval(p, env, stack);
     
-    if (pop(p, stack, false)->Bool(p)) {
+    if (pop(p, stack).Bool(p)) {
       if (d.x.type != &cx.nil_type) { d.x.eval(p, env, stack); }
     } else if (d.y.type != &cx.nil_type) {
       d.y.eval(p, env, stack);

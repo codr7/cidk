@@ -1,5 +1,4 @@
-* split pop() into Val pop(s) and optional<Val> try_pop(s)
-* grep 'env_pool.get' and sweep manually like Call.eval()
+* grep 'pool.get' and sweep manually like Call.eval()
 * add ReadState &state arg to all readers
 ** after 'in'
 ** inc/dec state.env_depth around do_env

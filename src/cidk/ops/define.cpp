@@ -36,8 +36,8 @@ namespace cidk::ops {
     }
 
     if (!n) {
-      auto v(*pop(p, stack, false)), k(*pop(p, stack, false));
-      env.add_const(p, k.as_sym, v);      
+      auto v(pop(p, stack));
+      env.add_const(p, pop(p, stack).as_sym, v);      
     }
   }
 }

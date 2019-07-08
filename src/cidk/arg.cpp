@@ -32,13 +32,13 @@ namespace cidk {
 
       if (i->type != &cx.nil_type) {
         i->eval(pos, env, stack);
-        auto typev(pop(pos, stack, false));
+        auto typev(pop(pos, stack));
 
-        if (typev->type != &cx.meta_type) {
-          throw ESys(pos, "Invalid argument type: ", typev->type->id);
+        if (typev.type != &cx.meta_type) {
+          throw ESys(pos, "Invalid argument type: ", typev.type->id);
         }
 
-        type = typev->as_type;
+        type = typev.as_type;
       }
 
       items.emplace_back(id, type);

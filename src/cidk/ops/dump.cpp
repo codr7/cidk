@@ -16,9 +16,9 @@ namespace cidk::ops {
     auto &cx(env.cx);
     const Pos &p(op.pos);
     op.as<Val>().eval(p, env, stack);
-    auto v(pop(p, stack, false));
+    auto v(pop(p, stack));
     auto &out(*cx.stderr);
-    v->dump(p, out);
+    v.dump(p, out);
     out << endl;
   }
 

@@ -24,7 +24,7 @@ namespace cidk::ops {
     const Pos &p(op.pos);
     const Data &d(op.as<Data>());
     d.val.eval(p, env, stack);
-    env.set(p, d.key, *pop(p, stack, false), false);
+    env.set(p, d.key, pop(p, stack), false);
   }
 
   void LetType::get_ids(const Op &op, IdSet &out) const {
@@ -57,8 +57,8 @@ namespace cidk::ops {
     }
 
     if (!n) {
-      auto v(pop(p, stack, false)), k(pop(p, stack, false));
-      out.emplace_back(p, *this, k->as_sym, *v);
+      auto v(pop(p, stack));
+      out.emplace_back(p, *this, pop(p, stack).as_sym, v);
     }
   }
 }

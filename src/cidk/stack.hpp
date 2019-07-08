@@ -13,7 +13,8 @@ namespace cidk {
   using Stack = vector<Val>;
 
   void mark_items(Stack &s); 
-  optional<Val> pop(const Pos &pos, Stack &s, bool silent);
+  Val pop(const Pos &pos, Stack &s);
+  optional<Val> try_pop(Stack &s);
 }
 
 #endif

@@ -22,10 +22,10 @@ namespace cidk::ops {
     const Pos &p(op.pos);
     const Data &d(op.as<Data>());
     d.x.eval(p, env, stack);
-    auto x(pop(p, stack, false));
+    auto x(pop(p, stack));
     d.y.eval(p, env, stack);
-    auto y(pop(p, stack, false));
-    stack.emplace_back(op.pos, env.cx.bool_type, x->is(*y));
+    auto y(pop(p, stack));
+    stack.emplace_back(op.pos, env.cx.bool_type, x.is(y));
   }
 
   void IsType::get_ids(const Op &op, IdSet &out) const {
