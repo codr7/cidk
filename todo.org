@@ -1,7 +1,7 @@
 * add ReadState &state arg to all readers
 ** after 'in'
-** inc/dec state.env_depth around do_env
-** set env_escape in env op unless env_depth > 0
+** inc/dec state.env_depth around do_env/defun
+** set env_escape in env/defun op unless env_depth > 0
 ** read Defun body with fun.body_opts
 *** propagate out to state arg
 * add mark/sweep ops
