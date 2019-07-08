@@ -12,7 +12,7 @@ namespace cidk::ops {
   
   const DoStackType DoStack("do-stack");
 
-  DoStackType::DoStackType(string id): OpType(id) { }
+  DoStackType::DoStackType(const string &id): OpType(id) { }
 
   void DoStackType::init(Op &op, const Val &in, const Val &body) const {
     op.data = Data(in, body);

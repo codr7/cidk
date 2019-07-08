@@ -12,7 +12,7 @@ namespace cidk::ops {
   
   const IsType Is("is");
 
-  IsType::IsType(string id): OpType(id) { }
+  IsType::IsType(const string &id): OpType(id) { }
 
   void IsType::init(Op &op, const Val &x, const Val &y) const {
     op.data = Data(x, y);

@@ -6,7 +6,7 @@
 namespace cidk::ops {
   const DropType Drop("drop");
 
-  DropType::DropType(string id): OpType(id) { }
+  DropType::DropType(const string &id): OpType(id) { }
 
   void DropType::init(Op &op) const { }
 

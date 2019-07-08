@@ -5,7 +5,7 @@
 namespace cidk::ops {
   const RecallType Recall("recall");
 
-  RecallType::RecallType(string id): OpType(id) { }
+  RecallType::RecallType(const string &id): OpType(id) { }
 
   void RecallType::init(Op &op) const { }
 

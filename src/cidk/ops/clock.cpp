@@ -13,7 +13,7 @@ namespace cidk::ops {
   
   const ClockType Clock("clock");
 
-  ClockType::ClockType(string id): OpType(id) { }
+  ClockType::ClockType(const string &id): OpType(id) { }
 
   void ClockType::init(Op &op, const Val &nreps, const Val &body) const {
     op.data = Data(nreps, body);

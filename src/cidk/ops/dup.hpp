@@ -6,7 +6,7 @@
 
 namespace cidk::ops {
   struct DupType: OpType {
-    DupType(string id);
+    DupType(const string &id);
     void init(Op &op) const;
     virtual void eval(const Op &op, Env &env, Stack &stack) const override;
 

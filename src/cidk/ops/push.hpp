@@ -6,7 +6,7 @@
 
 namespace cidk::ops {
   struct PushType: OpType {
-    PushType(string id);
+    PushType(const string &id);
     void init(Op &op, const Val &val) const;
     virtual void eval(const Op &op, Env &env, Stack &stack) const override;
     virtual void get_ids(const Op &op, IdSet &out) const override;

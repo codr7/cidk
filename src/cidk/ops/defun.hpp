@@ -6,7 +6,7 @@
 
 namespace cidk::ops {
   struct DefunType: OpType {
-    DefunType(string id);
+    DefunType(const string &id);
     void init(Op &op, Fun *fun) const;
     virtual void eval(const Op &op, Env &env, Stack &stack) const override;
     virtual void get_ids(const Op &op, IdSet &out) const override;

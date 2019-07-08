@@ -5,7 +5,7 @@
 
 namespace cidk::ops {
   struct ClockType: OpType {
-    ClockType(string id);
+    ClockType(const string &id);
 
     void init(Op &op, const Val &nreps, const Val &body) const;
     virtual void eval(const Op &op, Env &env, Stack &stack) const override;

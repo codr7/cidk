@@ -8,7 +8,7 @@
 namespace cidk::ops {
   const CallType Call("call");
 
-  CallType::CallType(string id): OpType(id) { }
+  CallType::CallType(const string &id): OpType(id) { }
 
   void CallType::init(Op &op, const Val &target) const { op.data = target; }
   

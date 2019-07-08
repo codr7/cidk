@@ -5,7 +5,7 @@
 
 namespace cidk::ops {
   struct DoStackType: OpType {
-    DoStackType(string id);
+    DoStackType(const string &id);
     void init(Op &op, const Val &in, const Val &body) const;
     virtual void eval(const Op &op, Env &env, Stack &stack) const override;
     virtual void get_ids(const Op &op, IdSet &out) const override;

@@ -12,7 +12,7 @@ namespace cidk::ops {
 
   const IfType If("if");
 
-  IfType::IfType(string id): OpType(id) { }
+  IfType::IfType(const string &id): OpType(id) { }
   
   void IfType::init(Op &op, const Val &cond, const Val &x, const Val &y) const {
     Data d;

@@ -8,7 +8,7 @@
 namespace cidk::ops {
   const DumpType Dump("dump");
 
-  DumpType::DumpType(string id): OpType(id) { }
+  DumpType::DumpType(const string &id): OpType(id) { }
 
   void DumpType::init(Op &op, const Val &val) const { op.data = val; }
 

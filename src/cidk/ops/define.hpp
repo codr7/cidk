@@ -6,7 +6,7 @@
 
 namespace cidk::ops {
   struct DefineType: OpType {
-    DefineType(string id);
+    DefineType(const string &id);
     void init(Op &op, const Val &val) const;
     virtual void eval(const Op &op, Env &env, Stack &stack) const override;
 

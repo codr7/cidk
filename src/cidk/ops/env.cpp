@@ -6,7 +6,7 @@
 namespace cidk::ops {
   const EnvType Env("env");
 
-  EnvType::EnvType(string id): OpType(id) { }
+  EnvType::EnvType(const string &id): OpType(id) { }
 
   void EnvType::init(Op &op) const { }
 

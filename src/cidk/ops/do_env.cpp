@@ -15,7 +15,7 @@ namespace cidk::ops {
   
   const DoEnvType DoEnv("do-env");
 
-  DoEnvType::DoEnvType(string id): OpType(id) { }
+  DoEnvType::DoEnvType(const string &id): OpType(id) { }
 
   void DoEnvType::init(Op &op, const Val &in, const Val &body) const {
     op.data = Data(in, body);

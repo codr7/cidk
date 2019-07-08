@@ -5,7 +5,7 @@
 namespace cidk::ops {
   const SwapType Swap("swap");
 
-  SwapType::SwapType(string id): OpType(id) { }
+  SwapType::SwapType(const string &id): OpType(id) { }
 
   void SwapType::init(Op &op) const { }
 

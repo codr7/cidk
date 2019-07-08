@@ -7,7 +7,7 @@
 namespace cidk::ops {
   const DefineType Define("define");
 
-  DefineType::DefineType(string id): OpType(id) { }
+  DefineType::DefineType(const string &id): OpType(id) { }
 
   void DefineType::eval(const Op &op, Env &env, Stack &stack) const { }
 
