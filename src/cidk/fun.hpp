@@ -7,11 +7,11 @@
 #include "cidk/def.hpp"
 #include "cidk/read_state.hpp"
 #include "cidk/stack.hpp"
-#include "cidk/val.hpp"
 
 namespace cidk {
   struct Call;
   struct Env;
+  struct Expr;
   struct Pos;
   
   struct Fun: Def {
@@ -19,7 +19,7 @@ namespace cidk {
 
     Env &env;
     Imp imp;
-    Val body;
+    Expr *body;
     IdSet body_ids;
     ReadState body_opts;
     

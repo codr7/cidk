@@ -5,10 +5,7 @@
 **** use _ to skip id / type
 **** update existing funs
 *** init id from id_name if null
-** switch fun body to Expr
-*** validate in Fun op
-*** emit Let ops to body in Fun()
-** commit fib_tail
+** emit Let ops to body in Defun reader
 * --
 * split pop() into Val pop(s) and optional<Val> try_pop(s)
 * grep 'env_pool.get' and sweep manually like Call.eval()

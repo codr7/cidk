@@ -1,6 +1,7 @@
 #include "cidk/call.hpp"
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
+#include "cidk/expr.hpp"
 
 namespace cidk {  
   Call::Call(Cx &cx, const Pos &pos, Fun &target):
@@ -21,7 +22,7 @@ namespace cidk {
       const ReadState &opt(target.body_opts);
       Env &e(opt.env_extend ? *cx.env_pool.get(target.env) : target.env);
     recall:
-      target.body.eval(pos, e, stack);
+      target.body->eval(e, stack);
       
       if (cx.eval_state == EvalState::recall) {
         if (opt.env_extend) { e = target.env; }

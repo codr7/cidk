@@ -3,6 +3,7 @@
 #include "cidk/list.hpp"
 #include "cidk/ops/defun.hpp"
 #include "cidk/read.hpp"
+#include "cidk/types/expr.hpp"
 
 namespace cidk::ops {
   const DefunType Defun("defun");
@@ -33,13 +34,13 @@ namespace cidk::ops {
     Pos p(pos);
 
     auto id(read_val(pos, in, env, stack));
-    if (!id) { throw ESys(p, "Missing fun id"); }
+    if (!id) { throw ESys(p, "Missing function id"); }
 
     auto args(read_val(pos, in, env, stack));
-    if (!args) { throw ESys(p, "Missing fun args"); }
+    if (!args) { throw ESys(p, "Missing function args"); }
 
     auto rets(read_val(pos, in, env, stack));
-    if (!rets) { throw ESys(p, "Missing fun rets"); }
+    if (!rets) { throw ESys(p, "Missing funtion returns"); }
 
     Fun *f(cx.fun_type.pool.get(cx, pos, 
                                 id->as_sym,
@@ -49,10 +50,15 @@ namespace cidk::ops {
     env.set(p, f->id, Val(p, cx.fun_type, f), false);
     Env &body_env(*cx.env_pool.get(env));
     auto body(read_val(pos, in, body_env, stack));
-    if (!body) { throw ESys(p, "Missing fun body"); }
+    if (!body) { throw ESys(p, "Missing function body"); }
+
+    if (body->type != &cx.expr_type) {
+      throw ESys(p, "Invalid function body: ", body->type->id);
+    }
+    
     read_eop(pos, in, env, stack);
-    f->body = *body;
-    f->body.get_ids(f->body_ids);
+    f->body = body->as_expr;
+    body->get_ids(f->body_ids);
     f->env.use(p, env, f->body_ids);
     out.emplace_back(p, *this, f);
   }

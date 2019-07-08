@@ -11,6 +11,8 @@ namespace cidk {
     Ops body;
     
     Expr(Cx &cx);
+    void eval(Env &env, Stack &stack) const;
+    void mark();
     virtual void sweep(const Pos &pos) override;
   };
 }

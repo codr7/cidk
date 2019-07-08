@@ -18,7 +18,7 @@ namespace cidk {
   }
 
   void ExprType::eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
-    cx.eval(val.as_expr->body, env, stack);
+    val.as_expr->eval(env, stack);
   }
 
   void ExprType::get_ids(const Val &val, IdSet &out) const {
@@ -30,7 +30,7 @@ namespace cidk {
   }
 
   void ExprType::mark_refs(const Pos &pos, const Val &val) const {
-    val.as_expr->is_marked = true;
+    val.as_expr->mark();
   }
 
   void ExprType::set(const Pos &pos, Val &dst, Expr *val) const {

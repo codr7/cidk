@@ -5,5 +5,9 @@
 namespace cidk {
   Expr::Expr(Cx &cx): Ref(cx) { }
 
+  void Expr::eval(Env &env, Stack &stack) const { cx.eval(body, env, stack); }
+
+  void Expr::mark() { is_marked = true; }
+  
   void Expr::sweep(const Pos &pos) { cx.expr_type.pool.put(this); }
 }
