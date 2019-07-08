@@ -1,7 +1,7 @@
 ![Logo](logo.png)
   
 ```
-defun fib(Int)(Int) {
+defun fib(_ Int)(Int) {
   if {dup; push 2; call <;} _ {
     call dec; dup;
     call fib; swap;

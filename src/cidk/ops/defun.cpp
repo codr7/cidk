@@ -53,8 +53,10 @@ namespace cidk::ops {
     }
 
     Fun &f(env.add_fun(pos, id->as_sym, {}, {}));
+    f.args.parse(cx, p, *args->as_list, env, stack);
     Env &body_env(*cx.env_pool.get(env));
     auto body(read_val(pos, in, body_env, stack));
+    f.body_opts.env_extend = true; //TODO Replace with reader state
     if (!body) { throw ESys(p, "Missing function body"); }
 
     if (body->type != &cx.expr_type) {
@@ -65,7 +67,7 @@ namespace cidk::ops {
     auto &as(f.args.items);
 
     for (auto i(as.rbegin()); i != as.rend(); i++) {
-      f.body.emplace_back(pos, Let, i->id, cx.S);
+      if (i->id) { f.body.emplace_back(pos, Let, i->id, cx.S); }
     }
 
     auto &b(body->as_expr->body);

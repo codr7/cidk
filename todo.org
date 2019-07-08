@@ -1,28 +1,18 @@
-* add Fun.args
-** add ArgList.parse(const Pos &, const list<Val> &)
-*** call in defun reader
-*** use _ to skip id / type
-** update existing funs args with id
-** bench fib_tail
-* --
 * split pop() into Val pop(s) and optional<Val> try_pop(s)
 * grep 'env_pool.get' and sweep manually like Call.eval()
-
 * --
 * add Reader type
 ** move pos, src & state to fields
 ** grep istream & replace with Reader
 ** inc/dec state.env_depth around do_env
 ** set env_escape in env op unless env_depth > 0
-** copy reader.state to Fun.body_opts
-* add mark/sweep ops
-** mark call stack funs in cx.mark()
-** call mark/sweep in fib_rec bench body & compare
-
+** copy reader.state to Fun.body_opts in defun
 * add OpType.mark_refs()
 ** implement for ops
 ** call from mark_refs(Ops)
-* --
+* add mark/sweep ops
+** mark call stack funs in cx.mark()
+** call mark/sweep in benchmarks & compare
 * add stack accessor like env
 ** op + macro
 ** push as list & move items

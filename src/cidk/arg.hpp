@@ -4,11 +4,18 @@
 #include <string>
 #include <vector>
 
+#include "cidk/stack.hpp"
+
 namespace cidk {
   using namespace std;
 
+  struct Cx;
+  struct Env;
+  struct List;
+  struct Pos;
   struct Sym;
   struct Type;
+  struct Val;
   
   struct Arg {
     string id_name;
@@ -21,6 +28,7 @@ namespace cidk {
 
   struct ArgList {
     vector<Arg> items;
+    void parse(Cx &cx, const Pos &pos, const List &in, Env &env, Stack &stack);
   };
   
   struct Ret {

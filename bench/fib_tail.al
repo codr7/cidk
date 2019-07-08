@@ -10,5 +10,5 @@ defun fib(n Int a Int b Int)(Int) {
   };
 };
 
-clock 10 {push 20 0 1; call fib; drop;};
+clock 10000 {push 20 0 1; call fib; drop;};
 dump;

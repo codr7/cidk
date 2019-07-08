@@ -8,10 +8,11 @@ namespace cidk::ops {
   struct Data {
     const Sym *key;
     Val val;
+    
     Data(const Sym *key, const Val &val): key(key), val(val) { }
   };
 
-  const LetType Let("let:");
+  const LetType Let("let");
 
   LetType::LetType(const string &id): OpType(id) { }
 

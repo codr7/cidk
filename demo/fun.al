@@ -1,4 +1,4 @@
-defun foo(Int)(Int) { dup; call +; };
+defun foo(_ Int)(Int) { dup; call +; };
 
 push 21;
 call foo;
