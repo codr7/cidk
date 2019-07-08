@@ -74,7 +74,7 @@ namespace cidk {
     void eval(const Ops &in, Env &env, Stack &stack);
     const Sym *intern(const string &name);
     void load(const Pos &pos, const string &path, Ops &out);
-    void mark(const Pos &pos);
+    void mark();
     void sweep(const Pos &pos);
   };
 

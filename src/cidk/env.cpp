@@ -53,15 +53,15 @@ namespace cidk {
     return found->second->val;
   }
 
-  void Env::mark(const Pos &pos) {
+  void Env::mark() {
     if (!is_marked) {
       is_marked = true;
-      mark_items(pos);
+      mark_items();
     }
   }
   
-  void Env::mark_items(const Pos &pos) {
-    for (auto &v: items) { v.second->mark(pos); }
+  void Env::mark_items() {
+    for (auto &v: items) { v.second->mark(); }
   }
 
   void Env::merge(Env &src) {

@@ -20,7 +20,7 @@ namespace cidk {
 
     virtual void get_ids(const Val &val, IdSet &out) const override;
     virtual bool is(const Val &x, const Val &y) const override;
-    virtual void mark_refs(const Pos &pos, const Val &val) const override;
+    virtual void mark_refs(const Val &val) const override;
 
     virtual bool Bool(const Pos &pos, const Val &val) const override;
   };

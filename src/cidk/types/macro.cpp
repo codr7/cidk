@@ -21,15 +21,11 @@ namespace cidk {
     return x.as_macro == y.as_macro;
   }
 
-  void MacroType::mark_refs(const Pos &pos, const Val &val) const {
-    val.as_macro->mark(pos);
-  }
+  void MacroType::mark_refs(const Val &val) const { val.as_macro->mark(); }
 
   void MacroType::set(const Pos &pos, Val &dst, Macro *val) const {
     dst.as_macro = val;
   }
 
-  void MacroType::sweep(const Pos &pos, Val &val) {
-    val.as_macro->sweep(pos);
-  }
+  void MacroType::sweep(const Pos &pos, Val &val) { val.as_macro->sweep(pos); }
 }

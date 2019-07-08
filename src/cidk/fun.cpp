@@ -4,10 +4,10 @@
 #include "cidk/fun.hpp"
 
 namespace cidk {
-  void Fun::mark(const Pos &pos) {
+  void Fun::mark() {
     if (!is_marked) {
       is_marked = true;
-      env.mark(pos);
+      env.mark();
       body->mark();
     }
   }  

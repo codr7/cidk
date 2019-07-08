@@ -5,10 +5,10 @@
 namespace cidk {
   List::List(Cx &cx): Ref(cx) { }
 
-  void List::mark(const Pos &pos) {
+  void List::mark() {
     if (!is_marked) {
       is_marked = true;
-      for (auto &v: items) { v.mark_refs(pos); }
+      for (auto &v: items) { v.mark_refs(); }
     }
   }
 

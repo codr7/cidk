@@ -3,8 +3,8 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  void mark_items(Pos &pos, Stack &s) {
-    for (Val &v: s) { v.mark_refs(pos); }
+  void mark_items(Stack &s) {
+    for (Val &v: s) { v.mark_refs(); }
   }
 
   optional<Val> pop(const Pos &pos, Stack &s, bool silent) {

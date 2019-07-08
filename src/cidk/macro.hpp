@@ -23,7 +23,7 @@ namespace cidk {
     Macro(Cx &cx, const Pos &pos, const Sym *id, Imp imp);
 
     void call(Pos &pos, istream &in, Env &env, Stack &stack, Ops &out) const;
-    void mark(const Pos &pos);
+    void mark();
     virtual void sweep(const Pos &pos) override;
   };
 }

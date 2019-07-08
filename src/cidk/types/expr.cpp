@@ -13,9 +13,7 @@ namespace cidk {
     out << "expr:" << val.as_expr;
   }
 
-  void ExprType::dup(Val &dst, const Val &src) const {
-    dst.as_expr = src.as_expr;
-  }
+  void ExprType::dup(Val &dst, const Val &src) const { dst.as_expr = src.as_expr; }
 
   void ExprType::eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
     val.as_expr->eval(env, stack);
@@ -29,9 +27,7 @@ namespace cidk {
     return x.as_expr == y.as_expr;
   }
 
-  void ExprType::mark_refs(const Pos &pos, const Val &val) const {
-    val.as_expr->mark();
-  }
+  void ExprType::mark_refs(const Val &val) const { val.as_expr->mark(); }
 
   void ExprType::set(const Pos &pos, Val &dst, Expr *val) const {
     dst.as_expr = val;

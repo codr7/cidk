@@ -56,9 +56,7 @@ namespace cidk {
     return x.as_list == y.as_list;
   }
 
-  void ListType::mark_refs(const Pos &pos, const Val &val) const {
-    val.as_list->mark(pos);
-  }
+  void ListType::mark_refs(const Val &val) const { val.as_list->mark(); }
 
   void ListType::set(const Pos &pos, Val &dst, List *val) const { dst.as_list = val; }
 

@@ -106,11 +106,11 @@ namespace cidk {
     read_ops(p, f, *env_pool.get(env), stack, out);
   }
 
-  void Cx::mark(const Pos &pos) {
+  void Cx::mark() {
     for (Ref *r: refs) { r->is_marked = false; }
     
     env.is_marked = true;
-    for (Env *e: envs) { e->mark_items(pos); }
+    for (Env *e: envs) { e->mark_items(); }
   }
   
   void Cx::sweep(const Pos &pos) {

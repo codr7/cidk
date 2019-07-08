@@ -63,8 +63,8 @@ namespace cidk {
     
     void clear();
     optional<Val> get(const Pos &pos, const Sym *key, bool silent);
-    void mark(const Pos &pos);
-    void mark_items(const Pos &pos);
+    void mark();
+    void mark_items();
     void merge(Env &src);
     
     bool set(const Pos &pos, const Sym *key, const Val &val, bool force);

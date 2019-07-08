@@ -55,7 +55,7 @@ namespace cidk {
     void get_ids(IdSet &out) const;
     bool is(const Val &y) const;
     bool is_eop() const;
-    void mark_refs(const Pos &pos);
+    void mark_refs();
 
     template <typename ValT>
     void reset(const Pos &pos, TValType<ValT> &type, ValT val) {

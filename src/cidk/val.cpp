@@ -52,9 +52,9 @@ namespace cidk {
     return type == &cx.sym_type && as_sym == cx.eop.as_sym;
   }
   
-  void Val::mark_refs(const Pos &pos) {
+  void Val::mark_refs() {
     type->is_marked = true;
-    type->mark_refs(pos, *this);
+    type->mark_refs(*this);
   }
 
   void Val::splat(const Pos &pos, Env &env, Stack &stack) const {

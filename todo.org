@@ -21,7 +21,9 @@
 ** mark call stack funs in cx.mark()
 ** call mark/sweep in fib_rec bench body & compare
 
-* switch Env.items to sorted deque or vector
+* add OpType.mark_refs()
+** implement for ops
+** call from Expr.mark()
 * --
 * add stack accessor like env
 ** op + macro

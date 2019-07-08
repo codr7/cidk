@@ -10,10 +10,10 @@ namespace cidk {
   
   void Type::derive(Type &parent) { env.merge(parent.env); }
   
-  void Type::mark(const Pos &pos) {
+  void Type::mark() {
     if (!is_marked) {
       is_marked = true;
-      env.mark(pos);
+      env.mark();
     }
   }
   
