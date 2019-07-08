@@ -22,7 +22,7 @@ namespace cidk {
       const ReadState &opt(target.body_opts);
       Env &e(opt.env_extend ? *cx.env_pool.get(target.env) : target.env);
     recall:
-      target.body->eval(e, stack);
+      cx.eval(target.body, e, stack);
       
       if (cx.eval_state == EvalState::recall) {
         if (opt.env_extend) { e = target.env; }

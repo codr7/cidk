@@ -5,13 +5,13 @@
 
 #include "cidk/arg.hpp"
 #include "cidk/def.hpp"
+#include "cidk/ops.hpp"
 #include "cidk/read_state.hpp"
 #include "cidk/stack.hpp"
 
 namespace cidk {
   struct Call;
   struct Env;
-  struct Expr;
   struct Pos;
   
   struct Fun: Def {
@@ -19,7 +19,7 @@ namespace cidk {
 
     Env &env;
     Imp imp;
-    Expr *body;
+    Ops body;
     IdSet body_ids;
     ReadState body_opts;
     

@@ -1,11 +1,11 @@
-* add fib_tail
-** add Fun.arg_list
-*** add ArgList.parse
-*** parse pairs of id/type
-**** use _ to skip id / type
-**** update existing funs
-*** init id from id_name if null
-** emit Let ops to body in Defun reader
+* add Fun.arg_list
+** add ArgList.parse
+** parse pairs of id/type
+*** use _ to skip id / type
+*** update existing funs
+** init id from id_name if null
+** add Let ops to body in Defun reader
+** bench fib_tail
 * --
 * split pop() into Val pop(s) and optional<Val> try_pop(s)
 * grep 'env_pool.get' and sweep manually like Call.eval()
@@ -23,7 +23,7 @@
 
 * add OpType.mark_refs()
 ** implement for ops
-** call from Expr.mark()
+** call from mark_refs(Ops)
 * --
 * add stack accessor like env
 ** op + macro

@@ -8,6 +8,8 @@ namespace cidk {
   
   struct Op;
   using Ops = vector<Op>;
+
+  void mark_refs(Ops &ops);
 }
 
 #endif

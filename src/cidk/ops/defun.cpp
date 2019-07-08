@@ -57,7 +57,8 @@ namespace cidk::ops {
     }
     
     read_eop(pos, in, env, stack);
-    f->body = body->as_expr;
+    auto &b(body->as_expr->body);
+    copy(b.begin(), b.end(), back_inserter(f->body));
     body->get_ids(f->body_ids);
     f->env.use(p, env, f->body_ids);
     out.emplace_back(p, *this, f);
