@@ -6,15 +6,16 @@
 
 namespace cidk::ops {
   struct Data {
-    Val key, val;
-    Data(const Val &key, const Val &val): key(key), val(val) { }
+    const Sym *key;
+    Val val;
+    Data(const Sym *key, const Val &val): key(key), val(val) { }
   };
 
   const LetType Let("let:");
 
   LetType::LetType(const string &id): OpType(id) { }
 
-  void LetType::init(Op &op, const Val &key, const Val &val) const {
+  void LetType::init(Op &op, const Sym *key, const Val &val) const {
     op.data = Data(key, val);
   }
 
@@ -22,7 +23,7 @@ namespace cidk::ops {
     const Pos &p(op.pos);
     const Data &d(op.as<Data>());
     d.val.eval(p, env, stack);
-    env.set(p, d.key.as_sym, *pop(p, stack, false), false);
+    env.set(p, d.key, *pop(p, stack, false), false);
   }
 
   void LetType::get_ids(const Op &op, IdSet &out) const {
@@ -50,13 +51,13 @@ namespace cidk::ops {
 
       auto v(read_val(pos, in, env, stack));
       if (!v) { throw ESys(p, "Missing let value"); }
-      out.emplace_back(p, *this, *k, *v);
+      out.emplace_back(p, *this, k->as_sym, *v);
       n++;
     }
 
     if (!n) {
       auto v(pop(p, stack, false)), k(pop(p, stack, false));
-      out.emplace_back(p, *this, *k, *v);
+      out.emplace_back(p, *this, k->as_sym, *v);
     }
   }
 }

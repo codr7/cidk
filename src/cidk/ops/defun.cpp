@@ -2,8 +2,10 @@
 #include "cidk/e.hpp"
 #include "cidk/list.hpp"
 #include "cidk/ops/defun.hpp"
+#include "cidk/ops/let.hpp"
 #include "cidk/read.hpp"
 #include "cidk/types/expr.hpp"
+#include "cidk/types/list.hpp"
 
 namespace cidk::ops {
   const DefunType Defun("defun");
@@ -37,17 +39,20 @@ namespace cidk::ops {
     if (!id) { throw ESys(p, "Missing function id"); }
 
     auto args(read_val(pos, in, env, stack));
-    if (!args) { throw ESys(p, "Missing function args"); }
+    if (!args) { throw ESys(p, "Missing argument list"); }
 
+    if (args->type != &cx.list_type) {
+      throw ESys(p, "Invalid argument list: ", args->type->id);
+    }
+    
     auto rets(read_val(pos, in, env, stack));
-    if (!rets) { throw ESys(p, "Missing funtion returns"); }
+    if (!rets) { throw ESys(p, "Missing return list"); }
 
-    Fun *f(cx.fun_type.pool.get(cx, pos, 
-                                id->as_sym,
-                                args->as_list->items,
-                                rets->as_list->items));
+    if (rets->type != &cx.list_type) {
+      throw ESys(p, "Invalid return list: ", args->type->id);
+    }
 
-    env.set(p, f->id, Val(p, cx.fun_type, f), false);
+    Fun &f(env.add_fun(pos, id->as_sym, {}, {}));
     Env &body_env(*cx.env_pool.get(env));
     auto body(read_val(pos, in, body_env, stack));
     if (!body) { throw ESys(p, "Missing function body"); }
@@ -56,11 +61,17 @@ namespace cidk::ops {
       throw ESys(p, "Invalid function body: ", body->type->id);
     }
     
-    read_eop(pos, in, env, stack);
+    read_eop(pos, in, env, stack);    
+    auto &as(f.args.items);
+
+    for (auto i(as.rbegin()); i != as.rend(); i++) {
+      f.body.emplace_back(pos, Let, i->id, cx.S);
+    }
+
     auto &b(body->as_expr->body);
-    copy(b.begin(), b.end(), back_inserter(f->body));
-    body->get_ids(f->body_ids);
-    f->env.use(p, env, f->body_ids);
-    out.emplace_back(p, *this, f);
+    copy(b.begin(), b.end(), back_inserter(f.body));
+    body->get_ids(f.body_ids);
+    f.env.use(p, env, f.body_ids);
+    out.emplace_back(p, *this, &f);
   }
 }

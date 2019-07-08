@@ -1,10 +1,8 @@
-* add Fun.arg_list
-** add ArgList.parse
-** parse pairs of id/type
+* add Fun.args
+** add ArgList.parse(const Pos &, const list<Val> &)
+*** call in defun reader
 *** use _ to skip id / type
-*** update existing funs
-** init id from id_name if null
-** add Let ops to body in Defun reader
+** update existing funs args with id
 ** bench fib_tail
 * --
 * split pop() into Val pop(s) and optional<Val> try_pop(s)

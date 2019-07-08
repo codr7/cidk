@@ -2,6 +2,7 @@
 #define CIDK_ARG_HPP
 
 #include <string>
+#include <vector>
 
 namespace cidk {
   using namespace std;
@@ -18,6 +19,10 @@ namespace cidk {
     Arg(string id, Type *type = nullptr);
   };
 
+  struct ArgList {
+    vector<Arg> items;
+  };
+  
   struct Ret {
     Type &type;
     Ret(Type &type);

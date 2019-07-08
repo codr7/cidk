@@ -46,6 +46,13 @@ namespace cidk {
                  Rest &&...rest);
 
     template <typename...Rest>
+    Fun &add_fun(const Pos &pos,
+                 const Sym *id,
+                 const vector<Arg> &args,
+                 const vector<Ret> &rets,
+                 Rest &&...rest);
+
+    template <typename...Rest>
     Macro &add_macro(const Pos &pos, const string &id, Rest &&...rest);
 
     template <typename TypeT, typename...Rest>

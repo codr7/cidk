@@ -18,6 +18,7 @@ namespace cidk {
     using Imp = function<void (Call &, Env &, Stack &)>;
 
     Env &env;
+    ArgList args;
     Imp imp;
     Ops body;
     IdSet body_ids;
