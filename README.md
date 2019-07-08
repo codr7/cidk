@@ -11,7 +11,7 @@ defun fib(Int)(Int) {
 ```
 
 ### Intro
-Welcome to cidk! This project aims to implement a stack machine devkit with integrated assembler in C++.
+Welcome to cidk! This project aims to implement a virtual stack machine devkit with an integrated high-level assembler in C++.
 
 ### Setup
 cidk requires CMake and a C++17-capable compiler to build.
