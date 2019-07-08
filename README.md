@@ -11,7 +11,7 @@ defun fib(Int)(Int) {
 ```
 
 ### Intro
-Welcome to cidk! This project aims to implement a stack machine devkit with integrated assembler in C++. While most virtual machines resemble physical CPUs to some degree; cidk is designed to cater to the needs of dynamic languages, and therefore operates at a higher level.
+Welcome to cidk! This project aims to implement a stack machine devkit with integrated assembler in C++.
 
 ### Setup
 cidk requires CMake and a C++17-capable compiler to build.
@@ -24,7 +24,6 @@ $ cd build
 $ cmake ..
 $ make
 $ ./cidk ../bench/fib_rec.al
-124
 ```
 
 ### Syntax
