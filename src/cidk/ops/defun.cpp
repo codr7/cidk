@@ -56,7 +56,7 @@ namespace cidk::ops {
     f.args.parse(cx, p, *args->as_list, env, stack);
     Env &body_env(*cx.env_pool.get(env));
     auto body(read_val(pos, in, body_env, stack));
-    f.body_opts.env_extend = true; //TODO Replace with reader state
+    f.body_opts.env_extend = true; //TODO Replace with read state
     if (!body) { throw ESys(p, "Missing function body"); }
 
     if (body->type != &cx.expr_type) {
