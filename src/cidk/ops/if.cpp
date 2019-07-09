@@ -46,18 +46,19 @@ namespace cidk::ops {
   void IfType::read(Cx &cx,
                     Pos &pos,
                     istream &in,
+                    ReadState &state,
                     Env &env,
                     Stack &stack,
                     Ops &out) const {
     Pos p(pos);
 
-    auto cond(read_val(pos, in, env, stack));
+    auto cond(read_val(pos, in, state, env, stack));
     if (!cond) { throw ESys(p, "Missing if cond"); }
 
-    auto x(read_val(pos, in, env, stack));
+    auto x(read_val(pos, in, state, env, stack));
     if (!x) { throw ESys(p, "Missing if branch"); }
 
-    auto y(read_val(pos, in, env, stack));
+    auto y(read_val(pos, in, state, env, stack));
     if (!y) { throw ESys(p, "Missing else branch"); }
     read_eop(pos, in, env, stack);
 

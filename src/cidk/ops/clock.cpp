@@ -44,16 +44,17 @@ namespace cidk::ops {
   }
 
   void ClockType::read(Cx &cx, Pos &pos,
-                      istream &in,
-                      Env &env,
-                      Stack &stack,
-                      Ops &out) const {
+                       istream &in,
+                       ReadState &state,
+                       Env &env,
+                       Stack &stack,
+                       Ops &out) const {
     Pos p(pos);
 
-    auto nreps(read_val(pos, in, env, stack));
+    auto nreps(read_val(pos, in, state, env, stack));
     if (!nreps) { throw ESys(p, "Missing clock nreps"); }
 
-    auto body(read_val(pos, in, env, stack));
+    auto body(read_val(pos, in, state, env, stack));
     if (!body) { throw ESys(p, "Missing clock body"); }
     read_eop(pos, in, env, stack);
     

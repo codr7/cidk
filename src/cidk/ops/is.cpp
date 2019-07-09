@@ -37,14 +37,15 @@ namespace cidk::ops {
   void IsType::read(Cx &cx,
                     Pos &pos,
                     istream &in,
+                    ReadState &state,
                     Env &env,
                     Stack &stack,
                     Ops &out) const {
     Pos p(pos);
-    auto x(read_val(pos, in, env, stack));
+    auto x(read_val(pos, in, state, env, stack));
     if (!x) { throw ESys(p, "Missing x"); }
 
-    auto y(read_val(pos, in, env, stack));
+    auto y(read_val(pos, in, state, env, stack));
     if (!y) { throw ESys(p, "Missing y"); }
     read_eop(pos, in, env, stack);
     out.emplace_back(p, *this, *x, *y);

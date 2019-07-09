@@ -17,6 +17,7 @@ namespace cidk {
   struct Env;
   struct Op;
   struct Pos;
+  struct ReadState;
   
   struct OpType {    
     string id;
@@ -26,7 +27,8 @@ namespace cidk {
     
     virtual void read(Cx &cx, 
                       Pos &pos, 
-                      istream &in, 
+                      istream &in,
+                      ReadState &state,
                       Env &env,
                       Stack &stack,
                       Ops &out) const = 0;

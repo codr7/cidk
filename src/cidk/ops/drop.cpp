@@ -18,6 +18,7 @@ namespace cidk::ops {
   void DropType::read(Cx &cx,
                       Pos &pos,
                       istream &in,
+                      ReadState &state,
                       Env &env,
                       Stack &stack,
                       Ops &out) const {

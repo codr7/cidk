@@ -13,14 +13,24 @@
 #include "cidk/types/sym.hpp"
 
 namespace cidk {
-  void read_ops(Pos &pos, istream &in, Env &env, Stack &stack, Ops &out) {
-    while (read_op(pos, in, env, stack, out));
+  void read_ops(Pos &pos,
+                istream &in,
+                ReadState &state,
+                Env &env,
+                Stack &stack,
+                Ops &out) {
+    while (read_op(pos, in, state, env, stack, out));
   }
 
-  bool read_op(Pos &pos, istream &in, Env &env, Stack &stack, Ops &out) {
+  bool read_op(Pos &pos,
+               istream &in,
+               ReadState &state,
+               Env &env,
+               Stack &stack,
+               Ops &out) {
     Cx &cx(env.cx);
     Pos p(pos);
-    auto idv(read_val(pos, in, env, stack));
+    auto idv(read_val(pos, in, state, env, stack));
 
     if (!idv) {
       if (in.eof()) { return false; }
@@ -36,17 +46,22 @@ namespace cidk {
     if (id == "") { throw exception(); }
     if (found == cx.op_types.end()) { throw ESys(pos, "Unknown op: ", id); } 
     OpType &ot(*found->second);
-    ot.read(cx, pos, in, env, stack, out);
+    ot.read(cx, pos, in, state, env, stack, out);
     return true;
   }
 
   void read_eop(Pos &pos, istream &in, Env &env, Stack &stack) {
     Pos p = pos;
-    auto v(read_val(pos, in, env, stack));
+    ReadState s;
+    auto v(read_val(pos, in, s, env, stack));
     if (!v || !v->is_eop()) { throw ESys(p, "Missing ;"); }
   }
 
-  optional<Val> read_val(Pos &pos, istream &in, Env &env, Stack &stack) {
+  optional<Val> read_val(Pos &pos,
+                         istream &in,
+                         ReadState &state,
+                         Env &env,
+                         Stack &stack) {
     Cx &cx(env.cx);
     skip_ws(pos, in);
     
@@ -54,17 +69,17 @@ namespace cidk {
       switch (c) {
       case '(':
         pos.col++;
-        return read_list(pos, in, env, stack);
+        return read_list(pos, in, state, env, stack);
       case '{':
         pos.col++;
-        return read_expr(pos, in, env, stack);
+        return read_expr(pos, in, state, env, stack);
       case ';':
         pos.col++;
         return cx.eop;
       default:
         in.unget();
-        if (isdigit(c)) { return read_num(pos, in, env, stack); }
-        if (isgraph(c)) { return read_id(pos, in, env, stack); }
+        if (isdigit(c)) { return read_num(pos, in, state, env, stack); }
+        if (isgraph(c)) { return read_id(pos, in, state, env, stack); }
         throw ESys(pos, "Invalid input: ", c);
       };
     }
@@ -72,7 +87,7 @@ namespace cidk {
     return {};
   }
   
-  Val read_expr(Pos &pos, istream &in, Env &env, Stack &stack) {
+  Val read_expr(Pos &pos, istream &in, ReadState &state, Env &env, Stack &stack) {
     Cx &cx(env.cx);
     Pos p(pos);
     Expr *out(cx.expr_type.pool.get(cx));
@@ -88,13 +103,16 @@ namespace cidk {
       }
       
       in.unget();
-      if (!read_op(pos, in, env, stack, out->body)) { throw ESys(pos, "Open expr"); }
+
+      if (!read_op(pos, in, state, env, stack, out->body)) {
+        throw ESys(pos, "Open expr");
+      }
     }
     
     return Val(p, cx.expr_type, out);
   }
 
-  Val read_id(Pos &pos, istream &in, Env &env, Stack &stack) {
+  Val read_id(Pos &pos, istream &in, ReadState &state, Env &env, Stack &stack) {
     Cx &cx(env.cx);
     Pos p(pos);
     stringstream out;
@@ -130,7 +148,7 @@ namespace cidk {
     return Val(p, cx.sym_type, id);
   }
   
-  Val read_list(Pos &pos, istream &in, Env &env, Stack &stack) {    
+  Val read_list(Pos &pos, istream &in, ReadState &state, Env &env, Stack &stack) {    
     Cx &cx(env.cx);
     Pos p(pos);
     List *out(cx.list_type.pool.get(cx));
@@ -145,7 +163,7 @@ namespace cidk {
       }
       
       in.unget();
-      auto v(read_val(pos, in, env, stack));
+      auto v(read_val(pos, in, state, env, stack));
       if (!v) { throw ESys(pos, "Open list"); }
       out->items.push_back(*v);
     }
@@ -153,7 +171,7 @@ namespace cidk {
     return Val(p, cx.list_type, out);
   }
   
-  Val read_num(Pos &pos, istream &in, Env &env, Stack &stack) {
+  Val read_num(Pos &pos, istream &in, ReadState &state, Env &env, Stack &stack) {
     Cx &cx(env.cx);
     Pos p(pos);
     stringstream out;

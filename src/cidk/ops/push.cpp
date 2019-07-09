@@ -21,6 +21,7 @@ namespace cidk::ops {
   void PushType::read(Cx &cx,
                       Pos &pos,
                       istream &in,
+                      ReadState &state,
                       Env &env,
                       Stack &stack,
                       Ops &out) const {
@@ -28,7 +29,7 @@ namespace cidk::ops {
     int n(0);
 
     for (;; n++) {
-      auto v(read_val(pos, in, env, stack));
+      auto v(read_val(pos, in, state, env, stack));
       if (!v) { throw ESys(p, "Missing ;"); }
       if (v->is_eop()) { break; }
       out.emplace_back(p, *this, *v);

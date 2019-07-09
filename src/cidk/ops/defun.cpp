@@ -30,22 +30,23 @@ namespace cidk::ops {
   void DefunType::read(Cx &cx,
                        Pos &pos,
                        istream &in,
+                       ReadState &state,
                        Env &env,
                        Stack &stack,
                        Ops &out) const {
     Pos p(pos);
 
-    auto id(read_val(pos, in, env, stack));
+    auto id(read_val(pos, in, state, env, stack));
     if (!id) { throw ESys(p, "Missing function id"); }
 
-    auto args(read_val(pos, in, env, stack));
+    auto args(read_val(pos, in, state, env, stack));
     if (!args) { throw ESys(p, "Missing argument list"); }
 
     if (args->type != &cx.list_type) {
       throw ESys(p, "Invalid argument list: ", args->type->id);
     }
     
-    auto rets(read_val(pos, in, env, stack));
+    auto rets(read_val(pos, in, state, env, stack));
     if (!rets) { throw ESys(p, "Missing return list"); }
 
     if (rets->type != &cx.list_type) {
@@ -55,19 +56,25 @@ namespace cidk::ops {
     Fun &f(env.add_fun(pos, id->as_sym, {}, {}));
     f.args.parse(cx, p, *args->as_list, env, stack);
     Env &body_env(*cx.env_pool.get(env));
-    auto body(read_val(pos, in, body_env, stack));
-    f.body_opts.env_extend = true; //TODO Replace with read state
+    f.body_opts.env_depth = 0;
+    auto body(read_val(pos, in, f.body_opts, body_env, stack));
     if (!body) { throw ESys(p, "Missing function body"); }
 
     if (body->type != &cx.expr_type) {
       throw ESys(p, "Invalid function body: ", body->type->id);
     }
     
+    state.merge(f.body_opts);
+    if (!state.env_depth) { state.env_escape = true; }
+    
     read_eop(pos, in, env, stack);    
     auto &as(f.args.items);
 
     for (auto i(as.rbegin()); i != as.rend(); i++) {
-      if (i->id) { f.body.emplace_back(pos, Let, i->id, cx.S); }
+      if (i->id) {
+        f.body.emplace_back(pos, Let, i->id, cx.S);
+        f.body_opts.env_extend = true;
+      }
     }
 
     auto &b(body->as_expr->body);

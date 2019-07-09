@@ -102,8 +102,9 @@ namespace cidk {
     if (f.fail()) { throw ESys(pos, "File not found: ", path); }
 
     Pos p(path);
+    ReadState state;
     Stack stack;
-    read_ops(p, f, *env_pool.get(env), stack, out);
+    read_ops(p, f, state, *env_pool.get(env), stack, out);
   }
 
   void Cx::mark() {

@@ -40,15 +40,16 @@ namespace cidk::ops {
   }
 
   void DoStackType::read(Cx &cx, Pos &pos,
-                      istream &in,
-                      Env &env,
-                      Stack &stack,
-                      Ops &out) const {
+                         istream &in,
+                         ReadState &state,
+                         Env &env,
+                         Stack &stack,
+                         Ops &out) const {
     Pos p(pos);
-    auto _in(read_val(pos, in, env, stack));
+    auto _in(read_val(pos, in, state, env, stack));
     if (!_in) { throw ESys(p, "Missing do-stack input"); }
 
-    auto body(read_val(pos, in, *env.cx.env_pool.get(env), stack));
+    auto body(read_val(pos, in, state, *env.cx.env_pool.get(env), stack));
     if (!body) { throw ESys(p, "Missing do-stack body"); }
     read_eop(pos, in, env, stack);
     

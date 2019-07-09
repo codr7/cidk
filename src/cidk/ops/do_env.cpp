@@ -50,17 +50,20 @@ namespace cidk::ops {
 
   void DoEnvType::read(Cx &cx, Pos &pos,
                       istream &in,
+                      ReadState &state,
                       Env &env,
                       Stack &stack,
                       Ops &out) const {
     Pos p(pos);
-    auto _in(read_val(pos, in, env, stack));
+    auto _in(read_val(pos, in, state, env, stack));
     if (!_in) { throw ESys(p, "Missing do-env input"); }
 
-    auto body(read_val(pos, in, *env.cx.env_pool.get(env), stack));
+    state.env_depth++;
+    auto body(read_val(pos, in, state, *env.cx.env_pool.get(env), stack));
     if (!body) { throw ESys(p, "Missing do-env body"); }
+    state.env_depth--;
     read_eop(pos, in, env, stack);
-    
+    if (!state.env_depth) { state.env_escape = true; }
     out.emplace_back(p, *this, *_in, *body);
   }
 }

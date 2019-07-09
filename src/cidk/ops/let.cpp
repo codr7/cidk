@@ -35,6 +35,7 @@ namespace cidk::ops {
   void LetType::read(Cx &cx,
                      Pos &pos,
                      istream &in,
+                     ReadState &state,
                      Env &env,
                      Stack &stack,
                      Ops &out) const {
@@ -42,7 +43,7 @@ namespace cidk::ops {
     int n(0);
     
     for (;;) {
-      auto k(read_val(pos, in, env, stack));
+      auto k(read_val(pos, in, state, env, stack));
       if (!k) { throw ESys(p, "Missing ;"); }
       if (k->is_eop()) { break; }
 
@@ -50,7 +51,7 @@ namespace cidk::ops {
         throw ESys(p, "Invalid let id: ", k->type->id);
       }
 
-      auto v(read_val(pos, in, env, stack));
+      auto v(read_val(pos, in, state, env, stack));
       if (!v) { throw ESys(p, "Missing let value"); }
       out.emplace_back(p, *this, k->as_sym, *v);
       n++;
@@ -60,5 +61,7 @@ namespace cidk::ops {
       auto v(pop(p, stack));
       out.emplace_back(p, *this, pop(p, stack).as_sym, v);
     }
+
+    if (!state.env_depth) { state.env_extend = true; }
   }
 }
