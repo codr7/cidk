@@ -73,7 +73,7 @@ namespace cidk {
   }
 
   void Cx::deinit() {
-    for (Ref *r: refs) { r->is_marked = false; }
+    for (auto i(refs.next); i != &refs; i = i->next) { i->val().is_marked = false; }
     env.clear();
     sweep(Pos::_);
 
@@ -108,22 +108,19 @@ namespace cidk {
   }
 
   void Cx::mark() {
-    for (Ref *r: refs) { r->is_marked = false; }
-    
+    for (auto i(refs.next); i != &refs; i = i->next) { i->val().is_marked = false; }
     env.is_marked = true;
     for (Env *e: envs) { e->mark_items(); }
   }
   
   void Cx::sweep(const Pos &pos) {
-    for (auto i(--refs.end()); i != refs.end();) {
-      Ref *r(*i);
+    for (auto i(refs.prev); i != &refs;) {
+      Ref &r(i->val());
+      i = i->prev;
 
-      if (r->is_marked) {
-        i--;
-      } else {
-        auto j(i--);
-        refs.erase(j);
-        r->sweep(pos);
+      if (!r.is_marked) {
+        r.unlink();
+        r.sweep(pos);
       }
     }
   }

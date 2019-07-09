@@ -1,5 +1,7 @@
-* add Ls push/pop/unlink
-** use for cx.refs
+* grep/replace { }
+* convert Cx.envs to Ls
+* move Ref.cx to Def
+** add Cx &-arg to Ref.sweep()
 * add mark/sweep ops
 ** mark call stack funs in cx.mark()
 ** call mark/sweep in benchmarks & compare

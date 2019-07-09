@@ -75,9 +75,9 @@ namespace cidk {
         auto j(org.items.find(i->first));
         
         if (sweep) {
-          Var &v(*i->second);
-          cx.refs.erase(v.ref_it);
-          v.sweep(pos);
+          Ref &r(dynamic_cast<Ref &>(*i->second));
+          r.unlink();
+          r.sweep(pos);
         }
 
         if (j == org.items.end()) {
@@ -117,11 +117,12 @@ namespace cidk {
 
   void Env::sweep_items(const Pos &pos) {
     for (auto &i: items) {
-      Var *v(i.second);
+      Var &v(*i.second);
 
-      if (v->env == this) {
-        cx.refs.erase(v->ref_it);
-        cx.var_pool.put(v);
+      if (v.env == this) {
+        Ref &r(dynamic_cast<Ref &>(v));
+        r.unlink();
+        r.sweep(pos);
       }
     }
   }

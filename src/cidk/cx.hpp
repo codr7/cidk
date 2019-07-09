@@ -38,7 +38,7 @@ namespace cidk {
 
     unordered_map<string, const Sym *> syms;
     
-    list<Ref *> refs;
+    Ls<Ref, CxRefs> refs;
     unordered_map<string, OpType *> op_types;
     list<Env *> envs;
     Env env;

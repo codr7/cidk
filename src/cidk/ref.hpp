@@ -1,7 +1,7 @@
 #ifndef CIDK_REF_HPP
 #define CIDK_REF_HPP
 
-#include <list>
+#include "cidk/ls.hpp"
 
 namespace cidk {
   using namespace std;
@@ -9,9 +9,10 @@ namespace cidk {
   struct Cx;
   struct Pos;
 
-  struct Ref {    
+  struct CxRefs {};
+  
+  struct Ref: Ls<Ref, CxRefs> {    
     Cx &cx;
-    list<Ref *>::iterator ref_it;
     bool is_marked;
 
     Ref(Cx &cx);

@@ -31,7 +31,7 @@ namespace cidk {
       }
 
       if (opt.env_extend && !opt.env_escape) {
-        cx.refs.erase(e.ref_it);
+        dynamic_cast<Ref &>(e).unlink();
         e.sweep_items(pos);
         e.sweep(pos);
       }
