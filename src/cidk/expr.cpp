@@ -3,7 +3,7 @@
 #include "cidk/types/expr.hpp"
 
 namespace cidk {
-  Expr::Expr(Cx &cx): Ref(cx) { }
+  Expr::Expr(Cx &cx): Ref(cx) {}
 
   void Expr::eval(Env &env, Stack &stack) const { cx.eval(body, env, stack); }
 

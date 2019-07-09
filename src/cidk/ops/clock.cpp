@@ -5,24 +5,24 @@
 #include "cidk/timer.hpp"
 
 namespace cidk::ops {
-  struct Data {
+  struct ClockData {
     Val nreps, body;
     
-    Data(const Val &nreps, const Val &body): nreps(nreps), body(body) { }
+    ClockData(const Val &nreps, const Val &body): nreps(nreps), body(body) {}
   };
   
   const ClockType Clock("clock");
 
-  ClockType::ClockType(const string &id): OpType(id) { }
+  ClockType::ClockType(const string &id): OpType(id) {}
 
   void ClockType::init(Op &op, const Val &nreps, const Val &body) const {
-    op.data = Data(nreps, body);
+    op.data = ClockData(nreps, body);
   }
   
   void ClockType::eval(const Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
     const Pos &p(op.pos);
-    const Data &d(op.as<Data>());
+    const ClockData &d(op.as<ClockData>());
     Stack bs;
 
     d.nreps.eval(op.pos, env, stack);
@@ -38,7 +38,7 @@ namespace cidk::ops {
   }
 
   void ClockType::get_ids(const Op &op, IdSet &out) const {
-    Data d(op.as<Data>());
+    ClockData d(op.as<ClockData>());
     d.nreps.get_ids(out);
     d.body.get_ids(out);
   }

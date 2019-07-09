@@ -3,5 +3,5 @@
 
 namespace cidk {
   Def::Def(Cx &cx, const Pos &pos, const Sym *id):
-    Ref(cx), pos(pos), id(id) { }
+    Ref(cx), pos(pos), id(id) {}
 }

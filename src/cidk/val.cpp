@@ -3,13 +3,13 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  Val::Val(): type(nullptr) { }
+  Val::Val(): type(nullptr) {}
   
   Val::Val(const Val &src): type(src.type) { src.dup(*this); }
 
-  Val::Val(ValType &type): type(&type) { }
+  Val::Val(ValType &type): type(&type) {}
 
-  Val::~Val() { }
+  Val::~Val() {}
 
   const Val &Val::operator =(const Val &src) {
     src.dup(*this);

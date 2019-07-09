@@ -5,9 +5,9 @@
 namespace cidk::ops {
   const DupType Dup("dup");
 
-  DupType::DupType(const string &id): OpType(id) { }
+  DupType::DupType(const string &id): OpType(id) {}
 
-  void DupType::init(Op &op) const { }
+  void DupType::init(Op &op) const {}
 
   void DupType::eval(const Op &op, Env &env, Stack &stack) const {
     Val v(stack.back());

@@ -16,7 +16,7 @@ namespace cidk {
 
     template <typename...Args>
     E(const Pos &pos, Args &&...args):
-      pos(pos), msg(str(forward<Args>(args)...)), is_cached(false) { }
+      pos(pos), msg(str(forward<Args>(args)...)), is_cached(false) {}
     
     virtual const char* what() const throw() override;
     virtual void print(ostream &out) const;
@@ -24,7 +24,7 @@ namespace cidk {
 
   struct ESys: E {
     template <typename...Args>
-    ESys(const Pos &pos, Args &&...args): E(pos, forward<Args>(args)...) { }
+    ESys(const Pos &pos, Args &&...args): E(pos, forward<Args>(args)...) {}
   };
 }
 

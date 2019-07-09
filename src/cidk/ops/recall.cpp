@@ -5,9 +5,9 @@
 namespace cidk::ops {
   const RecallType Recall("recall");
 
-  RecallType::RecallType(const string &id): OpType(id) { }
+  RecallType::RecallType(const string &id): OpType(id) {}
 
-  void RecallType::init(Op &op) const { }
+  void RecallType::init(Op &op) const {}
 
   void RecallType::eval(const Op &op, Env &env, Stack &stack) const {
     env.cx.eval_state = EvalState::recall;

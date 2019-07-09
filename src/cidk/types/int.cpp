@@ -7,7 +7,7 @@ namespace cidk {
                    const Pos &pos,
                    const Sym *id,
                    const vector<Type *> &parents):
-    TValType<Int>(cx, pos, id, parents) { }
+    TValType<Int>(cx, pos, id, parents) {}
 
   void IntType::dump(const Pos &Pos, const Val &val, ostream &out) const {
     out << val.as_int;

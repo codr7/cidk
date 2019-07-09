@@ -5,30 +5,30 @@
 #include "cidk/types/sym.hpp"
 
 namespace cidk::ops {
-  struct Data {
+  struct LetData {
     const Sym *key;
     Val val;
     
-    Data(const Sym *key, const Val &val): key(key), val(val) { }
+    LetData(const Sym *key, const Val &val): key(key), val(val) {}
   };
 
   const LetType Let("let");
 
-  LetType::LetType(const string &id): OpType(id) { }
+  LetType::LetType(const string &id): OpType(id) {}
 
   void LetType::init(Op &op, const Sym *key, const Val &val) const {
-    op.data = Data(key, val);
+    op.data = LetData(key, val);
   }
 
   void LetType::eval(const Op &op, Env &env, Stack &stack) const {
     const Pos &p(op.pos);
-    const Data &d(op.as<Data>());
+    const LetData &d(op.as<LetData>());
     d.val.eval(p, env, stack);
     env.set(p, d.key, pop(p, stack), false);
   }
 
   void LetType::get_ids(const Op &op, IdSet &out) const {
-    const Data &d(op.as<Data>());
+    const LetData &d(op.as<LetData>());
     d.val.get_ids(out);
   }
 

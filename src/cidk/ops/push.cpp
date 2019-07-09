@@ -6,7 +6,7 @@
 namespace cidk::ops {
   const PushType Push("push");
 
-  PushType::PushType(const string &id): OpType(id) { }
+  PushType::PushType(const string &id): OpType(id) {}
 
   void PushType::init(Op &op, const Val &val) const { op.data = val; }
 

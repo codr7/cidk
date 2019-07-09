@@ -1,5 +1,5 @@
 #include "cidk/ops.hpp"
 
 namespace cidk {
-  void mark_refs(Ops &ops) { }
+  void mark_refs(Ops &ops) {}
 }

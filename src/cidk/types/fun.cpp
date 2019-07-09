@@ -10,7 +10,7 @@ namespace cidk {
                    const Pos &pos,
                    const Sym *id,
                    const vector<Type *> &parents):
-    TValType<Fun *>(cx, pos, id, parents) { }
+    TValType<Fun *>(cx, pos, id, parents) {}
 
   void FunType::call(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
     Call(cx, pos, *val.as_fun).eval(env, stack);

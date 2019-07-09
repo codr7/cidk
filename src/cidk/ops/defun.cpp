@@ -10,7 +10,7 @@
 namespace cidk::ops {
   const DefunType Defun("defun");
 
-  DefunType::DefunType(const string &id): OpType(id) { }
+  DefunType::DefunType(const string &id): OpType(id) {}
 
   void DefunType::init(Op &op, Fun *fun) const { op.data = fun; }
 

@@ -6,26 +6,23 @@
 #include "cidk/types/nil.hpp"
 
 namespace cidk::ops {
-  struct Data {
+  struct IfData {
     Val cond, x, y;
+    IfData(const Val &cond, const Val &x, const Val &y): cond(cond), x(x), y(y) {}
   };
 
   const IfType If("if");
 
-  IfType::IfType(const string &id): OpType(id) { }
+  IfType::IfType(const string &id): OpType(id) {}
   
   void IfType::init(Op &op, const Val &cond, const Val &x, const Val &y) const {
-    Data d;
-    d.cond = cond;
-    d.x = x;
-    d.y = y;
-    op.data = d;
+    op.data = IfData(cond, x, y);
   }
 
   void IfType::eval(const Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
     const Pos &p(op.pos);
-    const Data &d(op.as<Data>());
+    const IfData &d(op.as<IfData>());
 
     d.cond.eval(p, env, stack);
     
@@ -37,7 +34,7 @@ namespace cidk::ops {
   }
 
   void IfType::get_ids(const Op &op, IdSet &out) const {
-    Data d(op.as<Data>());
+    IfData d(op.as<IfData>());
     d.cond.get_ids(out);
     d.x.get_ids(out);
     d.y.get_ids(out);

@@ -9,13 +9,13 @@ namespace cidk {
                    const Pos &pos,
                    const Sym *id,
                    const vector<Type *> &parents):
-    ValType(cx, pos, id, parents) { }
+    ValType(cx, pos, id, parents) {}
 
   void PopType::dump(const Pos &Pos, const Val &val, ostream &out) const {
     out << '$';
   }
 
-  void PopType::dup(Val &dst, const Val &src) const { }
+  void PopType::dup(Val &dst, const Val &src) const {}
 
   void PopType::eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
     pop(pos, stack).eval(pos, env, stack);

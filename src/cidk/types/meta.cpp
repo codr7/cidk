@@ -8,7 +8,7 @@ namespace cidk {
                      const Pos &pos,
                      const Sym *id,
                      const vector<Type *> &parents):
-    TValType<Type *>(cx, pos, id, parents) { }
+    TValType<Type *>(cx, pos, id, parents) {}
 
   void MetaType::dump(const Pos &Pos, const Val &val, ostream &out) const {
     out << "type:" << val.as_type->id;

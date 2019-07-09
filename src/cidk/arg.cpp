@@ -6,9 +6,9 @@
 #include "cidk/types/sym.hpp"
 
 namespace cidk {
-  Arg::Arg(const Sym *id, Type *type): id(id), type(type) { }
+  Arg::Arg(const Sym *id, Type *type): id(id), type(type) {}
 
-  Arg::Arg(string id, Type *type): id_name(id), id(nullptr), type(type) { }
+  Arg::Arg(string id, Type *type): id_name(id), id(nullptr), type(type) {}
 
   void ArgList::parse(Cx &cx,
                       const Pos &pos,
@@ -45,5 +45,5 @@ namespace cidk {
     }
   }
 
-  Ret::Ret(Type &type): type(type) { }
+  Ret::Ret(Type &type): type(type) {}
 }

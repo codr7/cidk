@@ -3,7 +3,7 @@
 #include "cidk/types/list.hpp"
 
 namespace cidk {
-  List::List(Cx &cx): Ref(cx) { }
+  List::List(Cx &cx): Ref(cx) {}
 
   void List::mark() {
     if (!is_marked) {

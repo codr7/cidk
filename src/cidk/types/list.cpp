@@ -7,7 +7,7 @@ namespace cidk {
                      const Pos &pos,
                      const Sym *id,
                      const vector<Type *> &parents):
-    TValType<List *>(cx, pos, id, parents) { }
+    TValType<List *>(cx, pos, id, parents) {}
 
   void ListType::clone(const Pos &pos, Val &dst, const Val &src) const {
     dst.as_list = cx.list_type.pool.get(cx, src.as_list->items);

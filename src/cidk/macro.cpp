@@ -6,7 +6,7 @@ namespace cidk {
   Macro::Macro(Cx &cx,
                const Pos &pos,
                const Sym *id,
-               Imp imp): Def(cx, pos, id), imp(imp) { }
+               Imp imp): Def(cx, pos, id), imp(imp) {}
 
   void Macro::call(Pos &pos, istream &in, Env &env, Stack &stack, Ops &out) const {
     imp(pos, *this, in, env, stack, out);

@@ -8,23 +8,23 @@
 #include "cidk/types/pop.hpp"
 
 namespace cidk::ops {
-  struct Data {
+  struct DoEnvData {
     Val in, body;
-    Data(const Val &in, const Val &body): in(in), body(body) { }
+    DoEnvData(const Val &in, const Val &body): in(in), body(body) {}
   };
   
   const DoEnvType DoEnv("do-env");
 
-  DoEnvType::DoEnvType(const string &id): OpType(id) { }
+  DoEnvType::DoEnvType(const string &id): OpType(id) {}
 
   void DoEnvType::init(Op &op, const Val &in, const Val &body) const {
-    op.data = Data(in, body);
+    op.data = DoEnvData(in, body);
   }
   
   void DoEnvType::eval(const Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
     const Pos &p(op.pos);
-    const Data &d(op.as<Data>());
+    const DoEnvData &d(op.as<DoEnvData>());
     Env *de(nullptr);
     d.in.eval(p, env, stack);
     auto in(pop(p, stack));
@@ -43,7 +43,7 @@ namespace cidk::ops {
   }
 
   void DoEnvType::get_ids(const Op &op, IdSet &out) const {
-    Data d(op.as<Data>());
+    DoEnvData d(op.as<DoEnvData>());
     d.in.get_ids(out);
     d.body.get_ids(out);
   }

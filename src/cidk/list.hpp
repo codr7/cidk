@@ -14,7 +14,7 @@ namespace cidk {
     List(Cx &cx);
 
     template <typename SrcT>
-    List(Cx &cx, const SrcT &src): Ref(cx), items(src.begin(), src.end()) { }
+    List(Cx &cx, const SrcT &src): Ref(cx), items(src.begin(), src.end()) {}
     
     void mark();
     virtual void sweep(const Pos &pos) override;

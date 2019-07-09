@@ -7,7 +7,7 @@
 namespace cidk {
   using namespace std;
 
-  inline void append(ostream &s) { }
+  inline void append(ostream &s) {}
 
   template <typename A0, typename...Args>
   void append(ostream &s, const A0 &a0, const Args &...args) {

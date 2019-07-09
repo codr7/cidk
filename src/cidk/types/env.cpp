@@ -7,7 +7,7 @@ namespace cidk {
                      const Pos &pos,
                      const Sym *id,
                      const vector<Type *> &parents):
-    TValType<Env *>(cx, pos, id, parents) { }
+    TValType<Env *>(cx, pos, id, parents) {}
 
   void EnvType::clone(const Pos &pos, Val &dst, const Val &src) const {
     dst.as_env = cx.env_pool.get(*src.as_env);

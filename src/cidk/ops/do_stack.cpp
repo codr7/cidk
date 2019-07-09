@@ -5,23 +5,23 @@
 #include "cidk/types/nil.hpp"
 
 namespace cidk::ops {
-  struct Data {
+  struct DoStackData {
     Val in, body;
-    Data(const Val &in, const Val &body): in(in), body(body) { }
+    DoStackData(const Val &in, const Val &body): in(in), body(body) {}
   };
   
   const DoStackType DoStack("do-stack");
 
-  DoStackType::DoStackType(const string &id): OpType(id) { }
+  DoStackType::DoStackType(const string &id): OpType(id) {}
 
   void DoStackType::init(Op &op, const Val &in, const Val &body) const {
-    op.data = Data(in, body);
+    op.data = DoStackData(in, body);
   }
   
   void DoStackType::eval(const Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
     const Pos &p(op.pos);
-    const Data &d(op.as<Data>());
+    const DoStackData &d(op.as<DoStackData>());
     Stack ds;
 
     if (d.in.type != &cx.nil_type) {
@@ -34,7 +34,7 @@ namespace cidk::ops {
   }
 
   void DoStackType::get_ids(const Op &op, IdSet &out) const {
-    Data d(op.as<Data>());
+    DoStackData d(op.as<DoStackData>());
     d.in.get_ids(out);
     d.body.get_ids(out);
   }

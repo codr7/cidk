@@ -5,22 +5,22 @@
 #include "cidk/types/bool.hpp"
 
 namespace cidk::ops {
-  struct Data {
+  struct IsData {
     Val x, y;
-    Data(const Val &x, const Val &y): x(x), y(y) { }
+    IsData(const Val &x, const Val &y): x(x), y(y) {}
   };
   
   const IsType Is("is");
 
-  IsType::IsType(const string &id): OpType(id) { }
+  IsType::IsType(const string &id): OpType(id) {}
 
   void IsType::init(Op &op, const Val &x, const Val &y) const {
-    op.data = Data(x, y);
+    op.data = IsData(x, y);
   }
 
   void IsType::eval(const Op &op, Env &env, Stack &stack) const {
     const Pos &p(op.pos);
-    const Data &d(op.as<Data>());
+    const IsData &d(op.as<IsData>());
     d.x.eval(p, env, stack);
     auto x(pop(p, stack));
     d.y.eval(p, env, stack);
@@ -29,7 +29,7 @@ namespace cidk::ops {
   }
 
   void IsType::get_ids(const Op &op, IdSet &out) const {
-    const Data &d(op.as<Data>());
+    const IsData &d(op.as<IsData>());
     d.x.get_ids(out);
     d.y.get_ids(out);
   }
