@@ -8,8 +8,12 @@
 * add mark/sweep ops
 ** mark call stack funs in cx.mark()
 ** call mark/sweep in benchmarks & compare
-* switch Env to bin search
-** test Items=deque/vector
+* rename Var to Env::Item
+** move var_pool to EnvType::item_pool
+* switch Env to use sorted Ls<Env::Item, EnvItems> for items
+** keep track of max_key
+** add Ls *find(, bool *found) that checks max_key & performs linear scan from end
+*** return prev if not found
 ** bench
 * add stack accessor like env
 ** op + macro
