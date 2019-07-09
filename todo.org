@@ -1,6 +1,9 @@
+* add Ls push/pop/unlink
+** use for cx.refs
 * add mark/sweep ops
 ** mark call stack funs in cx.mark()
 ** call mark/sweep in benchmarks & compare
+* grep string &-args and replace with string + move
 * add OpType.mark_refs()
 ** implement for ops
 ** call from mark_refs(Ops)
