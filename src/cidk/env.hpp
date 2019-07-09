@@ -1,11 +1,11 @@
 #ifndef CIDK_ENV_HPP
 #define CIDK_ENV_HPP
 
-#include <list>
 #include <map>
 #include <vector>
 
 #include "cidk/arg.hpp"
+#include "cidk/ls.hpp"
 #include "cidk/ref.hpp"
 #include "cidk/stack.hpp"
 #include "cidk/sym.hpp"
@@ -21,10 +21,9 @@ namespace cidk {
   struct Val;
   struct Var;
 
-  struct Env: Ref {
-    using It = list<Env *>::iterator;
-
-    It it;
+  struct CxEnvs {};
+  
+  struct Env: Ref, Ls<Env, CxEnvs> {
     map<const Sym *, Var *> items;
     
     Env(Cx &cx);

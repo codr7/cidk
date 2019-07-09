@@ -1,14 +1,13 @@
-* convert Cx.envs to Ls
 * move Ref.cx to Def
 ** add Cx &-arg to Ref.sweep()
-* add mark/sweep ops
-** mark call stack funs in cx.mark()
-** call mark/sweep in benchmarks & compare
 * grep string &-args and replace with string + move
 ** compare benchmarks
 * add OpType.mark_refs()
 ** implement for ops
 ** call from mark_refs(Ops)
+* add mark/sweep ops
+** mark call stack funs in cx.mark()
+** call mark/sweep in benchmarks & compare
 * switch Env to bin search
 ** test Items=deque/vector
 ** bench

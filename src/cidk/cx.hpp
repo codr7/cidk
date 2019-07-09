@@ -40,7 +40,7 @@ namespace cidk {
     
     Ls<Ref, CxRefs> refs;
     unordered_map<string, OpType *> op_types;
-    list<Env *> envs;
+    Ls<Env, CxEnvs> envs;
     Env env;
     
     MetaType &meta_type;

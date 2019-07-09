@@ -110,7 +110,7 @@ namespace cidk {
   void Cx::mark() {
     for (auto i(refs.next); i != &refs; i = i->next) { i->val().is_marked = false; }
     env.is_marked = true;
-    for (Env *e: envs) { e->mark_items(); }
+    for (auto i(envs.next); i != &envs; i = i->next) { i->val().mark_items(); }
   }
   
   void Cx::sweep(const Pos &pos) {
