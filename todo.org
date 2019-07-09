@@ -1,9 +1,6 @@
 * add mark/sweep ops
 ** mark call stack funs in cx.mark()
 ** call mark/sweep in benchmarks & compare
-* add try_read_val with optional result
-** return Val from read_val & throw if not found
-** compare bench
 * add OpType.mark_refs()
 ** implement for ops
 ** call from mark_refs(Ops)

@@ -15,7 +15,7 @@ namespace cidk {
     vector<Item *> slabs;
     vector<T *> free;
     
-    Pool(): slab_size(7), slab_offs(0) {
+    Pool(): slab_size(CIDK_POOL_INIT), slab_offs(0) {
       slabs.emplace_back(new Item[slab_size]);
     }
 
