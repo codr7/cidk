@@ -76,6 +76,7 @@ namespace cidk {
     void restore(const Pos &pos, const Env &org, bool sweep);
     bool set(const Pos &pos, const Sym *key, const Val &val, bool force);
     virtual void sweep(const Pos &pos) override;
+    virtual void sweep_items(const Pos &pos);
     void use(const Pos &pos, Env &src, IdSet &ids);
   };
 }

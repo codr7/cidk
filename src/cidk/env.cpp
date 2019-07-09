@@ -115,6 +115,17 @@ namespace cidk {
     cx.env_pool.put(this);
   }
 
+  void Env::sweep_items(const Pos &pos) {
+    for (auto &i: items) {
+      Var *v(i.second);
+
+      if (v->env == this) {
+        cx.refs.erase(v->ref_it);
+        cx.var_pool.put(v);
+      }
+    }
+  }
+  
   void Env::use(const Pos &pos, Env &src, IdSet &ids) {
     for (auto i(ids.begin()); i != ids.end(); i++) {
       auto id(*i);
