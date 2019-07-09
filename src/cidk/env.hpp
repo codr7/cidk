@@ -73,7 +73,7 @@ namespace cidk {
     void mark();
     void mark_items();
     void merge(Env &src);
-    void prune(const Pos &pos, bool sweep);
+    void restore(const Pos &pos, const Env &org, bool sweep);
     bool set(const Pos &pos, const Sym *key, const Val &val, bool force);
     virtual void sweep(const Pos &pos) override;
     void use(const Pos &pos, Env &src, IdSet &ids);

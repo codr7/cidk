@@ -69,16 +69,22 @@ namespace cidk {
     std::swap(src.items, items);
   }
 
-  void Env::prune(const Pos &pos, bool sweep) {
+  void Env::restore(const Pos &pos, const Env &org, bool sweep) {
     for (auto i(items.begin()); i != items.end();) {
       if (i->second->env == this) {
+        auto j(org.items.find(i->first));
+        
         if (sweep) {
           Var &v(*i->second);
           cx.refs.erase(v.ref_it);
           v.sweep(pos);
         }
-        
-        i = items.erase(i);
+
+        if (j == org.items.end()) {
+          i = items.erase(i);
+        } else {
+          i->second = j->second;
+        }
       } else {
         i++;
       }

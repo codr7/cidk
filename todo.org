@@ -4,6 +4,9 @@
 * add OpType.mark_refs()
 ** implement for ops
 ** call from mark_refs(Ops)
+* switch Env to bin search
+** test Items=deque/vector
+** bench
 * add stack accessor like env
 ** op + macro
 ** push as list & move items
