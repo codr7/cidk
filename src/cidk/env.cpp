@@ -127,15 +127,11 @@ namespace cidk {
     }
   }
   
-  void Env::use(const Pos &pos, Env &src, IdSet &ids) {
+  void Env::use(const Pos &pos, Env &src, const IdSet &ids) {
     for (auto i(ids.begin()); i != ids.end(); i++) {
       auto id(*i);
       auto v(src.get(pos, id, true));
-
-      if (v) {
-        add(pos, id, *v, true);
-        ids.erase(i);
-      }
+      if (v) { set(pos, id, *v, true); }
     }
   }
 }
