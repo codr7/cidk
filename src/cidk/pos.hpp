@@ -12,7 +12,7 @@ namespace cidk {
     string src;
     int row, col;
     
-    Pos(const string &src, int row=1, int col=0);
+    Pos(string src, int row=1, int col=0);
   };
 }
 
