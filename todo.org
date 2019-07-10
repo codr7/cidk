@@ -1,5 +1,8 @@
 * add Env.try_get()
 ** switch get from optional to Val
+* extract Fun.call from Call.eval
+** include recall label
+** Use in env.call
 * add OpType.mark_refs()
 ** implement for ops
 ** call from mark_refs(Ops)
