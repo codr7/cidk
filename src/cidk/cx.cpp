@@ -120,7 +120,7 @@ namespace cidk {
 
       if (!r.is_marked) {
         r.unlink();
-        r.sweep(pos);
+        r.sweep(*this, pos);
       }
     }
   }

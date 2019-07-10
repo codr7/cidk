@@ -14,5 +14,5 @@ namespace cidk {
 
   void Macro::mark() { is_marked = true; }
   
-  void Macro::sweep(const Pos &pos) { cx.macro_type.pool.put(this); }
+  void Macro::sweep(Cx &cx, const Pos &pos) { cx.macro_type.pool.put(this); }
 }

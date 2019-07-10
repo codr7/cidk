@@ -33,7 +33,7 @@ namespace cidk {
       if (opt.env_extend && !opt.env_escape) {
         dynamic_cast<Ref &>(e).unlink();
         e.sweep_items(pos);
-        e.sweep(pos);
+        e.sweep(cx, pos);
       }
     }
   }

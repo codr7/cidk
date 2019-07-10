@@ -14,7 +14,7 @@ namespace cidk {
 
     Var(const Pos &pos, Env *Env, const Val &val);
     void mark();
-    virtual void sweep(const Pos &pos) override;
+    virtual void sweep(Cx &cx, const Pos &pos) override;
   };
 }
 

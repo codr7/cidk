@@ -52,7 +52,7 @@ namespace cidk {
 
   void EnvType::set(const Pos &pos, Val &dst, Env *val) const { dst.as_env = val; }
 
-  void EnvType::sweep(const Pos &pos, Val &val) { val.as_env->sweep(pos); }
+  void EnvType::sweep(const Pos &pos, Val &val) { val.as_env->sweep(cx, pos); }
 
   bool EnvType::Bool(const Pos &pos, const Val &val) const {
     return !val.as_env->items.empty();

@@ -10,5 +10,5 @@ namespace cidk {
     val.mark_refs();
   }
   
-  void Var::sweep(const Pos &pos) { cx.var_pool.put(this); }
+  void Var::sweep(Cx &cx, const Pos &pos) { cx.var_pool.put(this); }
 }

@@ -27,5 +27,5 @@ namespace cidk {
     dst.as_macro = val;
   }
 
-  void MacroType::sweep(const Pos &pos, Val &val) { val.as_macro->sweep(pos); }
+  void MacroType::sweep(const Pos &pos, Val &val) { val.as_macro->sweep(cx, pos); }
 }

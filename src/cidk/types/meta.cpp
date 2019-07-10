@@ -31,6 +31,6 @@ namespace cidk {
   }
 
   void MetaType::sweep(const Pos &pos, Val &val) {
-    val.as_type->sweep(pos);
+    val.as_type->sweep(cx, pos);
   }
 }

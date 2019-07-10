@@ -1,5 +1,3 @@
-* move Ref.cx to Def
-** add Cx &-arg to Ref.sweep()
 * grep string &-args and replace with string + move
 ** compare benchmarks
 * add OpType.mark_refs()

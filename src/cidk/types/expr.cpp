@@ -33,7 +33,5 @@ namespace cidk {
     dst.as_expr = val;
   }
 
-  void ExprType::sweep(const Pos &pos, Val &val) {
-    val.as_expr->sweep(pos);
-  }
+  void ExprType::sweep(const Pos &pos, Val &val) { val.as_expr->sweep(cx, pos); }
 }

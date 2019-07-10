@@ -6,9 +6,10 @@
 #include "cidk/types/expr.hpp"
 
 namespace cidk {  
-  Env::Env(Cx &cx): Ref(cx) { cx.envs.push(*this); }
+  Env::Env(Cx &cx): Ref(cx), cx(cx) { cx.envs.push(*this); }
 
-  Env::Env(const Env &src): Ref(src.cx), items(src.items) { cx.envs.push(*this); }
+  Env::Env(const Env &src):
+    Ref(src.cx), cx(src.cx), items(src.items) { cx.envs.push(*this); }
 
   Env &Env::operator =(const Env &src) {
     items = src.items;
@@ -76,7 +77,7 @@ namespace cidk {
         if (sweep) {
           Ref &r(dynamic_cast<Ref &>(*i->second));
           r.unlink();
-          r.sweep(pos);
+          r.sweep(cx, pos);
         }
 
         if (j == org.items.end()) {
@@ -109,7 +110,7 @@ namespace cidk {
     return true;
   }
 
-  void Env::sweep(const Pos &pos) {
+  void Env::sweep(Cx &cx, const Pos &pos) {
     dynamic_cast<Ls<Env, CxEnvs> *>(this)->unlink();
     cx.env_pool.put(this);
   }
@@ -121,7 +122,7 @@ namespace cidk {
       if (v.env == this) {
         Ref &r(dynamic_cast<Ref &>(v));
         r.unlink();
-        r.sweep(pos);
+        r.sweep(cx, pos);
       }
     }
   }

@@ -17,5 +17,5 @@ namespace cidk {
     }
   }
   
-  void Type::sweep(const Pos &pos) { delete this; }
+  void Type::sweep(Cx &cx, const Pos &pos) { delete this; }
 }

@@ -12,6 +12,7 @@ namespace cidk {
   struct Sym;
   
   struct Def: Ref {
+    Cx &cx;
     Pos pos;
     const Sym *id;
     

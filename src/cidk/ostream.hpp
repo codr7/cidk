@@ -9,8 +9,8 @@ namespace cidk {
   struct OStream: Ref {
     ostream &imp;
     
-    OStream (Cx &cx, ostream &imp);
-    virtual void sweep(const Pos &pos) override;
+    OStream(Cx &cx, ostream &imp);
+    virtual void sweep(Cx &cx, const Pos &pos) override;
   };
 }
 

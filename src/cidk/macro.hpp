@@ -24,7 +24,7 @@ namespace cidk {
 
     void call(Pos &pos, istream &in, Env &env, Stack &stack, Ops &out) const;
     void mark();
-    virtual void sweep(const Pos &pos) override;
+    virtual void sweep(Cx &cx, const Pos &pos) override;
   };
 }
 

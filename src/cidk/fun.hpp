@@ -33,7 +33,7 @@ namespace cidk {
         Imp imp = nullptr);
 
     void mark();
-    virtual void sweep(const Pos &pos) override;
+    virtual void sweep(Cx &cx, const Pos &pos) override;
   };
 }
 

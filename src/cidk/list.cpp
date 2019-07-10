@@ -12,5 +12,5 @@ namespace cidk {
     }
   }
 
-  void List::sweep(const Pos &pos) { cx.list_type.pool.put(this); }
+  void List::sweep(Cx &cx, const Pos &pos) { cx.list_type.pool.put(this); }
 }

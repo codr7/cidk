@@ -15,7 +15,7 @@ namespace cidk {
 
     void derive(Type &parent);
     void mark();
-    virtual void sweep(const Pos &pos) override;
+    virtual void sweep(Cx &cx, const Pos &pos) override;
   };
 }
 

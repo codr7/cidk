@@ -31,6 +31,6 @@ namespace cidk {
   }
 
   void OStreamType::sweep(const Pos &pos, Val &val) {
-    val.as_ostream->sweep(pos);
+    val.as_ostream->sweep(cx, pos);
   }
 }
