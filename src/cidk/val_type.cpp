@@ -18,10 +18,6 @@ namespace cidk {
     return *_const_type;
   }
 
-  void ValType::call(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
-    stack.emplace_back(val);
-  }
-
   void ValType::clone(const Pos &pos, Val &dst, const Val &src) const {
     return dup(dst, src);
   }

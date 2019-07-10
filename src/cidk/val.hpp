@@ -46,7 +46,6 @@ namespace cidk {
 
     const Val &operator =(const Val &src);
     
-    void call(const Pos &pos, Env &env, Stack &stack);
     Val &clone(const Pos &pos, Val &dst) const;
     void dump(const Pos &pos, ostream &out) const;
     Val &dup(Val &dst) const;

@@ -18,7 +18,6 @@ namespace cidk {
 
     ConstType &const_type(const Pos &pos);
     
-    virtual void call(const Pos &pos, const Val &val, Env &env, Stack &stack) const;
     virtual void clone(const Pos &pos, Val &dst, const Val &src) const;
     virtual void dump(const Pos &Pos, const Val &val, ostream &out) const = 0;
     virtual void dup(Val &dst, const Val &src) const = 0;

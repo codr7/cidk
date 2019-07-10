@@ -16,10 +16,6 @@ namespace cidk {
     return *this;
   }
 
-  void Val::call(const Pos &pos, Env &env, Stack &stack) {
-    type->call(pos, *this, env, stack);
-  }
-
   Val &Val::clone(const Pos &pos, Val &dst) const {
     dst.type = type;
     type->clone(pos, dst, *this);
