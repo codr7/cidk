@@ -7,17 +7,11 @@
 namespace cidk::libs {
   static void add_imp(Call &call, Env &env, Stack &stack) {
     auto &cx(env.cx);
-    auto &p(call.pos);
-
     auto i(stack.end()-1);
     Val &y(*i--), &x(*i);
     ValType *xt(x.type), *yt(y.type);
-    
-    if (xt == yt) {
-      xt->env.call(p, cx.add_id, env, stack);
-    } else {
-      xt->env.call(p, cx.intern(str("+[", yt->id, ']')), env, stack);
-    }
+    auto id((xt == yt) ? cx.add_id : cx.intern(str("+[", yt->id, ']')));
+    call.forward(xt->env, id, env, stack);
   }
 
   static void int_add_imp(Call &call, Env &env, Stack &stack) {
@@ -29,17 +23,11 @@ namespace cidk::libs {
 
   static void lt_imp(Call &call, Env &env, Stack &stack) {
     auto &cx(env.cx);
-    auto &p(call.pos);
-
     auto i(stack.end()-1);
     Val &y(*i--), &x(*i);
     ValType *xt(x.type), *yt(y.type);
-
-    if (xt == yt) {
-      xt->env.call(p, cx.lt_id, env, stack);
-    } else {
-      xt->env.call(p, cx.intern(str("<[", yt->id, ']')), env, stack);
-    }
+    auto id((xt == yt) ? cx.lt_id : cx.intern(str("<[", yt->id, ']')));
+    call.forward(xt->env, id, env, stack);
   }
 
   static void int_lt_imp(Call &call, Env &env, Stack &stack) {

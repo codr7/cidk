@@ -8,7 +8,8 @@ namespace cidk {
   struct Cx;
   struct Env;
   struct Fun;
-
+  struct Sym;
+  
   struct Call {
     const Pos &pos;
     Call *prev;
@@ -18,6 +19,8 @@ namespace cidk {
     ~Call() noexcept(false);
 
     void eval(Env &env, Stack &stack);
+    void eval(Fun &target, Env &env, Stack &stack);
+    void forward(Env &dst, const Sym *id, Env &env, Stack &stack);
   };
 
   

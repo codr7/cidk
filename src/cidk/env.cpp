@@ -37,17 +37,6 @@ namespace cidk {
     set(Pos::_, cx.intern(id), val, false);
   }
 
-  void Env::call(const Pos &pos, const Sym *id, Env &env, Stack &stack) {
-    Val &v(get(pos, id));
-    Type *vt(v.type);
-    
-    if (vt != &cx.fun_type) {
-      throw ESys(pos, "Expected Fun, was: ", vt->id);
-    }
-
-    Call(pos, *v.as_fun).eval(env, stack);
-  }
-
   void Env::clear() { items.clear(); }
   
   Val &Env::get(const Pos &pos, const Sym *key) {
