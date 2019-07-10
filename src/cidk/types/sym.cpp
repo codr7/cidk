@@ -19,7 +19,7 @@ namespace cidk {
   void SymType::dup(Val &dst, const Val &src) const { dst.as_sym = src.as_sym; }
 
   void SymType::eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
-    stack.emplace_back(*env.get(pos, val.as_sym, false));
+    stack.push_back(env.get(pos, val.as_sym));
   }
 
   void SymType::get_ids(const Val &val, IdSet &out) const { out.emplace(val.as_sym); }

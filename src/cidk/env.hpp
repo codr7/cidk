@@ -69,7 +69,7 @@ namespace cidk {
     void call(const Pos &pos, const Sym *id, Env &env, Stack &stack);
     
     void clear();
-    optional<Val> get(const Pos &pos, const Sym *key, bool silent);
+    Val &get(const Pos &pos, const Sym *key);
     void mark();
     void mark_items();
     void merge(Env &src);
@@ -77,6 +77,7 @@ namespace cidk {
     bool set(const Pos &pos, const Sym *key, const Val &val, bool force);
     virtual void sweep(Cx &cx, const Pos &pos) override;
     virtual void sweep_items(const Pos &pos);
+    optional<Val> try_get(const Pos &pos, const Sym *key);
     void use(const Pos &pos, Env &src, const IdSet &ids);
   };
 }

@@ -38,26 +38,21 @@ namespace cidk {
   }
 
   void Env::call(const Pos &pos, const Sym *id, Env &env, Stack &stack) {
-    auto v(get(pos, id, false));
-    Type *vt(v->type);
+    Val &v(get(pos, id));
+    Type *vt(v.type);
     
     if (vt != &cx.fun_type) {
       throw ESys(pos, "Expected Fun, was: ", vt->id);
     }
 
-    Call(pos, *v->as_fun).eval(env, stack);
+    Call(pos, *v.as_fun).eval(env, stack);
   }
 
   void Env::clear() { items.clear(); }
   
-  optional<Val> Env::get(const Pos &pos, const Sym *key, bool silent) {
+  Val &Env::get(const Pos &pos, const Sym *key) {
     auto found(items.find(key));
-
-    if (found == items.end()) {
-      if (!silent) { throw ESys(pos, "Unknown id: ", key); }
-      return {};
-    }
-
+    if (found == items.end()) { throw ESys(pos, "Unknown id: ", key); }
     return found->second->val;
   }
 
@@ -134,11 +129,17 @@ namespace cidk {
       }
     }
   }
-  
+
+  optional<Val> Env::try_get(const Pos &pos, const Sym *key) {
+    auto found(items.find(key));
+    if (found == items.end()) { return {}; }
+    return found->second->val;
+  }
+
   void Env::use(const Pos &pos, Env &src, const IdSet &ids) {
     for (auto i(ids.begin()); i != ids.end(); i++) {
       auto id(*i);
-      auto v(src.get(pos, id, true));
+      auto v(src.try_get(pos, id));
       if (v) { set(pos, id, *v, true); }
     }
   }
