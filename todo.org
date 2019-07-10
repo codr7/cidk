@@ -1,6 +1,3 @@
-* add mark/sweep ops
-** mark call stack funs in cx.mark()
-** call mark/sweep in benchmarks & compare
 * rename Var to Env::Item
 ** move var_pool to EnvType::item_pool
 * switch Env to sorted deque

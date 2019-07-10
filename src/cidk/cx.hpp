@@ -58,6 +58,7 @@ namespace cidk {
     PopType &pop_type;
     SymType &sym_type;
 
+    vector<Ops *> ops;
     EvalState eval_state;
     Call *call;
     
@@ -71,7 +72,7 @@ namespace cidk {
     Cx();
 
     void deinit();
-    void eval(const Ops &in, Env &env, Stack &stack);
+    void eval(Ops &in, Env &env, Stack &stack);
     const Sym *intern(const string &name);
     void load(const Pos &pos, const string &path, Ops &out);
     void mark_refs();

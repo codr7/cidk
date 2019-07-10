@@ -89,8 +89,14 @@ Evaluates body on stack. Passing `_` creates a new empty stack.
 #### dump val*
 Dumps values to `stderr`, or pops value from stack if no arguments.
 
+#### mark
+Marks all reachable references for sweeping.
+
 #### push val+
 Pushes values on stack.
+
+#### sweep
+Sweeps non-reachable references from previous mark op.
 
 ### License
 MIT

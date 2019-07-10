@@ -6,5 +6,5 @@ defun fib(_ Int)(Int) {
   };
 };
 
-clock 10 {push 20; call fib; drop;};
+clock 10 {push 20; call fib; drop; mark; sweep;};
 dump;

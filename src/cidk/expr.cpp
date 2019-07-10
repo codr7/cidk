@@ -5,7 +5,7 @@
 namespace cidk {
   Expr::Expr(Cx &cx): Ref(cx) {}
 
-  void Expr::eval(Env &env, Stack &stack) const { env.cx.eval(body, env, stack); }
+  void Expr::eval(Env &env, Stack &stack) { env.cx.eval(body, env, stack); }
 
   void Expr::mark() {
     is_marked = true;

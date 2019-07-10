@@ -82,11 +82,15 @@ namespace cidk {
 #endif
   }
 
-  void Cx::eval(const Ops &in, Env &env, Stack &stack) {
-    for (const Op &o: in) { 
+  void Cx::eval(Ops &in, Env &env, Stack &stack) {
+    ops.push_back(&in);
+    
+    for (Op &o: in) { 
       o.eval(env, stack); 
       if (eval_state != EvalState::go) { break; }
     }
+
+    ops.pop_back();
   }
 
   const Sym *Cx::intern(const string &name) {
@@ -112,6 +116,7 @@ namespace cidk {
     env.is_marked = true;
     for (auto i(envs.next); i != &envs; i = i->next) { i->val().mark_items(); }
     for (Call *c(call); c; c = c->prev) { c->target.mark(); }
+    for (Ops *os: ops) { cidk::mark_refs(*os); }
   }
   
   void Cx::sweep_refs(const Pos &pos) {
