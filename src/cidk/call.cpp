@@ -4,17 +4,19 @@
 #include "cidk/expr.hpp"
 
 namespace cidk {  
-  Call::Call(Cx &cx, const Pos &pos, Fun &target):
-    cx(cx), pos(pos), prev(cx.call), target(target) {
-    cx.call = this;
+  Call::Call(const Pos &pos, Fun &target):
+    pos(pos), prev(target.cx.call), target(target) {
+    target.cx.call = this;
   }
 
   Call::~Call() noexcept(false) {
-    if (cx.call != this) { throw ESys(pos, "Call ended out of order"); }
-    cx.call = prev;
+    Call *&c(target.cx.call);
+    if (c != this) { throw ESys(pos, "Call ended out of order"); }
+    c = prev;
   }
 
   void Call::eval(Env &env, Stack &stack) {
+    Cx &cx(env.cx);
     auto imp(target.imp);
 
     if (imp) { imp(*this, env, stack); }

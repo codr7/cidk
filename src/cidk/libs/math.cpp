@@ -6,7 +6,7 @@
 
 namespace cidk::libs {
   static void add_imp(Call &call, Env &env, Stack &stack) {
-    auto &cx(call.cx);
+    auto &cx(env.cx);
     auto &p(call.pos);
 
     auto i(stack.end()-1);
@@ -28,7 +28,7 @@ namespace cidk::libs {
   }
 
   static void lt_imp(Call &call, Env &env, Stack &stack) {
-    auto &cx(call.cx);
+    auto &cx(env.cx);
     auto &p(call.pos);
 
     auto i(stack.end()-1);
@@ -43,7 +43,7 @@ namespace cidk::libs {
   }
 
   static void int_lt_imp(Call &call, Env &env, Stack &stack) {
-    auto &cx(call.cx);
+    auto &cx(env.cx);
     auto &p(call.pos);
     auto y(pop(p, stack));
     Val &x(stack.back());

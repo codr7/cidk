@@ -28,7 +28,7 @@ namespace cidk {
                       Ops &out) { out.emplace_back(pos, ops::Env); }
   
   static void Bool_imp(Call &call, Env &env, Stack &stack) {
-    auto &cx(call.cx);
+    auto &cx(env.cx);
     auto &v(stack.back());
     v.reset(call.pos, cx.bool_type, v.type->Bool(call.pos, v));
   }

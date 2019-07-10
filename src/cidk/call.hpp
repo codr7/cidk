@@ -10,12 +10,11 @@ namespace cidk {
   struct Fun;
 
   struct Call {
-    Cx &cx;
     const Pos &pos;
     Call *prev;
     Fun &target;
 
-    Call(Cx &cx, const Pos &pos, Fun &target);
+    Call(const Pos &pos, Fun &target);
     ~Call() noexcept(false);
 
     void eval(Env &env, Stack &stack);
