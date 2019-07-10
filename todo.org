@@ -1,4 +1,3 @@
-* use [] for math type funs
 * add OpType.mark_refs()
 ** implement for ops
 ** call from mark_refs(Ops)
