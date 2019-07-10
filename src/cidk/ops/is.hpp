@@ -10,6 +10,7 @@ namespace cidk::ops {
     void init(Op &op, const Val &x, const Val &y) const;
     virtual void eval(const Op &op, Env &env, Stack &stack) const override;
     virtual void get_ids(const Op &op, IdSet &out) const override;
+    virtual void mark_refs(Op &op) const override;
 
     virtual void read(Cx &cx,
                       Pos &pos,

@@ -24,6 +24,7 @@ namespace cidk {
     OpType(const string &id);
     virtual void eval(const Op &op, Env &env, Stack &stack) const = 0;
     virtual void get_ids(const Op &op, IdSet &out) const;
+    virtual void mark_refs(Op &op) const;
     
     virtual void read(Cx &cx, 
                       Pos &pos, 
@@ -54,6 +55,7 @@ namespace cidk {
 
     void eval(Env &env, Stack &stack) const;
     void get_ids(IdSet &out) const;
+    void mark_refs();
   };
 }
 

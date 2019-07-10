@@ -27,6 +27,8 @@ namespace cidk::ops {
     out.insert(bs.begin(), bs.end());
   }
 
+  void DefunType::mark_refs(Op &op) const { op.as<Fun *>()->mark(); }
+
   void DefunType::read(Cx &cx,
                        Pos &pos,
                        istream &in,

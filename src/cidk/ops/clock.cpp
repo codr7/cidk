@@ -43,6 +43,12 @@ namespace cidk::ops {
     d.body.get_ids(out);
   }
 
+  void ClockType::mark_refs(Op &op) const {
+    auto &d(op.as<ClockData>());
+    d.nreps.mark_refs();
+    d.body.mark_refs();
+  }
+
   void ClockType::read(Cx &cx, Pos &pos,
                        istream &in,
                        ReadState &state,

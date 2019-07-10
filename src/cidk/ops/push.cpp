@@ -18,6 +18,8 @@ namespace cidk::ops {
     op.as<Val>().get_ids(out);
   }
 
+  void PushType::mark_refs(Op &op) const { op.as<Val>().mark_refs(); }
+
   void PushType::read(Cx &cx,
                       Pos &pos,
                       istream &in,

@@ -26,6 +26,8 @@ namespace cidk::ops {
     op.as<Val>().get_ids(out);
   }
 
+  void DumpType::mark_refs(Op &op) const { op.as<Val>().mark_refs(); }
+
   void DumpType::read(Cx &cx,
                       Pos &pos,
                       istream &in,

@@ -39,6 +39,12 @@ namespace cidk::ops {
     d.body.get_ids(out);
   }
 
+  void DoStackType::mark_refs(Op &op) const {
+    auto &d(op.as<DoStackData>());
+    d.in.mark_refs();
+    d.body.mark_refs();
+  }
+
   void DoStackType::read(Cx &cx, Pos &pos,
                          istream &in,
                          ReadState &state,

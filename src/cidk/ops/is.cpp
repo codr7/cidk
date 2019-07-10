@@ -29,9 +29,15 @@ namespace cidk::ops {
   }
 
   void IsType::get_ids(const Op &op, IdSet &out) const {
-    const IsData &d(op.as<IsData>());
+    auto &d(op.as<IsData>());
     d.x.get_ids(out);
     d.y.get_ids(out);
+  }
+
+  void IsType::mark_refs(Op &op) const {
+    auto &d(op.as<IsData>());
+    d.x.mark_refs();
+    d.y.mark_refs();
   }
 
   void IsType::read(Cx &cx,

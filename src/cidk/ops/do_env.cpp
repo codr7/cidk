@@ -48,6 +48,12 @@ namespace cidk::ops {
     d.body.get_ids(out);
   }
 
+  void DoEnvType::mark_refs(Op &op) const {
+    auto &d(op.as<DoEnvData>());
+    d.in.mark_refs();
+    d.body.mark_refs();
+  }
+
   void DoEnvType::read(Cx &cx, Pos &pos,
                       istream &in,
                       ReadState &state,
