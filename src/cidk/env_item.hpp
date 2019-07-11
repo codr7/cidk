@@ -10,10 +10,9 @@ namespace cidk {
   struct EnvItem: Ref {
     Pos pos;
     Env *env;
-    const Sym *key;
     Val val;
     
-    EnvItem(const Pos &pos, Env *Env, const Sym *key, const Val &val);
+    EnvItem(const Pos &pos, Env *Env, const Val &val);
     void mark();
     virtual void sweep(Cx &cx, const Pos &pos) override;
   };
