@@ -1,7 +1,7 @@
 #ifndef CIDK_ENV_HPP
 #define CIDK_ENV_HPP
 
-#include <map>
+#include <list>
 #include <vector>
 
 #include "cidk/arg.hpp"
@@ -24,7 +24,8 @@ namespace cidk {
   struct CxEnvs {};
   
   struct Env: Ref, Ls<Env, CxEnvs> {
-    using Items = map<const Sym *, EnvItem *>;
+    using Items = list<EnvItem *>;
+    using Iter = Items::iterator;
     
     Cx &cx;
     Items items;
@@ -69,11 +70,12 @@ namespace cidk {
     void add_var(const Pos &pos, const string &id, const Val &val);
 
     void clear();
+    Iter find(const Sym *key);
     Val &get(const Pos &pos, const Sym *key);
     void mark();
     void mark_items();
     void merge(Env &src);
-    void restore(const Pos &pos, const Env &org, bool sweep);
+    void restore(const Pos &pos, Env &org, bool sweep);
     bool set(const Pos &pos, const Sym *key, const Val &val, bool force);
     virtual void sweep(Cx &cx, const Pos &pos) override;
     virtual void sweep_items(const Pos &pos);

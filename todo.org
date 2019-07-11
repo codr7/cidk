@@ -1,8 +1,7 @@
-* switch Env to sorted deque
-** binary search
-** Items::iterator find(, bool *found)
-*** return prev if not found
-** bench
+* sort Env list
+** switch to forward_list
+** change find to look for sym > key
+** track max_key
 * add stack accessor like env
 ** op + macro
 ** push as list & move items

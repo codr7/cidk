@@ -2,8 +2,8 @@
 #include "cidk/env_item.hpp"
 
 namespace cidk {
-  EnvItem::EnvItem(const Pos &pos, Env *env, const Val &val):
-    Ref(env->cx), pos(pos), env(env), val(val) {}
+  EnvItem::EnvItem(const Pos &pos, Env *env, const Sym *key, const Val &val):
+    Ref(env->cx), pos(pos), env(env), key(key), val(val) {}
 
   void EnvItem::mark() {
     is_marked = true;
