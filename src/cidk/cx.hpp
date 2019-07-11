@@ -6,6 +6,7 @@
 #include <unordered_map>
 
 #include "cidk/env.hpp"
+#include "cidk/env_item.hpp"
 #include "cidk/op.hpp"
 #include "cidk/types/ostream.hpp"
 #include "cidk/pool.hpp"
@@ -14,7 +15,6 @@
 #include "cidk/types/fun.hpp"
 #include "cidk/types/macro.hpp"
 #include "cidk/types/meta.hpp"
-#include "cidk/var.hpp"
 
 namespace cidk {
   struct Call;
@@ -33,8 +33,8 @@ namespace cidk {
     bool debug;
     
     Pool<Env> env_pool;
+    Pool<EnvItem> env_item_pool;
     Pool<Sym> sym_pool;    
-    Pool<Var> var_pool;
 
     unordered_map<string, const Sym *> syms;
     

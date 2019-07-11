@@ -13,19 +13,21 @@
 namespace cidk {
   using namespace std;
 
+  struct EnvItem;
   struct Fun;
   struct Macro;
   struct Pos;
   struct Sym;
   struct Type;
   struct Val;
-  struct Var;
 
   struct CxEnvs {};
   
   struct Env: Ref, Ls<Env, CxEnvs> {
+    using Items = map<const Sym *, EnvItem *>;
+    
     Cx &cx;
-    map<const Sym *, Var *> items;
+    Items items;
     
     Env(Cx &cx);
     Env(const Env &src);

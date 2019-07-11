@@ -1,5 +1,3 @@
-* rename Var to Env::Item
-** move var_pool to EnvType::item_pool
 * switch Env to sorted deque
 ** binary search
 ** Items::iterator find(, bool *found)

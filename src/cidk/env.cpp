@@ -3,6 +3,7 @@
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
 #include "cidk/env.hpp"
+#include "cidk/env_item.hpp"
 #include "cidk/ops/env.hpp"
 #include "cidk/types/expr.hpp"
 
@@ -18,7 +19,10 @@ namespace cidk {
   }
 
   bool Env::add(const Pos &pos, const Sym *key, const Val &val, bool silent) {
-    if (items.emplace(key, cx.var_pool.get(pos, this, val)).second) { return true; }
+    if (items.emplace(key, cx.env_item_pool.get(pos, this, val)).second) { 
+      return true; 
+    }
+
     if (!silent) { throw ESys(pos, "Dup binding: ", key); }
     return false;
   }
@@ -87,7 +91,7 @@ namespace cidk {
     auto found(items.find(key));
     
     if (found == items.end()) {
-      items.emplace(key, cx.var_pool.get(pos, this, val));
+      items.emplace(key, cx.env_item_pool.get(pos, this, val));
     } else {
       auto v(found->second);
       
@@ -95,7 +99,7 @@ namespace cidk {
         if (!force) { return false; }
         v->val = val;
       } else {
-        found->second = cx.var_pool.get(pos, this, val);
+        found->second = cx.env_item_pool.get(pos, this, val);
       }
     }
 
@@ -109,10 +113,10 @@ namespace cidk {
 
   void Env::sweep_items(const Pos &pos) {
     for (auto &i: items) {
-      Var &v(*i.second);
+      auto &it(*i.second);
 
-      if (v.env == this) {
-        Ref &r(dynamic_cast<Ref &>(v));
+      if (it.env == this) {
+        Ref &r(dynamic_cast<Ref &>(it));
         r.unlink();
         r.sweep(cx, pos);
       }
