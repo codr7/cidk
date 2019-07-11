@@ -86,6 +86,14 @@ Evaluates body on stack. Passing `_` creates a new empty stack.
 [... 42]
 ```
 
+`stack` evaluates to the current stack.
+
+```
+  do-stack (1 2) {push 3 4 stack 5 6;};
+
+[... (1 2 3 4) 5 6]
+```
+
 #### dump val*
 Dumps values to `stderr`, or pops value from stack if no arguments.
 

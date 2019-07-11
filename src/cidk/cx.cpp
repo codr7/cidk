@@ -7,6 +7,7 @@
 #include "cidk/libs/math.hpp"
 #include "cidk/op.hpp"
 #include "cidk/ops/env.hpp"
+#include "cidk/ops/stack.hpp"
 #include "cidk/read.hpp"
 #include "cidk/str.hpp"
 #include "cidk/types/bool.hpp"
@@ -26,7 +27,14 @@ namespace cidk {
                       Env &env,
                       Stack &stack,
                       Ops &out) { out.emplace_back(pos, ops::Env); }
-  
+
+  static void stack_imp(Pos &pos,
+                        const Macro &m,
+                        istream &in,
+                        Env &env,
+                        Stack &stack,
+                        Ops &out) { out.emplace_back(pos, ops::Stack); }
+
   static void Bool_imp(Call &call, Env &env, Stack &stack) {
     auto &cx(env.cx);
     auto &v(stack.back());
@@ -68,6 +76,7 @@ namespace cidk {
     env.add_const(Pos::_, "F", F);
     
     env.add_macro(Pos::_, "env", env_imp);
+    env.add_macro(Pos::_, "stack", stack_imp);
     
     env.add_fun(Pos::_, "Bool", {Arg("val")}, {Ret(bool_type)}, Bool_imp);
   }
