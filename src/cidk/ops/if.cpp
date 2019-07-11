@@ -21,8 +21,8 @@ namespace cidk::ops {
 
   void IfType::eval(const Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
-    const Pos &p(op.pos);
-    const IfData &d(op.as<IfData>());
+    auto &p(op.pos);
+    auto &d(op.as<IfData>());
 
     d.cond.eval(p, env, stack);
     

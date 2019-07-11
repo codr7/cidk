@@ -1,5 +1,15 @@
+* switch +/</dec to ops
+** add/lt x y
+** infer arg types
+** dispatch using single env lookup
+** add Undef type
+** update op readers to process stack
+*** read if branches with separate stacks
+**** add unify(Stack &, Stack &)
+** bench
+* --
 * add check op
-** check (foo bar) {push foo bar 42; call + =;};
+** check (foo bar) {push foo bar 42; add; is;};
 ** first arg is optional context that's evaluated and printed on fail
 * add repl
 ** launch if no args
@@ -28,7 +38,14 @@
 ** splat chars
 * add >
 ** default using lt
-* add optional dup op offs arg
-* add optional swap op offs arg
-* add drop op nvals arg
 * add Fun.rets (Rets)
+
+defun fib(_ Int)(Int) {
+  if {dup; push 2; lt;} _ {
+    dec; dup;
+    call fib;
+    swap; dec; 
+    call fib;
+    add;
+  };
+};
