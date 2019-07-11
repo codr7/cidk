@@ -48,12 +48,24 @@ namespace cidk::ops {
                     Stack &stack,
                     Ops &out) const {
     Pos p(pos);
+
     auto x(read_val(pos, in, state, env, stack));
     if (!x) { throw ESys(p, "Missing x"); }
 
-    auto y(read_val(pos, in, state, env, stack));
-    if (!y) { throw ESys(p, "Missing y"); }
-    read_eop(pos, in, env, stack);
-    out.emplace_back(p, *this, *x, *y);
+    if (x->is_eop()) {
+      out.emplace_back(p, *this, cx.S, cx.S);
+      return;
+    }
+
+    int n(0);
+    
+    for (;; n++) {
+      auto y(read_val(pos, in, state, env, stack));
+      if (!y) { throw ESys(p, "Missing ;"); }
+      if (y->is_eop()) { break; }
+      out.emplace_back(p, *this, *x, *y);
+    }
+
+    if (!n) { out.emplace_back(p, *this, *x, cx.S); }
   }
 }

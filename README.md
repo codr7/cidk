@@ -97,6 +97,15 @@ Evaluates body on stack. Passing `_` creates a new empty stack.
 #### dump val*
 Dumps values to `stderr`, or pops value from stack if no arguments.
 
+#### is x y z*
+Pushes `T` if all arguments are the same value, `F` otherwise. Missing values are popped from stack.
+
+```
+  push 42; is 42;
+
+[... T]
+```
+
 #### mark
 Marks non-reachable references for sweeping.
 
