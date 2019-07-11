@@ -19,12 +19,15 @@ namespace cidk {
   }
 
   bool Env::add(const Pos &pos, const Sym *key, const Val &val, bool silent) {
-    if (items.emplace(key, cx.env_item_pool.get(pos, this, val)).second) { 
-      return true; 
+    auto i(find(key));
+
+    if (i != items.end() && i->first == key) {
+      if (!silent) { throw ESys(pos, "Dup binding: ", key); }
+      return false;
     }
 
-    if (!silent) { throw ESys(pos, "Dup binding: ", key); }
-    return false;
+    items.emplace(i, key, cx.env_item_pool.get(pos, this, val));
+    return true;
   }
 
   void Env::add_const(const Pos &pos, const string &id, const Val &val) {
@@ -42,11 +45,19 @@ namespace cidk {
   }
 
   void Env::clear() { items.clear(); }
-  
+
+  typename Env::Iter Env::find(const Sym *key) {
+    for (auto i(items.begin()); i != items.end(); i++) {
+      if (i->first >= key) { return i; }
+    }
+
+    return items.end();
+  }
+
   Val &Env::get(const Pos &pos, const Sym *key) {
-    auto found(items.find(key));
-    if (found == items.end()) { throw ESys(pos, "Unknown id: ", key); }
-    return found->second->val;
+    auto i(find(key));
+    if (i == items.end() || i->first != key) { throw ESys(pos, "Unknown id: ", key); }
+    return i->second->val;
   }
 
   void Env::mark() {
@@ -57,18 +68,33 @@ namespace cidk {
   }
   
   void Env::mark_items() {
-    for (auto &v: items) { v.second->mark(); }
+    for (auto &i: items) { i.second->mark(); }
   }
 
   void Env::merge(Env &src) {
-    src.items.insert(items.begin(), items.end());
-    std::swap(src.items, items);
+    for (auto i(items.begin()), j(src.items.begin());
+         j != src.items.end();
+         i++, j++) {
+      while (i->first < j->first) { i++; }
+
+      if (i == items.end()) {
+        copy(j, src.items.end(), back_inserter(items));
+        break;
+      }
+      
+      if (i->first == j->first) {
+        i->second->val = j->second->val;
+      } else {
+        items.insert(i, *j);
+        i++;
+      }
+    }
   }
 
-  void Env::restore(const Pos &pos, const Env &org, bool sweep) {
+  void Env::restore(const Pos &pos, Env &org, bool sweep) {
     for (auto i(items.begin()); i != items.end();) {
       if (i->second->env == this) {
-        auto j(org.items.find(i->first));
+        auto j(org.find(i->first));
         
         if (sweep) {
           Ref &r(dynamic_cast<Ref &>(*i->second));
@@ -76,7 +102,7 @@ namespace cidk {
           r.sweep(cx, pos);
         }
 
-        if (j == org.items.end()) {
+        if (j == org.items.end() || j->first != i->first) {
           i = items.erase(i);
         } else {
           i->second = j->second;
@@ -88,18 +114,18 @@ namespace cidk {
   }
 
   bool Env::set(const Pos &pos, const Sym *key, const Val &val, bool force) {
-    auto found(items.find(key));
+    auto i(find(key));
     
-    if (found == items.end()) {
-      items.emplace(key, cx.env_item_pool.get(pos, this, val));
+    if (i == items.end() || i->first != key) {
+      items.emplace(i, key, cx.env_item_pool.get(pos, this, val));
     } else {
-      auto v(found->second);
+      auto it(*i->second);
       
-      if (v->env == this) {
+      if (it.env == this) {
         if (!force) { return false; }
-        v->val = val;
+        it.val = val;
       } else {
-        found->second = cx.env_item_pool.get(pos, this, val);
+        i->second = cx.env_item_pool.get(pos, this, val);
       }
     }
 
@@ -124,9 +150,9 @@ namespace cidk {
   }
 
   optional<Val> Env::try_get(const Pos &pos, const Sym *key) {
-    auto found(items.find(key));
-    if (found == items.end()) { return {}; }
-    return found->second->val;
+    auto i(find(key));
+    if (i == items.end() || i->first != key) { return {}; }
+    return i->second->val;
   }
 
   void Env::use(const Pos &pos, Env &src, const IdSet &ids) {
