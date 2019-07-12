@@ -1,5 +1,8 @@
+* drop EnvItem Ref
+** include external item-envs in mark
+** put back owned items in Env destructor
 * finish stack type inference
-** process stack arg in op readers
+** process stack in op readers
 ** add Undef type
 *** store actual as_type
 ** add unify(Stack &x, Stack &y)
@@ -10,7 +13,7 @@
 ** drop Call.forward/fun overload
 ** drop cx.lt_sym
 ** bench
-*** skip push
+*** pass literal arg instead of push
 * fix add-op vararg
 ** get 1+ x from stack
 * --
