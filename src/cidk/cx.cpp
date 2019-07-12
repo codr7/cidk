@@ -82,6 +82,7 @@ namespace cidk {
 
   void Cx::deinit() {
     for (auto i(refs.next); i != &refs; i = i->next) { i->val().is_marked = false; }
+    env.is_marked = true;
     env.clear();
     sweep_refs(Pos::_);
 

@@ -2,13 +2,9 @@
 #include "cidk/env_item.hpp"
 
 namespace cidk {
-  EnvItem::EnvItem(const Pos &pos, Env *env, const Val &val):
-    Ref(env->cx), pos(pos), env(env), val(val) {}
+  EnvItem::EnvItem(Env *env, const Val &val): env(env), val(val), nrefs(1) {}
 
-  void EnvItem::mark() {
-    is_marked = true;
-    val.mark_refs();
+  void EnvItem::deref(Cx &cx) {
+    if (!--nrefs) { cx.env_item_pool.put(this); }
   }
-  
-  void EnvItem::sweep(Cx &cx, const Pos &pos) { cx.env_item_pool.put(this); }
 }

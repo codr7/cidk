@@ -1,20 +1,18 @@
 #ifndef CIDK_ENV_ITEM_HPP
 #define CIDK_ENV_ITEM_HPP
 
-#include "cidk/ref.hpp"
 #include "cidk/val.hpp"
 
 namespace cidk {
   struct Env;
 
-  struct EnvItem: Ref {
-    Pos pos;
+  struct EnvItem {
     Env *env;
     Val val;
+    int nrefs;
     
-    EnvItem(const Pos &pos, Env *Env, const Val &val);
-    void mark();
-    virtual void sweep(Cx &cx, const Pos &pos) override;
+    EnvItem(Env *Env, const Val &val);
+    void deref(Cx &cx);
   };
 }
 

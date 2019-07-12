@@ -18,7 +18,7 @@ namespace cidk::ops {
     auto &cx(env.cx);
     const Pos &p(op.pos);
     auto f(op.as<Fun *>());
-    f->env.use(p, env, f->body_ids);
+    f->env.use(env, f->body_ids);
     if (f->id) { env.set(p, f->id, Val(p, cx.fun_type, f), false); }
   }
 
@@ -82,7 +82,7 @@ namespace cidk::ops {
     auto &b(body->as_expr->body);
     copy(b.begin(), b.end(), back_inserter(f.body));
     body->get_ids(f.body_ids);
-    f.env.use(p, env, f.body_ids);
+    f.env.use(env, f.body_ids);
     out.emplace_back(p, *this, &f);
   }
 }

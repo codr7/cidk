@@ -1,8 +1,4 @@
-* replace EnvItem Ref with int nrefs
-** start at 1
-** inc on use
-** add deref(Cx &cx) to dec/put
-** bench
+* figure out why fib_rec is slower again
 * add type inference
 ** process stack/env in OpType inits
 ** add cx, env, stack to OpType inits / op constructor

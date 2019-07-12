@@ -27,14 +27,13 @@ namespace cidk {
       cx.eval(fun.body, e, stack);
       
       if (cx.eval_state == EvalState::recall) {
-        if (opt.env_extend) { e.restore(pos, fun.env, !opt.env_escape); }
+        if (opt.env_extend) { e.restore(fun.env); }
         cx.eval_state = EvalState::go;
         goto recall;
       }
 
       if (opt.env_extend && !opt.env_escape) {
         dynamic_cast<Ref &>(e).unlink();
-        e.sweep_items(pos);
         e.sweep(cx, pos);
       }
     }

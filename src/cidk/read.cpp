@@ -130,19 +130,20 @@ namespace cidk {
     if (!in.eof()) { in.unget();}
     auto id(cx.intern(out.str()));
 
-    auto v(env.try_get(p, id));
+    auto i(env.try_get(id));
 
-    if (v) {
-      if (v->type->is_const) { return v->clone(p, *v); }
+    if (i) {
+      Val &v(i->val);
+      if (v.type->is_const) { return v.clone(p, v); }
 
-      if (v->type == &cx.macro_type) {
+      if (v.type == &cx.macro_type) {
         auto &et(cx.expr_type);
         Expr *e(et.pool.get(cx));
-        v->as_macro->call(pos, in, env, stack, e->body);
+        v.as_macro->call(pos, in, env, stack, e->body);
         return Val(p, cx.expr_type, e);
       }
 
-      return *v;
+      return v;
     }
     
     return Val(p, cx.sym_type, id);
