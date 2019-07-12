@@ -1,11 +1,10 @@
-* drop EnvItem Ref
-** include external item-envs in mark
-** put back owned items in Env destructor
-* finish stack type inference
-** process stack in op readers
+* add type inference
+** process stack/env in OpType inits
+** add cx, env, stack to OpType inits / op constructor
 ** add Undef type
 *** store actual as_type
 ** add unify(Stack &x, Stack &y)
+** add Env.unify(const Env &y)
 ** use to lookup add-fn at read-time
 * switch < to op
 ** copy add-op to lt
