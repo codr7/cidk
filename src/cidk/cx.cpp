@@ -61,7 +61,6 @@ namespace cidk {
     sym_type(env.add_type<SymType>(Pos::_, "Sym", {&any_type})),
     eval_state(EvalState::go),
     call(nullptr),
-    add_id(intern("+")),
     lt_id(intern("<")),
     _(nil_type),
     S(pop_type),

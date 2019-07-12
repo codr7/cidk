@@ -7,7 +7,7 @@
 namespace cidk::ops {
   struct AddType: OpType {
     AddType(const string &id);
-    void init(Op &op, const Val &x, const Val &y) const;
+    void init(Op &op, const Val &x, const Val &y, Fun *f) const;
     virtual void eval(const Op &op, Env &env, Stack &stack) const override;
     virtual void get_ids(const Op &op, IdSet &out) const override;
     virtual void mark_refs(Op &op) const override;

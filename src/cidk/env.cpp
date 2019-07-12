@@ -1,5 +1,4 @@
 #include "cidk/const_type.hpp"
-#include "cidk/call.hpp"
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
 #include "cidk/env.hpp"
@@ -42,16 +41,6 @@ namespace cidk {
 
   void Env::add_var(const Pos &pos, const string &id, const Val &val) {
     set(Pos::_, cx.intern(id), val, false);
-  }
-
-  void Env::call(const Pos &pos, const Sym *key, Env &env, Stack &stack) {
-    Val &f(get(pos, key));
-    
-    if (f.type != &cx.fun_type) {
-      throw ESys(pos, "Expected Fun, was: ", f.type->id);
-    }
-
-    Call(pos, *f.as_fun).eval(env, stack);
   }
 
   void Env::clear() { items.clear(); }

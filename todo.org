@@ -1,4 +1,4 @@
-* add stack type inference
+* finish stack type inference
 ** process stack arg in op readers
 ** add Undef type
 *** store actual as_type
@@ -9,6 +9,8 @@
 *** support vararg like is-op
 ** drop Call.forward/fun overload
 ** bench
+* fix add-op vararg
+** get 1+ x from stack
 * --
 * add check op
 ** check (foo bar) {push foo bar 42; add; is;};
@@ -17,8 +19,9 @@
 ** launch if no args
 ** only eval if last char is ;
 ** clear stack on empty input
-* add env.update(is, function<void>(Val &))
-** use setter (set-X in current env) if available
+* add fib_iter bench
+** add env.update(is, function<void>(Val &))
+*** use setter (set-X in current env) if available
 * add 'include' op
 ** vararg like 'call'
 ** load ops on read and store in data
