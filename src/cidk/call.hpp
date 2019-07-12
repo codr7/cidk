@@ -13,13 +13,13 @@ namespace cidk {
   struct Call {
     const Pos &pos;
     Call *prev;
-    Fun &target;
+    Fun &fun;
 
-    Call(const Pos &pos, Fun &target);
+    Call(const Pos &pos, Fun &fun);
     ~Call() noexcept(false);
 
     void eval(Env &env, Stack &stack);
-    void eval(Fun &target, Env &env, Stack &stack);
+    void eval(Fun &fun, Env &env, Stack &stack);
     void forward(Env &dst, const Sym *id, Env &env, Stack &stack);
   };
 

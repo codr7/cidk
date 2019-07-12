@@ -5,7 +5,7 @@ defun fib(_ Int)(Int) {
   if {dup; push 2; call <;} _ {
     call dec; dup;
     call fib; swap;
-    call dec fib +;
+    call dec fib; add;
   };
 };
 ```
@@ -31,7 +31,7 @@ Each statement starts with an opcode and ends with semicolon, arguments are sepa
 
 ```
   push 35 7;
-  call +;
+  add;
 
 [... 42]
 ```
@@ -42,10 +42,10 @@ Each statement starts with an opcode and ends with semicolon, arguments are sepa
 Calls functions in specified order, or pops function from stack if no arguments.
 
 ```
-  push 7 14 21;
-  call + <;
+  push 7 14;
+  call <;
 
-[... F]
+[... T]
 ```
 
 #### define [id val]+
@@ -55,7 +55,7 @@ Defines compile time constants for pairs of keys and values, or pops key and val
   do-env {
     define foo 35 bar 7;
     push foo bar;
-    call +;
+    add;
   };
   
 [... 42]
@@ -81,7 +81,7 @@ Evaluates body in environment. Passing `_` creates a new empty environment, whil
 Evaluates body on stack. Passing `_` creates a new empty stack.
 
 ```
-  do-stack (35 7) {call +;};
+  do-stack (35 7) {add;};
 
 [... 42]
 ```

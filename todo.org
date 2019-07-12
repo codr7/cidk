@@ -1,7 +1,6 @@
 * switch < & dec to ops
 ** copy is-op to lt
-** drop math-lib
-** drop call.forward/fun overload
+** drop Call.forward/fun overload
 ** bench
 * --
 * add check op

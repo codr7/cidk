@@ -22,13 +22,15 @@ namespace cidk::ops {
     Cx &cx(env.cx);
     const Pos &p(op.pos);
     auto &d(op.as<AddData>());
-    d.x.eval(p, env, stack);
     d.y.eval(p, env, stack);
+    Val y(pop(p, stack));
+    d.x.eval(p, env, stack);
+    Val x(pop(p, stack));
     
-    auto i(stack.end()-1);
-    Val &y(*i--), &x(*i);
     ValType *xt(x.type), *yt(y.type);
     auto id((xt == yt) ? cx.add_id : cx.intern(str("+[", yt->id, ']')));
+    stack.push_back(x);
+    stack.push_back(y);
     xt->env.call(p, id, env, stack);
   }
 

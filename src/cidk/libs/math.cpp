@@ -5,6 +5,13 @@
 #include "cidk/types/bool.hpp"
 
 namespace cidk::libs {
+  static void int_add_imp(Call &call, Env &env, Stack &stack) {
+    auto &p(call.pos);
+    auto y(pop(p, stack));
+    Val &x(stack.back());
+    x.as_int += y.as_int;
+  }
+
   static void lt_imp(Call &call, Env &env, Stack &stack) {
     auto &cx(env.cx);
     auto i(stack.end()-1);
@@ -27,6 +34,12 @@ namespace cidk::libs {
   }
 
   void init_math(Cx &cx) {
+    cx.int_type.env.add_fun(Pos::_,
+                            "+",
+                            {Arg("x"), Arg("y")},
+                            {Ret(cx.int_type)},
+                            int_add_imp);
+
     cx.env.add_fun(Pos::_, "<", {Arg("x"), Arg("y")}, {Ret(cx.bool_type)}, lt_imp);
 
     cx.int_type.env.add_fun(Pos::_,

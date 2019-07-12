@@ -124,7 +124,7 @@ namespace cidk {
     for (auto i(refs.next); i != &refs; i = i->next) { i->val().is_marked = false; }
     env.is_marked = true;
     for (auto i(envs.next); i != &envs; i = i->next) { i->val().mark_items(); }
-    for (Call *c(call); c; c = c->prev) { c->target.mark(); }
+    for (Call *c(call); c; c = c->prev) { c->fun.mark(); }
     for (Ops *os: ops) { cidk::mark_refs(*os); }
   }
   
