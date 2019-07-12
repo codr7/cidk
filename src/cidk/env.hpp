@@ -68,6 +68,7 @@ namespace cidk {
 
     void add_var(const Pos &pos, const string &id, const Val &val);
 
+    void call(const Pos &pos, const Sym *key, Env &env, Stack &stack);
     void clear();
     Iter find(const Sym *key);
     Val &get(const Pos &pos, const Sym *key);

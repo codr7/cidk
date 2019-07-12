@@ -4,7 +4,7 @@ defun fib(n Int a Int b Int)(Int) {
       push n; 
       call dec; 
       push b a b; 
-      call +; 
+      add; 
       recall;
     };
   };

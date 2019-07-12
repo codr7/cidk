@@ -50,7 +50,7 @@ namespace cidk::ops {
     Pos p(pos);
 
     auto x(read_val(pos, in, state, env, stack));
-    if (!x) { throw ESys(p, "Missing x"); }
+    if (!x) { throw ESys(p, "Missing ;"); }
 
     if (x->is_eop()) {
       out.emplace_back(p, *this, cx.S, cx.S);

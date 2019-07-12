@@ -38,7 +38,7 @@ Each statement starts with an opcode and ends with semicolon, arguments are sepa
 
 ### Opcodes
 
-#### call fun*
+#### call fun+
 Calls functions in specified order, or pops function from stack if no arguments.
 
 ```
@@ -48,7 +48,7 @@ Calls functions in specified order, or pops function from stack if no arguments.
 [... F]
 ```
 
-#### define [id val]*
+#### define [id val]+
 Defines compile time constants for pairs of keys and values, or pops key and value from stack if no arguments.
 
 ```
@@ -94,10 +94,10 @@ Evaluates body on stack. Passing `_` creates a new empty stack.
 [... (1 2 3 4) 5 6]
 ```
 
-#### dump val*
+#### dump val+
 Dumps values to `stderr`, or pops value from stack if no arguments.
 
-#### is x y z*
+#### is x y+
 Pushes `T` if all arguments are the same value, `F` otherwise. Missing values are popped from stack.
 
 ```

@@ -1,11 +1,7 @@
-* switch +/</dec to ops
-** add/lt x y
-** infer arg types
-** dispatch using single env lookup
-** add Undef type
-** update op readers to process stack
-*** read if branches with separate stacks
-**** add unify(Stack &, Stack &)
+* switch < & dec to ops
+** copy is-op to lt
+** drop math-lib
+** drop call.forward/fun overload
 ** bench
 * --
 * add check op

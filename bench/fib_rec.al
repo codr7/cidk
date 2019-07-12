@@ -2,7 +2,7 @@ defun fib(_ Int)(Int) {
   if {dup; push 2; call <;} _ {
     call dec; dup;
     call fib; swap;
-    call dec fib +;
+    call dec fib; add;
   };
 };
 
