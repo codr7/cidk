@@ -8,7 +8,9 @@
 ** copy add-op to lt
 *** support vararg like is-op
 ** drop Call.forward/fun overload
+** drop cx.lt_sym
 ** bench
+*** skip push
 * fix add-op vararg
 ** get 1+ x from stack
 * --
@@ -22,6 +24,8 @@
 * add fib_iter bench
 ** add env.update(is, function<void>(Val &))
 *** use setter (set-X in current env) if available
+* convert dec to op
+** support env update for sym
 * add 'include' op
 ** vararg like 'call'
 ** load ops on read and store in data
