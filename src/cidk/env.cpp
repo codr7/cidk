@@ -25,7 +25,7 @@ namespace cidk {
       return false;
     }
 
-    items.emplace(i, key, cx.env_item_pool.get(this, val));
+    items.emplace(i, key, cx.env_item_pool.get(*this, val));
     return true;
   }
 
@@ -101,9 +101,7 @@ namespace cidk {
 
   void Env::restore(Env &org) {
     for (auto i(items.begin()); i != items.end();) {
-      Env *e(i->second->env);
-      
-      if (e == this) {
+      if (&i->second->env == this) {
         auto j(org.find(i->first));
 
         if (j == org.items.end() || j->first != i->first) {
@@ -122,15 +120,15 @@ namespace cidk {
     auto i(find(key));
     
     if (i == items.end() || i->first != key) {
-      items.emplace(i, key, cx.env_item_pool.get(this, val));
+      items.emplace(i, key, cx.env_item_pool.get(*this, val));
     } else {
       auto it(*i->second);
       
-      if (it.env == this) {
+      if (&it.env == this) {
         if (!force) { return false; }
         it.val = val;
       } else {
-        i->second = cx.env_item_pool.get(this, val);
+        i->second = cx.env_item_pool.get(*this, val);
       }
     }
 

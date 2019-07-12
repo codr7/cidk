@@ -7,11 +7,11 @@ namespace cidk {
   struct Env;
 
   struct EnvItem {
-    Env *env;
+    Env &env;
     Val val;
     int nrefs;
     
-    EnvItem(Env *Env, const Val &val);
+    EnvItem(Env &Env, const Val &val);
     void deref(Cx &cx);
   };
 }
