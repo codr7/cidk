@@ -1,5 +1,12 @@
-* switch < & dec to ops
-** copy is-op to lt
+* add stack type inference
+** process stack arg in op readers
+** add Undef type
+*** store actual as_type
+** add unify(Stack &x, Stack &y)
+** use to lookup add-fn at read-time
+* switch < to op
+** copy add-op to lt
+*** support vararg like is-op
 ** drop Call.forward/fun overload
 ** bench
 * --
