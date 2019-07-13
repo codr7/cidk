@@ -49,7 +49,7 @@ namespace cidk {
   }
   
   void Val::mark_refs() {
-    type->is_marked = true;
+    type->mark();
     type->mark_refs(*this);
   }
 

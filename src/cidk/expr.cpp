@@ -8,8 +8,10 @@ namespace cidk {
   void Expr::eval(Env &env, Stack &stack) { env.cx.eval(body, env, stack); }
 
   void Expr::mark() {
-    is_marked = true;
-    mark_refs(body);
+    if (ref_state == RefState::sweep) {
+      ref_state = RefState::keep;
+      mark_refs(body);
+    }
   }
   
   void Expr::sweep(Cx &cx, const Pos &pos) { cx.expr_type.pool.put(this); }

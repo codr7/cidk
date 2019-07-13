@@ -11,8 +11,8 @@ namespace cidk {
   void Type::derive(Type &parent) { env.merge(parent.env); }
   
   void Type::mark() {
-    if (!is_marked) {
-      is_marked = true;
+    if (ref_state == RefState::sweep) {
+      ref_state = RefState::keep;
       env.mark();
     }
   }

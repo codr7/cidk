@@ -23,7 +23,8 @@ namespace cidk {
   }
 
   void OStreamType::mark_refs(const Val &val) const {
-    val.as_ostream->is_marked = true;
+    auto &os(*val.as_ostream);
+    if (os.ref_state == RefState::sweep) { os.ref_state = RefState::keep; }
   }
 
   void OStreamType::set(const Pos &pos, Val &dst, OStream *val) const {

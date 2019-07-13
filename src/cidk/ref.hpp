@@ -10,9 +10,11 @@ namespace cidk {
   struct Pos;
 
   struct CxRefs {};
+
+  enum struct RefState {keep, skip, sweep};
   
   struct Ref: Ls<Ref, CxRefs> {    
-    bool is_marked;
+    RefState ref_state;
 
     Ref(Cx &cx);
     virtual ~Ref() = default;

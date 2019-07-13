@@ -12,7 +12,9 @@ namespace cidk {
     imp(pos, *this, in, env, stack, out);
   }
 
-  void Macro::mark() { is_marked = true; }
+  void Macro::mark() {
+    if (ref_state == RefState::sweep) { ref_state = RefState::keep; }
+  }
   
   void Macro::sweep(Cx &cx, const Pos &pos) { cx.macro_type.pool.put(this); }
 }

@@ -72,6 +72,7 @@ namespace cidk {
     Cx();
 
     void deinit();
+    void clear_refs();
     void eval(Ops &in, Env &env, Stack &stack);
     const Sym *intern(const string &name);
     void load(const Pos &pos, const string &path, Ops &out);

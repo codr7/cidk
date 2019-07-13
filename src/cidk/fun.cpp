@@ -5,8 +5,8 @@
 
 namespace cidk {
   void Fun::mark() {
-    if (!is_marked) {
-      is_marked = true;
+    if (ref_state == RefState::sweep) {
+      ref_state = RefState::keep;
       env.mark();
       mark_refs(body);
     }

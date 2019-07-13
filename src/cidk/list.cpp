@@ -6,8 +6,8 @@ namespace cidk {
   List::List(Cx &cx): Ref(cx) {}
 
   void List::mark() {
-    if (!is_marked) {
-      is_marked = true;
+    if (ref_state == RefState::sweep) {
+      ref_state = RefState::keep;
       for (auto &v: items) { v.mark_refs(); }
     }
   }
