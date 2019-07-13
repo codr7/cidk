@@ -49,7 +49,7 @@ Adds arguments and pushes result. `x` and `y` are popped from stack if missing.
 ```
 
 #### call fun+
-Calls functions in specified order. Function is popped from stack if missing.
+Calls functions in specified order. `fun` is popped from stack if missing.
 
 ```
   push 7 14;
@@ -105,7 +105,7 @@ Evaluates body on stack. Passing `_` creates a new empty stack.
 ```
 
 #### dump val+
-Dumps values to `stderr`. Value is popped from stack if missing.
+Dumps values to `stderr`. `val` is popped from stack if missing.
 
 #### is x y z*
 Pushes `T` if all arguments are the same value, `F` otherwise. `x` and `y` are popped from stack if missing.
