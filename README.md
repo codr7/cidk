@@ -38,8 +38,18 @@ Each statement starts with an opcode and ends with semicolon, arguments are sepa
 
 ### Opcodes
 
+#### add x y z*
+Adds arguments and pushes result. `x` and `y` are popped from stack if missing.
+
+```
+  push 14;
+  add 7 $ 21;
+
+[... 42]
+```
+
 #### call fun+
-Calls functions in specified order, or pops function from stack if no arguments.
+Calls functions in specified order. Function is popped from stack if missing.
 
 ```
   push 7 14;
@@ -49,7 +59,7 @@ Calls functions in specified order, or pops function from stack if no arguments.
 ```
 
 #### define [id val]+
-Defines compile time constants for pairs of keys and values, or pops key and value from stack if no arguments.
+Defines compile time constants for pairs of ids and values. `id` and `val` are popped from stack if missing.
 
 ```
   do-env {
@@ -95,10 +105,10 @@ Evaluates body on stack. Passing `_` creates a new empty stack.
 ```
 
 #### dump val+
-Dumps values to `stderr`, or pops value from stack if no arguments.
+Dumps values to `stderr`. Value is popped from stack if missing.
 
-#### is x y+
-Pushes `T` if all arguments are the same value, `F` otherwise. Missing values are popped from stack.
+#### is x y z*
+Pushes `T` if all arguments are the same value, `F` otherwise. `x` and `y` are popped from stack if missing.
 
 ```
   push 42; is 42;

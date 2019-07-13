@@ -1,5 +1,3 @@
-* fix add-op vararg
-** get 1+ x from stack
 * switch < to op
 ** copy add-op to lt
 *** support vararg like is-op
