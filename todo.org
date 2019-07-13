@@ -8,14 +8,8 @@
 ** bench
 *** pass literal arg instead of push
 
-* --
-* add RefState(keep/skip/sweep)
-** rename is_marked to ref_state
-** default keep
-** only set to sweep if not skip
 * add fun.call(pos, env, stack)
 ** skip Call if imp
-** set ref_state to skip during call
 * --
 * add type inference
 ** process stack/env in OpType inits

@@ -17,6 +17,7 @@ namespace cidk {
 
   void Call::eval(Fun &fun, Env &env, Stack &stack) {
     Cx &cx(env.cx);
+    fun.ref_state = RefState::skip;
     auto imp(fun.imp);
     
     if (imp) { imp(*this, env, stack); }
@@ -37,6 +38,8 @@ namespace cidk {
         e.sweep(cx, pos);
       }
     }
+    
+    fun.ref_state = RefState::keep;
   }
   
   void Call::eval(Env &env, Stack &stack) { eval(fun, env, stack); }

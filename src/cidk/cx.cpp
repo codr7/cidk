@@ -131,7 +131,6 @@ namespace cidk {
     clear_refs();
     env.ref_state = RefState::keep;
     for (auto i(envs.next); i != &envs; i = i->next) { i->val().mark_items(); }
-    for (Call *c(call); c; c = c->prev) { c->fun.mark(); }
     for (Ops *os: ops) { cidk::mark_refs(*os); }
   }
   
