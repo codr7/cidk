@@ -1,3 +1,6 @@
+* only create Call for body-funs
+** switch Fun imp to const Pos &, Fun &, ...
+** extract Fun.call from Call.eval()
 * add type inference
 ** process stack/env in OpType inits
 ** add cx, env, stack to OpType inits / op constructor
