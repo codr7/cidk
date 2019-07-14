@@ -4,7 +4,7 @@ project(cidk)
 
 set(CMAKE_CXX_COMPILER clang++)
 
-add_compile_options(-std=c++17 -Wall -Werror -O3)
+add_compile_options(-std=c++17 -Wall -Werror -O2 -g)
 
 file(GLOB_RECURSE src src/cidk/*.cpp)
 
