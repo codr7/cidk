@@ -71,6 +71,7 @@ namespace cidk {
     void clear();
     Iter find(const Sym *key);
     Val &get(const Pos &pos, const Sym *key);
+    EnvItem &get_item(const Pos &pos, const Sym *key);
     void mark();
     void mark_items();
     void merge(Env &src);

@@ -20,10 +20,6 @@ namespace cidk::libs {
     x.reset(p, cx.bool_type, x.as_int < y.as_int);
   }
 
-  static void int_dec_imp(Call &call, Env &env, Stack &stack) {
-    stack.back().as_int--;
-  }
-
   void init_math(Cx &cx) {
     cx.int_type.env.add_fun(Pos::_,
                             "+",
@@ -36,8 +32,6 @@ namespace cidk::libs {
                             {Arg("x"), Arg("y")},
                             {Ret(cx.bool_type)},
                             int_lt_imp);
-    
-    cx.env.add_fun(Pos::_, "dec", {Arg("v")}, {Ret(cx.int_type)}, int_dec_imp);
   }
 }
 

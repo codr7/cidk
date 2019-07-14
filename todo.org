@@ -1,10 +1,5 @@
-** add Type/Val.as_env
-*** call in do-env
-* --
 * extract BinOp from Add/Lt
 ** extract everything but read()
-* convert dec to op
-** dec n d;
 * add type inference
 ** process stack/env in OpType inits
 ** add cx, env, stack to OpType inits / op constructor

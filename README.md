@@ -3,11 +3,10 @@
 ```
 defun fib(_ Int)(Int) {
   if {dup; lt $ 2;} _ {
-    call dec;
-    dup;
+    dec; dup;
     call fib;
-    swap;
-    call dec fib;
+    swap; dec;
+    call fib;
     add;
   };
 };

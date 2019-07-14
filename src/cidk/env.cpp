@@ -53,10 +53,12 @@ namespace cidk {
     return items.end();
   }
 
-  Val &Env::get(const Pos &pos, const Sym *key) {
+  Val &Env::get(const Pos &pos, const Sym *key) { return get_item(pos, key).val; }
+
+  EnvItem &Env::get_item(const Pos &pos, const Sym *key) {
     auto i(find(key));
     if (i == items.end() || i->first != key) { throw ESys(pos, "Unknown id: ", key); }
-    return i->second->val;
+    return *i->second;
   }
 
   void Env::mark() {
