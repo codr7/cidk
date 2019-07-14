@@ -2,8 +2,8 @@ defun fib(n Int a Int b Int)(Int) {
   if n {
     if {is n 1;} b {
       dec n; 
-      push b a b; 
-      add; 
+      push b; 
+      add a b; 
       recall;
     };
   } a;
