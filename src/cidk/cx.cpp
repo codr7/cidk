@@ -68,8 +68,6 @@ namespace cidk {
     F(Pos::_, bool_type, false),
     eop(Pos::_, sym_type, intern(";")),
     stdin(&cin), stdout(&cout), stderr(&cerr) {
-    env.ref_state = RefState::skip;
-
     libs::init_math(*this);
     env.add_const(Pos::_, "_", _);
     env.add_const(Pos::_, "$", S);
@@ -84,7 +82,6 @@ namespace cidk {
 
   void Cx::deinit() {
     clear_refs();
-    env.ref_state = RefState::keep;
     env.clear();
     sweep_refs(Pos::_);
 
@@ -94,11 +91,8 @@ namespace cidk {
   }
 
   void Cx::clear_refs() {
-    for (auto i(refs.next); i != &refs; i = i->next) {
-      Ref &r(i->val());
-      r.ref_marked = false;
-      if (r.ref_state != RefState::skip) { r.ref_state = RefState::sweep; }
-    }
+    for (auto i(refs.next); i != &refs; i = i->next) { i->val().ref_mark = false; }
+    env.ref_mark = true;
   }
 
   void Cx::eval(Ops &in, Env &env, Stack &stack) {
@@ -132,8 +126,10 @@ namespace cidk {
   
   void Cx::mark_refs() {
     clear_refs();
-    for (auto i(envs.next); i != &envs; i = i->next) { i->val().mark_items(); }
+
     for (Ops *os: ops) { cidk::mark_refs(*os); }
+    for (Call *c(call); c; c = c->prev) { c->fun.mark(); }
+    for (auto i(envs.next); i != &envs; i = i->next) { i->val().mark_items(); }
   }
   
   void Cx::sweep_refs(const Pos &pos) {
@@ -141,7 +137,7 @@ namespace cidk {
       Ref &r(i->val());
       i = i->prev;
 
-      if (r.ref_state == RefState::sweep) {
+      if (!r.ref_mark) {
         r.unlink();
         r.sweep(*this, pos);
       }

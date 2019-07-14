@@ -11,12 +11,10 @@ namespace cidk {
   void Type::derive(Type &parent) { env.merge(parent.env); }
   
   void Type::mark() {
-    if (!ref_marked) {
-      ref_marked = true;
+    if (!ref_mark) {
+      ref_mark = true;
       env.mark();
     }
-    
-    if (ref_state == RefState::sweep) { ref_state = RefState::keep; }
   }
   
   void Type::sweep(Cx &cx, const Pos &pos) { delete this; }

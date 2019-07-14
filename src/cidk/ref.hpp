@@ -11,11 +11,8 @@ namespace cidk {
 
   struct CxRefs {};
 
-  enum struct RefState {keep, skip, sweep};
-  
   struct Ref: Ls<Ref, CxRefs> {    
-    RefState ref_state;
-    bool ref_marked;
+    bool ref_mark;
 
     Ref(Cx &cx);
     virtual ~Ref() = default;

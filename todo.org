@@ -6,9 +6,6 @@
 ** bench
 *** pass literal arg instead of push
 
-* add fun.call(pos, env, stack)
-** skip Call if imp
-* --
 * add type inference
 ** process stack/env in OpType inits
 ** add cx, env, stack to OpType inits / op constructor
