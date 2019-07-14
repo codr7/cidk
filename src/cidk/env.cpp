@@ -60,10 +60,12 @@ namespace cidk {
   }
 
   void Env::mark() {
-    if (ref_state == RefState::sweep) {
-      ref_state = RefState::keep;
+    if (!ref_marked) {
+      ref_marked = true;
       mark_items();
     }
+    
+    if (ref_state == RefState::sweep) { ref_state = RefState::keep; }
   }
   
   void Env::mark_items() {

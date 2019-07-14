@@ -25,6 +25,9 @@
 ** launch if no args
 ** only eval if last char is ;
 ** clear stack on empty input
+* rename Bool() to as_bool()
+** add Type/Val.as_env
+*** call in do-env
 * add fib_iter bench
 ** add env.update(is, function<void>(Val &))
 *** use setter (set-X in current env) if available

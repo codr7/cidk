@@ -15,6 +15,7 @@ namespace cidk {
   
   struct Ref: Ls<Ref, CxRefs> {    
     RefState ref_state;
+    bool ref_marked;
 
     Ref(Cx &cx);
     virtual ~Ref() = default;
