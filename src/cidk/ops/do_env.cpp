@@ -33,10 +33,8 @@ namespace cidk::ops {
       de = env.cx.env_pool.get(cx);
     } else if (in.type == &cx.bool_type && in.as_bool) {
       de = env.cx.env_pool.get(env);
-    } else if (in.type == &cx.env_type) {
-      de = in.as_env;
     } else {
-      throw ESys(p, "Invalid do-env input: ", in.type->id);
+      de = &in.get_env();
     }
     
     d.body.eval(p, *de, stack);

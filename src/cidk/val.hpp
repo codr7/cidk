@@ -65,7 +65,8 @@ namespace cidk {
     void splat(const Pos &pos, Env &env, Stack &stack) const;
     void sweep(const Pos &pos);
 
-    bool Bool(const Pos &pos) const;
+    bool get_bool() const;
+    Env &get_env();
   };
 }
 

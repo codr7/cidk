@@ -21,7 +21,7 @@ namespace cidk {
                        Env &env,
                        Stack &stack) const override;
 
-    virtual bool Bool(const Pos &pos, const Val &val) const override;
+    virtual bool get_bool(const Val &val) const override;
   };
 }
 

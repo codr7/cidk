@@ -39,7 +39,7 @@ namespace cidk {
 
   void ConstType::mark_refs(const Val &val) const { val_type.mark_refs(val); }
 
-  bool ConstType::Bool(const Pos &pos, const Val &val) const {
-    return val_type.Bool(pos, val);
-  }
+  bool ConstType::get_bool(const Val &val) const { return val_type.get_bool(val); }
+
+  Env &ConstType::get_env(Val &val) const { return val_type.get_env(val); }
 }

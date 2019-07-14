@@ -1,4 +1,3 @@
-* rename Bool() to as_bool()
 ** add Type/Val.as_env
 *** call in do-env
 * --

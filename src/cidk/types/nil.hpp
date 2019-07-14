@@ -11,7 +11,7 @@ namespace cidk {
     virtual void dup(Val &dst, const Val &src) const override;
     virtual bool is(const Val &x, const Val &y) const override;
 
-    virtual bool Bool(const Pos &pos, const Val &val) const override;
+    virtual bool get_bool(const Val &val) const override;
   };
 }
 

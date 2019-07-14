@@ -17,5 +17,5 @@ namespace cidk {
 
   bool NilType::is(const Val &x, const Val &y) const { return true; }
 
-  bool NilType::Bool(const Pos &pos, const Val &val) const { return false; }
+  bool NilType::get_bool(const Val &val) const { return false; }
 }

@@ -54,7 +54,7 @@ namespace cidk {
 
   void EnvType::sweep(const Pos &pos, Val &val) { val.as_env->sweep(cx, pos); }
 
-  bool EnvType::Bool(const Pos &pos, const Val &val) const {
-    return !val.as_env->items.empty();
-  }
+  bool EnvType::get_bool(const Val &val) const { return !val.as_env->items.empty(); }
+
+  Env &EnvType::get_env(Val &val) const { return *val.as_env; }
 }

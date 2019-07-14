@@ -31,7 +31,8 @@ namespace cidk {
     using Type::sweep;
     virtual void sweep(const Pos &pos, Val &val);
 
-    virtual bool Bool(const Pos &pos, const Val &val) const;
+    virtual bool get_bool(const Val &val) const;
+    virtual Env &get_env(Val &val) const;
   };
   
   template <typename ValT>

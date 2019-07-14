@@ -16,23 +16,15 @@ namespace cidk {
     out << "fun:" << val.as_fun->id;
   }
 
-  void FunType::dup(Val &dst, const Val &src) const {
-    dst.as_fun = src.as_fun;
-  }
+  void FunType::dup(Val &dst, const Val &src) const { dst.as_fun = src.as_fun; }
 
-  bool FunType::is(const Val &x, const Val &y) const {
-    return x.as_fun == y.as_fun;
-  }
+  bool FunType::is(const Val &x, const Val &y) const { return x.as_fun == y.as_fun; }
 
-  void FunType::mark_refs(const Val &val) const {
-    val.as_fun->mark();
-  }
+  void FunType::mark_refs(const Val &val) const { val.as_fun->mark(); }
 
-  void FunType::set(const Pos &pos, Val &dst, Fun *val) const {
-    dst.as_fun = val;
-  }
+  void FunType::set(const Pos &pos, Val &dst, Fun *val) const { dst.as_fun = val; }
 
-  void FunType::sweep(const Pos &pos, Val &val) {
-    val.as_fun->sweep(cx, pos);
-  }
+  void FunType::sweep(const Pos &pos, Val &val) { val.as_fun->sweep(cx, pos); }
+
+  Env &FunType::get_env(Val &val) const { return val.as_fun->env; }
 }

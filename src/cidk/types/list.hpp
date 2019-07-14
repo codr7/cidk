@@ -33,7 +33,7 @@ namespace cidk {
     
     virtual void sweep(const Pos &pos, Val &val) override;
 
-    virtual bool Bool(const Pos &pos, const Val &val) const override;
+    virtual bool get_bool(const Val &val) const override;
   };
 }
 

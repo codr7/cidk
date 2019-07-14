@@ -40,5 +40,7 @@ namespace cidk {
 
   void ValType::sweep(const Pos &pos, Val &val) {}
 
-  bool ValType::Bool(const Pos &pos, const Val &val) const { return true; }
+  bool ValType::get_bool(const Val &val) const { return true; }
+
+  Env &ValType::get_env(Val &val) const { return val.type->env; }
 }

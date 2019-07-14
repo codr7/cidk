@@ -66,7 +66,7 @@ namespace cidk {
 
   void ListType::sweep(const Pos &pos, Val &val) { val.as_list->sweep(cx, pos); }
 
-  bool ListType::Bool(const Pos &pos, const Val &val) const {
+  bool ListType::get_bool(const Val &val) const {
     return !val.as_list->items.empty();
   }
 }

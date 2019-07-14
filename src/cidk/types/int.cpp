@@ -13,13 +13,9 @@ namespace cidk {
     out << val.as_int;
   }
 
-  void IntType::dup(Val &dst, const Val &src) const {
-    dst.as_int = src.as_int;
-  }
+  void IntType::dup(Val &dst, const Val &src) const { dst.as_int = src.as_int; }
 
-  bool IntType::is(const Val &x, const Val &y) const {
-    return x.as_int == y.as_int;
-  }
+  bool IntType::is(const Val &x, const Val &y) const { return x.as_int == y.as_int; }
 
   void IntType::set(const Pos &pos, Val &dst, Int val) const { dst.as_int = val; }
 
@@ -27,5 +23,5 @@ namespace cidk {
     for (Int i = 0; i < val.as_int; i++) { stack.emplace_back(pos, cx.int_type, i); }
   }
 
-  bool IntType::Bool(const Pos &pos, const Val &val) const { return val.as_int > 0; }
+  bool IntType::get_bool(const Val &val) const { return val.as_int > 0; }
 }
