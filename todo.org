@@ -1,11 +1,11 @@
-* switch < to op
-** copy add-op to lt
-*** support vararg like is-op
-** drop Call.forward/fun overload
-** drop cx.lt_sym
-** bench
-*** pass literal arg instead of push
-
+* rename Bool() to as_bool()
+** add Type/Val.as_env
+*** call in do-env
+* --
+* extract BinOp from Add/Lt
+** extract everything but read()
+* convert dec to op
+** dec n d;
 * add type inference
 ** process stack/env in OpType inits
 ** add cx, env, stack to OpType inits / op constructor
@@ -22,14 +22,9 @@
 ** launch if no args
 ** only eval if last char is ;
 ** clear stack on empty input
-* rename Bool() to as_bool()
-** add Type/Val.as_env
-*** call in do-env
 * add fib_iter bench
 ** add env.update(is, function<void>(Val &))
 *** use setter (set-X in current env) if available
-* convert dec to op
-** support env update for sym
 * add 'include' op
 ** vararg like 'call'
 ** load ops on read and store in data
@@ -40,17 +35,12 @@
 ** add Splice support
 *** splice list items automagially
 * add Splat op
-* add lambda support
-** &{...}
-** anonymous Fun
 * add Char type
 ** char32_t
 * add Str type
 ** read as utf-8
 *** https://stackoverflow.com/questions/16208079/how-to-work-with-utf-8-in-c-conversion-from-other-encodings-to-utf-8
 ** splat chars
-* add >
-** default using lt
 * add Fun.rets (Rets)
 
 defun fib(_ Int)(Int) {

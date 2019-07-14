@@ -62,8 +62,6 @@ namespace cidk {
     EvalState eval_state;
     Call *call;
     
-    const Sym *lt_id;
-    
     const Val _, S, T, F, eop;
     
     istream *stdin;

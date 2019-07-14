@@ -1,5 +1,5 @@
 defun fib(_ Int)(Int) {
-  if {dup; push 2; call <;} _ {
+  if {dup; lt $ 2;} _ {
     call dec; dup;
     call fib; swap;
     call dec fib; add;

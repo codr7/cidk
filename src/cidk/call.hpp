@@ -19,8 +19,6 @@ namespace cidk {
     ~Call() noexcept(false);
 
     void eval(Env &env, Stack &stack);
-    void eval(Fun &fun, Env &env, Stack &stack);
-    void forward(Env &dst, const Sym *id, Env &env, Stack &stack);
   };
 
   

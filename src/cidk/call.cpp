@@ -15,7 +15,7 @@ namespace cidk {
     c = prev;
   }
 
-  void Call::eval(Fun &fun, Env &env, Stack &stack) {
+  void Call::eval(Env &env, Stack &stack) {
     Cx &cx(env.cx);
     auto imp(fun.imp);
     
@@ -37,15 +37,5 @@ namespace cidk {
         e.sweep(cx, pos);
       }
     }
-  }
-  
-  void Call::eval(Env &env, Stack &stack) { eval(fun, env, stack); }
-
-  void Call::forward(Env &dst, const Sym *id, Env &env, Stack &stack) {
-    Cx &cx(env.cx);
-    Val &v(dst.get(pos, id));
-    Type *vt(v.type);
-    if (vt != &cx.fun_type) { throw ESys(pos, "Expected Fun, was: ", vt->id); }
-    eval(*v.as_fun, env, stack);
   }
 }

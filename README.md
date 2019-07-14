@@ -2,10 +2,13 @@
   
 ```
 defun fib(_ Int)(Int) {
-  if {dup; push 2; call <;} _ {
-    call dec; dup;
-    call fib; swap;
-    call dec fib; add;
+  if {dup; lt $ 2;} _ {
+    call dec;
+    dup;
+    call fib;
+    swap;
+    call dec fib;
+    add;
   };
 };
 ```
@@ -111,7 +114,16 @@ Dumps values to `stderr`. `val` is popped from stack if missing.
 Pushes `T` if all arguments are the same value, `F` otherwise. `x` and `y` are popped from stack if missing.
 
 ```
-  push 42; is 42;
+  push 42; is $ 42;
+
+[... T]
+```
+
+#### lt x y
+Pushes `T` if `x` is less than `y`, otherwise `F`. `x` and `y` are popped from stack if missing.
+
+```
+  lt 7 14;
 
 [... T]
 ```
