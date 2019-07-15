@@ -1,5 +1,9 @@
-* extract BinOp from Add/Lt
-** extract everything but read()
+* add assert
+** assert (foo bar) {push foo bar 42; add; is;};
+** first arg is optional context that's evaluated and dumped on fail
+* add repl
+** launch if no files
+** clear stack on empty input
 * add type inference
 ** process stack/env in OpType inits
 ** add cx, env, stack to OpType inits / op constructor
@@ -8,14 +12,6 @@
 ** add unify(Stack &x, Stack &y)
 ** add Env.unify(const Env &y)
 ** use to lookup add-fn at read-time
-* --
-* add check op
-** check (foo bar) {push foo bar 42; add; is;};
-** first arg is optional context that's evaluated and printed on fail
-* add repl
-** launch if no args
-** only eval if last char is ;
-** clear stack on empty input
 * add fib_iter bench
 ** add env.update(is, function<void>(Val &))
 *** use setter (set-X in current env) if available
