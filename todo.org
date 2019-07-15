@@ -1,6 +1,5 @@
 * add assert
-** assert (foo bar) {push foo bar 42; add; is;};
-** first arg is optional context that's evaluated and dumped on fail
+* drop dump pos arg
 * add repl
 ** launch if no files
 ** clear stack on empty input

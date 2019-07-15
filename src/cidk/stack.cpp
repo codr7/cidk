@@ -20,4 +20,18 @@ namespace cidk {
     s.pop_back();
     return out;
   }
+
+  ostream &operator <<(ostream &out, const Stack &s) {
+    out << '(';
+    char sep(0);
+    
+    for (auto &v: s) {
+      if (sep) { out << sep; }
+      v.dump(Pos::_, out);
+      sep = ' ';
+    }
+
+    out << ')';
+    return out;
+  }
 }
