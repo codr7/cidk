@@ -12,6 +12,7 @@
 ** add unify(Stack &x, Stack &y)
 ** add Env.unify(const Env &y)
 ** use to lookup add-fn at read-time
+* push Fun on stack from Defun if missing id
 * add fib_iter bench
 ** add env.update(is, function<void>(Val &))
 *** use setter (set-X in current env) if available

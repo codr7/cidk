@@ -26,14 +26,14 @@ namespace cidk::ops {
     const Pos &p(op.pos);
     const DoEnvData &d(op.as<DoEnvData>());
     Env *de(nullptr);
-    d.in.eval(p, env, stack);
-    auto in(pop(p, stack));
-    
-    if (in.type == &cx.nil_type) {
+
+    if (d.in.type == &cx.nil_type) {
       de = env.cx.env_pool.get(cx);
-    } else if (in.type == &cx.bool_type && in.as_bool) {
+    } else if (d.in.type == &cx.bool_type && d.in.as_bool) {
       de = env.cx.env_pool.get(env);
     } else {
+      d.in.eval(p, env, stack);
+      auto in(pop(p, stack));
       de = &in.get_env();
     }
     
