@@ -47,7 +47,7 @@ namespace cidk {
     const Val &operator =(const Val &src);
     
     Val &clone(const Pos &pos, Val &dst) const;
-    void dump(const Pos &pos, ostream &out) const;
+    void dump(ostream &out) const;
     Val &dup(Val &dst) const;
     bool eq(const Pos &pos, const Val &y) const;
     void eval(const Pos &pos, Env &env, Stack &stack) const;
@@ -68,6 +68,8 @@ namespace cidk {
     bool get_bool() const;
     Env &get_env();
   };
+
+  ostream &operator <<(ostream &out, const Val &v);
 }
 
 #endif

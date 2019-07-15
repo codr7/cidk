@@ -16,9 +16,9 @@ namespace cidk {
     dst.type = &val_type;
   }
 
-  void ConstType::dump(const Pos &Pos, const Val &val, ostream &out) const {
+  void ConstType::dump(const Val &val, ostream &out) const {
     out << "const:";
-    val_type.dump(pos, val, out);
+    val_type.dump(val, out);
   }
 
   void ConstType::dup(Val &dst, const Val &src) const { val_type.dup(dst, src); }

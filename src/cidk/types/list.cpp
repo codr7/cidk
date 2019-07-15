@@ -13,13 +13,13 @@ namespace cidk {
     dst.as_list = cx.list_type.pool.get(cx, src.as_list->items);
   }
 
-  void ListType::dump(const Pos &Pos, const Val &val, ostream &out) const {
+  void ListType::dump(const Val &val, ostream &out) const {
     out << '(';
     char sep(0);
     
     for (auto &v: val.as_list->items) {
       if (sep) { out << sep; }
-      v.dump(pos, out);
+      out << v;
       sep = ' ';
     }
 
@@ -43,9 +43,9 @@ namespace cidk {
 
   void ListType::eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
     Stack out;
-    auto &l(val.as_list->items);
-    for (auto &v: l) { v.eval(pos, env, out); }
-    stack.emplace_back(pos, cx.list_type, cx.list_type.pool.get(cx, out));
+    for (auto &v: val.as_list->items) { v.eval(pos, env, out); }
+    List *l(cx.list_type.pool.get(cx, out));
+    stack.emplace_back(pos, cx.list_type, l);
   }
 
   void ListType::get_ids(const Val &val, IdSet &out) const {

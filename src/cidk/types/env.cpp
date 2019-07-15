@@ -13,14 +13,13 @@ namespace cidk {
     dst.as_env = cx.env_pool.get(*src.as_env);
   }
 
-  void EnvType::dump(const Pos &Pos, const Val &val, ostream &out) const {
+  void EnvType::dump(const Val &val, ostream &out) const {
     out << '(';
     char sep(0);
     
     for (auto &v: val.as_env->items) {
       if (sep) { out << sep; }
-      out << v.first << ':';
-      v.second->val.dump(pos, out);
+      out << v.first << ':' << v.second->val;
       sep = ' ';
     }
 

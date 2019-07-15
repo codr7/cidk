@@ -12,9 +12,7 @@ namespace cidk {
                    const vector<Type *> &parents):
     TValType<const Sym *>(cx, pos, id, parents) {}
 
-  void SymType::dump(const Pos &Pos, const Val &val, ostream &out) const {
-    out << val.as_sym;
-  }
+  void SymType::dump(const Val &val, ostream &out) const { out << val.as_sym; }
 
   void SymType::dup(Val &dst, const Val &src) const { dst.as_sym = src.as_sym; }
 

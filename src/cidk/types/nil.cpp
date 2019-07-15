@@ -9,9 +9,7 @@ namespace cidk {
                    const vector<Type *> &parents):
     ValType(cx, pos, id, parents) {}
 
-  void NilType::dump(const Pos &Pos, const Val &val, ostream &out) const {
-    out << '_';
-  }
+  void NilType::dump(const Val &val, ostream &out) const { out << '_'; }
 
   void NilType::dup(Val &dst, const Val &src) const {}
 

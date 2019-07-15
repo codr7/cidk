@@ -12,7 +12,7 @@ namespace cidk {
     ListType(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents);
 
     virtual void clone(const Pos &pos, Val &dst, const Val &src) const override;
-    virtual void dump(const Pos &Pos, const Val &val, ostream &out) const override;
+    virtual void dump(const Val &val, ostream &out) const override;
     virtual void dup(Val &dst, const Val &src) const override;
     virtual bool eq(const Pos &pos, const Val &x, const Val &y) const override;
 

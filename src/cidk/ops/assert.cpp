@@ -8,14 +8,16 @@
 namespace cidk::ops {
   struct AssertData {
     Val args, body;
-    IfData(const Val &args, const Val &body): args(args), body(body) {}
+    AssertData(const Val &args, const Val &body): args(args), body(body) {}
   };
 
   const AssertType Assert("assert");
 
   AssertType::AssertType(const string &id): OpType(id) {}
 
-  void AssertType::init(Op &op, const Val &body) const { op.data = body; }
+  void AssertType::init(Op &op, const Val &args, const Val &body) const {
+    op.data = AssertData(args, body);
+  }
 
   void AssertType::eval(const Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);

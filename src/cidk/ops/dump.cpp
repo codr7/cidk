@@ -18,7 +18,7 @@ namespace cidk::ops {
     op.as<Val>().eval(p, env, stack);
     auto v(pop(p, stack));
     auto &out(*cx.stderr);
-    v.dump(p, out);
+    v.dump(out);
     out << endl;
   }
 

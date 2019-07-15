@@ -22,7 +22,7 @@ namespace cidk {
     return dst;
   }
 
-  void Val::dump(const Pos &pos, ostream &out) const { type->dump(pos, *this, out); }
+  void Val::dump(ostream &out) const { type->dump(*this, out); }
   
   Val &Val::dup(Val &dst) const {
     dst.type = type;
@@ -62,4 +62,9 @@ namespace cidk {
   bool Val::get_bool() const { return type->get_bool(*this); }
 
   Env &Val::get_env() { return type->get_env(*this); }
+
+  ostream &operator <<(ostream &out, const Val &v) {
+    v.dump(out);
+    return out;
+  }
 }

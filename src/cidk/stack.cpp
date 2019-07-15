@@ -27,7 +27,7 @@ namespace cidk {
     
     for (auto &v: s) {
       if (sep) { out << sep; }
-      v.dump(Pos::_, out);
+      out << v;
       sep = ' ';
     }
 

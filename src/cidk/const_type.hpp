@@ -10,7 +10,7 @@ namespace cidk {
     ConstType(Cx &cx, const Pos &pos, ValType &val_type);
 
     virtual void clone(const Pos &pos, Val &dst, const Val &src) const override;
-    virtual void dump(const Pos &Pos, const Val &val, ostream &out) const override;
+    virtual void dump(const Val &val, ostream &out) const override;
     virtual void dup(Val &dst, const Val &src) const override;
 
     virtual void eval(const Pos &pos,

@@ -1,5 +1,4 @@
-* add assert
-* drop dump pos arg
+* convert demos to test/run.al
 * add repl
 ** launch if no files
 ** clear stack on empty input

@@ -9,9 +9,7 @@ namespace cidk {
                    const vector<Type *> &parents):
     TValType<Int>(cx, pos, id, parents) {}
 
-  void IntType::dump(const Pos &Pos, const Val &val, ostream &out) const {
-    out << val.as_int;
-  }
+  void IntType::dump(const Val &val, ostream &out) const { out << val.as_int; }
 
   void IntType::dup(Val &dst, const Val &src) const { dst.as_int = src.as_int; }
 

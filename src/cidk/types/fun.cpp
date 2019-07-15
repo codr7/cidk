@@ -12,7 +12,7 @@ namespace cidk {
                    const vector<Type *> &parents):
     TValType<Fun *>(cx, pos, id, parents) {}
 
-  void FunType::dump(const Pos &Pos, const Val &val, ostream &out) const {
+  void FunType::dump(const Val &val, ostream &out) const {
     out << "fun:" << val.as_fun->id;
   }
 

@@ -9,7 +9,7 @@ namespace cidk {
                    const vector<Type *> &parents):
     TValType<Macro *>(cx, pos, id, parents) {}
 
-  void MacroType::dump(const Pos &Pos, const Val &val, ostream &out) const {
+  void MacroType::dump(const Val &val, ostream &out) const {
     out << string("macro:") << val.as_macro->id;
   }
 

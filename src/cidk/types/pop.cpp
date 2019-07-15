@@ -11,9 +11,7 @@ namespace cidk {
                    const vector<Type *> &parents):
     ValType(cx, pos, id, parents) {}
 
-  void PopType::dump(const Pos &Pos, const Val &val, ostream &out) const {
-    out << '$';
-  }
+  void PopType::dump(const Val &val, ostream &out) const { out << '$'; }
 
   void PopType::dup(Val &dst, const Val &src) const {}
 
