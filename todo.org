@@ -1,4 +1,3 @@
-* convert demos to test/run.al
 * add type inference
 ** process stack/env in OpType inits
 ** add cx, env, stack to OpType inits / op constructor

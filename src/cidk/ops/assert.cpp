@@ -1,9 +1,11 @@
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
 #include "cidk/expr.hpp"
+#include "cidk/list.hpp"
 #include "cidk/ops/assert.hpp"
 #include "cidk/read.hpp"
 #include "cidk/types/bool.hpp"
+#include "cidk/types/list.hpp"
 
 namespace cidk::ops {
   struct AssertData {
@@ -23,10 +25,8 @@ namespace cidk::ops {
     Cx &cx(env.cx);
     const Pos &p(op.pos);
     const auto &d(op.as<AssertData>());
-    Stack arg_stack(stack);
-    d.args.eval(p, env, arg_stack);
-    Val args(pop(p, arg_stack));
-    
+    Stack args(stack);
+    for (auto &a: d.args.as_list->items) { a.eval(p, env, args); }
     d.body.eval(p, env, stack);
     Val ok(pop(op.pos, stack));
     
@@ -38,7 +38,8 @@ namespace cidk::ops {
   }
 
   void AssertType::get_ids(const Op &op, IdSet &out) const {
-    op.as<Val>().get_ids(out);
+    auto &d(op.as<AssertData>());
+    d.body.get_ids(out);
   }
 
   void AssertType::mark_refs(Op &op) const { op.as<Val>().mark_refs(); }
@@ -50,7 +51,13 @@ namespace cidk::ops {
                         Env &env,
                         Stack &stack,
                         Ops &out) const {
+    Pos p(pos);
     auto args(read_val(pos, in, state, env, stack));
+
+    if (args->type != &cx.list_type) {
+      throw ESys(p, "Expected List, was: ", args->type->id);
+    }
+
     auto body(read_val(pos, in, state, env, stack));
     read_eop(pos, in, env, stack);
     out.emplace_back(pos, *this, *args, *body);
