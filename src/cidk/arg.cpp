@@ -2,6 +2,7 @@
 #include "cidk/e.hpp"
 #include "cidk/cx.hpp"
 #include "cidk/list.hpp"
+#include "cidk/types/list.hpp"
 #include "cidk/types/nil.hpp"
 #include "cidk/types/sym.hpp"
 
@@ -16,18 +17,25 @@ namespace cidk {
                       Env &env,
                       Stack &stack) {
     auto &vs(in.items);
+    vector<const Sym *> ids;
     
     for (auto i(vs.begin()); i != vs.end(); i++) {
-      const Sym *id(nullptr);
-
       if (i->type == &cx.sym_type) {
-        id = i->as_sym;
+        ids.push_back(i->as_sym);
+      } else if (i->type == &cx.list_type) {
+        for (auto &id: i->as_list->items) {
+          if (id.type != &cx.sym_type) {
+            throw ESys(pos, "Invalid argument id: ", id.type->id);
+          }
+
+          ids.push_back(id.as_sym);
+        }
       } else if (i->type != &cx.nil_type) {
         throw ESys(pos, "Invalid argument: ", i->type->id);
       }
 
       i++;
-      if (i == vs.end()) { throw ESys(pos, "Odd number of arguments"); }
+      if (i == vs.end()) { throw ESys(pos, "Invalid argument list"); }
       Type *type(nullptr);
 
       if (i->type != &cx.nil_type) {
@@ -41,7 +49,8 @@ namespace cidk {
         type = typev.as_type;
       }
 
-      items.emplace_back(id, type);
+      for (auto id: ids) { items.emplace_back(id, type); }
+      ids.clear();
     }
   }
 

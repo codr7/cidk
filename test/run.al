@@ -40,3 +40,5 @@ do-env _ {
   call foo;
   assert(stack) {is 0;};
 };
+
+mark; sweep;

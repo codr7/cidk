@@ -44,6 +44,8 @@ namespace cidk {
     Env env;
     
     MetaType &meta_type;
+    Type &a_type;
+    NilType &nil_type;    
     Type &any_type, &num_type;
     
     BoolType &bool_type;
@@ -53,7 +55,6 @@ namespace cidk {
     IntType &int_type;
     ListType &list_type;
     MacroType &macro_type;
-    NilType &nil_type;
     OStreamType &ostream_type;
     PopType &pop_type;
     SymType &sym_type;

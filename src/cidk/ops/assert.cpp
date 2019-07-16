@@ -39,10 +39,15 @@ namespace cidk::ops {
 
   void AssertType::get_ids(const Op &op, IdSet &out) const {
     auto &d(op.as<AssertData>());
+    d.args.get_ids(out);
     d.body.get_ids(out);
   }
 
-  void AssertType::mark_refs(Op &op) const { op.as<Val>().mark_refs(); }
+  void AssertType::mark_refs(Op &op) const {
+    auto &d(op.as<AssertData>());
+    d.args.mark_refs();
+    d.body.mark_refs();
+  }
 
   void AssertType::read(Cx &cx,
                         Pos &pos,
