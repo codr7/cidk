@@ -41,4 +41,5 @@ do-env _ {
   assert(stack) {is 0;};
 };
 
+dump stack;
 mark; sweep;

@@ -26,6 +26,7 @@ $ cd build
 $ cmake ..
 $ make
 $ ./cidk ../test/run.al
+()
 $ ./cidk
 cidk v0.2
 
