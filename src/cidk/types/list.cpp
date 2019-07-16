@@ -10,7 +10,15 @@ namespace cidk {
     TValType<List *>(cx, pos, id, parents) {}
 
   void ListType::clone(const Pos &pos, Val &dst, const Val &src) const {
-    dst.as_list = cx.list_type.pool.get(cx, src.as_list->items);
+    auto dl(cx.list_type.pool.get(cx));
+
+    for (const auto &sv: src.as_list->items) {
+      Val dv;
+      sv.clone(pos, dv);
+      dl->items.push_back(dv);
+    }
+    
+    dst.as_list = dl;
   }
 
   void ListType::dump(const Val &val, ostream &out) const {
