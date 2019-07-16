@@ -1,7 +1,7 @@
 #include <fstream>
 
 #include "cidk/call.hpp"
-#include "cidk/conf.hpp"
+#include "cidk/cidk.hpp"
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
 #include "cidk/libs/math.hpp"

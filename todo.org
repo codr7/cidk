@@ -1,7 +1,4 @@
 * convert demos to test/run.al
-* add repl
-** launch if no files
-** clear stack on empty input
 * add type inference
 ** process stack/env in OpType inits
 ** add cx, env, stack to OpType inits / op constructor

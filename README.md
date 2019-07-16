@@ -25,7 +25,21 @@ $ mkdir build
 $ cd build
 $ cmake ..
 $ make
-$ ./cidk ../bench/fib_rec.al
+$ ./cidk
+cidk v0.1
+
+Press Return on empty row to evaluate.
+Evaluating nothing clears stack and Ctrl+D exits.
+
+  push 7 14 21;
+  
+(7 14 21)
+  add;
+  
+(7 35)
+  add;
+
+(42)
 ```
 
 ### Syntax

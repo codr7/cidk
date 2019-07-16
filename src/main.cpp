@@ -3,6 +3,7 @@
 
 #include "cidk/cx.hpp"
 #include "cidk/ops/push.hpp"
+#include "cidk/repl.hpp"
 #include "cidk/val.hpp"
 
 using namespace std;
@@ -21,9 +22,12 @@ void test(cidk::Cx &cx) {
   assert(s.back().as_int == 41);
 }
 
+enum struct Mode {load, repl};
+
 int main(int argc, char *argv[]) {
   auto p(cidk::Pos::_);
-
+  Mode m(Mode::repl);
+  
   cidk::Cx cx;
   cidk::Env &env(*cx.env_pool.get(cx.env));
   cidk::Stack stack;
@@ -38,9 +42,12 @@ int main(int argc, char *argv[]) {
       cidk::Ops ops;
       cx.load(p, a, ops);    
       cx.eval(ops, env, stack);
+      m = Mode::load;
     }
   }
 
+  if (m == Mode::repl) { cidk::repl(cx, cin, cout); }
+  
   if (cx.debug) { cx.deinit(); }
   return 0;
 }

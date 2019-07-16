@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "cidk/conf.hpp"
+#include "cidk/cidk.hpp"
 #include "cidk/def.hpp"
 
 namespace cidk {
