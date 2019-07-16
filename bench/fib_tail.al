@@ -25,3 +25,27 @@ defun fib2((n a b) A)(A) {
 
 clock 10000 {push 20 0 1; call fib2; drop;};
 dump;
+
+defun fib3((_ a b) A)(A) {
+  dup;
+    
+  if $ {
+    dup;
+      
+    if {is 1;} {
+      drop;
+      push b;
+    } {
+      dec; 
+      push b; 
+      add a b; 
+      recall;
+    };
+  } {
+    drop;
+    push a;
+  };
+};
+
+clock 10000 {push 20 0 1; call fib3; drop;};
+dump;

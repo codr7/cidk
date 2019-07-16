@@ -24,11 +24,11 @@ namespace cidk {
         ids.push_back(i->as_sym);
       } else if (i->type == &cx.list_type) {
         for (auto &id: i->as_list->items) {
-          if (id.type != &cx.sym_type) {
+          if (id.type != &cx.sym_type && id.type != &cx.nil_type) {
             throw ESys(pos, "Invalid argument id: ", id.type->id);
           }
 
-          ids.push_back(id.as_sym);
+          ids.push_back((id.type == &cx.sym_type) ? id.as_sym : nullptr);
         }
       } else if (i->type != &cx.nil_type) {
         throw ESys(pos, "Invalid argument: ", i->type->id);
