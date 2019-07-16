@@ -148,7 +148,7 @@ Marks non-reachable references for sweeping.
 Pushes values on stack.
 
 #### sweep
-Sweeps non-reachable references.
+Sweeps non-marked references.
 
 ### License
 MIT
