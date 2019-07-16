@@ -1,12 +1,12 @@
 ![Logo](logo.png)
   
 ```
-defun fib(_ Int)(Int) {
-  if {dup; lt $ 2;} _ {
-    dec; dup;
+defun fib(n Int)(Int) {
+  if {lt n 2;} n {
+    dec n;
     call fib;
-    swap; dec;
-    call fib;
+    dec n;
+    call fib; 
     add;
   };
 };
@@ -25,9 +25,9 @@ $ mkdir build
 $ cd build
 $ cmake ..
 $ make
-$ ./cidk test/run.al
+$ ./cidk ../test/run.al
 $ ./cidk
-cidk v0.1
+cidk v0.2
 
 Press Return on empty row to evaluate.
 Evaluating nothing clears stack and Ctrl+D exits.
