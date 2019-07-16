@@ -14,16 +14,21 @@
 * add fib_iter bench
 ** add env.update(is, function<void>(Val &))
 *** use setter (set-X in current env) if available
+* add sub op
+** copy lt
+* add mul op
+** copy add
+* add gt op
+** copy lt
+* add Quote type
+** struct with embedded Val
+** add '-reader
 * add 'include' op
 ** vararg like 'call'
 ** load ops on read and store in data
 ** eval on eval
-* add Quote type
-** struct with embedded Val
-** add '-reader
-** add Splice support
-*** splice list items automagially
-* add Splat op
+* add Splice support
+** splice list items automagially
 * add Char type
 ** char32_t
 * add Str type
