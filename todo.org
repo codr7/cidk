@@ -1,16 +1,13 @@
-* add type inference
-** process stack/env in OpType inits
+* add stack type inference
+** process stack in OpType inits
 ** add cx, env, stack to OpType inits / op constructor
 ** add Undef type
 *** store actual as_type
 ** add unify(Stack &x, Stack &y)
-** add Env.unify(const Env &y)
-** use to lookup add-fn at read-time
+** use to lookup fn at read-time in BinOp
 * push Fun on stack from Defun if missing id
 * add Fun arg type checking
-** add type-check op
-*** type-check 0 Int
-*** get value from stack if val is int otherwise eval
+** skip args with type A
 * add fib_iter bench
 ** add env.update(is, function<void>(Val &))
 *** use setter (set-X in current env) if available
