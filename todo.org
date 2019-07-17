@@ -1,3 +1,19 @@
+* add poke(vals+) op
+** copy push
+** replace values left-right
+** allow skipping with _
+** use in last fib tail
+* rename dup op to peek
+** rename Val/ValType.dup to copy
+* add 'include' op
+** vararg like 'call'
+** load ops on read and store in data
+** eval on eval
+* add test bench
+** add test/abc.al
+** bench 10x in run.al
+* add fib_iter bench
+** add set op
 * add stack type inference
 ** process stack in OpType inits
 ** add cx, env, stack to OpType inits / op constructor
@@ -8,16 +24,9 @@
 * push Fun on stack from Defun if missing id
 * add Fun arg type checking
 ** skip args with type A
-* add fib_iter bench
-** add env.update(is, function<void>(Val &))
-*** use setter (set-X in current env) if available
 * add Quote type
 ** struct with embedded Val
 ** add '-reader
-* add 'include' op
-** vararg like 'call'
-** load ops on read and store in data
-** eval on eval
 * add Splice support
 ** splice list items automagially
 * add Char type
