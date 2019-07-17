@@ -102,7 +102,7 @@ Passing `T` starts at the beginning and/or copies to end.
 (... 1 2 3 1 2 3)
 ```
 
-#### define [id val]+
+#### defconst [id val]+
 Defines compile time constants for pairs of ids and values. `id` and `val` are popped from stack if missing.
 
 ```

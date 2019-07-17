@@ -1,17 +1,17 @@
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
-#include "cidk/ops/define.hpp"
+#include "cidk/ops/defconst.hpp"
 #include "cidk/read.hpp"
 #include "cidk/types/sym.hpp"
 
 namespace cidk::ops {
-  const DefineType Define("define");
+  const DefconstType Defconst("defconst");
 
-  DefineType::DefineType(const string &id): OpType(id) {}
+  DefconstType::DefconstType(const string &id): OpType(id) {}
 
-  void DefineType::eval(const Op &op, Env &env, Stack &stack) const {}
+  void DefconstType::eval(const Op &op, Env &env, Stack &stack) const {}
 
-  void DefineType::read(Cx &cx,
+  void DefconstType::read(Cx &cx,
                       Pos &pos,
                       istream &in,
                       ReadState &state,

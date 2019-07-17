@@ -42,12 +42,12 @@ poke {mul 2;} _;
 assert (stack) {eq stack (1 4 3);};
 
 do-env _ {
-  define foo 42;
+  defconst foo 42;
   assert(foo) {is foo 42;};
 };
 
 do-env _ {
-  define foo 42;
+  defconst foo 42;
   do-env T {assert(foo) {is foo 42;};};
 };
 

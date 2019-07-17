@@ -1,4 +1,4 @@
-define REPS 10 N 20;
+defconst REPS 10 N 20;
 
 defun fib1(n Int)(Int) {
   if {lt n 2;} n {

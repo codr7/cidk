@@ -1,4 +1,4 @@
-define REPS 10000 N 20;
+defconst REPS 10000 N 20;
 
 defun fib1((n a b) Int)(Int) {
   if {is n 0;} a {
