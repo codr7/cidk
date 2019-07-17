@@ -1,5 +1,7 @@
 * rename dup op to peek
 ** rename Val/ValType.dup to copy
+* add Expr support to poke op
+** eval with prev val rotated to end
 * add 'include' op
 ** vararg like 'call'
 ** load ops on read and store in data
