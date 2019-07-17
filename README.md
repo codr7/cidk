@@ -51,7 +51,7 @@ Each statement starts with an opcode and ends with semicolon, arguments are sepa
   push 35 7;
   add;
 
-[... 42]
+(... 42)
 ```
 
 ### Opcodes
@@ -63,7 +63,7 @@ Adds arguments and pushes result. `x` and `y` are popped from stack if missing.
   push 14;
   add 7 $ 21;
 
-[... 42]
+(... 42)
 ```
 
 #### call fun+
@@ -73,7 +73,7 @@ Calls functions in specified order. `fun` is popped from stack if missing.
   push 7 14;
   call <;
 
-[... T]
+(... T)
 ```
 
 #### cp offs=1 len=1
@@ -83,14 +83,14 @@ Copies `nvals` items starting at `offs` to end of stack.
   push 1 2 3;
   cp;
 
-[... 1 2 3 3]
+(... 1 2 3 3)
 ```
 
 ```
   push 1 2 3 4 5;
   cp 4 3;
 
-[... 1 2 3 4 5 2 3 4]
+(... 1 2 3 4 5 2 3 4)
 ```
 
 Passing `T` starts at the beginning and/or copies to end.
@@ -99,7 +99,7 @@ Passing `T` starts at the beginning and/or copies to end.
   push 1 2 3;
   cp T T;
 
-[... 1 2 3 1 2 3]
+(... 1 2 3 1 2 3)
 ```
 
 #### define [id val]+
@@ -112,7 +112,7 @@ Defines compile time constants for pairs of ids and values. `id` and `val` are p
     add;
   };
   
-[... 42]
+(... 42)
 
   dump foo;
 
@@ -128,7 +128,7 @@ Evaluates body in environment. Passing `_` creates a new empty environment, whil
 ```
   do-env _ {push env;};
   
-[... ()]
+(... ())
 ```
 
 #### do-stack in? body
@@ -137,7 +137,7 @@ Evaluates body on stack. Passing `_` creates a new empty stack.
 ```
   do-stack (35 7) {add;};
 
-[... 42]
+(... 42)
 ```
 
 `stack` evaluates to the current stack.
@@ -145,7 +145,7 @@ Evaluates body on stack. Passing `_` creates a new empty stack.
 ```
   do-stack (1 2) {push 3 4 stack 5 6;};
 
-[... (1 2 3 4) 5 6]
+(... (1 2 3 4) 5 6)
 ```
 
 #### dump val+
@@ -157,7 +157,7 @@ Pushes `T` if all arguments are the same value, `F` otherwise. `x` and `y` are p
 ```
   push 42; is $ 42;
 
-[... T]
+(... T)
 ```
 
 #### lt x y
@@ -166,7 +166,7 @@ Pushes `T` if `x` is less than `y`, otherwise `F`. `x` and `y` are popped from s
 ```
   lt 7 14;
 
-[... T]
+(... T)
 ```
 
 #### mark
@@ -174,6 +174,34 @@ Marks non-reachable references for sweeping.
 
 #### push val+
 Pushes values on stack.
+
+#### poke val+
+Updates values on stack.
+
+```
+  push 1 2 3;
+  poke 42;
+
+(... 1 2 42)
+```
+
+`_` may be used to skip values, arguments are matched from end of stack.
+
+```
+  push 1 2 3;
+  poke 42 _;
+
+(... 1 42 3)
+```
+
+Expressions are evaluated with current value pushed on stack.
+
+```
+  push 1 2 3;
+  poke {mul 21;} _;
+
+(... 1 42 3)
+```
 
 #### sweep
 Sweeps non-marked references.

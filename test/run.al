@@ -37,6 +37,10 @@ poke 35 _;
 add;
 assert (stack) {is 42;};
 
+push 1 2 3;
+poke {mul 2;} _;
+assert (stack) {eq stack (1 4 3);};
+
 do-env _ {
   define foo 42;
   assert(foo) {is foo 42;};

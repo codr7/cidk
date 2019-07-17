@@ -1,6 +1,3 @@
-* add Expr support to poke op
-** eval with prev val rotated to end & rotate back
-** add poke to readme
 * add 'include' op
 ** vararg like 'call'
 ** load ops on read and store in data

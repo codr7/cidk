@@ -2,14 +2,17 @@
 #include "cidk/e.hpp"
 #include "cidk/ops/poke.hpp"
 #include "cidk/read.hpp"
+#include "cidk/types/expr.hpp"
 #include "cidk/types/nil.hpp"
 
 namespace cidk::ops {
   struct PokeData {
     size_t offs;
     Val val;
+    bool is_expr;
     
-    PokeData(size_t offs, const Val &val): offs(offs), val(val) {}
+    PokeData(size_t offs, const Val &val):
+      offs(offs), val(val), is_expr(val.type == &val.type->cx.expr_type) {}
   };
   
   const PokeType Poke("poke");
@@ -24,8 +27,10 @@ namespace cidk::ops {
     const Pos &p(op.pos);
     auto &d(op.as<PokeData>());
     auto ss(stack.size());
+
+    if (d.is_expr && d.offs) { stack.push_back(stack[ss - d.offs]); }
     d.val.eval(p, env, stack);
-    swap(stack.back(), stack[ss-d.offs-1]);
+    if (d.offs) { swap(stack.back(), stack[ss - d.offs]); }
     stack.resize(ss);
   }
 
@@ -57,7 +62,7 @@ namespace cidk::ops {
       vals.push_back(*v);
     }
 
-    if (!n--) { throw ESys(p, "Missing poke value"); }
+    if (!n) { throw ESys(p, "Missing poke value"); }
     
     for (auto &v: vals) {
       if (v.type != &cx.nil_type) { out.emplace_back(p, *this, n, v); }
