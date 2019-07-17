@@ -18,6 +18,9 @@ assert(stack) {eq;};
 lt 7 14;
 assert(stack) {is T;};
 
+gt 7 14;
+assert(stack) {is F;};
+
 do-env _ {
   define foo 42;
   assert(foo) {is foo 42;};
