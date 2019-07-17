@@ -6,6 +6,12 @@ push 7 21;
 add $ 14 $;
 assert(stack) {is 42;};
 
+mul 6 7;
+assert(stack) {is 42;};
+
+lt 7 14;
+assert(stack) {is T;};
+
 do-env _ {
   define foo 42;
   assert(foo) {is foo 42;};

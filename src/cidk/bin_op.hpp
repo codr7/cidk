@@ -6,9 +6,9 @@
 
 namespace cidk::ops {
   struct BinOp: OpType {
-    bool commutative;
+    bool is_assoc;
     
-    BinOp(const string &id, bool commutative = false);
+    BinOp(const string &id, bool is_assoc = false);
     void init(Op &op, const Val &x, const Val &y, Fun *f) const;
     virtual void eval(const Op &op, Env &env, Stack &stack) const override;
     virtual const Sym *get_fun_id(Cx &cx) const = 0;

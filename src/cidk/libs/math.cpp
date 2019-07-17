@@ -12,6 +12,13 @@ namespace cidk::libs {
     x.as_int += y.as_int;
   }
 
+  static void int_mul_imp(Call &call, Env &env, Stack &stack) {
+    auto &p(call.pos);
+    auto y(pop(p, stack));
+    Val &x(stack.back());
+    x.as_int *= y.as_int;
+  }
+
   static void int_lt_imp(Call &call, Env &env, Stack &stack) {
     auto &cx(env.cx);
     auto &p(call.pos);
@@ -26,6 +33,12 @@ namespace cidk::libs {
                             {Arg("x"), Arg("y")},
                             {Ret(cx.int_type)},
                             int_add_imp);
+
+    cx.int_type.env.add_fun(Pos::_,
+                            "*",
+                            {Arg("x"), Arg("y")},
+                            {Ret(cx.int_type)},
+                            int_mul_imp);
 
     cx.int_type.env.add_fun(Pos::_,
                             "<",
