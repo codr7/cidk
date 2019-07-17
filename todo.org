@@ -1,8 +1,5 @@
-* add eq op
-** copy lt
 * add gt op
 ** copy lt
-
 * add stack type inference
 ** process stack in OpType inits
 ** add cx, env, stack to OpType inits / op constructor

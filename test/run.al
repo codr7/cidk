@@ -12,6 +12,9 @@ assert(stack) {is 42;};
 mul 6 7;
 assert(stack) {is 42;};
 
+push (1 2 3) (1 2 3);
+assert(stack) {eq;};
+
 lt 7 14;
 assert(stack) {is T;};
 

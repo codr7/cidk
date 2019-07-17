@@ -1,46 +1,46 @@
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
-#include "cidk/ops/is.hpp"
+#include "cidk/ops/eq.hpp"
 #include "cidk/read.hpp"
 #include "cidk/types/bool.hpp"
 
 namespace cidk::ops {
-  struct IsData {
+  struct EqData {
     Val x, y;
-    IsData(const Val &x, const Val &y): x(x), y(y) {}
+    EqData(const Val &x, const Val &y): x(x), y(y) {}
   };
   
-  const IsType Is("is");
+  const EqType Eq("eq");
 
-  IsType::IsType(const string &id): OpType(id) {}
+  EqType::EqType(const string &id): OpType(id) {}
 
-  void IsType::init(Op &op, const Val &x, const Val &y) const {
-    op.data = IsData(x, y);
+  void EqType::init(Op &op, const Val &x, const Val &y) const {
+    op.data = EqData(x, y);
   }
 
-  void IsType::eval(const Op &op, Env &env, Stack &stack) const {
+  void EqType::eval(const Op &op, Env &env, Stack &stack) const {
     const Pos &p(op.pos);
-    const IsData &d(op.as<IsData>());
+    const EqData &d(op.as<EqData>());
     d.x.eval(p, env, stack);
     auto x(pop(p, stack));
     d.y.eval(p, env, stack);
     auto y(pop(p, stack));
-    stack.emplace_back(op.pos, env.cx.bool_type, x.is(y));
+    stack.emplace_back(op.pos, env.cx.bool_type, x.eq(p, y));
   }
 
-  void IsType::get_ids(const Op &op, IdSet &out) const {
-    auto &d(op.as<IsData>());
+  void EqType::get_ids(const Op &op, IdSet &out) const {
+    auto &d(op.as<EqData>());
     d.x.get_ids(out);
     d.y.get_ids(out);
   }
 
-  void IsType::mark_refs(Op &op) const {
-    auto &d(op.as<IsData>());
+  void EqType::mark_refs(Op &op) const {
+    auto &d(op.as<EqData>());
     d.x.mark_refs();
     d.y.mark_refs();
   }
 
-  void IsType::read(Cx &cx,
+  void EqType::read(Cx &cx,
                     Pos &pos,
                     istream &in,
                     ReadState &state,
