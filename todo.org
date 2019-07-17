@@ -1,5 +1,3 @@
-* add sub op
-** copy lt
 * add eq op
 ** copy lt
 * add gt op

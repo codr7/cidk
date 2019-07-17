@@ -6,6 +6,9 @@ push 7 21;
 add $ 14 $;
 assert(stack) {is 42;};
 
+sub 49 7;
+assert(stack) {is 42;};
+
 mul 6 7;
 assert(stack) {is 42;};
 
