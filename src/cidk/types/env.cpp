@@ -13,6 +13,8 @@ namespace cidk {
     dst.as_env = cx.env_pool.get(*src.as_env);
   }
 
+  void EnvType::cp(Val &dst, const Val &src) const { dst.as_env = src.as_env; }
+
   void EnvType::dump(const Val &val, ostream &out) const {
     out << '(';
     char sep(0);
@@ -25,8 +27,6 @@ namespace cidk {
 
     out << ')';
   }
-
-  void EnvType::dup(Val &dst, const Val &src) const { dst.as_env = src.as_env; }
 
   bool EnvType::eq(const Pos &pos, const Val &x, const Val &y) const {
     const auto &xl(x.as_env->items), &yl(y.as_env->items);

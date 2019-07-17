@@ -9,11 +9,11 @@ namespace cidk {
                      const vector<Type *> &parents):
     TValType<Expr *>(cx, pos, id, parents) {}
 
+  void ExprType::cp(Val &dst, const Val &src) const { dst.as_expr = src.as_expr; }
+
   void ExprType::dump(const Val &val, ostream &out) const {    
     out << "expr:" << val.as_expr;
   }
-
-  void ExprType::dup(Val &dst, const Val &src) const { dst.as_expr = src.as_expr; }
 
   void ExprType::eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
     val.as_expr->eval(env, stack);

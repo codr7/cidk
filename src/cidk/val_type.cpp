@@ -19,7 +19,7 @@ namespace cidk {
   }
 
   void ValType::clone(const Pos &pos, Val &dst, const Val &src) const {
-    return dup(dst, src);
+    return cp(dst, src);
   }
 
   bool ValType::eq(const Pos &pos, const Val &x, const Val &y) const {

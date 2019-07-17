@@ -12,11 +12,11 @@ namespace cidk {
                    const vector<Type *> &parents):
     TValType<Fun *>(cx, pos, id, parents) {}
 
+  void FunType::cp(Val &dst, const Val &src) const { dst.as_fun = src.as_fun; }
+
   void FunType::dump(const Val &val, ostream &out) const {
     out << "fun:" << val.as_fun->id;
   }
-
-  void FunType::dup(Val &dst, const Val &src) const { dst.as_fun = src.as_fun; }
 
   bool FunType::is(const Val &x, const Val &y) const { return x.as_fun == y.as_fun; }
 

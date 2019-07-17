@@ -7,8 +7,8 @@ namespace cidk {
   struct PopType: ValType {
     PopType(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents);
 
+    virtual void cp(Val &dst, const Val &src) const override;
     virtual void dump(const Val &val, ostream &out) const override;
-    virtual void dup(Val &dst, const Val &src) const override;
 
     virtual void eval(const Pos &pos,
                       const Val &val,

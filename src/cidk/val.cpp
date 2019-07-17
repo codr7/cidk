@@ -5,14 +5,14 @@
 namespace cidk {
   Val::Val(): type(nullptr) {}
   
-  Val::Val(const Val &src): type(src.type) { src.dup(*this); }
+  Val::Val(const Val &src): type(src.type) { src.cp(*this); }
 
   Val::Val(ValType &type): type(&type) {}
 
   Val::~Val() {}
 
   const Val &Val::operator =(const Val &src) {
-    src.dup(*this);
+    src.cp(*this);
     return *this;
   }
 
@@ -22,14 +22,14 @@ namespace cidk {
     return dst;
   }
 
-  void Val::dump(ostream &out) const { type->dump(*this, out); }
-  
-  Val &Val::dup(Val &dst) const {
+  Val &Val::cp(Val &dst) const {
     dst.type = type;
-    type->dup(dst, *this);
+    type->cp(dst, *this);
     return dst;
   }
 
+  void Val::dump(ostream &out) const { type->dump(*this, out); }
+  
   bool Val::eq(const Pos &pos, const Val &y) const { return type->eq(pos, *this, y); }
 
   void Val::eval(const Pos &pos, Env &env, Stack &stack) const {

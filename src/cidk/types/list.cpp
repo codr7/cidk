@@ -21,6 +21,8 @@ namespace cidk {
     dst.as_list = dl;
   }
 
+  void ListType::cp(Val &dst, const Val &src) const { dst.as_list = src.as_list; }
+
   void ListType::dump(const Val &val, ostream &out) const {
     out << '(';
     char sep(0);
@@ -33,8 +35,6 @@ namespace cidk {
 
     out << ')';
   }
-
-  void ListType::dup(Val &dst, const Val &src) const { dst.as_list = src.as_list; }
 
   bool ListType::eq(const Pos &pos, const Val &x, const Val &y) const {
     const auto &xl(x.as_list->items), &yl(y.as_list->items);

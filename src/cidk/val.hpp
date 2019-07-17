@@ -47,8 +47,8 @@ namespace cidk {
     const Val &operator =(const Val &src);
     
     Val &clone(const Pos &pos, Val &dst) const;
+    Val &cp(Val &dst) const;
     void dump(ostream &out) const;
-    Val &dup(Val &dst) const;
     bool eq(const Pos &pos, const Val &y) const;
     void eval(const Pos &pos, Env &env, Stack &stack) const;
     void get_ids(IdSet &out) const;

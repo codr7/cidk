@@ -10,12 +10,12 @@ namespace cidk {
                            const vector<Type *> &parents):
     TValType<OStream *>(cx, pos, id, parents) {}
 
-  void OStreamType::dump(const Val &val, ostream &out) const {
-    out << "OStream(" << &val.as_ostream->imp << ')';
+  void OStreamType::cp(Val &dst, const Val &src) const {
+    dst.as_ostream = src.as_ostream;
   }
 
-  void OStreamType::dup(Val &dst, const Val &src) const {
-    dst.as_ostream = src.as_ostream;
+  void OStreamType::dump(const Val &val, ostream &out) const {
+    out << "OStream(" << &val.as_ostream->imp << ')';
   }
 
   bool OStreamType::is(const Val &x, const Val &y) const {

@@ -10,11 +10,11 @@ namespace cidk {
                      const vector<Type *> &parents):
     TValType<Type *>(cx, pos, id, parents) {}
 
+  void MetaType::cp(Val &dst, const Val &src) const { dst.as_type = src.as_type; }
+
   void MetaType::dump(const Val &val, ostream &out) const {
     out << "type:" << val.as_type->id;
   }
-
-  void MetaType::dup(Val &dst, const Val &src) const { dst.as_type = src.as_type; }
 
   bool MetaType::is(const Val &x, const Val &y) const {
     return x.as_type == y.as_type;

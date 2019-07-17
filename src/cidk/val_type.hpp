@@ -19,8 +19,8 @@ namespace cidk {
     ConstType &const_type(const Pos &pos);
     
     virtual void clone(const Pos &pos, Val &dst, const Val &src) const;
+    virtual void cp(Val &dst, const Val &src) const = 0;
     virtual void dump(const Val &val, ostream &out) const = 0;
-    virtual void dup(Val &dst, const Val &src) const = 0;
     virtual bool eq(const Pos &pos, const Val &x, const Val &y) const;
     virtual void eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const;
     virtual void get_ids(const Val &val, IdSet &out) const;
