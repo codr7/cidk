@@ -1,3 +1,5 @@
+define REPS 10 N 20;
+
 defun fib1(n Int)(Int) {
   if {lt n 2;} n {
     dec n;
@@ -8,7 +10,7 @@ defun fib1(n Int)(Int) {
   };
 };
 
-clock 10 {push 20; call fib1; drop;};
+clock REPS {push N; call fib1; drop;};
 dump;
 
 defun fib2(_ A)(A) {
@@ -21,5 +23,5 @@ defun fib2(_ A)(A) {
   };
 };
 
-clock 10 {push 20; call fib2; drop;};
+clock REPS {push N; call fib2; drop;};
 dump;
