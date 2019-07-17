@@ -107,7 +107,7 @@ Defines compile time constants for pairs of ids and values. `id` and `val` are p
 
 ```
   do-env {
-    define foo 35 bar 7;
+    defconst foo 35 bar 7;
     push foo bar;
     add;
   };
