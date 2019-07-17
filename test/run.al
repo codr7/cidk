@@ -21,6 +21,11 @@ assert(stack) {is T;};
 gt 7 14;
 assert(stack) {is F;};
 
+push 42 7;
+poke 35 _;
+add;
+assert (stack) {is 42;};
+
 do-env _ {
   define foo 42;
   assert(foo) {is foo 42;};

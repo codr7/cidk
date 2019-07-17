@@ -23,9 +23,7 @@ namespace cidk::ops {
   void LetType::eval(const Op &op, Env &env, Stack &stack) const {
     const Pos &p(op.pos);
     const LetData &d(op.as<LetData>());
-    Val v;
-    d.val.clone(p, v);
-    v.eval(p, env, stack);
+    d.val.eval(p, env, stack);
     env.set(p, d.key, pop(p, stack), false);
   }
 

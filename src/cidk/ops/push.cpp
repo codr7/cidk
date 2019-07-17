@@ -11,11 +11,7 @@ namespace cidk::ops {
   void PushType::init(Op &op, const Val &val) const { op.data = val; }
 
   void PushType::eval(const Op &op, Env &env, Stack &stack) const {
-    const Pos &p(op.pos);
-    Val v;
-    
-    op.as<Val>().clone(p, v);
-    v.eval(p, env, stack);
+    op.as<Val>().eval(op.pos, env, stack);
   }
 
   void PushType::get_ids(const Op &op, IdSet &out) const {

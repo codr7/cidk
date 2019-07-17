@@ -35,8 +35,7 @@ defun fib3((_ a b) A)(A) {
     dup;
       
     if {is 1;} {
-      drop;
-      push b;
+      poke b;
     } {
       dec; 
       push b; 
@@ -44,8 +43,7 @@ defun fib3((_ a b) A)(A) {
       recall;
     };
   } {
-    drop;
-    push a;
+    poke a;
   };
 };
 
