@@ -27,7 +27,7 @@ $ cmake ..
 $ make
 $ ./cidk ../test/run.al
 ()
-$ ./cidk
+$ rlwrap ./cidk
 cidk v0.2
 
 Press Return on empty row to evaluate.
@@ -76,7 +76,7 @@ Calls functions in specified order. `fun` is popped from stack if missing.
 (... T)
 ```
 
-#### cp offs=1 len=1
+#### cp [offs 1] [len 1]
 Copies `nvals` items starting at `offs` to end of stack.
 
 ```

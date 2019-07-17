@@ -7,7 +7,9 @@
 ** bench 10x in run.al
 * add fib_iter bench
 ** add set op
+** add expr support like poke
 * add stack type inference
+** add Fun.rets (Rets)
 ** process stack in OpType inits
 ** add cx, env, stack to OpType inits / op constructor
 ** add Undef type
@@ -21,21 +23,11 @@
 ** struct with embedded Val
 ** add '-reader
 * add Splice support
-** splice list items automagially
+** splice list items automagically
 * add Char type
 ** char32_t
 * add Str type
 ** read as utf-8
 *** https://stackoverflow.com/questions/16208079/how-to-work-with-utf-8-in-c-conversion-from-other-encodings-to-utf-8
 ** splat chars
-* add Fun.rets (Rets)
 
-defun fib(_ Int)(Int) {
-  if {dup; push 2; lt;} _ {
-    dec; dup;
-    call fib;
-    swap; dec; 
-    call fib;
-    add;
-  };
-};
