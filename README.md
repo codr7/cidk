@@ -76,6 +76,32 @@ Calls functions in specified order. `fun` is popped from stack if missing.
 [... T]
 ```
 
+#### cp offs=1 len=1
+Copies `nvals` items starting at `offs` to end of stack.
+
+```
+  push 1 2 3;
+  cp;
+
+[... 1 2 3 3]
+```
+
+```
+  push 1 2 3 4 5;
+  cp 4 3;
+
+[... 1 2 3 4 5 2 3 4]
+```
+
+Passing `T` starts at the beginning and/or copies to end.
+
+```
+  push 1 2 3;
+  cp T T;
+
+[... 1 2 3 1 2 3]
+```
+
 #### define [id val]+
 Defines compile time constants for pairs of ids and values. `id` and `val` are popped from stack if missing.
 

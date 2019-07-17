@@ -29,10 +29,10 @@ clock REPS {push N 0 1; call fib2; drop;};
 dump;
 
 defun fib3((_ a b) A)(A) {
-  dup;
+  cp;
     
   if $ {
-    dup;
+    cp;
       
     if {is 1;} {
       poke b;

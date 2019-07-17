@@ -21,6 +21,17 @@ assert(stack) {is T;};
 gt 7 14;
 assert(stack) {is F;};
 
+push 1 2 3; cp;
+assert(stack) {eq stack (1 2 3 3);};
+
+push 1 2 3 4 5;
+cp 4 3;
+assert(stack) {eq stack (1 2 3 4 5 2 3 4);};
+
+push 1 2 3;
+cp T T;
+assert(stack) {eq stack (1 2 3 1 2 3);};
+
 push 42 7;
 poke 35 _;
 add;
@@ -48,14 +59,14 @@ if F 42 7;
 assert(stack) {is 7;};
 
 do-env _ {
-  defun foo(_ Int)(Int) { dup; add; };
+  defun foo(_ Int)(Int) { cp; add; };
   push 21;
   call foo;
   assert(stack) {is 42;};
 };
 
 do-env _ {
-  defun foo(_ Int)() { dec; dup; if $ {recall;} _; };
+  defun foo(_ Int)() { dec; cp; if $ {recall;} _; };
   push 42;
   call foo;
   assert(stack) {is 0;};

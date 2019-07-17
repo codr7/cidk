@@ -1,7 +1,4 @@
-* rename dup op to cp
-** rename Val/ValType.dup to cp
-** add (offs=0 len=1) args
-** add to readme
+* rename Val/ValType.dup to cp
 * add Expr support to poke op
 ** eval with prev val rotated to end & rotate back
 ** add poke to readme

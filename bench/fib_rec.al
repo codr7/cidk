@@ -14,8 +14,8 @@ clock REPS {push N; call fib1; drop;};
 dump;
 
 defun fib2(_ A)(A) {
-  if {dup; lt $ 2;} _ {
-    dec; dup;
+  if {cp; lt $ 2;} _ {
+    dec; cp;
     call fib2; 
     swap; dec;
     call fib2; 
