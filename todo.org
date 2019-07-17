@@ -1,3 +1,6 @@
+* use const/define with expr instead of macro
+** eval expr in ConstType::eval
+** remove macro
 * add 'include' op
 ** vararg like 'call'
 ** load ops on read and store in data
