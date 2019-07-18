@@ -7,8 +7,8 @@
 namespace cidk::ops {
   struct PokeType: OpType {
     PokeType(const string &id);
-    void init(Op &op, size_t offs, const Val &val) const;
-    virtual void eval(const Op &op, Env &env, Stack &stack) const override;
+    void init(Cx &cx, Op &op, size_t offs, const Val &val) const;
+    virtual void eval(Op &op, Env &env, Stack &stack) const override;
     virtual void get_ids(const Op &op, IdSet &out) const override;
     virtual void mark_refs(Op &op) const override;
 

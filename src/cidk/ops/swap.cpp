@@ -7,9 +7,9 @@ namespace cidk::ops {
 
   SwapType::SwapType(const string &id): OpType(id) {}
 
-  void SwapType::init(Op &op) const {}
+  void SwapType::init(Cx &cx, Op &op) const {}
 
-  void SwapType::eval(const Op &op, Env &env, Stack &stack) const {
+  void SwapType::eval(Op &op, Env &env, Stack &stack) const {
     auto i(stack.end());
     iter_swap(i-1, i-2);
   }
@@ -22,6 +22,6 @@ namespace cidk::ops {
                       Stack &stack,
                       Ops &out) const {
     read_eop(pos, in, env, stack);
-    out.emplace_back(pos, *this);
+    out.emplace_back(cx, pos, *this);
   }
 }

@@ -15,11 +15,11 @@ namespace cidk::ops {
 
   ClockType::ClockType(const string &id): OpType(id) {}
 
-  void ClockType::init(Op &op, const Val &nreps, const Val &body) const {
+  void ClockType::init(Cx &cx, Op &op, const Val &nreps, const Val &body) const {
     op.data = ClockData(nreps, body);
   }
   
-  void ClockType::eval(const Op &op, Env &env, Stack &stack) const {
+  void ClockType::eval(Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
     const Pos &p(op.pos);
     const ClockData &d(op.as<ClockData>());
@@ -64,6 +64,6 @@ namespace cidk::ops {
     if (!body) { throw ESys(p, "Missing clock body"); }
     read_eop(pos, in, env, stack);
     
-    out.emplace_back(p, *this, *nreps, *body);
+    out.emplace_back(cx, p, *this, *nreps, *body);
   }
 }

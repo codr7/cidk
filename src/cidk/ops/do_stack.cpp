@@ -14,11 +14,11 @@ namespace cidk::ops {
 
   DoStackType::DoStackType(const string &id): OpType(id) {}
 
-  void DoStackType::init(Op &op, const Val &in, const Val &body) const {
+  void DoStackType::init(Cx &cx, Op &op, const Val &in, const Val &body) const {
     op.data = DoStackData(in, body);
   }
   
-  void DoStackType::eval(const Op &op, Env &env, Stack &stack) const {
+  void DoStackType::eval(Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
     const Pos &p(op.pos);
     const DoStackData &d(op.as<DoStackData>());
@@ -59,6 +59,6 @@ namespace cidk::ops {
     if (!body) { throw ESys(p, "Missing do-stack body"); }
     read_eop(pos, in, env, stack);
     
-    out.emplace_back(p, *this, *_in, *body);
+    out.emplace_back(cx, p, *this, *_in, *body);
   }
 }

@@ -14,11 +14,11 @@ namespace cidk::ops {
 
   IsType::IsType(const string &id): OpType(id) {}
 
-  void IsType::init(Op &op, const Val &x, const Val &y) const {
+  void IsType::init(Cx &cx, Op &op, const Val &x, const Val &y) const {
     op.data = IsData(x, y);
   }
 
-  void IsType::eval(const Op &op, Env &env, Stack &stack) const {
+  void IsType::eval(Op &op, Env &env, Stack &stack) const {
     const Pos &p(op.pos);
     const IsData &d(op.as<IsData>());
     d.x.eval(p, env, stack);
@@ -52,7 +52,7 @@ namespace cidk::ops {
     if (!x) { throw ESys(p, "Missing ;"); }
 
     if (x->is_eop()) {
-      out.emplace_back(p, *this, cx.S, cx.S);
+      out.emplace_back(cx, p, *this, cx.$, cx.$);
       return;
     }
 
@@ -62,9 +62,9 @@ namespace cidk::ops {
       auto y(read_val(pos, in, state, env, stack));
       if (!y) { throw ESys(p, "Missing ;"); }
       if (y->is_eop()) { break; }
-      out.emplace_back(p, *this, *x, *y);
+      out.emplace_back(cx, p, *this, *x, *y);
     }
 
-    if (!n) { out.emplace_back(p, *this, *x, cx.S); }
+    if (!n) { out.emplace_back(cx, p, *this, *x, cx.$); }
   }
 }

@@ -4,9 +4,20 @@
 #include <string>
 #include <sstream>
 
+#include "cidk/ref.hpp"
+
 namespace cidk {
   using namespace std;
 
+  struct Str: Ref {
+    wstring data;
+
+    Str(Cx &cx, const string &bytes);
+    Str(Cx &cx, wstring chars);
+    virtual void sweep(Cx &cx, const Pos &pos) override;
+    string to_utf8(Cx &cx) const;
+  };
+  
   inline void append(ostream &s) {}
 
   template <typename A0, typename...Args>
@@ -21,6 +32,8 @@ namespace cidk {
     append(out, args...);
     return out.str();
   }
+
+  string &replace(string &s, const string &ss1, const string &ss2);
 }
 
 #endif

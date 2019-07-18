@@ -19,11 +19,11 @@ namespace cidk::ops {
 
   PokeType::PokeType(const string &id): OpType(id) {}
 
-  void PokeType::init(Op &op, size_t offs, const Val &val) const {
+  void PokeType::init(Cx &cx, Op &op, size_t offs, const Val &val) const {
     op.data = PokeData(offs, val);
   }
 
-  void PokeType::eval(const Op &op, Env &env, Stack &stack) const {
+  void PokeType::eval(Op &op, Env &env, Stack &stack) const {
     const Pos &p(op.pos);
     auto &d(op.as<PokeData>());
     auto ss(stack.size());
@@ -65,7 +65,7 @@ namespace cidk::ops {
     if (!n) { throw ESys(p, "Missing poke value"); }
     
     for (auto &v: vals) {
-      if (v.type != &cx.nil_type) { out.emplace_back(p, *this, n, v); }
+      if (v.type != &cx.nil_type) { out.emplace_back(cx, p, *this, n, v); }
       n--;
     }
   }

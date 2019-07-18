@@ -1,17 +1,28 @@
-* use const with expr instead of macro
-** eval expr in ConstType::eval
-** remove macro
-** add example to readme
-* add 'include' op
-** vararg like 'call'
-** load ops on read and store in data
-** eval on eval
 * add test bench
-** add test/abc.al
+** add test/abc/str/env.al
 ** bench 10x in run.al
+* add Char type
+** char32_t
+** add \", \\ and \n consts
+* implement Str splat
+* add ReadState stack & Env args to load
+** pass between loaded files in main
+** forward args in include-op
+
+* add Env.add_const_expr construct expr from op args & bind const
+** replaces macro
 * add fib_iter bench
 ** add set op
 ** add expr support like poke
+* remove Env/Def.cx
+** pass args instead
+* simplify read_eop()
+** use skip_ws/get/unget instead
+* remove typed Val constructor Pos arg
+* add div op like mul
+** add math/int_div
+* add mod op like mul
+** add math/int_mod
 * add stack type inference
 ** add Fun.rets (Rets)
 ** process stack in OpType inits
@@ -28,10 +39,8 @@
 ** add '-reader
 * add Splice support
 ** splice list items automagically
-* add Char type
-** char32_t
-* add Str type
-** read as utf-8
-*** https://stackoverflow.com/questions/16208079/how-to-work-with-utf-8-in-c-conversion-from-other-encodings-to-utf-8
-** splat chars
+* add len op
+** forward to type env
+** add Str/List/Env.len funs
+
 

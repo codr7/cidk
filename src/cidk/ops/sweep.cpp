@@ -7,9 +7,9 @@ namespace cidk::ops {
 
   SweepType::SweepType(const string &id): OpType(id) {}
 
-  void SweepType::init(Op &op) const {}
+  void SweepType::init(Cx &cx, Op &op) const {}
 
-  void SweepType::eval(const Op &op, Env &env, Stack &stack) const {
+  void SweepType::eval(Op &op, Env &env, Stack &stack) const {
     env.cx.sweep_refs(op.pos);
   }
 
@@ -21,6 +21,6 @@ namespace cidk::ops {
                      Stack &stack,
                      Ops &out) const {
     read_eop(pos, in, env, stack);
-    out.emplace_back(pos, *this);
+    out.emplace_back(cx, pos, *this);
   }
 }

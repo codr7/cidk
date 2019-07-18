@@ -25,6 +25,7 @@ namespace cidk {
   struct NilType;
   struct PopType;
   struct Ref;
+  struct StrType;
   struct SymType;
   
   enum struct EvalState { go, recall };
@@ -57,13 +58,14 @@ namespace cidk {
     MacroType &macro_type;
     OStreamType &ostream_type;
     PopType &pop_type;
+    StrType &str_type;
     SymType &sym_type;
 
     vector<Ops *> ops;
     EvalState eval_state;
     Call *call;
     
-    const Val _, S, T, F, eop;
+    const Val _, $, T, F, eop;
     
     istream *stdin;
     ostream *stdout, *stderr;

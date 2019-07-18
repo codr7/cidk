@@ -8,9 +8,9 @@ namespace cidk::ops {
 
   PushType::PushType(const string &id): OpType(id) {}
 
-  void PushType::init(Op &op, const Val &val) const { op.data = val; }
+  void PushType::init(Cx &cx, Op &op, const Val &val) const { op.data = val; }
 
-  void PushType::eval(const Op &op, Env &env, Stack &stack) const {
+  void PushType::eval(Op &op, Env &env, Stack &stack) const {
     const Pos &p(op.pos);
     
     Val v;
@@ -38,7 +38,7 @@ namespace cidk::ops {
       auto v(read_val(pos, in, state, env, stack));
       if (!v) { throw ESys(p, "Missing ;"); }
       if (v->is_eop()) { break; }
-      out.emplace_back(p, *this, *v);
+      out.emplace_back(cx, p, *this, *v);
     }
 
     if (!n) { throw ESys(p, "Missing push value"); }

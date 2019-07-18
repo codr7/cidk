@@ -20,7 +20,7 @@ namespace cidk {
   }
 
   void ExprType::get_ids(const Val &val, IdSet &out) const {
-    for (auto &op: val.as_expr->body) { op.get_ids(out); }
+    cidk::get_ids(val.as_expr->body, out);
   }
 
   bool ExprType::is(const Val &x, const Val &y) const {

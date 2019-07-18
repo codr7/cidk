@@ -15,11 +15,11 @@ namespace cidk::ops {
   BinOp::BinOp(const string &id, bool is_assoc):
     OpType(id), is_assoc(is_assoc) {}
 
-  void BinOp::init(Op &op, const Val &x, const Val &y, Fun *fun) const {
+  void BinOp::init(Cx &cx, Op &op, const Val &x, const Val &y, Fun *fun) const {
     op.data = BinOpData(x, y, fun);
   }
 
-  void BinOp::eval(const Op &op, Env &env, Stack &stack) const {
+  void BinOp::eval(Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
     const Pos &p(op.pos);
     auto &d(op.as<BinOpData>());
@@ -70,20 +70,20 @@ namespace cidk::ops {
     const Sym *fun_id(get_fun_id(cx));
     Fun *f(cx.int_type.env.get(pos, fun_id).as_fun);
     
-    if (x->is_eop()) { out.emplace_back(p, *this, cx.S, cx.S, f); }
+    if (x->is_eop()) { out.emplace_back(cx, p, *this, cx.$, cx.$, f); }
     else {
       auto y(read_val(pos, in, state, env, stack));
       
-      if (y->is_eop()) { out.emplace_back(p, *this, *x, cx.S, f); }
+      if (y->is_eop()) { out.emplace_back(cx, p, *this, *x, cx.$, f); }
       else {
-        out.emplace_back(p, *this, *x, *y, f);
+        out.emplace_back(cx, p, *this, *x, *y, f);
 
         if (is_assoc) {
           for (;;) {
             auto z(read_val(pos, in, state, env, stack));
             if (!z) { throw ESys(p, "Missing ;"); }
             if (z->is_eop()) { break; }
-            out.emplace_back(p, *this, cx.S, *z, f);
+            out.emplace_back(cx, p, *this, cx.$, *z, f);
           }
         } else { read_eop(p, in, env, stack); }
       }

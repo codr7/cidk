@@ -10,9 +10,9 @@ namespace cidk::ops {
 
   CallType::CallType(const string &id): OpType(id) {}
 
-  void CallType::init(Op &op, const Val &target) const { op.data = target; }
+  void CallType::init(Cx &cx, Op &op, const Val &target) const { op.data = target; }
   
-  void CallType::eval(const Op &op, Env &env, Stack &stack) const {
+  void CallType::eval(Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
     const Pos &p(op.pos);
     op.as<Val>().eval(p, env, stack);
@@ -53,9 +53,9 @@ namespace cidk::ops {
         v.emplace(fv);
       }
 
-      out.emplace_back(p, *this, *v);
+      out.emplace_back(cx, p, *this, *v);
     }
 
-    if (!n) { out.emplace_back(p, *this, Val(cx.pop_type)); }
+    if (!n) { out.emplace_back(cx, p, *this, Val(cx.pop_type)); }
   }
 }

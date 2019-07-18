@@ -15,11 +15,15 @@ namespace cidk::ops {
 
   IfType::IfType(const string &id): OpType(id) {}
   
-  void IfType::init(Op &op, const Val &cond, const Val &x, const Val &y) const {
+  void IfType::init(Cx &cx,
+                    Op &op,
+                    const Val &cond,
+                    const Val &x,
+                    const Val &y) const {
     op.data = IfData(cond, x, y);
   }
 
-  void IfType::eval(const Op &op, Env &env, Stack &stack) const {
+  void IfType::eval(Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
     auto &p(op.pos);
     auto &d(op.as<IfData>());
@@ -66,6 +70,6 @@ namespace cidk::ops {
     if (!y) { throw ESys(p, "Missing else branch"); }
     read_eop(pos, in, env, stack);
 
-    out.emplace_back(p, *this, *cond, *x, *y);
+    out.emplace_back(cx, p, *this, *cond, *x, *y);
   }
 }

@@ -16,11 +16,11 @@ namespace cidk::ops {
 
   DecType::DecType(const string &id): OpType(id) {}
 
-  void DecType::init(Op &op, const Val &n, const Val &delta) const {
+  void DecType::init(Cx &cx, Op &op, const Val &n, const Val &delta) const {
     op.data = DecData(n, delta);
   }
 
-  void DecType::eval(const Op &op, Env &env, Stack &stack) const {
+  void DecType::eval(Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
     const Pos &p(op.pos);
     auto &d(op.as<DecData>());
@@ -79,14 +79,14 @@ namespace cidk::ops {
     if (!n) { throw ESys(p, "Missing ;"); }
     Val one(p, cx.int_type, Int(1));
     
-    if (n->is_eop()) { out.emplace_back(p, *this, cx.S, one); }
+    if (n->is_eop()) { out.emplace_back(cx, p, *this, cx.$, one); }
     else {
       auto delta(read_val(pos, in, state, env, stack));
       if (!delta) { throw ESys(p, "Missing ;"); }
       
-      if (delta->is_eop()) { out.emplace_back(p, *this, *n, one); }
+      if (delta->is_eop()) { out.emplace_back(cx, p, *this, *n, one); }
       else {
-        out.emplace_back(p, *this, *n, *delta);
+        out.emplace_back(cx, p, *this, *n, *delta);
         read_eop(pos, in, env, stack);
       }
     }

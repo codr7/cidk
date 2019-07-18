@@ -8,9 +8,9 @@ namespace cidk::ops {
 
   DropType::DropType(const string &id): OpType(id) {}
 
-  void DropType::init(Op &op) const {}
+  void DropType::init(Cx &cx, Op &op) const {}
 
-  void DropType::eval(const Op &op, Env &env, Stack &stack) const {
+  void DropType::eval(Op &op, Env &env, Stack &stack) const {
     if (stack.empty()) { throw ESys(op.pos, "Nothing to drop"); }
     stack.pop_back();
   }
@@ -23,6 +23,6 @@ namespace cidk::ops {
                       Stack &stack,
                       Ops &out) const {
     read_eop(pos, in, env, stack);
-    out.emplace_back(pos, *this);
+    out.emplace_back(cx, pos, *this);
   }
 }

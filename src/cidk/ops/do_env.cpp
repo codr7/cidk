@@ -17,11 +17,11 @@ namespace cidk::ops {
 
   DoEnvType::DoEnvType(const string &id): OpType(id) {}
 
-  void DoEnvType::init(Op &op, const Val &in, const Val &body) const {
+  void DoEnvType::init(Cx &cx, Op &op, const Val &in, const Val &body) const {
     op.data = DoEnvData(in, body);
   }
   
-  void DoEnvType::eval(const Op &op, Env &env, Stack &stack) const {
+  void DoEnvType::eval(Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
     const Pos &p(op.pos);
     const DoEnvData &d(op.as<DoEnvData>());
@@ -68,6 +68,6 @@ namespace cidk::ops {
     state.env_depth--;
     read_eop(pos, in, env, stack);
     if (!state.env_depth) { state.env_escape = true; }
-    out.emplace_back(p, *this, *_in, *body);
+    out.emplace_back(cx, p, *this, *_in, *body);
   }
 }

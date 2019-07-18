@@ -21,6 +21,8 @@ assert(stack) {is T;};
 gt 7 14;
 assert(stack) {is F;};
 
+assert() {eq "foo\"bar" "foo\"bar";};
+
 push 1 2 3; cp;
 assert(stack) {eq stack (1 2 3 3);};
 

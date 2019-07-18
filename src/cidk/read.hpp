@@ -33,7 +33,8 @@ namespace cidk {
   Val read_expr(Pos &pos, istream &in, ReadState &state, Env &env, Stack &stack);
   Val read_id(Pos &pos, istream &in, ReadState &state, Env &env, Stack &stack);
   Val read_list(Pos &pos, istream &in, ReadState &state, Env &env, Stack &stack);
-  Val read_num(Pos &pos, istream &in, ReadState &state, Env &env, Stack &stack);
+  Val read_num(Cx &cx, Pos &pos, istream &in);
+  Val read_str(Cx &cx, Pos &pos, istream &in);
 
   void skip_ws(Pos &pos, istream &in);
 }

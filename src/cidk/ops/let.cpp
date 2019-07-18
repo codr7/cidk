@@ -16,11 +16,11 @@ namespace cidk::ops {
 
   LetType::LetType(const string &id): OpType(id) {}
 
-  void LetType::init(Op &op, const Sym *key, const Val &val) const {
+  void LetType::init(Cx &cx, Op &op, const Sym *key, const Val &val) const {
     op.data = LetData(key, val);
   }
 
-  void LetType::eval(const Op &op, Env &env, Stack &stack) const {
+  void LetType::eval(Op &op, Env &env, Stack &stack) const {
     const Pos &p(op.pos);
     const LetData &d(op.as<LetData>());
 
@@ -57,13 +57,13 @@ namespace cidk::ops {
 
       auto v(read_val(pos, in, state, env, stack));
       if (!v) { throw ESys(p, "Missing let value"); }
-      out.emplace_back(p, *this, k->as_sym, *v);
+      out.emplace_back(cx, p, *this, k->as_sym, *v);
       n++;
     }
 
     if (!n) {
       auto v(pop(p, stack));
-      out.emplace_back(p, *this, pop(p, stack).as_sym, v);
+      out.emplace_back(cx, p, *this, pop(p, stack).as_sym, v);
     }
 
     if (!state.env_depth) { state.env_extend = true; }

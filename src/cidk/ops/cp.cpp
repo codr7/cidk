@@ -14,11 +14,11 @@ namespace cidk::ops {
 
   CpType::CpType(const string &id): OpType(id) {}
 
-  void CpType::init(Op &op, Int offs, Int len) const {
+  void CpType::init(Cx &cx, Op &op, Int offs, Int len) const {
     op.data = CpData(offs, len);
   }
 
-  void CpType::eval(const Op &op, Env &env, Stack &stack) const {
+  void CpType::eval(Op &op, Env &env, Stack &stack) const {
     const auto &d(op.as<CpData>());
     
     auto
@@ -72,6 +72,6 @@ namespace cidk::ops {
     }
 
     if (!done) { read_eop(pos, in, env, stack); }
-    out.emplace_back(p, *this, offs->as_int, len->as_int);
+    out.emplace_back(cx, p, *this, offs->as_int, len->as_int);
   }
 }

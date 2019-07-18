@@ -22,7 +22,7 @@ namespace cidk {
   struct OpType {    
     string id;
     OpType(const string &id);
-    virtual void eval(const Op &op, Env &env, Stack &stack) const = 0;
+    virtual void eval(Op &op, Env &env, Stack &stack) const;
     virtual void get_ids(const Op &op, IdSet &out) const;
     virtual void mark_refs(Op &op) const;
     
@@ -43,8 +43,8 @@ namespace cidk {
     any data;
     
     template <typename T, typename...Args>
-    Op(const Pos &pos, const T &type, Args &&...args): pos(pos), type(&type) {
-      type.init(*this, forward<Args>(args)...);
+    Op(Cx &cx, const Pos &pos, const T &type, Args &&...args): pos(pos), type(&type) {
+      type.init(cx, *this, forward<Args>(args)...);
     }
 
     template <typename T>
@@ -53,7 +53,7 @@ namespace cidk {
     template <typename T>
     const T &as() const { return any_cast<const T &>(data); }
 
-    void eval(Env &env, Stack &stack) const;
+    void eval(Env &env, Stack &stack);
     void get_ids(IdSet &out) const;
     void mark_refs();
   };

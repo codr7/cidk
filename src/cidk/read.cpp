@@ -10,6 +10,7 @@
 #include "cidk/types/list.hpp"
 #include "cidk/types/macro.hpp"
 #include "cidk/types/pop.hpp"
+#include "cidk/types/str.hpp"
 #include "cidk/types/sym.hpp"
 
 namespace cidk {
@@ -67,18 +68,24 @@ namespace cidk {
     
     if (char c(0); in.get(c)) {
       switch (c) {
-      case '(':
-        pos.col++;
-        return read_list(pos, in, state, env, stack);
       case '{':
         pos.col++;
         return read_expr(pos, in, state, env, stack);
+      case '(':
+        pos.col++;
+        return read_list(pos, in, state, env, stack);
+      case '"':
+        pos.col++;
+        return read_str(cx, pos, in);
+      case '_':
+        pos.col++;
+        return cx._;
       case ';':
         pos.col++;
         return cx.eop;
       default:
         in.unget();
-        if (isdigit(c)) { return read_num(pos, in, state, env, stack); }
+        if (isdigit(c)) { return read_num(cx, pos, in); }
         if (isgraph(c)) { return read_id(pos, in, state, env, stack); }
         throw ESys(pos, "Invalid input: ", c);
       };
@@ -120,7 +127,7 @@ namespace cidk {
     
     for (;;) {  
       if (!in.get(c) ||
-          c == '(' || c == ')' || c == '{' || c == '}' || c == ';' || 
+          c == '(' || c == ')' || c == '{' || c == '}' || c == ';' ||
           !isgraph(c)) { break; }
       
       out << c;
@@ -172,8 +179,7 @@ namespace cidk {
     return Val(p, cx.list_type, out);
   }
   
-  Val read_num(Pos &pos, istream &in, ReadState &state, Env &env, Stack &stack) {
-    Cx &cx(env.cx);
+  Val read_num(Cx &cx, Pos &pos, istream &in) {
     Pos p(pos);
     stringstream out;
     char c(0);
@@ -187,6 +193,27 @@ namespace cidk {
     if (!in.eof()) { in.unget();}
     Int n(strtoll(out.str().c_str(), NULL, 10));
     return Val(p, cx.int_type, n);
+  }
+
+  Val read_str(Cx &cx, Pos &pos, istream &in) {    
+    Pos p(pos);
+    stringstream out;
+    char c(0), pc(0);
+    
+    for (;;) {
+      pc = c;
+      if (!in.get(c)) { throw ESys(pos, "Open str"); }
+      pos.col++;
+
+      if (pc != '\\') {
+        if (c == '"') { break; }
+        if (c == '\\') { continue; }
+      }
+
+      out << c;
+    }
+    
+    return Val(p, cx.str_type, cx.str_type.pool.get(cx, out.str()));
   }
 
   void skip_ws(Pos &pos, istream &in) {

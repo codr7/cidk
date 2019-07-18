@@ -10,9 +10,9 @@ namespace cidk::ops {
 
   DumpType::DumpType(const string &id): OpType(id) {}
 
-  void DumpType::init(Op &op, const Val &val) const { op.data = val; }
+  void DumpType::init(Cx &cx, Op &op, const Val &val) const { op.data = val; }
 
-  void DumpType::eval(const Op &op, Env &env, Stack &stack) const {
+  void DumpType::eval(Op &op, Env &env, Stack &stack) const {
     auto &cx(env.cx);
     const Pos &p(op.pos);
     op.as<Val>().eval(p, env, stack);
@@ -42,9 +42,9 @@ namespace cidk::ops {
       auto v(read_val(pos, in, state, env, stack));
       if (!v) { throw ESys(p, "Missing ;"); }
       if (v->is_eop()) { break; }
-      out.emplace_back(p, *this, *v);
+      out.emplace_back(cx, p, *this, *v);
     }
 
-    if (!n) { out.emplace_back(p, *this, Val(cx.pop_type)); }
+    if (!n) { out.emplace_back(cx, p, *this, Val(cx.pop_type)); }
   }
 }

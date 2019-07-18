@@ -12,9 +12,9 @@ namespace cidk::ops {
 
   DefunType::DefunType(const string &id): OpType(id) {}
 
-  void DefunType::init(Op &op, Fun *fun) const { op.data = fun; }
+  void DefunType::init(Cx &cx, Op &op, Fun *fun) const { op.data = fun; }
 
-  void DefunType::eval(const Op &op, Env &env, Stack &stack) const {
+  void DefunType::eval(Op &op, Env &env, Stack &stack) const {
     auto &cx(env.cx);
     const Pos &p(op.pos);
     auto f(op.as<Fun *>());
@@ -74,7 +74,7 @@ namespace cidk::ops {
 
     for (auto i(as.rbegin()); i != as.rend(); i++) {
       if (i->id) {
-        f.body.emplace_back(pos, Let, i->id, cx.S);
+        f.body.emplace_back(cx, pos, Let, i->id, cx.$);
         f.body_opts.env_extend = true;
       }
     }
@@ -83,6 +83,6 @@ namespace cidk::ops {
     copy(b.begin(), b.end(), back_inserter(f.body));
     body->get_ids(f.body_ids);
     f.env.use(env, f.body_ids);
-    out.emplace_back(p, *this, &f);
+    out.emplace_back(cx, p, *this, &f);
   }
 }

@@ -6,6 +6,7 @@
 #include "cidk/read.hpp"
 #include "cidk/types/bool.hpp"
 #include "cidk/types/list.hpp"
+#include "cidk/types/nil.hpp"
 
 namespace cidk::ops {
   struct AssertData {
@@ -17,16 +18,21 @@ namespace cidk::ops {
 
   AssertType::AssertType(const string &id): OpType(id) {}
 
-  void AssertType::init(Op &op, const Val &args, const Val &body) const {
+  void AssertType::init(Cx &cx, Op &op, const Val &args, const Val &body) const {
     op.data = AssertData(args, body);
   }
 
-  void AssertType::eval(const Op &op, Env &env, Stack &stack) const {
+  void AssertType::eval(Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
     const Pos &p(op.pos);
     const auto &d(op.as<AssertData>());
-    Stack args(stack);
-    for (auto &a: d.args.as_list->items) { a.eval(p, env, args); }
+    Stack args;
+    
+    if (!d.args.as_list->items.empty()) {
+      copy(stack.begin(), stack.end(), back_inserter(args));
+      for (auto &a: d.args.as_list->items) { a.eval(p, env, args); }
+    }
+    
     d.body.eval(p, env, stack);
     Val ok(pop(op.pos, stack));
     
@@ -65,6 +71,6 @@ namespace cidk::ops {
 
     auto body(read_val(pos, in, state, env, stack));
     read_eop(pos, in, env, stack);
-    out.emplace_back(pos, *this, *args, *body);
+    out.emplace_back(cx, pos, *this, *args, *body);
   }
 }

@@ -9,8 +9,6 @@ namespace cidk::ops {
 
   DefconstType::DefconstType(const string &id): OpType(id) {}
 
-  void DefconstType::eval(const Op &op, Env &env, Stack &stack) const {}
-
   void DefconstType::read(Cx &cx,
                       Pos &pos,
                       istream &in,

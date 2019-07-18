@@ -7,11 +7,8 @@
 namespace cidk::ops {
   struct StackType: OpType {
     StackType(const string &id);
-    void init(Op &op) const;
-    
-    virtual void eval(const Op &op,
-                      cidk::Env &env,
-                      cidk::Stack &stack) const override;
+    void init(Cx &cx, Op &op) const;
+    virtual void eval(Op &op, cidk::Env &env, cidk::Stack &stack) const override;
 
     virtual void read(Cx &cx,
                       Pos &pos,

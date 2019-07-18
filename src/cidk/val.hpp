@@ -12,6 +12,7 @@ namespace cidk {
   struct List;
   struct Macro;
   struct OStream;
+  struct Str;
   struct ValType;
   
   template <typename ValT>
@@ -29,6 +30,7 @@ namespace cidk {
       List *as_list;
       Macro *as_macro;
       OStream *as_ostream;
+      Str *as_str;
       const Sym *as_sym;
       Type *as_type;
     };

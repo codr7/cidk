@@ -8,9 +8,9 @@ namespace cidk::ops {
 
   EnvType::EnvType(const string &id): OpType(id) {}
 
-  void EnvType::init(Op &op) const {}
+  void EnvType::init(Cx &cx, Op &op) const {}
 
-  void EnvType::eval(const Op &op, cidk::Env &env, Stack &stack) const {
+  void EnvType::eval(Op &op, cidk::Env &env, Stack &stack) const {
     stack.emplace_back(op.pos, env.cx.env_type, &env);
   }
 
@@ -22,6 +22,6 @@ namespace cidk::ops {
                      Stack &stack,
                      Ops &out) const {
     read_eop(pos, in, env, stack);
-    out.emplace_back(pos, *this);
+    out.emplace_back(cx, pos, *this);
   }
 }

@@ -9,9 +9,9 @@ namespace cidk::ops {
 
   StackType::StackType(const string &id): OpType(id) {}
 
-  void StackType::init(Op &op) const {}
+  void StackType::init(Cx &cx, Op &op) const {}
 
-  void StackType::eval(const Op &op, cidk::Env &env, cidk::Stack &stack) const {
+  void StackType::eval(Op &op, cidk::Env &env, cidk::Stack &stack) const {
     Cx &cx(env.cx);
     List *out(cx.list_type.pool.get(cx));
     move(stack.begin(), stack.end(), back_inserter(out->items));
@@ -28,7 +28,7 @@ namespace cidk::ops {
                        Ops &out) const {
     Pos p(pos);
     read_eop(pos, in, env, stack);
-    out.emplace_back(p, *this);
+    out.emplace_back(cx, p, *this);
     cout << "StackType::read" << endl;
   }
 }

@@ -9,14 +9,14 @@ namespace cidk {
   OpType::OpType(const string &id): id(id) {
     Op::types().emplace(id, this);
   }
-  
+
+  void OpType::eval(Op &op, Env &env, Stack &stack) const {}
+
   void OpType::get_ids(const Op &op, IdSet &out) const {}
 
   void OpType::mark_refs(Op &op) const {}
 
-  void Op::eval(Env &env, Stack &stack) const {
-    type->eval(*this, env, stack);
-  }
+  void Op::eval(Env &env, Stack &stack) { type->eval(*this, env, stack); }
 
   void Op::get_ids(IdSet &out) const { type->get_ids(*this, out); }
 
