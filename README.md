@@ -28,7 +28,7 @@ $ make
 $ ./cidk ../test/run.al
 ()
 $ rlwrap ./cidk
-cidk v0.2
+cidk v0.3
 
 Press Return on empty row to evaluate.
 Evaluating nothing clears stack and Ctrl+D exits.
@@ -150,6 +150,18 @@ Evaluates body on stack. Passing `_` creates a new empty stack.
 
 #### dump val+
 Dumps values to `stderr`. `val` is popped from stack if missing.
+
+#### include file+
+Includes the contents of specified files in the current compilation.
+
+The following example includes the main test suite, which prints the number if milliseconds it took to run.
+
+```
+  include "../test/run.al";
+
+39
+()
+```
 
 #### is x y z*
 Pushes `T` if all arguments are the same value, `F` otherwise. `x` and `y` are popped from stack if missing.

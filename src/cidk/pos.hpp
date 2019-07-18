@@ -1,7 +1,7 @@
 #ifndef CIDK_POS_HPP
 #define CIDK_POS_HPP
 
-#include <string>
+#include "cidk/path.hpp"
 
 namespace cidk {
   using namespace std;
@@ -9,10 +9,10 @@ namespace cidk {
   struct Pos {
     static const Pos _;
     
-    string src;
+    Path src;
     int row, col;
     
-    Pos(string src, int row=1, int col=0);
+    Pos(Path src, int row=1, int col=0);
   };
 }
 

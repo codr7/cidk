@@ -8,15 +8,18 @@
 #include "cidk/env.hpp"
 #include "cidk/env_item.hpp"
 #include "cidk/op.hpp"
-#include "cidk/types/ostream.hpp"
+#include "cidk/path.hpp"
 #include "cidk/pool.hpp"
 #include "cidk/stack.hpp"
 #include "cidk/sym.hpp"
 #include "cidk/types/fun.hpp"
 #include "cidk/types/macro.hpp"
 #include "cidk/types/meta.hpp"
+#include "cidk/types/ostream.hpp"
 
 namespace cidk {
+  namespace fs = experimental::filesystem;
+
   struct Call;
   struct BoolType;
   struct EnvType;
@@ -66,7 +69,8 @@ namespace cidk {
     Call *call;
     
     const Val _, $, T, F, eop;
-    
+
+    Path load_path;
     istream *stdin;
     ostream *stdout, *stderr;
     
@@ -76,7 +80,7 @@ namespace cidk {
     void clear_refs();
     void eval(Ops &in, Env &env, Stack &stack);
     const Sym *intern(const string &name);
-    void load(const Pos &pos, const string &path, Ops &out);
+    void load(const Pos &pos, const Path &src, Ops &out);
     void mark_refs();
     void sweep_refs(const Pos &pos);
   };

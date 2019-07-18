@@ -116,14 +116,18 @@ namespace cidk {
     return s;
   }
 
-  void Cx::load(const Pos &pos, const string &path, Ops &out) {
-    ifstream f(path);
-    if (f.fail()) { throw ESys(pos, "File not found: ", path); }
+  void Cx::load(const Pos &pos, const Path &src, Ops &out) {
+    auto fp(src.is_absolute() ? src : load_path/src);
+    ifstream f(fp);
+    if (f.fail()) { throw ESys(pos, "File not found: ", fp); }
 
-    Pos p(path);
+    Pos p(src);
     ReadState state;
     Stack stack;
+    auto prev(load_path);
+    load_path = src.parent_path();
     read_ops(p, f, state, *env_pool.get(env), stack, out);
+    load_path = prev;
   }
   
   void Cx::mark_refs() {
