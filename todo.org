@@ -1,10 +1,13 @@
 * add test bench
-** add test/abc/str/env.al
+** add test/abc/str/env/stack.al
 ** bench 10x in run.al
 * add Char type
-** char32_t
+** wchar_t
 ** add \", \\ and \n consts
 * implement Str splat
+* add len op
+** forward to type env
+** add Str/List/Env.len funs
 * add ReadState stack & Env args to load
 ** pass between loaded files in main
 ** forward args in include-op
@@ -39,8 +42,4 @@
 ** add '-reader
 * add Splice support
 ** splice list items automagically
-* add len op
-** forward to type env
-** add Str/List/Env.len funs
-
 
