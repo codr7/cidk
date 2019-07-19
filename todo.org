@@ -1,9 +1,14 @@
 * add Env.add_const_expr construct expr from op args & bind const
 ** remove macro
-* switch Fun imp to pass Cx, Pos, Fun instead of Call
+* switch FunImp to passing Cx, Pos, Fun instead of Call
 * add default add/sub/mul/div/gt/lt FunImp:s to ValType
 ** use instead of env lookup if same type
+** change BinOp to take imp instead of id
 * --
+* rename ReadState to Opts
+** add get_opts(const Ops &in, Opts &opts)
+** add ValType.get_opts
+** update Fun
 * add @ char reader
 ** read utf8
 * add Splat op
@@ -61,10 +66,19 @@ fun fib((n a b) Int)(Int) {
 }
 
 
-fun(fib (n Int) (Int)
+fun (fib (n Int) (Int)
   if n.<(2) n fib(n.-(1)).+(fib(n.-(2)))
 )
 
-fun(fib ((n a b) Int) (Int)
-  if(n.=(0) a if(n.=(1) b fib(n.-(1) b a.+(b))))
+fun (fib ((n a b) Int) (Int)
+  if (n.=(0) a if (n.=(1) b fib(n.-(1) b a.+(b))))
+)
+
+
+fun (fib (n Int) (Int)
+  if n.< 2 n fib(n.- 1).+ fib(n.- 2)
+)
+
+fun (fib ((n a b) Int) (Int)
+  if (n.= 0 a if (n.= 1 b fib(n.- 1 b a.+ b)))
 )
