@@ -7,7 +7,7 @@
 namespace cidk::ops {
   const GtType Gt("gt");
 
-  GtType::GtType(const string &id): BinOp(id) {}
+  GtType::GtType(const string &id): BinOp(id, false) {}
 
   const Sym *GtType::get_fun_id(Cx &cx) const { return cx.intern(">"); }
 }

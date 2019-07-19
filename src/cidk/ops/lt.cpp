@@ -7,7 +7,7 @@
 namespace cidk::ops {
   const LtType Lt("lt");
 
-  LtType::LtType(const string &id): BinOp(id) {}
+  LtType::LtType(const string &id): BinOp(id, false) {}
 
   const Sym *LtType::get_fun_id(Cx &cx) const { return cx.intern("<"); }
 }

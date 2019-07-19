@@ -1,5 +1,6 @@
-* add div op like mul
-** add math/int_div
+* add Env.add_const_expr construct expr from op args & bind const
+** remove macro
+* switch Fun imp to pass Cx, Pos, Fun instead of Call
 * add default add/sub/mul/div/gt/lt FunImp:s to ValType
 ** use instead of env lookup if same type
 * --
@@ -15,8 +16,6 @@
 ** pass between loaded files in main
 ** forward args in include-op
 
-* add Env.add_const_expr construct expr from op args & bind const
-** replaces macro
 * add fib_iter bench
 ** add set op
 ** add expr support like poke
@@ -51,3 +50,21 @@ fun fib(n Int)(Int) {
 fun fib((n a b) Int)(Int) {
   if n = 0 a if n = 1 b fib(n - 1, b, a + b)
 }
+
+
+fun fib(n Int)(Int) {
+  if n.<(2) n fib(n.-(1)).+(fib(n.-(2)))
+}
+
+fun fib((n a b) Int)(Int) {
+  if n.=(0) a if n.=(1) b fib(n.-(1) b a.+(b))
+}
+
+
+fun(fib (n Int) (Int)
+  if n.<(2) n fib(n.-(1)).+(fib(n.-(2)))
+)
+
+fun(fib ((n a b) Int) (Int)
+  if(n.=(0) a if(n.=(1) b fib(n.-(1) b a.+(b))))
+)

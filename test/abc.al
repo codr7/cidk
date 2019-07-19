@@ -6,11 +6,14 @@ push 7 21;
 add $ 14 $;
 assert(stack) {is 42;};
 
-sub 49 7;
+sub 56 7 7;
 assert(stack) {is 42;};
 
-mul 6 7;
+mul 2 3 7;
 assert(stack) {is 42;};
+
+div 42 2 7;
+assert(stack) {is 3;};
 
 push (1 2 3) (1 2 3);
 assert(stack) {eq;};

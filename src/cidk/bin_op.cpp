@@ -12,8 +12,8 @@ namespace cidk::ops {
     BinOpData(const Val &x, const Val &y, Fun *fun): x(x), y(y), fun(fun) {}
   };
   
-  BinOp::BinOp(const string &id, bool is_assoc):
-    OpType(id), is_assoc(is_assoc) {}
+  BinOp::BinOp(const string &id, bool is_vararg):
+    OpType(id), is_vararg(is_vararg) {}
 
   void BinOp::init(Cx &cx, Op &op, const Val &x, const Val &y, Fun *fun) const {
     op.data = BinOpData(x, y, fun);
@@ -78,7 +78,7 @@ namespace cidk::ops {
       else {
         out.emplace_back(cx, p, *this, *x, *y, f);
 
-        if (is_assoc) {
+        if (is_vararg) {
           for (;;) {
             auto z(read_val(pos, in, state, env, stack));
             if (!z) { throw ESys(p, "Missing ;"); }
