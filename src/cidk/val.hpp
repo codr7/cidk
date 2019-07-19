@@ -2,6 +2,7 @@
 #define CIDK_VAL_HPP
 
 #include "cidk/pos.hpp"
+#include "cidk/types/char.hpp"
 #include "cidk/types/int.hpp"
 
 namespace cidk {
@@ -23,6 +24,7 @@ namespace cidk {
     
     union {
       bool as_bool;
+      Char as_char;
       Env *as_env;
       Expr *as_expr;
       Fun *as_fun;

@@ -52,6 +52,7 @@ namespace cidk {
     any_type(env.add_type<Type>(Pos::_, "Any", {&a_type})),
     num_type(env.add_type<Type>(Pos::_, "Num")),
     bool_type(env.add_type<BoolType>(Pos::_, "Bool", {&any_type})),
+    char_type(env.add_type<CharType>(Pos::_, "Char", {&any_type})),
     env_type(env.add_type<EnvType>(Pos::_, "Env", {&any_type})),
     expr_type(env.add_type<ExprType>(Pos::_, "Expr", {&any_type})),
     fun_type(env.add_type<FunType>(Pos::_, "Fun", {&any_type})),

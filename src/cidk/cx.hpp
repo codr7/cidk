@@ -53,6 +53,7 @@ namespace cidk {
     Type &any_type, &num_type;
     
     BoolType &bool_type;
+    CharType &char_type;
     EnvType &env_type;
     ExprType &expr_type;
     FunType &fun_type;

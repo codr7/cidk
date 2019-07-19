@@ -6,12 +6,12 @@
 
 #include "cidk/str.hpp"
 #include "cidk/pool.hpp"
-#include "cidk/val_type.hpp"
+#include "cidk/types/char.hpp"
 
 namespace cidk {
   struct StrType: TValType<Str *> {
     Pool<Str> pool;
-    wstring_convert<codecvt_utf8<wchar_t>, wchar_t> conv;
+    wstring_convert<codecvt_utf8<Char>, Char> conv;
     
     StrType(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents);
 

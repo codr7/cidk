@@ -30,6 +30,7 @@ namespace cidk {
                          Env &env,
                          Stack &stack);
   
+  Val read_ctrl(Cx &cx, Pos &pos, istream &in);
   Val read_expr(Pos &pos, istream &in, ReadState &state, Env &env, Stack &stack);
   Val read_id(Pos &pos, istream &in, ReadState &state, Env &env, Stack &stack);
   Val read_list(Pos &pos, istream &in, ReadState &state, Env &env, Stack &stack);

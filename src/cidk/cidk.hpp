@@ -5,7 +5,7 @@
 #define CIDK_POOL_INIT 32
 
 namespace cidk {
-  const int VERSION[2] = {0, 3};
+  const int VERSION[2] = {0, 4};
 }
 
 #endif

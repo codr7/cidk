@@ -4,7 +4,7 @@
 
 namespace cidk {
   Str::Str(Cx &cx, const string &bytes):
-    Ref(cx), data(cx.str_type.conv.from_bytes(bytes.c_str())) {}
+    Ref(cx), data(cx.str_type.conv.from_bytes(bytes)) {}
 
   Str::Str(Cx &cx, wstring chars): Ref(cx), data(move(chars)) {}
 
