@@ -5,45 +5,55 @@
 #include "cidk/types/bool.hpp"
 
 namespace cidk::libs {
-  static void int_add_imp(Call &call, Env &env, Stack &stack) {
-    auto &p(call.pos);
+  static void int_add_imp(Cx &cx,
+                          const Pos &p,
+                          const Fun &f,
+                          Env &env, Stack &stack) {
     auto y(pop(p, stack));
     Val &x(stack.back());
     x.as_int += y.as_int;
   }
 
-  static void int_sub_imp(Call &call, Env &env, Stack &stack) {
-    auto &p(call.pos);
+  static void int_sub_imp(Cx &cx,
+                          const Pos &p,
+                          const Fun &f,
+                          Env &env, Stack &stack) {
     auto y(pop(p, stack));
     Val &x(stack.back());
     x.as_int -= y.as_int;
   }
 
-  static void int_mul_imp(Call &call, Env &env, Stack &stack) {
-    auto &p(call.pos);
+  static void int_mul_imp(Cx &cx,
+                          const Pos &p,
+                          const Fun &f,
+                          Env &env, Stack &stack) {
     auto y(pop(p, stack));
     Val &x(stack.back());
     x.as_int *= y.as_int;
   }
 
-  static void int_div_imp(Call &call, Env &env, Stack &stack) {
-    auto &p(call.pos);
+  static void int_div_imp(Cx &cx,
+                          const Pos &p,
+                          const Fun &f,
+                          Env &env, Stack &stack) {
     auto y(pop(p, stack));
     Val &x(stack.back());
     x.as_int /= y.as_int;
   }
 
-  static void int_lt_imp(Call &call, Env &env, Stack &stack) {
-    auto &cx(env.cx);
-    auto &p(call.pos);
+  static void int_lt_imp(Cx &cx,
+                         const Pos &p,
+                         const Fun &f,
+                         Env &env, Stack &stack) {
     auto y(pop(p, stack));
     Val &x(stack.back());
     x.reset(p, cx.bool_type, x.as_int < y.as_int);
   }
 
-  static void int_gt_imp(Call &call, Env &env, Stack &stack) {
-    auto &cx(env.cx);
-    auto &p(call.pos);
+  static void int_gt_imp(Cx &cx,
+                         const Pos &p,
+                         const Fun &f,
+                         Env &env, Stack &stack) {
     auto y(pop(p, stack));
     Val &x(stack.back());
     x.reset(p, cx.bool_type, x.as_int > y.as_int);

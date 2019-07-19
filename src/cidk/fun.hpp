@@ -5,6 +5,7 @@
 
 #include "cidk/arg.hpp"
 #include "cidk/def.hpp"
+#include "cidk/fimp.hpp"
 #include "cidk/ops.hpp"
 #include "cidk/read_state.hpp"
 #include "cidk/stack.hpp"
@@ -15,11 +16,9 @@ namespace cidk {
   struct Pos;
   
   struct Fun: Def {
-    using Imp = function<void (Call &, Env &, Stack &)>;
-
     Env &env;
     ArgList args;
-    Imp imp;
+    Fimp imp;
     Ops body;
     IdSet body_ids;
     ReadState body_opts;
@@ -30,7 +29,7 @@ namespace cidk {
         const Sym *id,
         const ArgsT &args,
         const RetsT &rets,
-        Imp imp = nullptr);
+        Fimp imp = nullptr);
 
     void mark();
     virtual void sweep(Cx &cx, const Pos &pos) override;

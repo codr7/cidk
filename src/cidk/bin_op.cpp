@@ -42,7 +42,7 @@ namespace cidk::ops {
       f = fv.as_fun;
     }
     
-    Call(p, *f).eval(env, stack);
+    Call(p, *f).eval(cx, env, stack);
   }
 
   void BinOp::get_ids(const Op &op, IdSet &out) const {

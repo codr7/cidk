@@ -1,7 +1,7 @@
 * switch FunImp to passing Cx, Pos, Fun instead of Call
-* add default add/sub/mul/div/gt/lt FunImp:s to ValType
+* add add/sub/mul/div/gt/lt fimps to ValType
 ** use instead of env lookup if same type
-** change BinOp to take imp instead of id
+*** change BinOp to take id and fimp
 * --
 * rename ReadState to Opts
 ** add cx.compile(Ops &in, Opts &opts)

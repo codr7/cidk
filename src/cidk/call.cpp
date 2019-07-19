@@ -4,8 +4,7 @@
 #include "cidk/expr.hpp"
 
 namespace cidk {  
-  Call::Call(const Pos &pos, Fun &fun):
-    pos(pos), prev(fun.cx.call), fun(fun) {
+  Call::Call(const Pos &pos, Fun &fun): pos(pos), prev(fun.cx.call), fun(fun) {
     fun.cx.call = this;
   }
 
@@ -15,11 +14,10 @@ namespace cidk {
     c = prev;
   }
 
-  void Call::eval(Env &env, Stack &stack) {
-    Cx &cx(env.cx);
+  void Call::eval(Cx &cx, Env &env, Stack &stack) {
     auto imp(fun.imp);
     
-    if (imp) { imp(*this, env, stack); }
+    if (imp) { imp(cx, pos, fun, env, stack); }
     else {
       const ReadState &opt(fun.body_opts);
       Env &e(opt.env_extend ? *cx.env_pool.get(fun.env) : fun.env);

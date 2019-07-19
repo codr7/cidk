@@ -133,7 +133,7 @@ namespace cidk {
            const Sym *id,
            const ArgsT &args,
            const RetsT &rets,
-           Imp imp):
+           Fimp imp):
     Def(cx, pos, id), env(*cx.env_pool.get(cx)), imp(imp) {
     for (auto a: args) {
       if (!a.id) { a.id = cx.intern(a.id_name); }

@@ -22,10 +22,9 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  static void Bool_imp(Call &call, Env &env, Stack &stack) {
-    auto &cx(env.cx);
+  static void Bool_imp(Cx &cx, const Pos &p, const Fun &f, Env &env, Stack &stack) {
     auto &v(stack.back());
-    v.reset(call.pos, cx.bool_type, v.get_bool());
+    v.reset(p, cx.bool_type, v.get_bool());
   }
   
   Cx::Cx():

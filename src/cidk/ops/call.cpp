@@ -19,7 +19,7 @@ namespace cidk::ops {
     auto f(pop(p, stack));
     Type *ft(f.type);
     if (ft != &cx.fun_type) { throw ESys(p, "Invalid call target: ", ft->id); }
-    cidk::Call(op.pos, *f.as_fun).eval(env, stack);
+    cidk::Call(op.pos, *f.as_fun).eval(cx, env, stack);
   }
 
   void CallType::get_ids(const Op &op, IdSet &out) const {
