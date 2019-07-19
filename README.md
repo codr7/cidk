@@ -13,7 +13,7 @@ defun fib(n Int)(Int) {
 ```
 
 ### Intro
-Welcome to cidk! This project aims to implement a virtual stack machine devkit with an integrated high-level assembler in C++.
+Welcome to cidk! This project aims to implement a virtual stack machine devkit with integrated assembler in C++.
 
 ### Setup
 cidk requires CMake and a C++17-capable compiler to build.
@@ -68,13 +68,6 @@ Adds arguments and pushes result. `x` and `y` are popped from stack if missing.
 
 #### call fun+
 Calls functions in specified order. `fun` is popped from stack if missing.
-
-```
-  push 7 14;
-  call <;
-
-(... T)
-```
 
 #### cp [offs 1] [len 1]
 Copies `nvals` items starting at `offs` to end of stack.

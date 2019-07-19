@@ -1,10 +1,13 @@
+* add Splat op
+** vararg like Push
+** implement Str splat
+** call splat on eval
 * add Char type
 ** wchar_t
 ** add \", \\ and \n consts
 ** use @ for regular chars
 *** add reader @a
 *** read utf8
-* implement Str splat
 * add len op
 ** forward to type env
 ** add Str/List/Env.len funs
