@@ -21,7 +21,7 @@ namespace cidk {
       break;
     default:
       wchar_t in[2] {val.as_char, 0};
-      out << cx.str_type.conv.to_bytes(in);
+      out << '@' << cx.str_type.conv.to_bytes(in);
     }
   }
 
