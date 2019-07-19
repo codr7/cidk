@@ -1,4 +1,8 @@
-* implement Str splat
+* add div op like mul
+** add math/int_div
+* add default add/sub/mul/div/gt/lt FunImp:s to ValType
+** use instead of env lookup if same type
+* --
 * add @ char reader
 ** read utf8
 * add Splat op
@@ -21,8 +25,6 @@
 * simplify read_eop()
 ** use skip_ws/get/unget instead
 * remove typed Val constructor Pos arg
-* add div op like mul
-** add math/int_div
 * add mod op like mul
 ** add math/int_mod
 * add stack type inference
@@ -42,3 +44,10 @@
 * add Splice support
 ** splice list items automagically
 
+fun fib(n Int)(Int) {
+  if n < 2 n {fib(n - 1) + fib(n - 2)}
+}
+
+fun fib((n a b) Int)(Int) {
+  if n = 0 a if n = 1 b fib(n - 1, b, a + b)
+}
