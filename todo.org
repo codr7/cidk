@@ -6,9 +6,16 @@
 ** change BinOp to take imp instead of id
 * --
 * rename ReadState to Opts
-** add get_opts(const Ops &in, Opts &opts)
-** add ValType.get_opts
-** update Fun
+** add cx.compile(Ops &in, Opts &opts)
+*** add OpType.compile(Cx &cx, Op &op, Env &env, Stack &stack, Opts &opts, Ops &out)
+*** call to compile Fun body
+** add Opts, Stack & Env args to Cx.load
+*** pass to compile
+*** pass between loaded files in main
+*** forward args in include-op
+* skip stack arg to op readers
+* remove Env/Def.cx
+** pass args instead
 * add @ char reader
 ** read utf8
 * add Splat op
@@ -17,15 +24,9 @@
 * add len op
 ** forward to type env
 ** add Str/List/Env.len funs
-* add ReadState stack & Env args to load
-** pass between loaded files in main
-** forward args in include-op
-
 * add fib_iter bench
 ** add set op
 ** add expr support like poke
-* remove Env/Def.cx
-** pass args instead
 * simplify read_eop()
 ** use skip_ws/get/unget instead
 * remove typed Val constructor Pos arg
@@ -48,37 +49,11 @@
 * add Splice support
 ** splice list items automagically
 
-fun fib(n Int)(Int) {
-  if n < 2 n {fib(n - 1) + fib(n - 2)}
-}
-
-fun fib((n a b) Int)(Int) {
-  if n = 0 a if n = 1 b fib(n - 1, b, a + b)
-}
-
-
-fun fib(n Int)(Int) {
-  if n.<(2) n fib(n.-(1)).+(fib(n.-(2)))
-}
-
-fun fib((n a b) Int)(Int) {
-  if n.=(0) a if n.=(1) b fib(n.-(1) b a.+(b))
-}
-
-
-fun (fib (n Int) (Int)
-  if n.<(2) n fib(n.-(1)).+(fib(n.-(2)))
-)
-
-fun (fib ((n a b) Int) (Int)
-  if (n.=(0) a if (n.=(1) b fib(n.-(1) b a.+(b))))
-)
-
-
-fun (fib (n Int) (Int)
+fun (fib (n Int) Int
   if n.< 2 n fib(n.- 1).+ fib(n.- 2)
 )
 
-fun (fib ((n a b) Int) (Int)
-  if (n.= 0 a if (n.= 1 b fib(n.- 1 b a.+ b)))
+fun (fib ((n a b) Int) Int
+  if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
+
