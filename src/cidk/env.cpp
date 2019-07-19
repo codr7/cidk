@@ -39,6 +39,10 @@ namespace cidk {
     add(pos, id, v, false);
   }
 
+  void Env::add_const_expr(Cx &cx, const Pos &pos, const string &id, const Ops &ops) {
+    add_const(pos, id, Val(pos, cx.expr_type, cx.expr_type.pool.get(cx, ops)));
+  }
+
   void Env::add_var(const Pos &pos, const string &id, const Val &val) {
     set(Pos::_, cx.intern(id), val, false);
   }

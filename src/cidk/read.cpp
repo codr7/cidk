@@ -8,7 +8,6 @@
 #include "cidk/str.hpp"
 #include "cidk/types/expr.hpp"
 #include "cidk/types/list.hpp"
-#include "cidk/types/macro.hpp"
 #include "cidk/types/pop.hpp"
 #include "cidk/types/str.hpp"
 #include "cidk/types/sym.hpp"
@@ -162,14 +161,6 @@ namespace cidk {
     if (i) {
       Val &v(i->val);
       if (v.type->is_const) { return v.clone(p, v); }
-
-      if (v.type == &cx.macro_type) {
-        auto &et(cx.expr_type);
-        Expr *e(et.pool.get(cx));
-        v.as_macro->call(pos, in, env, stack, e->body);
-        return Val(p, cx.expr_type, e);
-      }
-
       return v;
     }
     

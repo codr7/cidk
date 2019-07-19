@@ -11,7 +11,6 @@ namespace cidk {
   struct Expr;
   struct Fun;
   struct List;
-  struct Macro;
   struct OStream;
   struct Str;
   struct ValType;
@@ -30,7 +29,6 @@ namespace cidk {
       Fun *as_fun;
       Int as_int;
       List *as_list;
-      Macro *as_macro;
       OStream *as_ostream;
       Str *as_str;
       const Sym *as_sym;

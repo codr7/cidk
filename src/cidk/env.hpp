@@ -5,6 +5,7 @@
 
 #include "cidk/arg.hpp"
 #include "cidk/ls.hpp"
+#include "cidk/ops.hpp"
 #include "cidk/ref.hpp"
 #include "cidk/stack.hpp"
 #include "cidk/sym.hpp"
@@ -14,7 +15,6 @@ namespace cidk {
 
   struct EnvItem;
   struct Fun;
-  struct Macro;
   struct Pos;
   struct Sym;
   struct Type;
@@ -36,7 +36,8 @@ namespace cidk {
     bool add(const Pos &pos, const Sym *key, const Val &val, bool silent);
     void add_const(const Pos &pos, const string &id, const Val &val);
     void add_const(const Pos &pos, const Sym *id, const Val &val);
-
+    void add_const_expr(Cx &cx, const Pos &pos, const string &id, const Ops &ops);
+                        
     template <typename...Rest>
     Fun &add_fun(const Pos &pos,
                  const string &id,
@@ -50,9 +51,6 @@ namespace cidk {
                  const vector<Arg> &args,
                  const vector<Ret> &rets,
                  Rest &&...rest);
-
-    template <typename...Rest>
-    Macro &add_macro(const Pos &pos, const string &id, Rest &&...rest);
 
     template <typename TypeT, typename...Rest>
     TypeT &add_type(const Pos &pos,

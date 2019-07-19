@@ -1,5 +1,3 @@
-* add Env.add_const_expr construct expr from op args & bind const
-** remove macro
 * switch FunImp to passing Cx, Pos, Fun instead of Call
 * add default add/sub/mul/div/gt/lt FunImp:s to ValType
 ** use instead of env lookup if same type

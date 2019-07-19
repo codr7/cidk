@@ -13,7 +13,6 @@
 #include "cidk/stack.hpp"
 #include "cidk/sym.hpp"
 #include "cidk/types/fun.hpp"
-#include "cidk/types/macro.hpp"
 #include "cidk/types/meta.hpp"
 #include "cidk/types/ostream.hpp"
 
@@ -59,7 +58,6 @@ namespace cidk {
     FunType &fun_type;
     IntType &int_type;
     ListType &list_type;
-    MacroType &macro_type;
     OStreamType &ostream_type;
     PopType &pop_type;
     StrType &str_type;
@@ -105,19 +103,6 @@ namespace cidk {
     Fun *f(ft.pool.get(cx, pos, id, args, rets, forward<Rest>(rest)...));
     set(pos, f->id, Val(pos, ft, f), false);
     return *f;
-  }
-
-  template <typename...Rest>
-  Macro &Env::add_macro(const Pos &pos, const string &id, Rest &&...rest) {
-    auto &t(cx.macro_type);
-    
-    Macro *m(t.pool.get(cx,
-                        pos,
-                        cx.intern(id),
-                        forward<Rest>(rest)...));
-    
-    set(pos, m->id, Val(pos, t, m), false);
-    return *m;
   }
 
   template <typename TypeT, typename...Rest>

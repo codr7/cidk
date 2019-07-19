@@ -22,20 +22,6 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  static void env_imp(Pos &pos,
-                      const Macro &m,
-                      istream &in,
-                      Env &env,
-                      Stack &stack,
-                      Ops &out) { out.emplace_back(env.cx, pos, ops::Env); }
-
-  static void stack_imp(Pos &pos,
-                        const Macro &m,
-                        istream &in,
-                        Env &env,
-                        Stack &stack,
-                        Ops &out) { out.emplace_back(env.cx, pos, ops::Stash); }
-
   static void Bool_imp(Call &call, Env &env, Stack &stack) {
     auto &cx(env.cx);
     auto &v(stack.back());
@@ -58,7 +44,6 @@ namespace cidk {
     fun_type(env.add_type<FunType>(Pos::_, "Fun", {&any_type})),
     int_type(env.add_type<IntType>(Pos::_, "Int", {&any_type, &num_type})),
     list_type(env.add_type<ListType>(Pos::_, "List", {&any_type})),
-    macro_type(env.add_type<MacroType>(Pos::_, "Macro", {&any_type})),
     ostream_type(env.add_type<OStreamType>(Pos::_, "OStream", {&any_type})),
     pop_type(env.add_type<PopType>(Pos::_, "Pop", {&any_type})),
     str_type(env.add_type<StrType>(Pos::_, "Str", {&any_type})),
@@ -77,8 +62,8 @@ namespace cidk {
     env.add_const(Pos::_, "T", T);
     env.add_const(Pos::_, "F", F);
     
-    env.add_macro(Pos::_, "env", env_imp);
-    env.add_macro(Pos::_, "stack", stack_imp);
+    env.add_const_expr(*this, Pos::_, "env", {Op(*this, Pos::_, ops::Env)});
+    env.add_const_expr(*this, Pos::_, "stack", {Op(*this, Pos::_, ops::Stash)});
     
     env.add_fun(Pos::_, "Bool", {Arg("val")}, {Ret(bool_type)}, Bool_imp);
   }
