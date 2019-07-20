@@ -22,6 +22,13 @@ namespace cidk {
     return cp(dst, src);
   }
 
+  void ValType::compile(Cx &cx,
+                        const Pos &pos,
+                        Val &val,
+                        Env &env,
+                        Stack &stack,
+                        Opts *opts) const {}
+
   bool ValType::eq(const Pos &pos, const Val &x, const Val &y) const {
     return is(x, y);
   }

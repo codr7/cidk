@@ -19,7 +19,7 @@ namespace cidk {
     
     if (imp) { imp(cx, pos, fun, env, stack); }
     else {
-      const ReadState &opt(fun.body_opts);
+      const Opts &opt(fun.body_opts);
       Env &e(opt.env_extend ? *cx.env_pool.get(fun.env) : fun.env);
     recall:
       cx.eval(fun.body, e, stack);

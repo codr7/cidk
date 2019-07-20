@@ -23,6 +23,15 @@ namespace cidk {
 
   void ListType::cp(Val &dst, const Val &src) const { dst.as_list = src.as_list; }
 
+  void ListType::compile(Cx &cx,
+                         const Pos &pos,
+                         Val &val,
+                         Env &env,
+                         Stack &stack,
+                         Opts *opts) const {
+    for (auto &v: val.as_list->items) { v.compile(cx, pos, env, stack, opts); }
+  }
+  
   void ListType::dump(const Val &val, ostream &out) const {
     out << '(';
     char sep(0);

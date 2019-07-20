@@ -11,6 +11,15 @@ namespace cidk {
 
   void ExprType::cp(Val &dst, const Val &src) const { dst.as_expr = src.as_expr; }
 
+  void ExprType::compile(Cx &cx,
+                         const Pos &pos,
+                         Val &val,
+                         Env &env,
+                         Stack &stack,
+                         Opts *opts) const {
+    cx.compile(val.as_expr->body, opts, env, stack);
+  }
+
   void ExprType::dump(const Val &val, ostream &out) const {    
     out << "expr:" << val.as_expr;
   }

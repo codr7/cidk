@@ -6,6 +6,7 @@
 #include <string>
 
 #include "cidk/ops.hpp"
+#include "cidk/opts.hpp"
 #include "cidk/pos.hpp"
 #include "cidk/stack.hpp"
 #include "cidk/sym.hpp"
@@ -17,11 +18,18 @@ namespace cidk {
   struct Env;
   struct Op;
   struct Pos;
-  struct ReadState;
   
   struct OpType {    
     string id;
     OpType(const string &id);
+
+    virtual void compile(Cx &cx,
+                         Op &op,
+                         Env &env,
+                         Stack &stack,
+                         Ops &out,
+                         Opts *opts) const;
+
     virtual void eval(Op &op, Env &env, Stack &stack) const;
     virtual void get_ids(const Op &op, IdSet &out) const;
     virtual void mark_refs(Op &op) const;
@@ -29,7 +37,6 @@ namespace cidk {
     virtual void read(Cx &cx, 
                       Pos &pos, 
                       istream &in,
-                      ReadState &state,
                       Env &env,
                       Stack &stack,
                       Ops &out) const = 0;
@@ -53,6 +60,7 @@ namespace cidk {
     template <typename T>
     const T &as() const { return any_cast<const T &>(data); }
 
+    void compile(Cx &cx, Env &env, Stack &stack, Ops &out, Opts *opts);
     void eval(Env &env, Stack &stack);
     void get_ids(IdSet &out) const;
     void mark_refs();

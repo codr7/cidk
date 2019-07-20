@@ -27,9 +27,10 @@ $ cd build
 $ cmake ..
 $ make
 $ ./cidk ../test/run.al
+39
 ()
 $ rlwrap ./cidk
-cidk v0.4
+cidk v0.5
 
 Press Return on empty row to evaluate.
 Evaluating nothing clears stack and Ctrl+D exits.
@@ -100,7 +101,7 @@ Passing `T` starts at the beginning and/or copies to end.
 Defines compile time constants for pairs of ids and values. `id` and `val` are popped from stack if missing.
 
 ```
-  do-env {
+  do-env _ {
     defconst foo 35 bar 7;
     push foo bar;
     add;

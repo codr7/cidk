@@ -14,7 +14,6 @@ namespace cidk::ops {
   void MarkType::read(Cx &cx,
                      Pos &pos,
                      istream &in,
-                     ReadState &state,
                      Env &env,
                      Stack &stack,
                      Ops &out) const {

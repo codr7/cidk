@@ -22,6 +22,18 @@ namespace cidk::ops {
     op.data = AssertData(args, body);
   }
 
+  void AssertType::compile(Cx &cx,
+                           Op &op,
+                           Env &env,
+                           Stack &stack,
+                           Ops &out,
+                           Opts *opts) const {
+    auto &d(op.as<AssertData>());
+    d.args.compile(cx, op.pos, env, stack, opts);
+    d.body.compile(cx, op.pos, env, stack, opts);
+    out.push_back(op);
+  }
+
   void AssertType::eval(Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
     const Pos &p(op.pos);
@@ -58,18 +70,17 @@ namespace cidk::ops {
   void AssertType::read(Cx &cx,
                         Pos &pos,
                         istream &in,
-                        ReadState &state,
                         Env &env,
                         Stack &stack,
                         Ops &out) const {
     Pos p(pos);
-    auto args(read_val(pos, in, state, env, stack));
+    auto args(read_val(pos, in, env, stack));
 
     if (args->type != &cx.list_type) {
       throw ESys(p, "Expected List, was: ", args->type->id);
     }
 
-    auto body(read_val(pos, in, state, env, stack));
+    auto body(read_val(pos, in, env, stack));
     read_eop(pos, in, env, stack);
     out.emplace_back(cx, pos, *this, *args, *body);
   }

@@ -77,9 +77,17 @@ namespace cidk {
 
     void deinit();
     void clear_refs();
+    void compile(Ops &ops, Opts *opts, Env &env, Stack &stack);
     void eval(Ops &in, Env &env, Stack &stack);
     const Sym *intern(const string &name);
-    void load(const Pos &pos, const Path &src, Ops &out);
+
+    void load(const Pos &pos,
+              const Path &src,
+              Env &env,
+              Stack &stack,              
+              Ops &out,
+              Opts *opts);
+    
     void mark_refs();
     void sweep_refs(const Pos &pos);
   };
@@ -135,6 +143,7 @@ namespace cidk {
            const RetsT &rets,
            Fimp imp):
     Def(cx, pos, id), env(*cx.env_pool.get(cx)), imp(imp) {
+
     for (auto a: args) {
       if (!a.id) { a.id = cx.intern(a.id_name); }
       this->args.items.push_back(a);

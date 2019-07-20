@@ -8,10 +8,18 @@ namespace cidk::ops {
   struct IncludeType: OpType {
     IncludeType(const string &id);
 
+    void init(Cx &cx, Op &op, string val) const;
+
+    virtual void compile(Cx &cx,
+                         Op &op,
+                         Env &env,
+                         Stack &stack,
+                         Ops &out,
+                         Opts *opts) const override;
+
     virtual void read(Cx &cx,
                       Pos &pos,
                       istream &in,
-                      ReadState &state,
                       Env &env,
                       Stack &stack,
                       Ops &out) const override;

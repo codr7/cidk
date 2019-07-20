@@ -11,6 +11,13 @@ namespace cidk {
 
     ExprType(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents);
     
+    virtual void compile(Cx &cx,
+                         const Pos &pos,
+                         Val &val,
+                         Env &env,
+                         Stack &stack,
+                         Opts *opts) const override;
+
     virtual void cp(Val &dst, const Val &src) const override;
     virtual void dump(const Val &val, ostream &out) const override;
 

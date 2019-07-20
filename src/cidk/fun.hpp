@@ -7,7 +7,7 @@
 #include "cidk/def.hpp"
 #include "cidk/fimp.hpp"
 #include "cidk/ops.hpp"
-#include "cidk/read_state.hpp"
+#include "cidk/opts.hpp"
 #include "cidk/stack.hpp"
 
 namespace cidk {
@@ -21,7 +21,7 @@ namespace cidk {
     Fimp imp;
     Ops body;
     IdSet body_ids;
-    ReadState body_opts;
+    Opts body_opts;
     
     template <typename ArgsT, typename RetsT>
     Fun(Cx &cx,

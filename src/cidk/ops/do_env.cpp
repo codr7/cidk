@@ -4,6 +4,7 @@
 #include "cidk/read.hpp"
 #include "cidk/types/bool.hpp"
 #include "cidk/types/env.hpp"
+#include "cidk/types/expr.hpp"
 #include "cidk/types/nil.hpp"
 #include "cidk/types/pop.hpp"
 
@@ -20,7 +21,27 @@ namespace cidk::ops {
   void DoEnvType::init(Cx &cx, Op &op, const Val &in, const Val &body) const {
     op.data = DoEnvData(in, body);
   }
-  
+
+  void DoEnvType::compile(Cx &cx,
+                          Op &op,
+                          Env &env,
+                          Stack &stack,
+                          Ops &out,
+                          Opts *opts) const {
+    auto &d(op.as<DoEnvData>());
+    d.in.compile(cx, op.pos, env, stack, opts);
+    Env *de(&env);
+    
+    if (d.in.type == &cx.nil_type) {
+      de = env.cx.env_pool.get(cx);
+    } else if (d.in.type == &cx.bool_type && d.in.as_bool) {
+      de = env.cx.env_pool.get(env);
+    }
+
+    d.body.compile(cx, op.pos, *de, stack, opts);
+    out.push_back(op);
+  }
+
   void DoEnvType::eval(Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
     const Pos &p(op.pos);
@@ -53,21 +74,22 @@ namespace cidk::ops {
   }
 
   void DoEnvType::read(Cx &cx, Pos &pos,
-                      istream &in,
-                      ReadState &state,
-                      Env &env,
-                      Stack &stack,
-                      Ops &out) const {
+                       istream &in,
+                       Env &env,
+                       Stack &stack,
+                       Ops &out) const {
     Pos p(pos);
-    auto _in(read_val(pos, in, state, env, stack));
+    auto _in(read_val(pos, in, env, stack));
     if (!_in) { throw ESys(p, "Missing do-env input"); }
 
-    state.env_depth++;
-    auto body(read_val(pos, in, state, *env.cx.env_pool.get(env), stack));
+    auto body(read_val(pos, in, *env.cx.env_pool.get(env), stack));
     if (!body) { throw ESys(p, "Missing do-env body"); }
-    state.env_depth--;
+
+    if (body->type != &cx.expr_type) {
+      throw ESys(p, "Expected Expr, was: ", body->type->id);
+    }
+    
     read_eop(pos, in, env, stack);
-    if (!state.env_depth) { state.env_escape = true; }
     out.emplace_back(cx, p, *this, *_in, *body);
   }
 }

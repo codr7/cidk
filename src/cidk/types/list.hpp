@@ -13,6 +13,14 @@ namespace cidk {
 
     virtual void clone(const Pos &pos, Val &dst, const Val &src) const override;
     virtual void cp(Val &dst, const Val &src) const override;
+
+    virtual void compile(Cx &cx,
+                         const Pos &pos,
+                         Val &val,
+                         Env &env,
+                         Stack &stack,
+                         Opts *opts) const override;
+
     virtual void dump(const Val &val, ostream &out) const override;
     virtual bool eq(const Pos &pos, const Val &x, const Val &y) const override;
 

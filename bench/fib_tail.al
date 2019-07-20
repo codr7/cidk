@@ -30,16 +30,16 @@ dump;
 
 defun fib3((_ a b) A)(A) {
   cp;
-    
+
   if $ {
     cp;
-      
+
     if {is 1;} {
       poke b;
     } {
       dec; 
       push b; 
-      add a b; 
+      add a b;
       recall;
     };
   } {

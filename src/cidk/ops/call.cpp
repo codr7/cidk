@@ -11,15 +11,23 @@ namespace cidk::ops {
   CallType::CallType(const string &id): OpType(id) {}
 
   void CallType::init(Cx &cx, Op &op, const Val &target) const { op.data = target; }
-  
+
+  void CallType::compile(Cx &cx,
+                         Op &op,
+                         Env &env,
+                         Stack &stack,
+                         Ops &out,
+                         Opts *opts) const {
+    Val &f(op.as<Val>());
+    f.compile(cx, op.pos, env, stack, opts);
+    Type *ft(f.type);
+    if (ft != &cx.fun_type) { throw ESys(op.pos, "Invalid call target: ", ft->id); }
+    out.push_back(op);
+  }
+
   void CallType::eval(Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
-    const Pos &p(op.pos);
-    op.as<Val>().eval(p, env, stack);
-    auto f(pop(p, stack));
-    Type *ft(f.type);
-    if (ft != &cx.fun_type) { throw ESys(p, "Invalid call target: ", ft->id); }
-    cidk::Call(op.pos, *f.as_fun).eval(cx, env, stack);
+    cidk::Call(op.pos, *op.as<Val>().as_fun).eval(cx, env, stack);
   }
 
   void CallType::get_ids(const Op &op, IdSet &out) const {
@@ -30,7 +38,6 @@ namespace cidk::ops {
 
   void CallType::read(Cx &cx, Pos &pos,
                       istream &in,
-                      ReadState &state,
                       Env &env,
                       Stack &stack,
                       Ops &out) const {
@@ -38,21 +45,9 @@ namespace cidk::ops {
     int n(0);
     
     for (;; n++) {
-      auto v(read_val(pos, in, state, env, stack));
+      auto v(read_val(pos, in, env, stack));
       if (!v) { throw ESys(p, "Missing ;"); }
       if (v->is_eop()) { break; }
-
-      if (v->type != &cx.pop_type) {
-        v->eval(p, env, stack);
-        Val fv(pop(p, stack));
-      
-        if (fv.type != &cx.fun_type) {
-          throw ESys(p, "Invalid call target: ", fv.type->id);
-        }
-
-        v.emplace(fv);
-      }
-
       out.emplace_back(cx, p, *this, *v);
     }
 

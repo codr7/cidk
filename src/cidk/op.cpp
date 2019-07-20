@@ -10,11 +10,22 @@ namespace cidk {
     Op::types().emplace(id, this);
   }
 
+  void OpType::compile(Cx &cx,
+                       Op &op,
+                       Env &env,
+                       Stack &stack,
+                       Ops &out,
+                       Opts *opts) const { out.push_back(op); }
+
   void OpType::eval(Op &op, Env &env, Stack &stack) const {}
 
   void OpType::get_ids(const Op &op, IdSet &out) const {}
 
   void OpType::mark_refs(Op &op) const {}
+
+  void Op::compile(Cx &cx, Env &env, Stack &stack, Ops &out, Opts *opts) {
+    type->compile(cx, *this, env, stack, out, opts);
+  }
 
   void Op::eval(Env &env, Stack &stack) { type->eval(*this, env, stack); }
 

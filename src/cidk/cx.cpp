@@ -101,17 +101,27 @@ namespace cidk {
     return s;
   }
 
-  void Cx::load(const Pos &pos, const Path &src, Ops &out) {
+  void Cx::compile(Ops &ops, Opts *opts, Env &env, Stack &stack) {
+    Ops tmp;
+    for (auto &op: ops) { op.compile(*this, env, stack, tmp, opts); }
+    swap(ops, tmp);
+  }
+  
+  void Cx::load(const Pos &pos,
+                const Path &src,
+                Env &env,
+                Stack &stack,
+                Ops &out,
+                Opts *opts) {
     auto fp(src.is_absolute() ? src : load_path/src);
     ifstream f(fp);
     if (f.fail()) { throw ESys(pos, "File not found: ", fp); }
 
     Pos p(src);
-    ReadState state;
-    Stack stack;
     auto prev(load_path);
     load_path = src.parent_path();
-    read_ops(p, f, state, *env_pool.get(env), stack, out);
+    read_ops(p, f, env, stack, out);
+    compile(out, opts, env, stack);
     load_path = prev;
   }
   

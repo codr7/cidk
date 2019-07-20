@@ -51,7 +51,7 @@ do-env _ {
   assert(foo) {is foo 42;};
 };
 
-do-env _ {
+do-env T {
   defconst foo 42;
   do-env T {assert(foo) {is foo 42;};};
 };
@@ -67,14 +67,14 @@ assert(stack) {is 42;};
 if F 42 7;
 assert(stack) {is 7;};
 
-do-env _ {
+do-env T {
   defun foo(_ Int)(Int) { cp; add; };
   push 21;
   call foo;
   assert(stack) {is 42;};
 };
 
-do-env _ {
+do-env T {
   defun foo(_ Int)() { dec; cp; if $ {recall;} _; };
   push 42;
   call foo;

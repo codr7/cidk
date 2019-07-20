@@ -10,6 +10,14 @@ namespace cidk::ops {
     
     BinOp(const string &id, bool is_vararg);
     void init(Cx &cx, Op &op, const Val &x, const Val &y, Fun *f) const;
+
+    virtual void compile(Cx &cx,
+                         Op &op,
+                         Env &env,
+                         Stack &stack,
+                         Ops &out,
+                         Opts *opts) const override;
+
     virtual void eval(Op &op, Env &env, Stack &stack) const override;
     virtual const Sym *get_fun_id(Cx &cx) const = 0;
     virtual void get_ids(const Op &op, IdSet &out) const override;
@@ -18,7 +26,6 @@ namespace cidk::ops {
     virtual void read(Cx &cx,
                       Pos &pos,
                       istream &in,
-                      ReadState &state,
                       Env &env,
                       Stack &stack,
                       Ops &out) const override;

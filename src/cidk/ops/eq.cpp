@@ -18,6 +18,18 @@ namespace cidk::ops {
     op.data = EqData(x, y);
   }
 
+  void EqType::compile(Cx &cx,
+                        Op &op,
+                        Env &env,
+                        Stack &stack,
+                        Ops &out,
+                        Opts *opts) const {
+    auto &d(op.as<EqData>());
+    d.x.compile(cx, op.pos, env, stack, opts);
+    d.y.compile(cx, op.pos, env, stack, opts);
+    out.push_back(op);
+  }
+
   void EqType::eval(Op &op, Env &env, Stack &stack) const {
     const Pos &p(op.pos);
     const EqData &d(op.as<EqData>());
@@ -43,12 +55,11 @@ namespace cidk::ops {
   void EqType::read(Cx &cx,
                     Pos &pos,
                     istream &in,
-                    ReadState &state,
                     Env &env,
                     Stack &stack,
                     Ops &out) const {
     Pos p(pos);
-    auto x(read_val(pos, in, state, env, stack));
+    auto x(read_val(pos, in, env, stack));
     if (!x) { throw ESys(p, "Missing ;"); }
 
     if (x->is_eop()) {
@@ -59,7 +70,7 @@ namespace cidk::ops {
     int n(0);
     
     for (;; n++) {
-      auto y(read_val(pos, in, state, env, stack));
+      auto y(read_val(pos, in, env, stack));
       if (!y) { throw ESys(p, "Missing ;"); }
       if (y->is_eop()) { break; }
       out.emplace_back(cx, p, *this, *x, *y);

@@ -20,6 +20,19 @@ namespace cidk::ops {
     op.data = DecData(n, delta);
   }
 
+  void DecType::compile(Cx &cx,
+                        Op &op,
+                        Env &env,
+                        Stack &stack,
+                        Ops &out,
+                        Opts *opts) const {
+    auto &d(op.as<DecData>());
+    d.n.compile(cx, op.pos, env, stack, opts);
+    d.delta.compile(cx, op.pos, env, stack, opts);
+    out.push_back(op);
+  }
+
+  
   void DecType::eval(Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
     const Pos &p(op.pos);
@@ -33,7 +46,7 @@ namespace cidk::ops {
     
     if (d.n.type == &cx.pop_type) {
       Val &n(stack.back());
-
+      
       if (n.type != &cx.int_type) {
         throw ESys(p, "Expected Int, was: ", n.type->id);
       }
@@ -42,14 +55,14 @@ namespace cidk::ops {
     } else if (d.n.type == &cx.int_type) {
       stack.emplace_back(p, cx.int_type, d.n.as_int - delta.as_int);
     } else if (d.n.type == &cx.sym_type) {
-      Val &n(env.get_item(p, d.n.as_sym).val);
+      env.get_item(p, d.n.as_sym).val.eval(p, env, stack);
+      Val &n(stack.back());
       
       if (n.type != &cx.int_type) {
         throw ESys(p, "Expected Int, was: ", n.type->id);
       }
 
       n.as_int -= delta.as_int;
-      stack.push_back(n);
     } else {
       throw ESys(p, "Expected Int|Sym, was: ", d.n.type->id);
     }
@@ -70,18 +83,17 @@ namespace cidk::ops {
   void DecType::read(Cx &cx,
                      Pos &pos,
                      istream &in,
-                     ReadState &state,
                      Env &env,
                      Stack &stack,
                      Ops &out) const {
     Pos p(pos);
-    auto n(read_val(pos, in, state, env, stack));
+    auto n(read_val(pos, in, env, stack));
     if (!n) { throw ESys(p, "Missing ;"); }
     Val one(p, cx.int_type, Int(1));
     
     if (n->is_eop()) { out.emplace_back(cx, p, *this, cx.$, one); }
     else {
-      auto delta(read_val(pos, in, state, env, stack));
+      auto delta(read_val(pos, in, env, stack));
       if (!delta) { throw ESys(p, "Missing ;"); }
       
       if (delta->is_eop()) { out.emplace_back(cx, p, *this, *n, one); }

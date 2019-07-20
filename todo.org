@@ -1,17 +1,4 @@
-* switch FunImp to passing Cx, Pos, Fun instead of Call
-* add add/sub/mul/div/gt/lt fimps to ValType
-** use instead of env lookup if same type
-*** change BinOp to take id and fimp
-* --
-* rename ReadState to Opts
-** add cx.compile(Ops &in, Opts &opts)
-*** add OpType.compile(Cx &cx, Op &op, Env &env, Stack &stack, Opts &opts, Ops &out)
-*** call to compile Fun body
-** add Opts, Stack & Env args to Cx.load
-*** pass to compile
-*** pass between loaded files in main
-*** forward args in include-op
-* skip stack arg to op readers
+* drop env/stack args from readers
 * remove Env/Def.cx
 ** pass args instead
 * add @ char reader
@@ -28,6 +15,7 @@
 * simplify read_eop()
 ** use skip_ws/get/unget instead
 * remove typed Val constructor Pos arg
+** also remove from reset
 * add mod op like mul
 ** add math/int_mod
 * add stack type inference

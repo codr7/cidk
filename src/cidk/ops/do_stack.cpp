@@ -17,7 +17,28 @@ namespace cidk::ops {
   void DoStackType::init(Cx &cx, Op &op, const Val &in, const Val &body) const {
     op.data = DoStackData(in, body);
   }
-  
+
+  void DoStackType::compile(Cx &cx,
+                            Op &op,
+                            Env &env,
+                            Stack &stack,
+                            Ops &out,
+                            Opts *opts) const {
+    const Pos &p(op.pos);
+    auto &d(op.as<DoStackData>());
+    d.in.compile(cx, p, env, stack, opts);
+
+    Stack ds;
+
+    if (d.in.type != &cx.nil_type) {
+      d.in.eval(p, env, stack);
+      pop(p, stack).splat(p, env, ds);
+    }
+
+    d.body.compile(cx, p, env, ds, opts);
+    out.push_back(op);
+  }
+
   void DoStackType::eval(Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
     const Pos &p(op.pos);
@@ -47,15 +68,14 @@ namespace cidk::ops {
 
   void DoStackType::read(Cx &cx, Pos &pos,
                          istream &in,
-                         ReadState &state,
                          Env &env,
                          Stack &stack,
                          Ops &out) const {
     Pos p(pos);
-    auto _in(read_val(pos, in, state, env, stack));
+    auto _in(read_val(pos, in, env, stack));
     if (!_in) { throw ESys(p, "Missing do-stack input"); }
 
-    auto body(read_val(pos, in, state, *env.cx.env_pool.get(env), stack));
+    auto body(read_val(pos, in, *env.cx.env_pool.get(env), stack));
     if (!body) { throw ESys(p, "Missing do-stack body"); }
     read_eop(pos, in, env, stack);
     

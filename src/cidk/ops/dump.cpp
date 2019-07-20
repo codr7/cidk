@@ -12,6 +12,16 @@ namespace cidk::ops {
 
   void DumpType::init(Cx &cx, Op &op, const Val &val) const { op.data = val; }
 
+  void DumpType::compile(Cx &cx,
+                         Op &op,
+                         Env &env,
+                         Stack &stack,
+                         Ops &out,
+                         Opts *opts) const {
+    op.as<Val>().compile(cx, op.pos, env, stack, opts);
+    out.push_back(op);
+  }
+  
   void DumpType::eval(Op &op, Env &env, Stack &stack) const {
     auto &cx(env.cx);
     const Pos &p(op.pos);
@@ -31,7 +41,6 @@ namespace cidk::ops {
   void DumpType::read(Cx &cx,
                       Pos &pos,
                       istream &in,
-                      ReadState &state,
                       Env &env,
                       Stack &stack,
                       Ops &out) const {
@@ -39,7 +48,7 @@ namespace cidk::ops {
     int n(0);
     
     for (;; n++) {
-      auto v(read_val(pos, in, state, env, stack));
+      auto v(read_val(pos, in, env, stack));
       if (!v) { throw ESys(p, "Missing ;"); }
       if (v->is_eop()) { break; }
       out.emplace_back(cx, p, *this, *v);

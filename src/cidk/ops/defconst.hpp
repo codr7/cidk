@@ -7,11 +7,18 @@
 namespace cidk::ops {
   struct DefconstType: OpType {
     DefconstType(const string &id);
+    void init(Cx &cx, Op &op, const Sym *id, const Val &val) const;
+
+    virtual void compile(Cx &cx,
+                         Op &op,
+                         Env &env,
+                         Stack &stack,
+                         Ops &out,
+                         Opts *opts) const override;
 
     virtual void read(Cx &cx,
                       Pos &pos,
                       istream &in,
-                      ReadState &state,                     
                       Env &env,
                       Stack &stack,
                       Ops &out) const override;

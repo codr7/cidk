@@ -24,11 +24,11 @@ namespace cidk {
 
     while (getline(in, line)) {
       if (line.empty()) {
-        ReadState state;
         ops.clear();
 
         if (buf.tellp()) {
-          read_ops(p, buf, state, env, stack, ops);  
+          read_ops(p, buf, env, stack, ops);
+          cx.compile(ops, nullptr, env, stack);
           cx.eval(ops, env, stack);
         } else {
           stack.clear();

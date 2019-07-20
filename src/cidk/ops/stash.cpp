@@ -22,7 +22,6 @@ namespace cidk::ops {
   void StashType::read(Cx &cx,
                        Pos &pos,
                        istream &in,
-                       ReadState &state,
                        cidk::Env &env,
                        Stack &stack,
                        Ops &out) const {

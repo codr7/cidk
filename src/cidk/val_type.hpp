@@ -2,6 +2,7 @@
 #define CIDK_VAL_TYPE_HPP
 
 #include "cidk/ops.hpp"
+#include "cidk/opts.hpp"
 #include "cidk/stack.hpp"
 #include "cidk/sym.hpp"
 #include "cidk/type.hpp"
@@ -20,6 +21,13 @@ namespace cidk {
     
     virtual void clone(const Pos &pos, Val &dst, const Val &src) const;
     virtual void cp(Val &dst, const Val &src) const = 0;
+
+    virtual void compile(Cx &cx,
+                         const Pos &pos,
+                         Val &val,
+                         Env &env, Stack &stack,
+                         Opts *opts) const;
+
     virtual void dump(const Val &val, ostream &out) const = 0;
     virtual bool eq(const Pos &pos, const Val &x, const Val &y) const;
     virtual void eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const;

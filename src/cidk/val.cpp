@@ -28,6 +28,10 @@ namespace cidk {
     return dst;
   }
 
+  void Val::compile(Cx &cx, const Pos &pos, Env &env, Stack &stack, Opts *opts) {
+    type->compile(cx, pos, *this, env, stack, opts);
+  }
+
   void Val::dump(ostream &out) const { type->dump(*this, out); }
   
   bool Val::eq(const Pos &pos, const Val &y) const { return type->eq(pos, *this, y); }

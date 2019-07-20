@@ -16,6 +16,15 @@ namespace cidk {
     dst.type = &val_type;
   }
 
+  void ConstType::compile(Cx &cx,
+                          const Pos &pos,
+                          Val &val,
+                          Env &env,
+                          Stack &stack,
+                          Opts *opts) const {
+    val_type.compile(cx, pos, val, env, stack, opts);
+  }
+
   void ConstType::dump(const Val &val, ostream &out) const {
     out << "const:";
     val_type.dump(val, out);
@@ -26,7 +35,7 @@ namespace cidk {
   void ConstType::eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
     Val v;
     clone(pos, v, val);
-    stack.emplace_back(v);
+    stack.push_back(v);
   }
 
   void ConstType::get_ids(const Val &val, IdSet &out) const {

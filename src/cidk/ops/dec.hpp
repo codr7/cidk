@@ -8,6 +8,14 @@ namespace cidk::ops {
   struct DecType: OpType {
     DecType(const string &id);
     void init(Cx &cx, Op &op, const Val &n, const Val &delta) const;
+
+    virtual void compile(Cx &cx,
+                         Op &op,
+                         Env &env,
+                         Stack &stack,
+                         Ops &out,
+                         Opts *opts) const override;
+
     virtual void eval(Op &op, Env &env, Stack &stack) const override;
     virtual void get_ids(const Op &op, IdSet &out) const override;
     virtual void mark_refs(Op &op) const override;
@@ -15,7 +23,6 @@ namespace cidk::ops {
     virtual void read(Cx &cx,
                       Pos &pos,
                       istream &in,
-                      ReadState &state,
                       Env &env,
                       Stack &stack,
                       Ops &out) const override;

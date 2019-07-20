@@ -18,11 +18,12 @@ int main(int argc, char *argv[]) {
   
   while (--argc && ++argv) {
     string a(*argv);
-
+    
     if (a == "-debug") { cx.debug = true; }
     else {
-      cidk::Ops ops;
-      cx.load(p, a, ops);    
+      cidk::Ops ops;  
+
+      cx.load(p, a, env, stack, ops, nullptr);    
       cx.eval(ops, env, stack);
       m = Mode::load;
     }

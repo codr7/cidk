@@ -23,6 +23,19 @@ namespace cidk::ops {
     op.data = IfData(cond, x, y);
   }
 
+  void IfType::compile(Cx &cx,
+                       Op &op,
+                       Env &env,
+                       Stack &stack,
+                       Ops &out,
+                       Opts *opts) const {
+    auto &d(op.as<IfData>());
+    d.cond.compile(cx, op.pos, env, stack, opts);
+    d.x.compile(cx, op.pos, env, stack, opts);
+    d.y.compile(cx, op.pos, env, stack, opts);
+    out.push_back(op);
+  }
+
   void IfType::eval(Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
     auto &p(op.pos);
@@ -54,19 +67,18 @@ namespace cidk::ops {
   void IfType::read(Cx &cx,
                     Pos &pos,
                     istream &in,
-                    ReadState &state,
                     Env &env,
                     Stack &stack,
                     Ops &out) const {
     Pos p(pos);
 
-    auto cond(read_val(pos, in, state, env, stack));
+    auto cond(read_val(pos, in, env, stack));
     if (!cond) { throw ESys(p, "Missing if cond"); }
 
-    auto x(read_val(pos, in, state, env, stack));
+    auto x(read_val(pos, in, env, stack));
     if (!x) { throw ESys(p, "Missing if branch"); }
 
-    auto y(read_val(pos, in, state, env, stack));
+    auto y(read_val(pos, in, env, stack));
     if (!y) { throw ESys(p, "Missing else branch"); }
     read_eop(pos, in, env, stack);
 

@@ -19,6 +19,18 @@ namespace cidk::ops {
     op.data = BinOpData(x, y, fun);
   }
 
+  void BinOp::compile(Cx &cx,
+                      Op &op,
+                      Env &env,
+                      Stack &stack,
+                      Ops &out,
+                      Opts *opts) const {
+    auto &d(op.as<BinOpData>());
+    d.x.compile(cx, op.pos, env, stack, opts);
+    d.y.compile(cx, op.pos, env, stack, opts);
+    out.push_back(op);
+  }
+
   void BinOp::eval(Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
     const Pos &p(op.pos);
@@ -60,19 +72,18 @@ namespace cidk::ops {
   void BinOp::read(Cx &cx,
                    Pos &pos,
                    istream &in,
-                   ReadState &state,
                    Env &env,
                    Stack &stack,
                    Ops &out) const {
     Pos p(pos);
-    auto x(read_val(pos, in, state, env, stack));
+    auto x(read_val(pos, in, env, stack));
     if (!x) { throw ESys(p, "Missing ;"); }
     const Sym *fun_id(get_fun_id(cx));
     Fun *f(cx.int_type.env.get(pos, fun_id).as_fun);
     
     if (x->is_eop()) { out.emplace_back(cx, p, *this, cx.$, cx.$, f); }
     else {
-      auto y(read_val(pos, in, state, env, stack));
+      auto y(read_val(pos, in, env, stack));
       
       if (y->is_eop()) { out.emplace_back(cx, p, *this, *x, cx.$, f); }
       else {
@@ -80,7 +91,7 @@ namespace cidk::ops {
 
         if (is_vararg) {
           for (;;) {
-            auto z(read_val(pos, in, state, env, stack));
+            auto z(read_val(pos, in, env, stack));
             if (!z) { throw ESys(p, "Missing ;"); }
             if (z->is_eop()) { break; }
             out.emplace_back(cx, p, *this, cx.$, *z, f);

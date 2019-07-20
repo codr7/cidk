@@ -13,7 +13,6 @@ namespace cidk::ops {
     virtual void read(Cx &cx,
                       Pos &pos,
                       istream &in,
-                      ReadState &state,
                       Env &env,
                       Stack &stack,
                       Ops &out) const override;

@@ -117,8 +117,13 @@ namespace cidk {
           i->second->deref(cx);
           i->second = j->second;
           j->second->nrefs++;
+          i++;
+        } else {
+          i++;
         }
-      } else { i++; }
+      } else {
+        i++;
+      }
     }
   }
 

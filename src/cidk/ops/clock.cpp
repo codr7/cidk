@@ -3,6 +3,7 @@
 #include "cidk/ops/clock.hpp"
 #include "cidk/read.hpp"
 #include "cidk/timer.hpp"
+#include "cidk/types/expr.hpp"
 
 namespace cidk::ops {
   struct ClockData {
@@ -17,6 +18,18 @@ namespace cidk::ops {
 
   void ClockType::init(Cx &cx, Op &op, const Val &nreps, const Val &body) const {
     op.data = ClockData(nreps, body);
+  }
+
+  void ClockType::compile(Cx &cx,
+                          Op &op,
+                          Env &env,
+                          Stack &stack,
+                          Ops &out,
+                          Opts *opts) const {
+    auto &d(op.as<ClockData>());
+    d.nreps.compile(cx, op.pos, env, stack, opts);
+    d.body.compile(cx, op.pos, env, stack, opts);
+    out.push_back(op);
   }
   
   void ClockType::eval(Op &op, Env &env, Stack &stack) const {
@@ -51,17 +64,21 @@ namespace cidk::ops {
 
   void ClockType::read(Cx &cx, Pos &pos,
                        istream &in,
-                       ReadState &state,
                        Env &env,
                        Stack &stack,
                        Ops &out) const {
     Pos p(pos);
 
-    auto nreps(read_val(pos, in, state, env, stack));
+    auto nreps(read_val(pos, in, env, stack));
     if (!nreps) { throw ESys(p, "Missing clock nreps"); }
 
-    auto body(read_val(pos, in, state, env, stack));
+    auto body(read_val(pos, in, env, stack));
     if (!body) { throw ESys(p, "Missing clock body"); }
+
+    if (body->type != &cx.expr_type) {
+      throw ESys(p, "Expected Expr, was: ", body->type->id);
+    }
+
     read_eop(pos, in, env, stack);
     
     out.emplace_back(cx, p, *this, *nreps, *body);

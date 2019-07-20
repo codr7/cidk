@@ -1,6 +1,7 @@
 #ifndef CIDK_VAL_HPP
 #define CIDK_VAL_HPP
 
+#include "cidk/opts.hpp"
 #include "cidk/pos.hpp"
 #include "cidk/types/char.hpp"
 #include "cidk/types/int.hpp"
@@ -50,6 +51,7 @@ namespace cidk {
     
     Val &clone(const Pos &pos, Val &dst) const;
     Val &cp(Val &dst) const;
+    void compile(Cx &cx, const Pos &pos, Env &env, Stack &stack, Opts *opts);
     void dump(ostream &out) const;
     bool eq(const Pos &pos, const Val &y) const;
     void eval(const Pos &pos, Env &env, Stack &stack) const;
