@@ -106,25 +106,25 @@ namespace cidk {
   }
 
   void Env::restore(Cx &cx, Env &org) {
-    for (auto i(items.begin()); i != items.end();) {
-      if (i->second->env == this) {
-        auto j(org.find(i->first));
+    auto i(items.begin()), j(org.items.begin());
+    
+    for (; i != items.end() && j != org.items.end(); i++, j++) {
+      while (i->first < j->first) { i = items.erase(i); }
 
-        if (j == org.items.end() || j->first != i->first) {
-          i->second->deref(cx);
-          i = items.erase(i);
-        } else if (i->second != j->second) {
+      if (i->first == j->first) {
+        if (i->second != j->second) {
           i->second->deref(cx);
           i->second = j->second;
           j->second->nrefs++;
-          i++;
-        } else {
-          i++;
         }
       } else {
+        items.insert(i, *j);
+        j->second->nrefs++;
         i++;
       }
     }
+
+    if (i != items.end()) { items.erase(i, items.end()); }
   }
 
   void Env::set(Cx &cx, const Pos &pos, const Sym *key, const Val &val, bool force) {

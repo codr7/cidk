@@ -1,9 +1,7 @@
-* switch Env.restore to step two iters in paralell like merge
-** bench
 * set env_escape in do_env compile if cloned
 * add fib_iter bench
 ** add set op with expr support like poke
-* --
+* move Def.cx to Type
 * add @ char reader
 ** read utf8
 * add Splat op
