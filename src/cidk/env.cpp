@@ -9,11 +9,15 @@
 namespace cidk {  
   Env::Env(Cx &cx): Ref(cx), cx(cx) { cx.envs.push(*this); }
 
-  Env::Env(const Env &src):
-    Ref(src.cx), cx(src.cx), items(src.items) { cx.envs.push(*this); }
+  Env::Env(const Env &src): Ref(src.cx), cx(src.cx), items(src.items) {
+    for (auto &i: items) { i.second->nrefs++; }
+    cx.envs.push(*this);
+  }
 
   Env &Env::operator =(const Env &src) {
+    for (auto &i: items) { i.second->deref(cx); }
     items = src.items;
+    for (auto &i: items) { i.second->nrefs++; }
     return *this;
   }
 
@@ -47,7 +51,10 @@ namespace cidk {
     set(Pos::_, cx.intern(id), val, false);
   }
 
-  void Env::clear() { items.clear(); }
+  void Env::clear() {
+    for (auto &i: items) { i.second->deref(cx); }
+    items.clear();
+  }
 
   typename Env::Iter Env::find(const Sym *key) {
     for (auto i(items.begin()); i != items.end(); i++) {
@@ -170,8 +177,9 @@ namespace cidk {
         } else {
           i->second->deref(cx);
           i->second = it;
-          it->nrefs++;
         }
+
+        it->nrefs++;
       }
     }
   }
