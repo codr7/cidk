@@ -38,11 +38,10 @@ namespace cidk::ops {
     const Pos &p(op.pos);
     auto &d(op.as<PokeData>());
     auto ss(stack.size());
-
-    if (d.is_expr && d.offs) { stack.push_back(stack[ss - d.offs]); }
+    if (d.is_expr && d.offs > 1) { stack.push_back(stack[ss - d.offs]); }
     d.val.eval(cx, p, env, stack);
-    if (d.offs) { swap(stack.back(), stack[ss - d.offs]); }
-    stack.resize(ss);
+    swap(stack.back(), stack[ss - d.offs]);
+    if (!d.is_expr || d.offs > 1) { stack.pop_back(); }
   }
 
   void PokeType::get_ids(const Op &op, IdSet &out) const {
