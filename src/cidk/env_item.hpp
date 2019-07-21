@@ -7,7 +7,7 @@ namespace cidk {
   struct Env;
 
   struct EnvItem {
-    Env &env;
+    Env *env;
     Val val;
     int nrefs;
     

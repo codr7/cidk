@@ -18,16 +18,13 @@
 ** use skip_ws/get/unget instead
 * remove typed Val constructor Pos arg
 ** also remove from reset
-* add mod op like mul
-** add math/int_mod
 * add stack type inference
 ** add Fun.rets (Rets)
-** process stack in OpType inits
-** add cx, env, stack to OpType inits / op constructor
+** process stack in compile
 ** add Undef type
 *** store actual as_type
 ** add unify(Stack &x, Stack &y)
-** use to lookup fn at read-time in BinOp
+** use to pick fn at read-time in BinOp
 * push Fun on stack from Defun if missing id
 * add Fun arg type checking
 ** skip args with type A
@@ -36,6 +33,8 @@
 ** add '-reader
 * add Splice support
 ** splice list items automagically
+* add mod op like mul
+** add math/int_mod
 
 fun (fib (n Int) Int
   if n.< 2 n fib(n.- 1).+ fib(n.- 2)

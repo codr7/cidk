@@ -114,7 +114,7 @@ namespace cidk {
 
   void Env::restore(Env &org) {
     for (auto i(items.begin()); i != items.end();) {
-      if (&i->second->env == this) {
+      if (i->second->env == this) {
         auto j(org.find(i->first));
 
         if (j == org.items.end() || j->first != i->first) {
@@ -142,7 +142,7 @@ namespace cidk {
     } else {
       auto it(*i->second);
       
-      if (&it.env == this) {
+      if (it.env == this) {
         if (!force) { throw ESys(pos, "Dup binding: ", key); }
         it.val = val;
       } else {
@@ -152,7 +152,13 @@ namespace cidk {
   }
 
   void Env::sweep(Cx &cx, const Pos &pos) {
-    for (auto &i: items) { i.second->deref(cx); }
+    for (auto &i: items) {
+      auto &v(*i.second);
+      if (v.env == this) { v.env = nullptr; }
+      v.deref(cx);
+      
+    }
+    
     dynamic_cast<Ls<Env, CxEnvs> *>(this)->unlink();
     cx.env_pool.put(this);
   }
