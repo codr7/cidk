@@ -5,10 +5,10 @@
 namespace cidk {
   Type::Type(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents):
     Def(cx, pos, id), env(*cx.env_pool.get(cx)) {
-    for (auto pt: parents) { derive(*pt); }
+    for (auto pt: parents) { derive(cx, *pt); }
   }
   
-  void Type::derive(Type &parent) { env.merge(parent.env); }
+  void Type::derive(Cx &cx, Type &parent) { env.merge(cx, parent.env); }
   
   void Type::mark() {
     if (!ref_mark) {

@@ -15,7 +15,11 @@ namespace cidk {
 
   void PopType::dump(const Val &val, ostream &out) const { out << '$'; }
 
-  void PopType::eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const {}
+  void PopType::eval(Cx &cx,
+                     const Pos &pos,
+                     const Val &val,
+                     Env &env,
+                     Stack &stack) const {}
 
   bool PopType::is(const Val &x, const Val &y) const { return false; }
 }

@@ -26,8 +26,7 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void CallType::eval(Op &op, Env &env, Stack &stack) const {
-    Cx &cx(env.cx);
+  void CallType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
     cidk::Call(op.pos, *op.as<Val>().as_fun).eval(cx, env, stack);
   }
 

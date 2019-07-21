@@ -19,7 +19,7 @@ namespace cidk::ops {
                          Ops &out,
                          Opts *opts) const override;
 
-    virtual void eval(Op &op, Env &env, Stack &stack) const override;
+    virtual void eval(Cx &cx, Op &op, Env &env, Stack &stack) const override;
     virtual const Sym *get_fun_id(Cx &cx) const = 0;
     virtual void get_ids(const Op &op, IdSet &out) const override;
     virtual void mark_refs(Op &op) const override;

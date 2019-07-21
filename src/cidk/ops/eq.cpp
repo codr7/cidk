@@ -31,14 +31,14 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void EqType::eval(Op &op, Env &env, Stack &stack) const {
+  void EqType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
     const Pos &p(op.pos);
     const EqData &d(op.as<EqData>());
-    d.x.eval(p, env, stack);
+    d.x.eval(cx, p, env, stack);
     auto x(pop(p, stack));
-    d.y.eval(p, env, stack);
+    d.y.eval(cx, p, env, stack);
     auto y(pop(p, stack));
-    stack.emplace_back(op.pos, env.cx.bool_type, x.eq(p, y));
+    stack.emplace_back(op.pos, cx.bool_type, x.eq(p, y));
   }
 
   void EqType::get_ids(const Op &op, IdSet &out) const {

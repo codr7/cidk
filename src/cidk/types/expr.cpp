@@ -24,8 +24,12 @@ namespace cidk {
     out << "expr:" << val.as_expr;
   }
 
-  void ExprType::eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
-    val.as_expr->eval(env, stack);
+  void ExprType::eval(Cx &cx,
+                      const Pos &pos,
+                      const Val &val,
+                      Env &env,
+                      Stack &stack) const {
+    val.as_expr->eval(cx, env, stack);
   }
 
   void ExprType::get_ids(const Val &val, IdSet &out) const {

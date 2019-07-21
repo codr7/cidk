@@ -18,7 +18,7 @@ namespace cidk {
                        Ops &out,
                        Opts *opts) const { out.push_back(*in); }
 
-  void OpType::eval(Op &op, Env &env, Stack &stack) const {}
+  void OpType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {}
 
   void OpType::get_ids(const Op &op, IdSet &out) const {}
 
@@ -34,7 +34,7 @@ namespace cidk {
     type->compile(cx, in, end, env, stack, out, opts);
   }
 
-  void Op::eval(Env &env, Stack &stack) { type->eval(*this, env, stack); }
+  void Op::eval(Cx &cx, Env &env, Stack &stack) { type->eval(cx, *this, env, stack); }
 
   void Op::get_ids(IdSet &out) const { type->get_ids(*this, out); }
 

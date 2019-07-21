@@ -28,7 +28,7 @@ namespace cidk::ops {
                              Opts *opts) const {
     auto &d(in->as<DefconstData>());
     d.val.compile(cx, in->pos, env, stack, opts);
-    env.add_const(in->pos, d.id, d.val);
+    env.add_const(cx, in->pos, d.id, d.val);
   }
 
   void DefconstType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {

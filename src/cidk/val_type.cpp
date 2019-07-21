@@ -33,7 +33,11 @@ namespace cidk {
     return is(x, y);
   }
 
-  void ValType::eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
+  void ValType::eval(Cx &cx,
+                     const Pos &pos,
+                     const Val &val,
+                     Env &env,
+                     Stack &stack) const {
     stack.emplace_back(val);
   }
 

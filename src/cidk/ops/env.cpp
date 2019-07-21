@@ -21,8 +21,8 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void EnvType::eval(Op &op, cidk::Env &env, Stack &stack) const {
-    stack.emplace_back(op.pos, env.cx.env_type, &env);
+  void EnvType::eval(Cx &cx, Op &op, cidk::Env &env, Stack &stack) const {
+    stack.emplace_back(op.pos, cx.env_type, &env);
   }
 
   void EnvType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {

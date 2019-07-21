@@ -93,34 +93,38 @@ namespace cidk {
   };
 
   template <typename...Rest>
-  Fun &Env::add_fun(const Pos &pos,
+  Fun &Env::add_fun(Cx &cx,
+                    const Pos &pos,
                     const string &id,
                     const vector<Arg> &args,
                     const vector<Ret> &rets,
                     Rest &&...rest) {
-    return add_fun(pos, cx.intern(id), args, rets, forward<Rest>(rest)...);
+    return add_fun(cx, pos, cx.intern(id), args, rets, forward<Rest>(rest)...);
   }
 
   template <typename...Rest>
-  Fun &Env::add_fun(const Pos &pos,
+  Fun &Env::add_fun(Cx &cx,
+                    const Pos &pos,
                     const Sym *id,
                     const vector<Arg> &args,
                     const vector<Ret> &rets,
                     Rest &&...rest) {
     auto &ft(cx.fun_type);
     Fun *f(ft.pool.get(cx, pos, id, args, rets, forward<Rest>(rest)...));
-    set(pos, f->id, Val(pos, ft, f), false);
+    set(cx, pos, f->id, Val(pos, ft, f), false);
     return *f;
   }
 
   template <typename TypeT, typename...Rest>
-  TypeT &Env::add_type(const Pos &pos,
+  TypeT &Env::add_type(Cx &cx,
+                       const Pos &pos,
                        const string &id,
                        const vector<Type *> parents,
                        Rest &&...rest) {
     TypeT *t(new TypeT(cx, pos, cx.intern(id), parents, forward<Rest>(rest)...));
     
-    set(pos,
+    set(cx,
+        pos,
         t->id,
         Val(pos,
             (id == "Meta") ? *dynamic_cast<MetaType *>(t) : cx.meta_type,
@@ -131,8 +135,8 @@ namespace cidk {
   }
 
   template <typename...Rest>
-  void Env::add_var(const Pos &pos, const string &id, Rest &&...rest) {
-    add_var(pos, id, Val(pos, forward<Rest>(rest)...));
+  void Env::add_var(Cx &cx, const Pos &pos, const string &id, Rest &&...rest) {
+    add_var(cx, pos, id, Val(pos, forward<Rest>(rest)...));
   }
 
   template <typename ArgsT, typename RetsT>

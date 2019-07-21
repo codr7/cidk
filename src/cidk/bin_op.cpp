@@ -32,13 +32,12 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void BinOp::eval(Op &op, Env &env, Stack &stack) const {
-    Cx &cx(env.cx);
+  void BinOp::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
     const Pos &p(op.pos);
     auto &d(op.as<BinOpData>());
-    d.x.eval(p, env, stack);
+    d.x.eval(cx, p, env, stack);
     Val &x(stack.back());
-    d.y.eval(p, env, stack);
+    d.y.eval(cx, p, env, stack);
     Val &y(stack.back());
     Fun *f(d.fun);
     

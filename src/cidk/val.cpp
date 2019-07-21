@@ -36,8 +36,8 @@ namespace cidk {
   
   bool Val::eq(const Pos &pos, const Val &y) const { return type->eq(pos, *this, y); }
 
-  void Val::eval(const Pos &pos, Env &env, Stack &stack) const {
-    return type->eval(pos, *this, env, stack);
+  void Val::eval(Cx &cx, const Pos &pos, Env &env, Stack &stack) const {
+    return type->eval(cx, pos, *this, env, stack);
   }
 
   void Val::get_ids(IdSet &out) const { type->get_ids(*this, out); }

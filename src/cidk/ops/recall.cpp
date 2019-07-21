@@ -9,8 +9,8 @@ namespace cidk::ops {
 
   void RecallType::init(Cx &cx, Op &op) const {}
 
-  void RecallType::eval(Op &op, Env &env, Stack &stack) const {
-    env.cx.eval_state = EvalState::recall;
+  void RecallType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
+    cx.eval_state = EvalState::recall;
   }
 
   void RecallType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {

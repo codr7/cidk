@@ -31,29 +31,28 @@ namespace cidk::ops {
                           Opts *opts) const {
     auto &d(in->as<DoEnvData>());
     d.in.compile(cx, in->pos, env, stack, opts);
-    auto &ep(env.cx.env_pool);
+    auto &ep(cx.env_pool);
     Env &de((d.in.type == &cx.nil_type) ? *ep.get(cx) : *ep.get(env));
     d.body.compile(cx, in->pos, de, stack, opts);
     out.push_back(*in);
   }
 
-  void DoEnvType::eval(Op &op, Env &env, Stack &stack) const {
-    Cx &cx(env.cx);
+  void DoEnvType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
     const Pos &p(op.pos);
     const DoEnvData &d(op.as<DoEnvData>());
     Env *de(nullptr);
 
     if (d.in.type == &cx.nil_type) {
-      de = env.cx.env_pool.get(cx);
+      de = cx.env_pool.get(cx);
     } else if (d.in.type == &cx.bool_type && d.in.as_bool) {
-      de = env.cx.env_pool.get(env);
+      de = cx.env_pool.get(env);
     } else {
-      d.in.eval(p, env, stack);
+      d.in.eval(cx, p, env, stack);
       auto in(pop(p, stack));
       de = &in.get_env();
     }
     
-    d.body.eval(p, *de, stack);
+    d.body.eval(cx, p, *de, stack);
   }
 
   void DoEnvType::get_ids(const Op &op, IdSet &out) const {

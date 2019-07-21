@@ -32,7 +32,11 @@ namespace cidk {
 
   void ConstType::cp(Val &dst, const Val &src) const { val_type.cp(dst, src); }
 
-  void ConstType::eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
+  void ConstType::eval(Cx &cx,
+                       const Pos &pos,
+                       const Val &val,
+                       Env &env,
+                       Stack &stack) const {
     Val v;
     clone(pos, v, val);
     stack.push_back(v);

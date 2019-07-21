@@ -9,7 +9,7 @@ namespace cidk::ops {
 
   void SwapType::init(Cx &cx, Op &op) const {}
 
-  void SwapType::eval(Op &op, Env &env, Stack &stack) const {
+  void SwapType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
     auto i(stack.end());
     iter_swap(i-1, i-2);
   }

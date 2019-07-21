@@ -30,7 +30,12 @@ namespace cidk {
 
     virtual void dump(const Val &val, ostream &out) const = 0;
     virtual bool eq(const Pos &pos, const Val &x, const Val &y) const;
-    virtual void eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const;
+
+    virtual void eval(Cx &cx,
+                      const Pos &pos,
+                      const Val &val,
+                      Env &env, Stack &stack) const;
+
     virtual void get_ids(const Val &val, IdSet &out) const;
     virtual bool is(const Val &x, const Val &y) const = 0;
     virtual void mark_refs(const Val &val) const;

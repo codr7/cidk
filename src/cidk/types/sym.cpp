@@ -19,7 +19,7 @@ namespace cidk {
                         Stack &stack,
                         Opts *opts) const {
     if (auto i(env.try_get(val.as_sym)); i) {
-      i->val.eval(pos, env, stack);
+      i->val.eval(cx, pos, env, stack);
       val = pop(pos, stack);
     }
   }
@@ -28,8 +28,12 @@ namespace cidk {
 
   void SymType::dump(const Val &val, ostream &out) const { out << val.as_sym; }
 
-  void SymType::eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
-    env.get(pos, val.as_sym).eval(pos, env, stack);
+  void SymType::eval(Cx &cx,
+                     const Pos &pos,
+                     const Val &val,
+                     Env &env,
+                     Stack &stack) const {
+    env.get(pos, val.as_sym).eval(cx, pos, env, stack);
   }
 
   void SymType::get_ids(const Val &val, IdSet &out) const { out.emplace(val.as_sym); }

@@ -33,11 +33,10 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void DecType::eval(Op &op, Env &env, Stack &stack) const {
-    Cx &cx(env.cx);
+  void DecType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
     const Pos &p(op.pos);
     auto &d(op.as<DecData>());
-    d.delta.eval(p, env, stack);
+    d.delta.eval(cx, p, env, stack);
     Val delta(pop(p, stack));
 
     if (delta.type != &cx.int_type) {
@@ -55,7 +54,7 @@ namespace cidk::ops {
     } else if (d.n.type == &cx.int_type) {
       stack.emplace_back(p, cx.int_type, d.n.as_int - delta.as_int);
     } else if (d.n.type == &cx.sym_type) {
-      env.get_item(p, d.n.as_sym).val.eval(p, env, stack);
+      env.get_item(p, d.n.as_sym).val.eval(cx, p, env, stack);
       Val &n(stack.back());
       
       if (n.type != &cx.int_type) {

@@ -12,7 +12,7 @@ namespace cidk {
     
     Expr(Cx &cx);
     Expr(Cx &cx, const Ops &body);
-    void eval(Env &env, Stack &stack);
+    void eval(Cx &cx, Env &env, Stack &stack);
     void mark();
     virtual void sweep(Cx &cx, const Pos &pos) override;
   };

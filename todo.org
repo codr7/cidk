@@ -1,8 +1,12 @@
+* remove Def.cx
 * switch Env.restore to step two iters in paralell like merge
 ** bench
 * set env_escape in do_env compile if cloned
-* remove Env/Def.cx
-** pass args instead
+* add fib_iter bench
+** add set op with expr support like poke
+* remove typed Val constructor Pos arg
+** also remove from reset
+* --
 * add @ char reader
 ** read utf8
 * add Splat op
@@ -11,13 +15,6 @@
 * add len op
 ** forward to type env
 ** add Str/List/Env.len funs
-* add fib_iter bench
-** add set op
-** add expr support like poke
-* simplify read_eop()
-** use skip_ws/get/unget instead
-* remove typed Val constructor Pos arg
-** also remove from reset
 * add stack type inference
 ** add Fun.rets (Rets)
 ** process stack in compile

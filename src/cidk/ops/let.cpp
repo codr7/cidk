@@ -32,14 +32,14 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void LetType::eval(Op &op, Env &env, Stack &stack) const {
+  void LetType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
     const Pos &p(op.pos);
     const LetData &d(op.as<LetData>());
 
     Val v;
     d.val.clone(p, v);
-    v.eval(p, env, stack);
-    env.set(p, d.key, pop(p, stack), false);
+    v.eval(cx, p, env, stack);
+    env.set(cx, p, d.key, pop(p, stack), false);
   }
 
   void LetType::get_ids(const Op &op, IdSet &out) const {

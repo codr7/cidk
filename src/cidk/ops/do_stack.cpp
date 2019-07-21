@@ -32,7 +32,7 @@ namespace cidk::ops {
     Stack ds;
 
     if (d.in.type != &cx.nil_type) {
-      d.in.eval(p, env, stack);
+      d.in.eval(cx, p, env, stack);
       pop(p, stack).splat(p, env, ds);
     }
 
@@ -40,18 +40,17 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void DoStackType::eval(Op &op, Env &env, Stack &stack) const {
-    Cx &cx(env.cx);
+  void DoStackType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
     const Pos &p(op.pos);
     const DoStackData &d(op.as<DoStackData>());
     Stack ds;
 
     if (d.in.type != &cx.nil_type) {
-      d.in.eval(op.pos, env, stack);
+      d.in.eval(cx, op.pos, env, stack);
       pop(op.pos, stack).splat(p, env, ds);
     }
 
-    d.body.eval(op.pos, env, ds);
+    d.body.eval(cx, op.pos, env, ds);
     copy(ds.begin(), ds.end(), back_inserter(stack));
   }
 

@@ -46,7 +46,7 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void CpType::eval(Op &op, Env &env, Stack &stack) const {
+  void CpType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
     const auto &d(op.as<CpData>());
     
     auto

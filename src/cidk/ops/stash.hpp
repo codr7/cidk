@@ -8,7 +8,7 @@ namespace cidk::ops {
   struct StashType: OpType {
     StashType(const string &id);
     void init(Cx &cx, Op &op) const;
-    virtual void eval(Op &op, cidk::Env &env, Stack &stack) const override;
+    virtual void eval(Cx &cx, Op &op, cidk::Env &env, Stack &stack) const override;
     virtual void read(Cx &cx, Pos &pos, istream &in, Ops &out) const override;
   };
 

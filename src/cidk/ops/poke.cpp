@@ -34,13 +34,13 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void PokeType::eval(Op &op, Env &env, Stack &stack) const {
+  void PokeType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
     const Pos &p(op.pos);
     auto &d(op.as<PokeData>());
     auto ss(stack.size());
 
     if (d.is_expr && d.offs) { stack.push_back(stack[ss - d.offs]); }
-    d.val.eval(p, env, stack);
+    d.val.eval(cx, p, env, stack);
     if (d.offs) { swap(stack.back(), stack[ss - d.offs]); }
     stack.resize(ss);
   }

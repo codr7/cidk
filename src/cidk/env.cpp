@@ -7,21 +7,14 @@
 #include "cidk/types/expr.hpp"
 
 namespace cidk {  
-  Env::Env(Cx &cx): Ref(cx), cx(cx) { cx.envs.push(*this); }
+  Env::Env(Cx &cx): Ref(cx) { cx.envs.push(*this); }
 
-  Env::Env(const Env &src): Ref(src.cx), cx(src.cx), items(src.items) {
+  Env::Env(Cx &cx, const Env &src): Ref(cx), items(src.items) {
     for (auto &i: items) { i.second->nrefs++; }
     cx.envs.push(*this);
   }
 
-  Env &Env::operator =(const Env &src) {
-    for (auto &i: items) { i.second->deref(cx); }
-    items = src.items;
-    for (auto &i: items) { i.second->nrefs++; }
-    return *this;
-  }
-
-  bool Env::add(const Pos &pos, const Sym *key, const Val &val, bool silent) {
+  bool Env::add(Cx &cx, const Pos &pos, const Sym *key, const Val &val, bool silent) {
     auto i(find(key));
 
     if (i != items.end() && i->first == key) {
@@ -33,25 +26,25 @@ namespace cidk {
     return true;
   }
 
-  void Env::add_const(const Pos &pos, const string &id, const Val &val) {
-    add_const(pos, cx.intern(id), val);
+  void Env::add_const(Cx &cx, const Pos &pos, const string &id, const Val &val) {
+    add_const(cx, pos, cx.intern(id), val);
   }
 
-  void Env::add_const(const Pos &pos, const Sym *id, const Val &val) {
+  void Env::add_const(Cx &cx, const Pos &pos, const Sym *id, const Val &val) {
     auto v(val);
     v.type = &v.type->const_type(pos);
-    add(pos, id, v, false);
+    add(cx, pos, id, v, false);
   }
 
   void Env::add_const_expr(Cx &cx, const Pos &pos, const string &id, const Ops &ops) {
-    add_const(pos, id, Val(pos, cx.expr_type, cx.expr_type.pool.get(cx, ops)));
+    add_const(cx, pos, id, Val(pos, cx.expr_type, cx.expr_type.pool.get(cx, ops)));
   }
 
-  void Env::add_var(const Pos &pos, const string &id, const Val &val) {
-    set(Pos::_, cx.intern(id), val, false);
+  void Env::add_var(Cx &cx, const Pos &pos, const string &id, const Val &val) {
+    set(cx, Pos::_, cx.intern(id), val, false);
   }
 
-  void Env::clear() {
+  void Env::clear(Cx &cx) {
     for (auto &i: items) { i.second->deref(cx); }
     items.clear();
   }
@@ -83,7 +76,7 @@ namespace cidk {
     for (auto &i: items) { i.second->val.mark_refs(); }
   }
 
-  void Env::merge(Env &src) {
+  void Env::merge(Cx &cx, Env &src) {
     for (auto i(items.begin()), j(src.items.begin());
          j != src.items.end();
          i++, j++) {
@@ -112,7 +105,7 @@ namespace cidk {
     }
   }
 
-  void Env::restore(Env &org) {
+  void Env::restore(Cx &cx, Env &org) {
     for (auto i(items.begin()); i != items.end();) {
       if (i->second->env == this) {
         auto j(org.find(i->first));
@@ -134,7 +127,7 @@ namespace cidk {
     }
   }
 
-  void Env::set(const Pos &pos, const Sym *key, const Val &val, bool force) {
+  void Env::set(Cx &cx, const Pos &pos, const Sym *key, const Val &val, bool force) {
     auto i(find(key));
     
     if (i == items.end() || i->first != key) {
@@ -168,21 +161,20 @@ namespace cidk {
     return (i == items.end() || i->first != key) ? nullptr : i->second;
   }
 
-  void Env::use(Env &src, const IdSet &ids) {
+  void Env::use(Cx &cx, Env &src, const IdSet &ids) {
     for (auto i(ids.begin()); i != ids.end(); i++) {
       auto id(*i);
       auto it(src.try_get(id));
 
       if (it) {
+        it->nrefs++;
         auto i(find(id));
         
         if (i == items.end() || i->first != id) {
           items.emplace(i, id, it);
-          it->nrefs++;
         } else if (i->second != it) {
           i->second->deref(cx);
           i->second = it;
-          it->nrefs++;
         }
       }
     }

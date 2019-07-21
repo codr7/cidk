@@ -35,18 +35,17 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void AssertType::eval(Op &op, Env &env, Stack &stack) const {
-    Cx &cx(env.cx);
+  void AssertType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
     const Pos &p(op.pos);
     const auto &d(op.as<AssertData>());
     Stack args;
     
     if (!d.args.as_list->items.empty()) {
       copy(stack.begin(), stack.end(), back_inserter(args));
-      for (auto &a: d.args.as_list->items) { a.eval(p, env, args); }
+      for (auto &a: d.args.as_list->items) { a.eval(cx, p, env, args); }
     }
     
-    d.body.eval(p, env, stack);
+    d.body.eval(cx, p, env, stack);
     Val ok(pop(op.pos, stack));
     
     if (ok.type != &cx.bool_type) {

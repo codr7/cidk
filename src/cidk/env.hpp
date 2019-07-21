@@ -26,55 +26,57 @@ namespace cidk {
     using Items = vector<pair<const Sym *, EnvItem *>>;
     using Iter = Items::iterator;
     
-    Cx &cx;
     Items items;
     
     Env(Cx &cx);
-    Env(const Env &src);
-    Env &operator =(const Env &);
+    Env(Cx &cx, const Env &src);
+    Env &operator =(const Env &) = delete;
 
-    bool add(const Pos &pos, const Sym *key, const Val &val, bool silent);
-    void add_const(const Pos &pos, const string &id, const Val &val);
-    void add_const(const Pos &pos, const Sym *id, const Val &val);
+    bool add(Cx &cx, const Pos &pos, const Sym *key, const Val &val, bool silent);
+    void add_const(Cx &cx, const Pos &pos, const string &id, const Val &val);
+    void add_const(Cx &cx, const Pos &pos, const Sym *id, const Val &val);
     void add_const_expr(Cx &cx, const Pos &pos, const string &id, const Ops &ops);
                         
     template <typename...Rest>
-    Fun &add_fun(const Pos &pos,
+    Fun &add_fun(Cx &cx,
+                 const Pos &pos,
                  const string &id,
                  const vector<Arg> &args,
                  const vector<Ret> &rets,
                  Rest &&...rest);
 
     template <typename...Rest>
-    Fun &add_fun(const Pos &pos,
+    Fun &add_fun(Cx &cx,
+                 const Pos &pos,
                  const Sym *id,
                  const vector<Arg> &args,
                  const vector<Ret> &rets,
                  Rest &&...rest);
 
     template <typename TypeT, typename...Rest>
-    TypeT &add_type(const Pos &pos,
+    TypeT &add_type(Cx &cx,
+                    const Pos &pos,
                     const string &id,
                     const vector<Type *> parents = {},
                     Rest &&...rest);
 
     template <typename...Rest>
-    void add_var(const Pos &pos, const string &id, Rest &&...rest);
+    void add_var(Cx &cx, const Pos &pos, const string &id, Rest &&...rest);
 
-    void add_var(const Pos &pos, const string &id, const Val &val);
+    void add_var(Cx &cx, const Pos &pos, const string &id, const Val &val);
 
-    void clear();
+    void clear(Cx &cx);
     Iter find(const Sym *key);
     Val &get(const Pos &pos, const Sym *key);
     EnvItem &get_item(const Pos &pos, const Sym *key);
     void mark();
     void mark_items();
-    void merge(Env &src);
-    void restore(Env &org);
-    void set(const Pos &pos, const Sym *key, const Val &val, bool force);
+    void merge(Cx &cx, Env &src);
+    void restore(Cx &cx, Env &org);
+    void set(Cx &cx, const Pos &pos, const Sym *key, const Val &val, bool force);
     virtual void sweep(Cx &cx, const Pos &pos) override;
     EnvItem *try_get(const Sym *key);
-    void use(Env &src, const IdSet &ids);
+    void use(Cx &cx, Env &src, const IdSet &ids);
   };
 }
 

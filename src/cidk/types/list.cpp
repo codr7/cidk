@@ -58,9 +58,13 @@ namespace cidk {
     return true;
   }
 
-  void ListType::eval(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
+  void ListType::eval(Cx &cx,
+                      const Pos &pos,
+                      const Val &val,
+                      Env &env,
+                      Stack &stack) const {
     Stack out;
-    for (auto &v: val.as_list->items) { v.eval(pos, env, out); }
+    for (auto &v: val.as_list->items) { v.eval(cx, pos, env, out); }
     List *l(cx.list_type.pool.get(cx, out));
     stack.emplace_back(pos, cx.list_type, l);
   }
