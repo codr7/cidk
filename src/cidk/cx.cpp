@@ -103,7 +103,11 @@ namespace cidk {
 
   void Cx::compile(Ops &ops, Opts *opts, Env &env, Stack &stack) {
     Ops tmp;
-    for (auto &op: ops) { op.compile(*this, env, stack, tmp, opts); }
+
+    for (auto i(ops.begin()); i != ops.end(); i++) {
+      i->compile(*this, i, ops.end(), env, stack, tmp, opts);
+    }
+    
     swap(ops, tmp);
   }
   
@@ -120,7 +124,7 @@ namespace cidk {
     Pos p(src);
     auto prev(load_path);
     load_path = src.parent_path();
-    read_ops(p, f, env, stack, out);
+    read_ops(*this, p, f, out);
     compile(out, opts, env, stack);
     load_path = prev;
   }

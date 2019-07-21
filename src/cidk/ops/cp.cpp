@@ -19,29 +19,31 @@ namespace cidk::ops {
   }
 
   void CpType::compile(Cx &cx,
-                       Op &op,
+                       OpIter &in,
+                       const OpIter &end,
                        Env &env,
                        Stack &stack,
                        Ops &out,
                        Opts *opts) const {
-    auto &d(op.as<CpData>());
-    d.offs.compile(cx, op.pos, env, stack, opts);
+    const Pos &p(in->pos);
+    auto &d(in->as<CpData>());
+    d.offs.compile(cx, p, env, stack, opts);
 
     if (d.offs.type == &cx.bool_type && d.offs.as_bool) {
-      d.offs.reset(op.pos, cx.int_type, Int(-1));
+      d.offs.reset(p, cx.int_type, Int(-1));
     } else if (d.offs.type != &cx.int_type) {
-      throw ESys(op.pos, "Expected Int, was: ", d.offs.type->id);
+      throw ESys(p, "Expected Int, was: ", d.offs.type->id);
     }
 
-    d.len.compile(cx, op.pos, env, stack, opts);
+    d.len.compile(cx, p, env, stack, opts);
 
     if (d.len.type == &cx.bool_type && d.len.as_bool) {
-      d.len.reset(op.pos, cx.int_type, Int(-1));
+      d.len.reset(p, cx.int_type, Int(-1));
     } else if (d.len.type != &cx.int_type) {
-      throw ESys(op.pos, "Expected Int, was: ", d.len.type->id);
+      throw ESys(p, "Expected Int, was: ", d.len.type->id);
     }
 
-    out.push_back(op);
+    out.push_back(*in);
   }
 
   void CpType::eval(Op &op, Env &env, Stack &stack) const {
@@ -55,17 +57,12 @@ namespace cidk::ops {
     copy(i, j, back_inserter(stack));
   }
 
-  void CpType::read(Cx &cx,
-                    Pos &pos,
-                    istream &in,
-                    Env &env,
-                    Stack &stack,
-                    Ops &out) const {
+  void CpType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     optional<Val> offs, len;
     bool done(false);
     Pos p(pos), vp(p);
 
-    if (!(offs = read_val(pos, in, env, stack))) {
+    if (!(offs = read_val(cx, pos, in))) {
       throw ESys(vp, "Missing ;");
     }
 
@@ -74,7 +71,7 @@ namespace cidk::ops {
       len.emplace(pos, cx.int_type, Int(1));
       done = true;
     } else {      
-      if (!(len = read_val(pos, in, env, stack))) {
+      if (!(len = read_val(cx, pos, in))) {
         throw ESys(vp, "Missing ;");
       }
 
@@ -84,7 +81,7 @@ namespace cidk::ops {
       }
     }
 
-    if (!done) { read_eop(pos, in, env, stack); }
+    if (!done) { read_eop(pos, in); }
     out.emplace_back(cx, p, *this, *offs, *len);
   }
 }

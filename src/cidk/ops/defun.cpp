@@ -30,13 +30,14 @@ namespace cidk::ops {
   }
 
   void DefunType::compile(Cx &cx,
-                          Op &op,
+                          OpIter &in,
+                          const OpIter &end,
                           Env &env,
                           Stack &stack,
                           Ops &out,
                           Opts *opts) const {
-    const Pos &p(op.pos);
-    auto &d(op.as<DefunData>());
+    const Pos &p(in->pos);
+    auto &d(in->as<DefunData>());
     Fun &f(env.add_fun(p, d.id, {}, {}));
 
     f.args.parse(cx, p, *d.args.as_list, env, stack);
@@ -58,7 +59,7 @@ namespace cidk::ops {
     }
     
     d.fun = &f;
-    out.push_back(op);
+    out.push_back(*in);
   }
   
   void DefunType::eval(Op &op, Env &env, Stack &stack) const {
@@ -73,40 +74,34 @@ namespace cidk::ops {
 
   void DefunType::mark_refs(Op &op) const { op.as<DefunData>().fun->mark(); }
 
-  void DefunType::read(Cx &cx,
-                       Pos &pos,
-                       istream &in,
-                       Env &env,
-                       Stack &stack,
-                       Ops &out) const {
+  void DefunType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
 
-    auto id(read_val(pos, in, env, stack));
+    auto id(read_val(cx, pos, in));
     if (!id) { throw ESys(p, "Missing function id"); }
 
-    auto args(read_val(pos, in, env, stack));
+    auto args(read_val(cx, pos, in));
     if (!args) { throw ESys(p, "Missing argument list"); }
 
     if (args->type != &cx.list_type) {
       throw ESys(p, "Invalid argument list: ", args->type->id);
     }
     
-    auto rets(read_val(pos, in, env, stack));
+    auto rets(read_val(cx, pos, in));
     if (!rets) { throw ESys(p, "Missing return list"); }
 
     if (rets->type != &cx.list_type) {
       throw ESys(p, "Invalid return list: ", args->type->id);
     }
 
-    Env &body_env(*cx.env_pool.get(env));
-    auto body(read_val(pos, in, body_env, stack));
+    auto body(read_val(cx, pos, in));
     if (!body) { throw ESys(p, "Missing function body"); }
 
     if (body->type != &cx.expr_type) {
       throw ESys(p, "Invalid function body: ", body->type->id);
     }
 
-    read_eop(pos, in, env, stack);    
+    read_eop(pos, in);    
     out.emplace_back(cx, p, *this, id->as_sym, *args, *body);
   }
 }

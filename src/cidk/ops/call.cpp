@@ -13,16 +13,17 @@ namespace cidk::ops {
   void CallType::init(Cx &cx, Op &op, const Val &target) const { op.data = target; }
 
   void CallType::compile(Cx &cx,
-                         Op &op,
+                         OpIter &in,
+                         const OpIter &end,
                          Env &env,
                          Stack &stack,
                          Ops &out,
                          Opts *opts) const {
-    Val &f(op.as<Val>());
-    f.compile(cx, op.pos, env, stack, opts);
+    Val &f(in->as<Val>());
+    f.compile(cx, in->pos, env, stack, opts);
     Type *ft(f.type);
-    if (ft != &cx.fun_type) { throw ESys(op.pos, "Invalid call target: ", ft->id); }
-    out.push_back(op);
+    if (ft != &cx.fun_type) { throw ESys(in->pos, "Invalid call target: ", ft->id); }
+    out.push_back(*in);
   }
 
   void CallType::eval(Op &op, Env &env, Stack &stack) const {
@@ -36,16 +37,12 @@ namespace cidk::ops {
 
   void CallType::mark_refs(Op &op) const { op.as<Val>().mark_refs(); }
 
-  void CallType::read(Cx &cx, Pos &pos,
-                      istream &in,
-                      Env &env,
-                      Stack &stack,
-                      Ops &out) const {
+  void CallType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
     int n(0);
     
     for (;; n++) {
-      auto v(read_val(pos, in, env, stack));
+      auto v(read_val(cx, pos, in));
       if (!v) { throw ESys(p, "Missing ;"); }
       if (v->is_eop()) { break; }
       out.emplace_back(cx, p, *this, *v);

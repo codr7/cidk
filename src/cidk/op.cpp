@@ -11,11 +11,12 @@ namespace cidk {
   }
 
   void OpType::compile(Cx &cx,
-                       Op &op,
+                       OpIter &in,
+                       const OpIter &end,
                        Env &env,
                        Stack &stack,
                        Ops &out,
-                       Opts *opts) const { out.push_back(op); }
+                       Opts *opts) const { out.push_back(*in); }
 
   void OpType::eval(Op &op, Env &env, Stack &stack) const {}
 
@@ -23,8 +24,14 @@ namespace cidk {
 
   void OpType::mark_refs(Op &op) const {}
 
-  void Op::compile(Cx &cx, Env &env, Stack &stack, Ops &out, Opts *opts) {
-    type->compile(cx, *this, env, stack, out, opts);
+  void Op::compile(Cx &cx,
+                   OpIter &in,
+                   const OpIter &end,
+                   Env &env,
+                   Stack &stack,
+                   Ops &out,
+                   Opts *opts) {
+    type->compile(cx, in, end, env, stack, out, opts);
   }
 
   void Op::eval(Env &env, Stack &stack) { type->eval(*this, env, stack); }

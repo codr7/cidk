@@ -21,14 +21,15 @@ namespace cidk::ops {
   }
 
   void LetType::compile(Cx &cx,
-                        Op &op,
+                        OpIter &in,
+                        const OpIter &end,
                         Env &env,
                         Stack &stack,
                         Ops &out,
                         Opts *opts) const {
     if (opts) { opts->env_extend = true; }
-    op.as<LetData>().val.compile(cx, op.pos, env, stack, opts);
-    out.push_back(op);
+    in->as<LetData>().val.compile(cx, in->pos, env, stack, opts);
+    out.push_back(*in);
   }
 
   void LetType::eval(Op &op, Env &env, Stack &stack) const {
@@ -47,17 +48,12 @@ namespace cidk::ops {
 
   void LetType::mark_refs(Op &op) const { op.as<LetData>().val.mark_refs(); }
 
-  void LetType::read(Cx &cx,
-                     Pos &pos,
-                     istream &in,
-                     Env &env,
-                     Stack &stack,
-                     Ops &out) const {
+  void LetType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
     int n(0);
     
     for (;;) {
-      auto k(read_val(pos, in, env, stack));
+      auto k(read_val(cx, pos, in));
       if (!k) { throw ESys(p, "Missing ;"); }
       if (k->is_eop()) { break; }
 
@@ -65,15 +61,10 @@ namespace cidk::ops {
         throw ESys(p, "Invalid let id: ", k->type->id);
       }
 
-      auto v(read_val(pos, in, env, stack));
+      auto v(read_val(cx, pos, in));
       if (!v) { throw ESys(p, "Missing let value"); }
       out.emplace_back(cx, p, *this, k->as_sym, *v);
       n++;
-    }
-
-    if (!n) {
-      auto v(pop(p, stack));
-      out.emplace_back(cx, p, *this, pop(p, stack).as_sym, v);
     }
   }
 }

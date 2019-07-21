@@ -24,13 +24,14 @@ namespace cidk::ops {
   }
 
   void PokeType::compile(Cx &cx,
-                         Op &op,
+                         OpIter &in,
+                         const OpIter &end,
                          Env &env,
                          Stack &stack,
                          Ops &out,
                          Opts *opts) const {
-    op.as<PokeData>().val.compile(cx, op.pos, env, stack, opts);
-    out.push_back(op);
+    in->as<PokeData>().val.compile(cx, in->pos, env, stack, opts);
+    out.push_back(*in);
   }
 
   void PokeType::eval(Op &op, Env &env, Stack &stack) const {
@@ -54,18 +55,13 @@ namespace cidk::ops {
     d.val.mark_refs();
   }
 
-  void PokeType::read(Cx &cx,
-                      Pos &pos,
-                      istream &in,
-                      Env &env,
-                      Stack &stack,
-                      Ops &out) const {
+  void PokeType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
     vector<Val> vals;
     size_t n(0);
     
     for (;; n++) {
-      auto v(read_val(pos, in, env, stack));
+      auto v(read_val(cx, pos, in));
       if (!v) { throw ESys(p, "Missing ;"); }
       if (v->is_eop()) { break; }
       vals.push_back(*v);

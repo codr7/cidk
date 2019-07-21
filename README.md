@@ -98,7 +98,7 @@ Passing `T` starts at the beginning and/or copies to end.
 ```
 
 #### defconst [id val]+
-Defines compile time constants for pairs of ids and values. `id` and `val` are popped from stack if missing.
+Defines compile time constants for pairs of ids and values.
 
 ```
   do-env _ {

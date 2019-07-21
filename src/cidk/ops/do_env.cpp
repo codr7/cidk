@@ -23,17 +23,18 @@ namespace cidk::ops {
   }
 
   void DoEnvType::compile(Cx &cx,
-                          Op &op,
+                          OpIter &in,
+                          const OpIter &end,
                           Env &env,
                           Stack &stack,
                           Ops &out,
                           Opts *opts) const {
-    auto &d(op.as<DoEnvData>());
-    d.in.compile(cx, op.pos, env, stack, opts);
+    auto &d(in->as<DoEnvData>());
+    d.in.compile(cx, in->pos, env, stack, opts);
     auto &ep(env.cx.env_pool);
     Env &de((d.in.type == &cx.nil_type) ? *ep.get(cx) : *ep.get(env));
-    d.body.compile(cx, op.pos, de, stack, opts);
-    out.push_back(op);
+    d.body.compile(cx, in->pos, de, stack, opts);
+    out.push_back(*in);
   }
 
   void DoEnvType::eval(Op &op, Env &env, Stack &stack) const {
@@ -67,23 +68,19 @@ namespace cidk::ops {
     d.body.mark_refs();
   }
 
-  void DoEnvType::read(Cx &cx, Pos &pos,
-                       istream &in,
-                       Env &env,
-                       Stack &stack,
-                       Ops &out) const {
+  void DoEnvType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
-    auto _in(read_val(pos, in, env, stack));
+    auto _in(read_val(cx, pos, in));
     if (!_in) { throw ESys(p, "Missing do-env input"); }
 
-    auto body(read_val(pos, in, *env.cx.env_pool.get(env), stack));
+    auto body(read_val(cx, pos, in));
     if (!body) { throw ESys(p, "Missing do-env body"); }
 
     if (body->type != &cx.expr_type) {
       throw ESys(p, "Expected Expr, was: ", body->type->id);
     }
     
-    read_eop(pos, in, env, stack);
+    read_eop(pos, in);
     out.emplace_back(cx, p, *this, *_in, *body);
   }
 }

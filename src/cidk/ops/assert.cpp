@@ -23,15 +23,16 @@ namespace cidk::ops {
   }
 
   void AssertType::compile(Cx &cx,
-                           Op &op,
+                           OpIter &in,
+                           const OpIter &end,
                            Env &env,
                            Stack &stack,
                            Ops &out,
                            Opts *opts) const {
-    auto &d(op.as<AssertData>());
-    d.args.compile(cx, op.pos, env, stack, opts);
-    d.body.compile(cx, op.pos, env, stack, opts);
-    out.push_back(op);
+    auto &d(in->as<AssertData>());
+    d.args.compile(cx, in->pos, env, stack, opts);
+    d.body.compile(cx, in->pos, env, stack, opts);
+    out.push_back(*in);
   }
 
   void AssertType::eval(Op &op, Env &env, Stack &stack) const {
@@ -67,21 +68,16 @@ namespace cidk::ops {
     d.body.mark_refs();
   }
 
-  void AssertType::read(Cx &cx,
-                        Pos &pos,
-                        istream &in,
-                        Env &env,
-                        Stack &stack,
-                        Ops &out) const {
+  void AssertType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
-    auto args(read_val(pos, in, env, stack));
+    auto args(read_val(cx, pos, in));
 
     if (args->type != &cx.list_type) {
       throw ESys(p, "Expected List, was: ", args->type->id);
     }
 
-    auto body(read_val(pos, in, env, stack));
-    read_eop(pos, in, env, stack);
+    auto body(read_val(cx, pos, in));
+    read_eop(pos, in);
     out.emplace_back(cx, pos, *this, *args, *body);
   }
 }

@@ -20,15 +20,16 @@ namespace cidk::ops {
   }
 
   void BinOp::compile(Cx &cx,
-                      Op &op,
+                      OpIter &in,
+                      const OpIter &end,
                       Env &env,
                       Stack &stack,
                       Ops &out,
                       Opts *opts) const {
-    auto &d(op.as<BinOpData>());
-    d.x.compile(cx, op.pos, env, stack, opts);
-    d.y.compile(cx, op.pos, env, stack, opts);
-    out.push_back(op);
+    auto &d(in->as<BinOpData>());
+    d.x.compile(cx, in->pos, env, stack, opts);
+    d.y.compile(cx, in->pos, env, stack, opts);
+    out.push_back(*in);
   }
 
   void BinOp::eval(Op &op, Env &env, Stack &stack) const {
@@ -69,34 +70,33 @@ namespace cidk::ops {
     d.y.mark_refs();
   }
 
-  void BinOp::read(Cx &cx,
-                   Pos &pos,
-                   istream &in,
-                   Env &env,
-                   Stack &stack,
-                   Ops &out) const {
+  void BinOp::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
-    auto x(read_val(pos, in, env, stack));
+    auto x(read_val(cx, pos, in));
     if (!x) { throw ESys(p, "Missing ;"); }
     const Sym *fun_id(get_fun_id(cx));
     Fun *f(cx.int_type.env.get(pos, fun_id).as_fun);
     
-    if (x->is_eop()) { out.emplace_back(cx, p, *this, cx.$, cx.$, f); }
-    else {
-      auto y(read_val(pos, in, env, stack));
+    if (x->is_eop()) {
+      out.emplace_back(cx, p, *this, cx.$, cx.$, f);
+    } else {
+      auto y(read_val(cx, pos, in));
       
-      if (y->is_eop()) { out.emplace_back(cx, p, *this, *x, cx.$, f); }
-      else {
+      if (y->is_eop()) {
+        out.emplace_back(cx, p, *this, *x, cx.$, f);
+      } else {
         out.emplace_back(cx, p, *this, *x, *y, f);
 
         if (is_vararg) {
           for (;;) {
-            auto z(read_val(pos, in, env, stack));
+            auto z(read_val(cx, pos, in));
             if (!z) { throw ESys(p, "Missing ;"); }
             if (z->is_eop()) { break; }
             out.emplace_back(cx, p, *this, cx.$, *z, f);
           }
-        } else { read_eop(p, in, env, stack); }
+        } else {
+          read_eop(p, in);
+        }
       }
     }
   }

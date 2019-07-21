@@ -12,27 +12,23 @@ namespace cidk::ops {
   void IncludeType::init(Cx &cx, Op &op, string val) const { op.data = move(val); }
 
   void IncludeType::compile(Cx &cx,
-                            Op &op,
+                            OpIter &in,
+                            const OpIter &end,
                             Env &env,
                             Stack &stack,
                             Ops &out,
                             Opts *opts) const {
-    cx.load(op.pos, op.as<string>(), env, stack, out, opts);    
-    out.push_back(op);
+    cx.load(in->pos, in->as<string>(), env, stack, out, opts);    
+    out.push_back(*in);
   }
 
-  void IncludeType::read(Cx &cx,
-                         Pos &pos,
-                         istream &in,
-                         Env &env,
-                         Stack &stack,
-                         Ops &out) const {
+  void IncludeType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
     int n(0);
 
     for (;; n++) {
       Pos vp(pos);
-      auto v(read_val(pos, in, env, stack));
+      auto v(read_val(cx, pos, in));
       if (!v) { throw ESys(vp, "Missing ;"); }
       if (v->is_eop()) { break; }
 

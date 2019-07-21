@@ -19,15 +19,16 @@ namespace cidk::ops {
   }
 
   void IsType::compile(Cx &cx,
-                       Op &op,
+                       OpIter &in,
+                       const OpIter &end,
                        Env &env,
                        Stack &stack,
                        Ops &out,
                        Opts *opts) const {
-    auto &d(op.as<IsData>());
-    d.x.compile(cx, op.pos, env, stack, opts);
-    d.y.compile(cx, op.pos, env, stack, opts);
-    out.push_back(op);
+    auto &d(in->as<IsData>());
+    d.x.compile(cx, in->pos, env, stack, opts);
+    d.y.compile(cx, in->pos, env, stack, opts);
+    out.push_back(*in);
   }
 
   void IsType::eval(Op &op, Env &env, Stack &stack) const {
@@ -52,14 +53,9 @@ namespace cidk::ops {
     d.y.mark_refs();
   }
 
-  void IsType::read(Cx &cx,
-                    Pos &pos,
-                    istream &in,
-                    Env &env,
-                    Stack &stack,
-                    Ops &out) const {
+  void IsType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
-    auto x(read_val(pos, in, env, stack));
+    auto x(read_val(cx, pos, in));
     if (!x) { throw ESys(p, "Missing ;"); }
 
     if (x->is_eop()) {
@@ -70,7 +66,7 @@ namespace cidk::ops {
     int n(0);
     
     for (;; n++) {
-      auto y(read_val(pos, in, env, stack));
+      auto y(read_val(cx, pos, in));
       if (!y) { throw ESys(p, "Missing ;"); }
       if (y->is_eop()) { break; }
       out.emplace_back(cx, p, *this, *x, *y);

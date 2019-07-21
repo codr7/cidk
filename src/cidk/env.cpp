@@ -172,12 +172,12 @@ namespace cidk {
         
         if (i == items.end() || i->first != id) {
           items.emplace(i, id, it);
-        } else {
+          it->nrefs++;
+        } else if (i->second != it) {
           i->second->deref(cx);
           i->second = it;
+          it->nrefs++;
         }
-
-        it->nrefs++;
       }
     }
   }

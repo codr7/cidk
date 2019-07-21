@@ -27,7 +27,7 @@ namespace cidk {
         ops.clear();
 
         if (buf.tellp()) {
-          read_ops(p, buf, env, stack, ops);
+          read_ops(cx, p, buf, ops);
           cx.compile(ops, nullptr, env, stack);
           cx.eval(ops, env, stack);
         } else {

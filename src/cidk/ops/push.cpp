@@ -11,13 +11,14 @@ namespace cidk::ops {
   void PushType::init(Cx &cx, Op &op, const Val &val) const { op.data = val; }
 
   void PushType::compile(Cx &cx,
-                        Op &op,
-                        Env &env,
-                        Stack &stack,
-                        Ops &out,
-                        Opts *opts) const {
-    op.as<Val>().compile(cx, op.pos, env, stack, opts);
-    out.push_back(op);
+                         OpIter &in,
+                         const OpIter &end,
+                         Env &env,
+                         Stack &stack,
+                         Ops &out,
+                         Opts *opts) const {
+    in->as<Val>().compile(cx, in->pos, env, stack, opts);
+    out.push_back(*in);
   }
 
   void PushType::eval(Op &op, Env &env, Stack &stack) const {
@@ -34,17 +35,12 @@ namespace cidk::ops {
 
   void PushType::mark_refs(Op &op) const { op.as<Val>().mark_refs(); }
 
-  void PushType::read(Cx &cx,
-                      Pos &pos,
-                      istream &in,
-                      Env &env,
-                      Stack &stack,
-                      Ops &out) const {
+  void PushType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
     int n(0);
 
     for (;; n++) {
-      auto v(read_val(pos, in, env, stack));
+      auto v(read_val(cx, pos, in));
       if (!v) { throw ESys(p, "Missing ;"); }
       if (v->is_eop()) { break; }
       out.emplace_back(cx, p, *this, *v);

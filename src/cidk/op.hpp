@@ -24,7 +24,8 @@ namespace cidk {
     OpType(const string &id);
 
     virtual void compile(Cx &cx,
-                         Op &op,
+                         OpIter &in,
+                         const OpIter &end,
                          Env &env,
                          Stack &stack,
                          Ops &out,
@@ -33,13 +34,7 @@ namespace cidk {
     virtual void eval(Op &op, Env &env, Stack &stack) const;
     virtual void get_ids(const Op &op, IdSet &out) const;
     virtual void mark_refs(Op &op) const;
-    
-    virtual void read(Cx &cx, 
-                      Pos &pos, 
-                      istream &in,
-                      Env &env,
-                      Stack &stack,
-                      Ops &out) const = 0;
+    virtual void read(Cx &cx, Pos &pos, istream &in, Ops &out) const = 0;
   };
 
   struct Op {
@@ -60,7 +55,14 @@ namespace cidk {
     template <typename T>
     const T &as() const { return any_cast<const T &>(data); }
 
-    void compile(Cx &cx, Env &env, Stack &stack, Ops &out, Opts *opts);
+    void compile(Cx &cx,
+                 OpIter &in,
+                 const OpIter &end,
+                 Env &env, 
+                 Stack &stack, 
+                 Ops &out, 
+                 Opts *opts);
+
     void eval(Env &env, Stack &stack);
     void get_ids(IdSet &out) const;
     void mark_refs();

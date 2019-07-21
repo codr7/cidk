@@ -9,13 +9,7 @@ namespace cidk::ops {
     MarkType(const string &id);
     void init(Cx &cx, Op &op) const;
     virtual void eval(Op &op, Env &env, Stack &stack) const override;
-
-    virtual void read(Cx &cx,
-                      Pos &pos,
-                      istream &in,
-                      Env &env,
-                      Stack &stack,
-                      Ops &out) const override;
+    virtual void read(Cx &cx, Pos &pos, istream &in, Ops &out) const override;
   };
 
   extern const MarkType Mark;

@@ -20,27 +20,23 @@ namespace cidk::ops {
   }
 
   void DefconstType::compile(Cx &cx,
-                             Op &op,
+                             OpIter &in,
+                             const OpIter &end,
                              Env &env,
                              Stack &stack,
                              Ops &out,
                              Opts *opts) const {
-    auto &d(op.as<DefconstData>());
-    d.val.compile(cx, op.pos, env, stack, opts);
-    env.add_const(op.pos, d.id, d.val);
+    auto &d(in->as<DefconstData>());
+    d.val.compile(cx, in->pos, env, stack, opts);
+    env.add_const(in->pos, d.id, d.val);
   }
 
-  void DefconstType::read(Cx &cx,
-                      Pos &pos,
-                      istream &in,
-                      Env &env,
-                      Stack &stack,
-                      Ops &out) const {
+  void DefconstType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
     int n(0);
     
     for (;;) {
-      auto id(read_val(pos, in, env, stack));
+      auto id(read_val(cx, pos, in));
       if (!id) { throw ESys(p, "Missing ;"); }
       if (id->is_eop()) { break; }
 
@@ -48,15 +44,10 @@ namespace cidk::ops {
         throw ESys(p, "Invalid const id: ", id->type->id);
       }
 
-      auto v(read_val(pos, in, env, stack));
+      auto v(read_val(cx, pos, in));
       if (!v) { throw ESys(p, "Missing const value"); }
       out.emplace_back(cx, p, *this, id->as_sym, *v);
       n++;
-    }
-
-    if (!n) {
-      auto v(pop(p, stack));
-      out.emplace_back(cx, p, *this, pop(p, stack).as_sym, v);
     }
   }
 }

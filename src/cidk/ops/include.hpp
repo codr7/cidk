@@ -11,18 +11,14 @@ namespace cidk::ops {
     void init(Cx &cx, Op &op, string val) const;
 
     virtual void compile(Cx &cx,
-                         Op &op,
+                         OpIter &in,
+                         const OpIter &end,
                          Env &env,
                          Stack &stack,
                          Ops &out,
                          Opts *opts) const override;
 
-    virtual void read(Cx &cx,
-                      Pos &pos,
-                      istream &in,
-                      Env &env,
-                      Stack &stack,
-                      Ops &out) const override;
+    virtual void read(Cx &cx, Pos &pos, istream &in, Ops &out) const override;
   };
 
   extern const IncludeType Include;

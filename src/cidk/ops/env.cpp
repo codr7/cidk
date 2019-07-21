@@ -11,26 +11,22 @@ namespace cidk::ops {
   void EnvType::init(Cx &cx, Op &op) const {}
 
   void EnvType::compile(Cx &cx,
-                        Op &op,
+                        OpIter &in,
+                        const OpIter &end,
                         cidk::Env &env,
                         Stack &stack,
                         Ops &out,
                         Opts *opts) const {
     if (opts) { opts->env_escape = true; }
-    out.push_back(op);
+    out.push_back(*in);
   }
 
   void EnvType::eval(Op &op, cidk::Env &env, Stack &stack) const {
     stack.emplace_back(op.pos, env.cx.env_type, &env);
   }
 
-  void EnvType::read(Cx &cx,
-                     Pos &pos,
-                     istream &in,
-                     cidk::Env &env,
-                     Stack &stack,
-                     Ops &out) const {
-    read_eop(pos, in, env, stack);
+  void EnvType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
+    read_eop(pos, in);
     out.emplace_back(cx, pos, *this);
   }
 }

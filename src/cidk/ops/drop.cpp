@@ -15,13 +15,8 @@ namespace cidk::ops {
     stack.pop_back();
   }
 
-  void DropType::read(Cx &cx,
-                      Pos &pos,
-                      istream &in,
-                      Env &env,
-                      Stack &stack,
-                      Ops &out) const {
-    read_eop(pos, in, env, stack);
+  void DropType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
+    read_eop(pos, in);
     out.emplace_back(cx, pos, *this);
   }
 }

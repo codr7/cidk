@@ -13,13 +13,8 @@ namespace cidk::ops {
     env.cx.sweep_refs(op.pos);
   }
 
-  void SweepType::read(Cx &cx,
-                       Pos &pos,
-                       istream &in,
-                       Env &env,
-                       Stack &stack,
-                       Ops &out) const {
-    read_eop(pos, in, env, stack);
+  void SweepType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
+    read_eop(pos, in);
     out.emplace_back(cx, pos, *this);
   }
 }

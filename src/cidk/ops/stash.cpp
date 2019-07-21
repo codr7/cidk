@@ -19,14 +19,9 @@ namespace cidk::ops {
     stack.emplace_back(op.pos, env.cx.list_type, out);
   }
 
-  void StashType::read(Cx &cx,
-                       Pos &pos,
-                       istream &in,
-                       cidk::Env &env,
-                       Stack &stack,
-                       Ops &out) const {
+  void StashType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
-    read_eop(pos, in, env, stack);
+    read_eop(pos, in);
     out.emplace_back(cx, p, *this);
   }
 }

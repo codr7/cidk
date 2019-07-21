@@ -10,20 +10,15 @@ namespace cidk::ops {
     void init(Cx &cx, Op &op) const;
 
     virtual void compile(Cx &cx,
-                         Op &op,
+                         OpIter &in,
+                         const OpIter &end,
                          cidk::Env &env,
                          Stack &stack,
                          Ops &out,
                          Opts *opts) const override;
 
     virtual void eval(Op &op, cidk::Env &env, Stack &stack) const override;
-
-    virtual void read(Cx &cx,
-                      Pos &pos,
-                      istream &in,
-                      cidk::Env &env,
-                      Stack &stack,
-                      Ops &out) const override;
+    virtual void read(Cx &cx, Pos &pos, istream &in, Ops &out) const override;
   };
 
   extern const EnvType Env;

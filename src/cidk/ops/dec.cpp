@@ -21,18 +21,18 @@ namespace cidk::ops {
   }
 
   void DecType::compile(Cx &cx,
-                        Op &op,
+                        OpIter &in,
+                        const OpIter &end,
                         Env &env,
                         Stack &stack,
                         Ops &out,
                         Opts *opts) const {
-    auto &d(op.as<DecData>());
-    d.n.compile(cx, op.pos, env, stack, opts);
-    d.delta.compile(cx, op.pos, env, stack, opts);
-    out.push_back(op);
+    auto &d(in->as<DecData>());
+    d.n.compile(cx, in->pos, env, stack, opts);
+    d.delta.compile(cx, in->pos, env, stack, opts);
+    out.push_back(*in);
   }
 
-  
   void DecType::eval(Op &op, Env &env, Stack &stack) const {
     Cx &cx(env.cx);
     const Pos &p(op.pos);
@@ -80,26 +80,22 @@ namespace cidk::ops {
     d.delta.mark_refs();
   }
 
-  void DecType::read(Cx &cx,
-                     Pos &pos,
-                     istream &in,
-                     Env &env,
-                     Stack &stack,
-                     Ops &out) const {
+  void DecType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
-    auto n(read_val(pos, in, env, stack));
+    auto n(read_val(cx, pos, in));
     if (!n) { throw ESys(p, "Missing ;"); }
     Val one(p, cx.int_type, Int(1));
     
-    if (n->is_eop()) { out.emplace_back(cx, p, *this, cx.$, one); }
-    else {
-      auto delta(read_val(pos, in, env, stack));
+    if (n->is_eop()) {
+      out.emplace_back(cx, p, *this, cx.$, one);
+    } else {
+      auto delta(read_val(cx, pos, in));
       if (!delta) { throw ESys(p, "Missing ;"); }
       
       if (delta->is_eop()) { out.emplace_back(cx, p, *this, *n, one); }
       else {
         out.emplace_back(cx, p, *this, *n, *delta);
-        read_eop(pos, in, env, stack);
+        read_eop(pos, in);
       }
     }
   }
