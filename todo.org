@@ -1,4 +1,3 @@
-* remove Def.cx
 * switch Env.restore to step two iters in paralell like merge
 ** bench
 * set env_escape in do_env compile if cloned
