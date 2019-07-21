@@ -49,7 +49,7 @@ namespace cidk {
 
   void EnvType::mark_refs(const Val &val) const { val.as_env->mark(); }
 
-  void EnvType::set(const Pos &pos, Val &dst, Env *val) const { dst.as_env = val; }
+  void EnvType::set(Val &dst, Env *val) const { dst.as_env = val; }
 
   void EnvType::sweep(const Pos &pos, Val &val) { val.as_env->sweep(cx, pos); }
 

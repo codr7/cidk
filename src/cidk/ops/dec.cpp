@@ -52,7 +52,7 @@ namespace cidk::ops {
       
       n.as_int -= delta.as_int;
     } else if (d.n.type == &cx.int_type) {
-      stack.emplace_back(p, cx.int_type, d.n.as_int - delta.as_int);
+      stack.emplace_back(cx.int_type, d.n.as_int - delta.as_int);
     } else if (d.n.type == &cx.sym_type) {
       env.get_item(p, d.n.as_sym).val.eval(cx, p, env, stack);
       Val &n(stack.back());
@@ -83,7 +83,7 @@ namespace cidk::ops {
     Pos p(pos);
     auto n(read_val(cx, pos, in));
     if (!n) { throw ESys(p, "Missing ;"); }
-    Val one(p, cx.int_type, Int(1));
+    Val one(cx.int_type, Int(1));
     
     if (n->is_eop()) {
       out.emplace_back(cx, p, *this, cx.$, one);

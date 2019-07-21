@@ -41,8 +41,8 @@ namespace cidk {
     Val(ValType &type);
 
     template <typename ValT>
-    Val(const Pos &pos, TValType<ValT> &type, ValT val): type(&type) {
-      type.set(pos, *this, val);
+    Val(TValType<ValT> &type, ValT val): type(&type) {
+      type.set(*this, val);
     }
     
     ~Val();
@@ -61,9 +61,9 @@ namespace cidk {
     void mark_refs();
 
     template <typename ValT>
-    void reset(const Pos &pos, TValType<ValT> &type, ValT val) {
+    void reset(TValType<ValT> &type, ValT val) {
       this->type = &type;
-      type.set(pos, *this, val);
+      type.set(*this, val);
     }
 
     void splat(const Pos &pos, Env &env, Stack &stack) const;

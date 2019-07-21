@@ -40,7 +40,5 @@ namespace cidk {
 
   bool SymType::is(const Val &x, const Val &y) const { return x.as_sym == y.as_sym; }
 
-  void SymType::set(const Pos &pos, Val &dst, const Sym *val) const {
-    dst.as_sym = val;
-  }
+  void SymType::set(Val &dst, const Sym *val) const { dst.as_sym = val; }
 }

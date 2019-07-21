@@ -17,7 +17,7 @@ namespace cidk {
     virtual bool eq(const Pos &pos, const Val &x, const Val &y) const override;
     virtual bool is(const Val &x, const Val &y) const override;
     virtual void mark_refs(const Val &val) const override;
-    virtual void set(const Pos &pos, Val &dst, Env *val) const override;
+    virtual void set(Val &dst, Env *val) const override;
     virtual void sweep(const Pos &pos, Val &val) override;
 
     virtual bool get_bool(const Val &val) const override;

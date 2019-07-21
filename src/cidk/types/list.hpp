@@ -33,7 +33,7 @@ namespace cidk {
     virtual void get_ids(const Val &val, IdSet &out) const override;
     virtual bool is(const Val &x, const Val &y) const override;
     virtual void mark_refs(const Val &val) const override;
-    virtual void set(const Pos &pos, Val &dst, List *val) const override;
+    virtual void set(Val &dst, List *val) const override;
 
     virtual void splat(const Pos &pos,
                        const Val &val,

@@ -38,7 +38,7 @@ namespace cidk::ops {
     auto x(pop(p, stack));
     d.y.eval(cx, p, env, stack);
     auto y(pop(p, stack));
-    stack.emplace_back(op.pos, cx.bool_type, x.eq(p, y));
+    stack.emplace_back(cx.bool_type, x.eq(p, y));
   }
 
   void EqType::get_ids(const Op &op, IdSet &out) const {

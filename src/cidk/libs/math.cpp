@@ -47,7 +47,7 @@ namespace cidk::libs {
                          Env &env, Stack &stack) {
     auto y(pop(p, stack));
     Val &x(stack.back());
-    x.reset(p, cx.bool_type, x.as_int < y.as_int);
+    x.reset(cx.bool_type, x.as_int < y.as_int);
   }
 
   static void int_gt_imp(Cx &cx,
@@ -56,7 +56,7 @@ namespace cidk::libs {
                          Env &env, Stack &stack) {
     auto y(pop(p, stack));
     Val &x(stack.back());
-    x.reset(p, cx.bool_type, x.as_int > y.as_int);
+    x.reset(cx.bool_type, x.as_int > y.as_int);
   }
 
   void init_math(Cx &cx) {

@@ -22,7 +22,7 @@ namespace cidk {
 
   void FunType::mark_refs(const Val &val) const { val.as_fun->mark(); }
 
-  void FunType::set(const Pos &pos, Val &dst, Fun *val) const { dst.as_fun = val; }
+  void FunType::set(Val &dst, Fun *val) const { dst.as_fun = val; }
 
   void FunType::sweep(const Pos &pos, Val &val) { val.as_fun->sweep(cx, pos); }
 

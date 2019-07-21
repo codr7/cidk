@@ -29,7 +29,7 @@ namespace cidk {
     return x.as_char == y.as_char;
   }
 
-  void CharType::set(const Pos &pos, Val &dst, Char val) const { dst.as_char = val; }
+  void CharType::set(Val &dst, Char val) const { dst.as_char = val; }
 
   bool CharType::get_bool(const Val &val) const { return val.as_char > 0; }
 }

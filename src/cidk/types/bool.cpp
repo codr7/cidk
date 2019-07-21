@@ -19,7 +19,7 @@ namespace cidk {
     return x.as_bool == y.as_bool;
   }
 
-  void BoolType::set(const Pos &pos, Val &dst, bool val) const { dst.as_bool = val; }
+  void BoolType::set(Val &dst, bool val) const { dst.as_bool = val; }
 
   bool BoolType::get_bool(const Val &val) const { return val.as_bool; }
 }

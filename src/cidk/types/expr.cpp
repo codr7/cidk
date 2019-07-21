@@ -42,9 +42,7 @@ namespace cidk {
 
   void ExprType::mark_refs(const Val &val) const { val.as_expr->mark(); }
 
-  void ExprType::set(const Pos &pos, Val &dst, Expr *val) const {
-    dst.as_expr = val;
-  }
+  void ExprType::set(Val &dst, Expr *val) const { dst.as_expr = val; }
 
   void ExprType::sweep(const Pos &pos, Val &val) { val.as_expr->sweep(cx, pos); }
 }

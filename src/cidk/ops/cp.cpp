@@ -30,7 +30,7 @@ namespace cidk::ops {
     d.offs.compile(cx, p, env, stack, opts);
 
     if (d.offs.type == &cx.bool_type && d.offs.as_bool) {
-      d.offs.reset(p, cx.int_type, Int(-1));
+      d.offs.reset(cx.int_type, Int(-1));
     } else if (d.offs.type != &cx.int_type) {
       throw ESys(p, "Expected Int, was: ", d.offs.type->id);
     }
@@ -38,7 +38,7 @@ namespace cidk::ops {
     d.len.compile(cx, p, env, stack, opts);
 
     if (d.len.type == &cx.bool_type && d.len.as_bool) {
-      d.len.reset(p, cx.int_type, Int(-1));
+      d.len.reset(cx.int_type, Int(-1));
     } else if (d.len.type != &cx.int_type) {
       throw ESys(p, "Expected Int, was: ", d.len.type->id);
     }
@@ -67,8 +67,8 @@ namespace cidk::ops {
     }
 
     if (offs->is_eop()) {
-      offs.emplace(pos, cx.int_type, Int(1));
-      len.emplace(pos, cx.int_type, Int(1));
+      offs.emplace(cx.int_type, Int(1));
+      len.emplace(cx.int_type, Int(1));
       done = true;
     } else {      
       if (!(len = read_val(cx, pos, in))) {
@@ -76,7 +76,7 @@ namespace cidk::ops {
       }
 
       if (len->is_eop()) {
-        len.emplace(pos, cx.int_type, Int(1));
+        len.emplace(cx.int_type, Int(1));
         done = true;
       }
     }

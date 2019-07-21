@@ -95,7 +95,7 @@ namespace cidk {
       throw ESys(pos, "Invalid char literal: ", c);
     }
 
-    return Val(p, cx.char_type, wc);
+    return Val(cx.char_type, wc);
   }
 
   Val read_expr(Cx &cx, Pos &pos, istream &in) {
@@ -119,7 +119,7 @@ namespace cidk {
       }
     }
     
-    return Val(p, cx.expr_type, out);
+    return Val(cx.expr_type, out);
   }
 
   Val read_id(Cx &cx, Pos &pos, istream &in) {
@@ -137,7 +137,7 @@ namespace cidk {
     }
 
     if (!in.eof()) { in.unget();}
-    return Val(p, cx.sym_type, cx.intern(out.str()));
+    return Val(cx.sym_type, cx.intern(out.str()));
   }
   
   Val read_list(Cx &cx, Pos &pos, istream &in) {    
@@ -159,7 +159,7 @@ namespace cidk {
       out->items.push_back(*v);
     }
     
-    return Val(p, cx.list_type, out);
+    return Val(cx.list_type, out);
   }
   
   Val read_num(Cx &cx, Pos &pos, istream &in) {
@@ -175,7 +175,7 @@ namespace cidk {
 
     if (!in.eof()) { in.unget();}
     Int n(strtoll(out.str().c_str(), NULL, 10));
-    return Val(p, cx.int_type, n);
+    return Val(cx.int_type, n);
   }
 
   Val read_str(Cx &cx, Pos &pos, istream &in) {    
@@ -196,7 +196,7 @@ namespace cidk {
       out << c;
     }
     
-    return Val(p, cx.str_type, cx.str_type.pool.get(cx, out.str()));
+    return Val(cx.str_type, cx.str_type.pool.get(cx, out.str()));
   }
 
   void skip_ws(Pos &pos, istream &in) {

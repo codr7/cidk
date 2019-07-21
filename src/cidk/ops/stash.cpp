@@ -15,7 +15,7 @@ namespace cidk::ops {
     List *out(cx.list_type.pool.get(cx));
     move(stack.begin(), stack.end(), back_inserter(out->items));
     stack.clear();
-    stack.emplace_back(op.pos, cx.list_type, out);
+    stack.emplace_back(cx.list_type, out);
   }
 
   void StashType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {

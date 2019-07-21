@@ -26,7 +26,7 @@ namespace cidk {
     
     virtual void get_ids(const Val &val, IdSet &out) const override;
     virtual bool is(const Val &x, const Val &y) const override;
-    virtual void set(const Pos &pos, Val &dst, const Sym *val) const override;
+    virtual void set(Val &dst, const Sym *val) const override;
   };
 }
 

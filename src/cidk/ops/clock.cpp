@@ -47,7 +47,7 @@ namespace cidk::ops {
 
     Timer t;
     for (int i(0); i < nreps.as_int; i++) { d.body.eval(cx, op.pos, env, bs); }
-    stack.emplace_back(p, cx.int_type, Int(t.ms()));
+    stack.emplace_back(cx.int_type, Int(t.ms()));
   }
 
   void ClockType::get_ids(const Op &op, IdSet &out) const {

@@ -66,7 +66,7 @@ namespace cidk {
     Stack out;
     for (auto &v: val.as_list->items) { v.eval(cx, pos, env, out); }
     List *l(cx.list_type.pool.get(cx, out));
-    stack.emplace_back(pos, cx.list_type, l);
+    stack.emplace_back(cx.list_type, l);
   }
 
   void ListType::get_ids(const Val &val, IdSet &out) const {
@@ -79,7 +79,7 @@ namespace cidk {
 
   void ListType::mark_refs(const Val &val) const { val.as_list->mark(); }
 
-  void ListType::set(const Pos &pos, Val &dst, List *val) const { dst.as_list = val; }
+  void ListType::set(Val &dst, List *val) const { dst.as_list = val; }
 
   void ListType::splat(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
     for (auto &v: val.as_list->items) { stack.emplace_back(v); }

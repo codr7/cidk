@@ -22,7 +22,7 @@ namespace cidk {
 
     virtual bool is(const Val &x, const Val &y) const override;
     virtual void mark_refs(const Val &val) const override;
-    virtual void set(const Pos &pos, Val &dst, Str *val) const override;
+    virtual void set(Val &dst, Str *val) const override;
 
     virtual void splat(const Pos &pos,
                        const Val &val,

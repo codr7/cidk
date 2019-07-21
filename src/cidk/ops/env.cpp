@@ -22,7 +22,7 @@ namespace cidk::ops {
   }
 
   void EnvType::eval(Cx &cx, Op &op, cidk::Env &env, Stack &stack) const {
-    stack.emplace_back(op.pos, cx.env_type, &env);
+    stack.emplace_back(cx.env_type, &env);
   }
 
   void EnvType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {

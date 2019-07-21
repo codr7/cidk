@@ -111,7 +111,7 @@ namespace cidk {
                     Rest &&...rest) {
     auto &ft(cx.fun_type);
     Fun *f(ft.pool.get(cx, pos, id, args, rets, forward<Rest>(rest)...));
-    set(cx, pos, f->id, Val(pos, ft, f), false);
+    set(cx, pos, f->id, Val(ft, f), false);
     return *f;
   }
 
@@ -126,8 +126,7 @@ namespace cidk {
     set(cx,
         pos,
         t->id,
-        Val(pos,
-            (id == "Meta") ? *dynamic_cast<MetaType *>(t) : cx.meta_type,
+        Val((id == "Meta") ? *dynamic_cast<MetaType *>(t) : cx.meta_type,
             dynamic_cast<Type *>(t)),
         false);
     
@@ -136,7 +135,7 @@ namespace cidk {
 
   template <typename...Rest>
   void Env::add_var(Cx &cx, const Pos &pos, const string &id, Rest &&...rest) {
-    add_var(cx, pos, id, Val(pos, forward<Rest>(rest)...));
+    add_var(cx, pos, id, Val(forward<Rest>(rest)...));
   }
 
   template <typename ArgsT, typename RetsT>

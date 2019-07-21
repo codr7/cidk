@@ -24,7 +24,7 @@
 namespace cidk {
   static void bool_imp(Cx &cx, const Pos &p, const Fun &f, Env &env, Stack &stack) {
     auto &v(stack.back());
-    v.reset(p, cx.bool_type, v.get_bool());
+    v.reset(cx.bool_type, v.get_bool());
   }
   
   Cx::Cx():
@@ -51,9 +51,9 @@ namespace cidk {
     call(nullptr),
     _(nil_type),
     $(pop_type),
-    T(Pos::_, bool_type, true),
-    F(Pos::_, bool_type, false),
-    eop(Pos::_, sym_type, intern(";")),
+    T(bool_type, true),
+    F(bool_type, false),
+    eop(sym_type, intern(";")),
     stdin(&cin), stdout(&cout), stderr(&cerr) {
     libs::init_math(*this);
     env.add_const(*this, Pos::_, "_", _);

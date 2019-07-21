@@ -3,8 +3,6 @@
 * set env_escape in do_env compile if cloned
 * add fib_iter bench
 ** add set op with expr support like poke
-* remove typed Val constructor Pos arg
-** also remove from reset
 * --
 * add @ char reader
 ** read utf8

@@ -22,9 +22,7 @@ namespace cidk {
 
   void MetaType::mark_refs(const Val &val) const { val.as_type->mark(); }
 
-  void MetaType::set(const Pos &pos, Val &dst, Type *val) const {
-    dst.as_type = val;
-  }
+  void MetaType::set(Val &dst, Type *val) const { dst.as_type = val; }
 
   void MetaType::sweep(const Pos &pos, Val &val) { val.as_type->sweep(cx, pos); }
 

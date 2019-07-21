@@ -26,9 +26,7 @@ namespace cidk {
     val.as_ostream->ref_mark = true;
   }
 
-  void OStreamType::set(const Pos &pos, Val &dst, OStream *val) const {
-    dst.as_ostream = val;
-  }
+  void OStreamType::set(Val &dst, OStream *val) const { dst.as_ostream = val; }
 
   void OStreamType::sweep(const Pos &pos, Val &val) {
     val.as_ostream->sweep(cx, pos);
