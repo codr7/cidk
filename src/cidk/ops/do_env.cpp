@@ -31,8 +31,11 @@ namespace cidk::ops {
                           Opts *opts) const {
     auto &d(in->as<DoEnvData>());
     d.in.compile(cx, in->pos, env, stack, opts);
+
     auto &ep(cx.env_pool);
     Env &de((d.in.type == &cx.nil_type) ? *ep.get(cx) : *ep.get(env));
+
+    if (opts) { opts->env_escape = true; }
     d.body.compile(cx, in->pos, de, stack, opts);
     out.push_back(*in);
   }
@@ -51,7 +54,7 @@ namespace cidk::ops {
       auto in(pop(p, stack));
       de = &in.get_env();
     }
-    
+
     d.body.eval(cx, p, *de, stack);
   }
 

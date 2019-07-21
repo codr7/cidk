@@ -41,12 +41,9 @@ namespace cidk {
     Val(ValType &type);
 
     template <typename ValT>
-    Val(TValType<ValT> &type, ValT val): type(&type) {
-      type.set(*this, val);
-    }
+    Val(TValType<ValT> &type, ValT val): type(&type) { type.set(*this, val); }
     
     ~Val();
-
     const Val &operator =(const Val &src);
     
     Val &clone(const Pos &pos, Val &dst) const;
