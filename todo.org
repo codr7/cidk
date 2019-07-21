@@ -1,5 +1,10 @@
-* add fib_iter bench
+* fix fib_iter
+** add for op
+** add swap args
+*** int or sym
+*** default 2 1
 ** add set op with expr support like poke
+* --
 * move Def.cx to Type
 * add @ char reader
 ** read utf8
