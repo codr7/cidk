@@ -134,7 +134,7 @@ namespace cidk {
     }
   }
 
-  bool Env::set(const Pos &pos, const Sym *key, const Val &val, bool force) {
+  void Env::set(const Pos &pos, const Sym *key, const Val &val, bool force) {
     auto i(find(key));
     
     if (i == items.end() || i->first != key) {
@@ -143,14 +143,12 @@ namespace cidk {
       auto it(*i->second);
       
       if (&it.env == this) {
-        if (!force) { return false; }
+        if (!force) { throw ESys(pos, "Dup binding: ", key); }
         it.val = val;
       } else {
         i->second = cx.env_item_pool.get(*this, val);
       }
     }
-
-    return true;
   }
 
   void Env::sweep(Cx &cx, const Pos &pos) {

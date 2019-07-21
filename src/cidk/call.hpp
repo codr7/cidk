@@ -20,8 +20,6 @@ namespace cidk {
 
     void eval(Cx &cx, Env &env, Stack &stack);
   };
-
-  
 }
 
 #endif

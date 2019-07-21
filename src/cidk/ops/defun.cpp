@@ -49,7 +49,6 @@ namespace cidk::ops {
     auto &b(d.body.as_expr->body);
     copy(b.begin(), b.end(), back_inserter(f.body));
     d.body.get_ids(f.body_ids);
-    if (f.id) { env.set(p, f.id, Val(p, cx.fun_type, &f), false); }
     f.env.use(env, f.body_ids);
     cx.compile(f.body, &f.body_opts, *cx.env_pool.get(env), stack);
 
@@ -63,11 +62,8 @@ namespace cidk::ops {
   }
   
   void DefunType::eval(Op &op, Env &env, Stack &stack) const {
-    auto &cx(env.cx);
-    const Pos &p(op.pos);
     auto &f(*op.as<DefunData>().fun);
     f.env.use(env, f.body_ids);
-    if (f.id) { env.set(p, f.id, Val(p, cx.fun_type, &f), false); }
   }
 
   void DefunType::get_ids(const Op &op, IdSet &out) const {

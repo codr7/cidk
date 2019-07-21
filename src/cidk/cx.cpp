@@ -22,7 +22,7 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  static void Bool_imp(Cx &cx, const Pos &p, const Fun &f, Env &env, Stack &stack) {
+  static void bool_imp(Cx &cx, const Pos &p, const Fun &f, Env &env, Stack &stack) {
     auto &v(stack.back());
     v.reset(p, cx.bool_type, v.get_bool());
   }
@@ -64,7 +64,7 @@ namespace cidk {
     env.add_const_expr(*this, Pos::_, "env", {Op(*this, Pos::_, ops::Env)});
     env.add_const_expr(*this, Pos::_, "stack", {Op(*this, Pos::_, ops::Stash)});
     
-    env.add_fun(Pos::_, "Bool", {Arg("val")}, {Ret(bool_type)}, Bool_imp);
+    env.add_fun(Pos::_, "bool", {Arg("val")}, {Ret(bool_type)}, bool_imp);
   }
 
   void Cx::deinit() {
