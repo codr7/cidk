@@ -35,14 +35,13 @@ namespace cidk::ops {
   void BinOp::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
     const Pos &p(op.pos);
     auto &d(op.as<BinOpData>());
-    d.x.eval(cx, p, env, stack);
-    Val &x(stack.back());
-    d.y.eval(cx, p, env, stack);
-    Val &y(stack.back());
     Fun *f(d.fun);
+    d.x.eval(cx, p, env, stack);
+    ValType *xt(stack.back().type);
+    d.y.eval(cx, p, env, stack);
     
     if (!f) {
-      ValType *xt(x.type), *yt(y.type);
+      ValType *yt(stack.back().type);
       const Sym *fun_id(get_fun_id(cx));
       auto id((xt == yt) ? fun_id : cx.intern(str(fun_id->name, '[', yt->id, ']')));
       auto &fv(xt->env.get(p, id));

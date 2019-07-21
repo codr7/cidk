@@ -10,8 +10,7 @@ namespace cidk::libs {
                           const Fun &f,
                           Env &env, Stack &stack) {
     auto y(pop(p, stack));
-    Val &x(stack.back());
-    x.as_int += y.as_int;
+    stack.back().as_int += y.as_int;
   }
 
   static void int_sub_imp(Cx &cx,
@@ -19,8 +18,7 @@ namespace cidk::libs {
                           const Fun &f,
                           Env &env, Stack &stack) {
     auto y(pop(p, stack));
-    Val &x(stack.back());
-    x.as_int -= y.as_int;
+    stack.back().as_int -= y.as_int;
   }
 
   static void int_mul_imp(Cx &cx,
@@ -28,8 +26,7 @@ namespace cidk::libs {
                           const Fun &f,
                           Env &env, Stack &stack) {
     auto y(pop(p, stack));
-    Val &x(stack.back());
-    x.as_int *= y.as_int;
+    stack.back().as_int *= y.as_int;
   }
 
   static void int_div_imp(Cx &cx,
@@ -37,8 +34,7 @@ namespace cidk::libs {
                           const Fun &f,
                           Env &env, Stack &stack) {
     auto y(pop(p, stack));
-    Val &x(stack.back());
-    x.as_int /= y.as_int;
+    stack.back().as_int /= y.as_int;
   }
 
   static void int_lt_imp(Cx &cx,
