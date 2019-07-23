@@ -51,7 +51,7 @@ namespace cidk::ops {
     copy(b.begin(), b.end(), back_inserter(f.body));
     d.body.get_ids(f.body_ids);
     f.env.use(cx, env, f.body_ids);
-    cx.compile(f.body, &f.body_opts, *cx.env_pool.get(env), stack);
+    cx.compile(f.body, &f.body_opts, *cx.env_pool.get(cx, env), stack);
 
     if (opts) {
       opts->merge(f.body_opts);

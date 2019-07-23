@@ -33,10 +33,9 @@ namespace cidk::ops {
     d.in.compile(cx, in->pos, env, stack, opts);
 
     auto &ep(cx.env_pool);
-    Env &de((d.in.type == &cx.nil_type) ? *ep.get(cx) : *ep.get(env));
+    Env &de((d.in.type == &cx.nil_type) ? *ep.get(cx) : *ep.get(cx, env));
 
-    if (de.items.empty()) { de.use(cx, env, {cx.intern("env")}); }
-  
+    if (de.items.empty()) { de.use(cx, env, {cx.intern("env")}); }  
     if (opts) { opts->env_escape = true; }
     d.body.compile(cx, in->pos, de, stack, opts);
     out.push_back(*in);
@@ -50,7 +49,7 @@ namespace cidk::ops {
     if (d.in.type == &cx.nil_type) {
       de = cx.env_pool.get(cx);
     } else if (d.in.type == &cx.bool_type && d.in.as_bool) {
-      de = cx.env_pool.get(env);
+      de = cx.env_pool.get(cx, env);
     } else {
       d.in.eval(cx, p, env, stack);
       auto in(pop(p, stack));

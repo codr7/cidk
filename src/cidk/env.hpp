@@ -30,6 +30,7 @@ namespace cidk {
     
     Env(Cx &cx);
     Env(Cx &cx, const Env &src);
+    Env(const Env &src) = delete;
     Env &operator =(const Env &) = delete;
 
     bool add(Cx &cx, const Pos &pos, const Sym *key, const Val &val, bool silent);
