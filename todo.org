@@ -42,8 +42,3 @@ fun (fib ((n a b) Int) Int
 )
 
 * optimize env use with opts in do-env like Call
-
-func: fib-iter-stack Int Int (
-  0 1 rotr -- times: (dup rotl +)
-  swap drop
-)

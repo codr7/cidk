@@ -15,8 +15,9 @@ dump;
 defun fib2(_ Int)(Int) {
   push 1 0;
   swap 2;
+  dec;
   
-  for {dec;} _ {
+  for $ _ {
     drop;
     cp;
     swap 2;

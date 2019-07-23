@@ -47,5 +47,7 @@ defun fib3((_ a b) A)(A) {
   };
 };
 
+push N 0 1; call fib3; dump;
+
 clock REPS {push N 0 1; call fib3; drop;};
 dump;
