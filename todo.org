@@ -1,3 +1,5 @@
+* switch cp offs base to 0
+** test/bench/readme
 * finish for op
 ** add ValType.iter(const Val &src, function<void (const Val &)>)
 *** call with src in default imp

@@ -28,22 +28,22 @@ defun fib2((n a b) A)(A) {
 clock REPS {push N 0 1; call fib2; drop;};
 dump;
 
-defun fib3((_ a b) A)(A) {
-  cp;
-
+defun fib3((_ _ _) A)(A) {
+  swap 2; cp;
+  
   if $ {
     cp; is 1;
       
     if $ {
-      poke b;
+      drop; drop;
     } {
-      dec; 
-      push b; 
-      add a b;
+      dec;
+      swap 2; cp; swap 2;
+      add;
       recall;
     };
   } {
-    poke a;
+    drop; swap; drop; 
   };
 };
 
