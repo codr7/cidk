@@ -14,19 +14,18 @@ dump;
 
 defun fib2(_ Int)(Int) {
   push 1 0;
-  swap 2;
-  dec;
+  swap 2; dec;
   
   for $ _ {
     drop;
-    cp;
-    swap 2;
+    cp; swap 2;
     add;
   };
 
-  swap;
-  drop;
+  swap; drop;
 };
+
+push N; call fib2; dump;
 
 clock REPS {push N; call fib2; drop;};
 dump;

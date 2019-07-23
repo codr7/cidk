@@ -32,9 +32,9 @@ defun fib3((_ a b) A)(A) {
   cp;
 
   if $ {
-    cp;
-
-    if {is 1;} {
+    cp; is 1;
+      
+    if $ {
       poke b;
     } {
       dec; 
