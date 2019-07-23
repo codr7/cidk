@@ -111,7 +111,7 @@ namespace cidk {
                     Rest &&...rest) {
     auto &ft(cx.fun_type);
     Fun *f(ft.pool.get(cx, pos, id, args, rets, forward<Rest>(rest)...));
-    set(cx, pos, f->id, Val(ft, f), false);
+    let(cx, pos, f->id, Val(ft, f));
     return *f;
   }
 
@@ -123,12 +123,11 @@ namespace cidk {
                        Rest &&...rest) {
     TypeT *t(new TypeT(cx, pos, cx.intern(id), parents, forward<Rest>(rest)...));
     
-    set(cx,
+    let(cx,
         pos,
         t->id,
         Val((id == "Meta") ? *dynamic_cast<MetaType *>(t) : cx.meta_type,
-            dynamic_cast<Type *>(t)),
-        false);
+            dynamic_cast<Type *>(t)));
     
     return *t;
   }

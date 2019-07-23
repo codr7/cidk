@@ -69,11 +69,12 @@ namespace cidk {
     Iter find(const Sym *key);
     Val &get(const Pos &pos, const Sym *key);
     EnvItem &get_item(const Pos &pos, const Sym *key);
+    void let(Cx &cx, const Pos &pos, const Sym *key, const Val &val);
     void mark();
     void mark_items();
     void merge(Cx &cx, Env &src);
     void restore(Cx &cx, Env &org);
-    void set(Cx &cx, const Pos &pos, const Sym *key, const Val &val, bool force);
+    void set(Cx &cx, const Pos &pos, const Sym *key, const Val &val);
     virtual void sweep(Cx &cx, const Pos &pos) override;
     EnvItem *try_get(const Sym *key);
     void use(Cx &cx, Env &src, const IdSet &ids);

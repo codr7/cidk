@@ -32,6 +32,18 @@ do-env T {
   assert(stack) {eq stack (1 2);};
 };
 
+push 1 2 3;
+set 1 4;
+assert(stack) {eq stack (1 4 3);};
+
+do-env T {
+  let foo 1;
+  push foo;
+  set foo 2;
+  push foo;
+  assert(stack) {eq stack (1 2);};
+};
+
 push 42 7;
 poke 35 _;
 add;

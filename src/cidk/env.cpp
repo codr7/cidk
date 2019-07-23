@@ -14,18 +14,6 @@ namespace cidk {
     cx.envs.push(*this);
   }
 
-  bool Env::add(Cx &cx, const Pos &pos, const Sym *key, const Val &val, bool silent) {
-    auto i(find(key));
-
-    if (i != items.end() && i->first == key) {
-      if (!silent) { throw ESys(pos, "Dup binding: ", key); }
-      return false;
-    }
-
-    items.emplace(i, key, cx.env_item_pool.get(*this, val));
-    return true;
-  }
-
   void Env::add_const(Cx &cx, const Pos &pos, const string &id, const Val &val) {
     add_const(cx, pos, cx.intern(id), val);
   }
@@ -33,7 +21,7 @@ namespace cidk {
   void Env::add_const(Cx &cx, const Pos &pos, const Sym *id, const Val &val) {
     auto v(val);
     v.type = &v.type->const_type(pos);
-    add(cx, pos, id, v, false);
+    let(cx, pos, id, v);
   }
 
   void Env::add_const_expr(Cx &cx, const Pos &pos, const string &id, const Ops &ops) {
@@ -41,7 +29,7 @@ namespace cidk {
   }
 
   void Env::add_var(Cx &cx, const Pos &pos, const string &id, const Val &val) {
-    set(cx, Pos::_, cx.intern(id), val, false);
+    let(cx, Pos::_, cx.intern(id), val);
   }
 
   void Env::clear(Cx &cx) {
@@ -63,6 +51,18 @@ namespace cidk {
     auto i(find(key));
     if (i == items.end() || i->first != key) { throw ESys(pos, "Unknown id: ", key); }
     return *i->second;
+  }
+
+  void Env::let(Cx &cx, const Pos &pos, const Sym *key, const Val &val) {
+    auto i(find(key));
+    
+    if (i == items.end() || i->first != key) {
+      items.emplace(i, key, cx.env_item_pool.get(*this, val));
+    } else {
+      auto &it(*i->second);
+      if (it.env == this) { throw ESys(pos, "Duplicate binding: ", key); }
+      i->second = cx.env_item_pool.get(*this, val);
+    }
   }
 
   void Env::mark() {
@@ -127,20 +127,19 @@ namespace cidk {
     if (i != items.end()) { items.erase(i, items.end()); }
   }
 
-  void Env::set(Cx &cx, const Pos &pos, const Sym *key, const Val &val, bool force) {
+  void Env::set(Cx &cx, const Pos &pos, const Sym *key, const Val &val) {
     auto i(find(key));
     
     if (i == items.end() || i->first != key) {
-      items.emplace(i, key, cx.env_item_pool.get(*this, val));
-    } else {
-      auto it(*i->second);
+      throw ESys(pos, "Missing binding: ", key);
+    }
+
+    auto &it(*i->second);
       
-      if (it.env == this) {
-        if (!force) { throw ESys(pos, "Dup binding: ", key); }
-        it.val = val;
-      } else {
-        i->second = cx.env_item_pool.get(*this, val);
-      }
+    if (it.env == this) {
+      it.val = val;
+    } else {
+      i->second = cx.env_item_pool.get(*this, val);
     }
   }
 

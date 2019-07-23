@@ -39,7 +39,7 @@ namespace cidk::ops {
     Val v;
     d.val.clone(p, v);
     v.eval(cx, p, env, stack);
-    env.set(cx, p, d.key, pop(p, stack), false);
+    env.let(cx, p, d.key, pop(p, stack));
   }
 
   void LetType::get_ids(const Op &op, IdSet &out) const {
@@ -50,7 +50,6 @@ namespace cidk::ops {
 
   void LetType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
-    int n(0);
     
     for (;;) {
       auto k(read_val(cx, pos, in));
@@ -64,7 +63,6 @@ namespace cidk::ops {
       auto v(read_val(cx, pos, in));
       if (!v) { throw ESys(p, "Missing ;"); }
       out.emplace_back(cx, p, *this, k->as_sym, v->is_eop() ? cx.$ : *v);
-      n++;
     }
   }
 }

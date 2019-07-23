@@ -209,6 +209,26 @@ Expressions are evaluated with current value pushed on stack.
 
 (... 1 42 3)
 ```
+#### set [key val?]+
+Updates values on stack or in environment depending on key type. `val` is popped from stack if missing.
+
+```
+  push 1 2 3;
+  set 1 4;
+
+(... 1 4 3)
+```
+
+```
+  do-env T {
+    let foo 1;
+    push foo;
+    set foo 2;
+    push foo;
+  };
+
+(... 1 2)
+```
 
 #### swap [x y?]?
 Swaps values.
