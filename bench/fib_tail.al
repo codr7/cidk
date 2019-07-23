@@ -43,7 +43,7 @@ defun fib3((_ _ _) A)(A) {
       recall;
     };
   } {
-    drop; swap; drop; 
+    swap 1 2; drop; drop; 
   };
 };
 
