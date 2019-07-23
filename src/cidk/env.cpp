@@ -139,14 +139,7 @@ namespace cidk {
       throw ESys(pos, "Missing binding: ", key);
     }
 
-    auto &it(*i->second);
-      
-    if (it.env == this) {
-      it.val = val;
-    } else {
-      i->second->deref(cx);
-      i->second = cx.env_item_pool.get(*this, val);
-    }
+    i->second->val = val;
   }
 
   void Env::sweep(Cx &cx, const Pos &pos) {
