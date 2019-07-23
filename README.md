@@ -101,7 +101,7 @@ Passing `T` starts at the beginning and/or copies to end.
 Defines compile time constants for pairs of ids and values.
 
 ```
-  do-env _ {
+  do-env T {
     defconst foo 35 bar 7;
     push foo bar;
     add;
@@ -234,7 +234,7 @@ Default place is end of stack.
 While symbols act on the environment.
 
 ```
-  do-env _ {
+  do-env T {
     let foo 1 bar 2;
     swap foo bar;
     push foo bar;
@@ -246,7 +246,7 @@ While symbols act on the environment.
 Mixing is fine too.
 
 ```
-  do-env _ {
+  do-env T {
     let foo 1;
     push 2;
     swap foo;

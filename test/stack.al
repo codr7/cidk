@@ -9,6 +9,29 @@ push 1 2 3;
 cp T T;
 assert(stack) {eq stack (1 2 3 1 2 3);};
 
+push 1 2 3;
+swap 0 1;
+assert(stack) {eq stack (1 3 2);};
+
+push 1 2 3;
+swap 1;
+assert(stack) {eq stack (1 3 2);};
+
+do-env T {
+  let foo 1 bar 2;
+  swap foo bar;
+  push foo bar;
+  assert(stack) {eq stack (2 1);};
+};
+
+do-env T {
+  let foo 1;
+  push 2;
+  swap foo;
+  push foo;
+  assert(stack) {eq stack (1 2);};
+};
+
 push 42 7;
 poke 35 _;
 add;
