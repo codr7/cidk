@@ -1,10 +1,12 @@
-* fix fib_iter
-** add for op
-*** add function<Val (Val in)> iter to ValType
-*** add function<bool (Val in, Val &out)> pop to ValType
-**** implement as dec for int
-**** use to iterate loop
+* add for op
+** add function<Val (Val in)> iter to ValType
+** add function<bool (Val in, Val &out)> pop to ValType
+*** implement as dec for int
+*** use to iterate loop
+* bench/fib_iter.al
 * --
+* fix Env mem leak
+** valgrind --leak-check=full ./cidk -debug ../test/run.al
 * move Def.cx to Type
 * add @ char reader
 ** read utf8

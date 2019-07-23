@@ -61,6 +61,7 @@ namespace cidk {
     } else {
       auto &it(*i->second);
       if (it.env == this) { throw ESys(pos, "Duplicate binding: ", key); }
+      i->second->deref(cx);
       i->second = cx.env_item_pool.get(*this, val);
     }
   }
@@ -109,7 +110,10 @@ namespace cidk {
     auto i(items.begin()), j(org.items.begin());
     
     for (; i != items.end() && j != org.items.end(); i++, j++) {
-      while (i->first < j->first) { i = items.erase(i); }
+      while (i->first < j->first) {
+        i->second->deref(cx);
+        i = items.erase(i);
+      }
 
       if (i->first == j->first) {
         if (i->second != j->second) {
@@ -124,7 +128,8 @@ namespace cidk {
       }
     }
 
-    if (i != items.end()) { items.erase(i, items.end()); }
+    for (auto j(i); j != items.end(); j++) { i->second->deref(cx); }
+    items.erase(i, items.end());
   }
 
   void Env::set(Cx &cx, const Pos &pos, const Sym *key, const Val &val) {
@@ -139,6 +144,7 @@ namespace cidk {
     if (it.env == this) {
       it.val = val;
     } else {
+      i->second->deref(cx);
       i->second = cx.env_item_pool.get(*this, val);
     }
   }
@@ -147,8 +153,7 @@ namespace cidk {
     for (auto &i: items) {
       auto &v(*i.second);
       if (v.env == this) { v.env = nullptr; }
-      v.deref(cx);
-      
+      v.deref(cx);      
     }
     
     dynamic_cast<Ls<Env, CxEnvs> *>(this)->unlink();
