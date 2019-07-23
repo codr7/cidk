@@ -1,9 +1,10 @@
-* add for op
-** add function<Val (Val in)> iter to ValType
-** add function<bool (Val in, Val &out)> pop to ValType
-*** implement as dec for int
-*** use to iterate loop
-* bench/fib_iter.al
+* finish for op
+** add ValType.iter(const Val &src, function<void (const Val &)>)
+*** call with src in default imp
+*** update for op to use iter
+** bind var if not _
+*** let / set / del
+**** add Env.del
 * --
 * move Def.cx to Type
 * add @ char reader
@@ -40,3 +41,9 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
+* optimize env use with opts in do-env like Call
+
+func: fib-iter-stack Int Int (
+  0 1 rotr -- times: (dup rotl +)
+  swap drop
+)

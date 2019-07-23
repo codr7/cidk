@@ -68,13 +68,13 @@ namespace cidk::ops {
     Pos p(pos);
 
     auto cond(read_val(cx, pos, in));
-    if (!cond) { throw ESys(p, "Missing if cond"); }
+    if (!cond || cond->is_eop()) { throw ESys(p, "Missing if cond"); }
 
     auto x(read_val(cx, pos, in));
-    if (!x) { throw ESys(p, "Missing if branch"); }
+    if (!x  || x->is_eop()) { throw ESys(p, "Missing if branch"); }
 
     auto y(read_val(cx, pos, in));
-    if (!y) { throw ESys(p, "Missing else branch"); }
+    if (!y || y->is_eop()) { throw ESys(p, "Missing else branch"); }
     read_eop(pos, in);
 
     out.emplace_back(cx, p, *this, *cond, *x, *y);
