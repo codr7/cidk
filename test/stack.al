@@ -38,10 +38,14 @@ assert(stack) {eq stack (1 4 3);};
 
 do-env T {
   let foo 1;
-  push foo;
   set foo 2;
-  push foo;
-  assert(stack) {eq stack (1 2);};
+  assert(stack) {eq foo 2;};
+};
+
+do-env T {
+  let foo 1;
+  set foo {add 41;};
+  assert(foo) {eq foo 42;}; 
 };
 
 push 42 7;

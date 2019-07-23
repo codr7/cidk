@@ -1,7 +1,4 @@
 * fix fib_iter
-** finish set op 
-*** add expr support like poke
-*** update readme + tests
 ** add for op
 *** add function<Val (Val in)> iter to ValType
 *** add function<bool (Val in, Val &out)> pop to ValType

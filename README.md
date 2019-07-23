@@ -230,6 +230,18 @@ Updates values on stack or in environment depending on key type. `val` is popped
 (... 1 2)
 ```
 
+Expressions are evaluated with current value pushed on stack.
+
+```
+  do-env T {
+    let foo 1;
+    set foo {add 41;};
+    push foo;
+  };
+
+(... 42)
+```
+
 #### swap [x y?]?
 Swaps values.
 

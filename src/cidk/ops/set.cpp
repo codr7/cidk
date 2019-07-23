@@ -2,12 +2,16 @@
 #include "cidk/e.hpp"
 #include "cidk/ops/set.hpp"
 #include "cidk/read.hpp"
+#include "cidk/types/expr.hpp"
 #include "cidk/types/sym.hpp"
 
 namespace cidk::ops {
   struct SetData {
-    Val key, val;    
-    SetData(const Val &key, const Val &val): key(key), val(val) {}
+    Val key, val;
+    bool is_expr;
+    
+    SetData(const Val &key, const Val &val, bool is_expr):
+      key(key), val(val), is_expr(is_expr) {}
   };
 
   const SetType Set("set");
@@ -15,7 +19,7 @@ namespace cidk::ops {
   SetType::SetType(const string &id): OpType(id) {}
 
   void SetType::init(Cx &cx, Op &op, const Val &key, const Val &val) const {
-    op.data = SetData(key, val);
+    op.data = SetData(key, val, val.type == &cx.expr_type);
   }
 
   void SetType::compile(Cx &cx,
@@ -36,6 +40,15 @@ namespace cidk::ops {
 
     Val v;
     d.val.clone(p, v);
+
+    if (d.is_expr) {
+      if (d.key.type == &cx.int_type) {
+        stack.push_back(stack[d.key.as_int]);
+      } else {
+        stack.push_back(env.get(p, d.key.as_sym));
+      }
+    }
+    
     v.eval(cx, p, env, stack);
     v = pop(p, stack);
   

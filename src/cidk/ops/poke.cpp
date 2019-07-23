@@ -11,8 +11,8 @@ namespace cidk::ops {
     Val val;
     bool is_expr;
     
-    PokeData(size_t offs, const Val &val):
-      offs(offs), val(val), is_expr(val.type == &val.type->cx.expr_type) {}
+    PokeData(size_t offs, const Val &val, bool is_expr):
+      offs(offs), val(val), is_expr(is_expr) {}
   };
   
   const PokeType Poke("poke");
@@ -20,7 +20,7 @@ namespace cidk::ops {
   PokeType::PokeType(const string &id): OpType(id) {}
 
   void PokeType::init(Cx &cx, Op &op, size_t offs, const Val &val) const {
-    op.data = PokeData(offs, val);
+    op.data = PokeData(offs, val, val.type == &cx.expr_type);
   }
 
   void PokeType::compile(Cx &cx,
