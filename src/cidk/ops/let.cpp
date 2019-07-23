@@ -62,8 +62,8 @@ namespace cidk::ops {
       }
 
       auto v(read_val(cx, pos, in));
-      if (!v) { throw ESys(p, "Missing let value"); }
-      out.emplace_back(cx, p, *this, k->as_sym, *v);
+      if (!v) { throw ESys(p, "Missing ;"); }
+      out.emplace_back(cx, p, *this, k->as_sym, v->is_eop() ? cx.$ : *v);
       n++;
     }
   }

@@ -210,6 +210,53 @@ Expressions are evaluated with current value pushed on stack.
 (... 1 42 3)
 ```
 
+#### swap [x y?]?
+Swaps values.
+
+Integers index the stack from end.
+
+```
+  push 1 2 3;
+  swap 0 1;
+
+(... 1 3 2)
+```
+
+Default place is end of stack.
+
+```
+  push 1 2 3;
+  swap 1;
+
+(... 1 3 2)
+```
+
+While symbols act on the environment.
+
+```
+  do-env _ {
+    let foo 1 bar 2;
+    swap foo bar;
+    push foo bar;
+  };
+
+(... 2 1)
+```
+
+Mixing is fine too.
+
+```
+  do-env _ {
+    let foo 1;
+    push 2;
+    swap foo;
+    push foo;
+  };
+
+(... 1 2)
+  
+```
+
 #### sweep
 Sweeps non-marked references.
 

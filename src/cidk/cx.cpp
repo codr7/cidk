@@ -124,8 +124,10 @@ namespace cidk {
     Pos p(src);
     auto prev(load_path);
     load_path = src.parent_path();
-    read_ops(*this, p, f, out);
-    compile(out, opts, env, stack);
+    Ops ops;
+    read_ops(*this, p, f, ops);
+    compile(ops, opts, env, stack);
+    copy(ops.begin(), ops.end(), back_inserter(out));
     load_path = prev;
   }
   

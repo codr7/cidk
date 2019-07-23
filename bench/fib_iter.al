@@ -5,10 +5,8 @@ defun fib1(n Int)(Int) {
   
   for {dec n;} {  
     swap a b;
-    set b {add a b;}; 
+    set b {add a b; cp;}; 
   };
-
-  push b;
 };
 
 clock REPS {push N; call fib1; drop;};
