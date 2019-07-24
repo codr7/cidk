@@ -5,14 +5,12 @@
 namespace cidk {
   Expr::Expr(Cx &cx): Ref(cx) {}
 
-  Expr::Expr(Cx &cx, const Ops &body): Ref(cx), body(body) {}
-
-  void Expr::eval(Cx &cx, Env &env, Stack &stack) { cx.eval(body, env, stack); }
+  Expr::Expr(Cx &cx, const Ops &ops): Ref(cx), ops(ops) {}
 
   void Expr::mark() {
     if (!ref_mark) {
       ref_mark = true;
-      mark_refs(body);
+      mark_refs(ops);
     }
   }
   

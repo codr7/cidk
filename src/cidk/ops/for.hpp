@@ -7,7 +7,7 @@
 namespace cidk::ops {
   struct ForType: OpType {
     ForType(const string &id);
-    void init(Cx &cx, Op &op, const Val &src, const Val &var, const Val &body) const;
+    void init(Cx &cx, Op &op, const Val &src, const Sym *var, Expr &body) const;
 
     virtual void compile(Cx &cx,
                          OpIter &in,

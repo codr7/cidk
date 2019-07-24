@@ -47,7 +47,7 @@ namespace cidk::ops {
       if (i->id) { f.body.emplace_back(cx, p, Let, i->id, cx.$); }
     }
 
-    auto &b(d.body.as_expr->body);
+    auto &b(d.body.as_expr->ops);
     copy(b.begin(), b.end(), back_inserter(f.body));
     d.body.get_ids(f.body_ids);
     f.env.use(cx, env, f.body_ids);

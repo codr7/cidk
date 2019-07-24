@@ -14,6 +14,6 @@ namespace cidk {
                     const Val &val,
                     Env &env,
                     Stack &stack) const {
-    val.as_expr->body.front().eval(cx, env, stack);
+    val.as_expr->ops.front().eval(cx, env, stack);
   }
 }

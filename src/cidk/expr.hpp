@@ -10,11 +10,10 @@ namespace cidk {
   struct Val;
   
   struct Expr: Ref {
-    Ops body;
+    Ops ops;
     
     Expr(Cx &cx);
-    Expr(Cx &cx, const Ops &body);
-    void eval(Cx &cx, Env &env, Stack &stack);
+    Expr(Cx &cx, const Ops &ops);
     void mark();
     virtual void sweep(Cx &cx, const Pos &pos) override;
   };

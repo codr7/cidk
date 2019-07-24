@@ -17,7 +17,7 @@ namespace cidk {
                          Env &env,
                          Stack &stack,
                          Opts *opts) const {
-    cx.compile(val.as_expr->body, opts, env, stack);
+    cx.compile(val.as_expr->ops, opts, env, stack);
   }
 
   void ExprType::dump(const Val &val, ostream &out) const {    
@@ -29,11 +29,11 @@ namespace cidk {
                       const Val &val,
                       Env &env,
                       Stack &stack) const {
-    val.as_expr->eval(cx, env, stack);
+    cx.eval(val.as_expr->ops, env, stack);
   }
 
   void ExprType::get_ids(const Val &val, IdSet &out) const {
-    cidk::get_ids(val.as_expr->body, out);
+    cidk::get_ids(val.as_expr->ops, out);
   }
 
   bool ExprType::is(const Val &x, const Val &y) const {

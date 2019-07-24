@@ -115,12 +115,12 @@ namespace cidk {
       
       in.unget();
 
-      if (!read_op(cx, pos, in, out->body)) {
+      if (!read_op(cx, pos, in, out->ops)) {
         throw ESys(pos, "Open expr");
       }
     }
 
-    return (out->body.size() == 1)
+    return (out->ops.size() == 1)
       ? Val(cx.sexpr_type, out)
       : Val(cx.expr_type, out);
   }
