@@ -13,7 +13,7 @@ defun fib1(n Int)(Int) {
 clock REPS {push N; call fib1; drop;};
 dump;
 
-defun fib2(_ A)(A) {
+defun fib2(_ Int)(Int) {
   if {cp; lt $ 2;} _ {
     dec; cp;
     call fib2; 

@@ -9,6 +9,13 @@
 ** bind var if not _
 *** let / set / del
 **** add Env.del
+* add OpType
+** forward eval to body.front()
+** inherit ExprType
+** derive Expr
+** add Type.isa(parent)
+** switch Expr checks to use Type.isa
+** bench
 * --
 * move Def.cx to Type
 * add @ char reader

@@ -14,7 +14,7 @@ defun fib1((n a b) Int)(Int) {
 clock REPS {push N 0 1; call fib1; drop;};
 dump;
 
-defun fib2((n a b) A)(A) {
+defun fib2((n a b) Int)(Int) {
   if n {
     if {is n 1;} b {
       dec n; 
@@ -28,7 +28,7 @@ defun fib2((n a b) A)(A) {
 clock REPS {push N 0 1; call fib2; drop;};
 dump;
 
-defun fib3((_ _ _) A)(A) {
+defun fib3((_ _ _) Int)(Int) {
   swap 2; cp;
   
   if $ {
