@@ -20,7 +20,7 @@ namespace cidk::ops {
   PokeType::PokeType(const string &id): OpType(id) {}
 
   void PokeType::init(Cx &cx, Op &op, size_t offs, const Val &val) const {
-    op.data = PokeData(offs, val, val.type->isa(&cx.expr_type));
+    op.data = PokeData(offs, val, val.type->isa(cx.expr_type));
   }
 
   void PokeType::compile(Cx &cx,

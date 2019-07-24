@@ -20,9 +20,10 @@ namespace cidk {
     }
   }
 
-  Type *Type::isa(Type *parent) const {
-    if (parent == this) { return parent; }
-    auto i(parents.find(parent));
+  Type *Type::isa(Type &parent) const {
+    Type *p(&parent);
+    if (p == this) { return p; }
+    auto i(parents.find(p));
     return (i == parents.end()) ? nullptr : i->second;
   }
   

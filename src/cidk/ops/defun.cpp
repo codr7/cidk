@@ -92,7 +92,7 @@ namespace cidk::ops {
     auto body(read_val(cx, pos, in));
     if (!body || body->is_eop()) { throw ESys(p, "Missing function body"); }
 
-    if (!body->type->isa(&cx.expr_type)) {
+    if (!body->type->isa(cx.expr_type)) {
       throw ESys(p, "Invalid function body: ", body->type->id);
     }
 
