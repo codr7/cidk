@@ -21,13 +21,14 @@ namespace cidk::ops {
   void SwapType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
     const Pos &p(op.pos);
     const auto &d(op.as<SwapData>());
-
+    const auto ss(stack.size());
+    
     Val
       &x((d.x.type == &cx.int_type)
-         ? stack[stack.size() - d.x.as_int - 1]
+         ? stack[ss - d.x.as_int - 1]
          : env.get(p, d.x.as_sym)),
       &y((d.y.type == &cx.int_type)
-         ? stack[stack.size() - d.y.as_int - 1]
+         ? stack[ss - d.y.as_int - 1]
          : env.get(p, d.y.as_sym));
 
     swap(x, y);
