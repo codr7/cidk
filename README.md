@@ -71,7 +71,7 @@ Adds arguments and pushes result. `x` and `y` are popped from stack if missing.
 #### call fun+
 Calls functions in specified order. `fun` is popped from stack if missing.
 
-#### cp [offs 1] [len 1]
+#### cp [offs 0] [len 1]
 Copies `nvals` items starting at `offs` to end of stack.
 
 ```
@@ -143,7 +143,7 @@ Evaluates body on stack. Passing `_` creates a new empty stack.
 (... (1 2 3 4) 5 6)
 ```
 
-#### drop n=1
+#### drop [n 1]
 Drops `n` values from stack.
 
 ```

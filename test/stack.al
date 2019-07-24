@@ -2,7 +2,7 @@ push 1 2 3; cp;
 assert(stack) {eq stack (1 2 3 3);};
 
 push 1 2 3 4 5;
-cp 4 3;
+cp 3 3;
 assert(stack) {eq stack (1 2 3 4 5 2 3 4);};
 
 push 1 2 3;
