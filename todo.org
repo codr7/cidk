@@ -1,5 +1,6 @@
 * add Go benchmarks
 * finish for op
+** convert var to const Sym * / body to Expr &
 ** add ValType.iter(const Val &src, function<void (const Val &)>)
 *** call with src in default imp
 *** update for op to use iter
@@ -7,6 +8,7 @@
 *** let / del
 **** add Env.del
 *** update val in place
+** bench fib_iter
 * --
 * move Def.cx to Type
 * add @ char reader
