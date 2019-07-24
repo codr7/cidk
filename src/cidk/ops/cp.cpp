@@ -20,13 +20,18 @@ namespace cidk::ops {
 
   void CpType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
     const auto &d(op.as<CpData>());
-    
+    auto ss(stack.size());
+      
     auto
-      offs((d.offs == -1) ? stack.size()-1 : d.offs),
-      len((d.len == -1) ? offs+1 : d.len);
+      offs((d.offs == -1) ? ss - 1 : d.offs),
+      len((d.len == -1) ? offs + 1 : d.len);
 
-    auto i(stack.end() - offs - 1), j(i + len);
-    copy(i, j, back_inserter(stack));
+    if (len == 1) {
+      stack.push_back(stack[ss - offs - 1]);
+    } else {
+      auto i(stack.end() - offs - 1), j(i + len);
+      copy(i, j, back_inserter(stack));
+    }
   }
 
   void CpType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
