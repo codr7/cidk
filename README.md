@@ -143,6 +143,16 @@ Evaluates body on stack. Passing `_` creates a new empty stack.
 (... (1 2 3 4) 5 6)
 ```
 
+#### drop n=1
+Drops `n` values from stack.
+
+```
+  push 1 2 3;
+  drop 2;
+
+(... 1)
+```
+
 #### dump val+
 Dumps values to `stderr`. `val` is popped from stack if missing.
 

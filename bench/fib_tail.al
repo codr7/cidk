@@ -35,7 +35,7 @@ defun fib3((_ _ _) Int)(Int) {
     cp; is 1;
       
     if $ {
-      drop; drop;
+      drop 2;
     } {
       dec;
       swap 2; cp; swap 2;
@@ -43,7 +43,7 @@ defun fib3((_ _ _) Int)(Int) {
       recall;
     };
   } {
-    swap 1 2; drop; drop; 
+    swap 1 2; drop 2; 
   };
 };
 

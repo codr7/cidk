@@ -1,5 +1,3 @@
-* add n-arg to drop op
-** use in fib_tail
 * switch cp offs base to 0
 ** test/bench/readme
 * finish for op
