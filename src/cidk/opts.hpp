@@ -6,7 +6,6 @@ namespace cidk {
     bool env_escape, env_extend;
     
     Opts();
-    void merge(const Opts &src);
   };
 };
 

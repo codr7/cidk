@@ -52,12 +52,7 @@ namespace cidk::ops {
     d.body.get_ids(f.body_ids);
     f.env.use(cx, env, f.body_ids);
     cx.compile(f.body, &f.body_opts, *cx.env_pool.get(cx, env), stack);
-
-    if (opts) {
-      opts->merge(f.body_opts);
-      opts->env_escape = true;
-    }
-    
+    if (opts) { opts->env_escape = true; }
     d.fun = &f;
     out.push_back(*in);
   }
