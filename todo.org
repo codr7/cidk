@@ -7,8 +7,9 @@
 *** call with src in default imp
 *** update for op to use iter
 ** bind var if not _
-*** let / set / del
+*** let / del
 **** add Env.del
+*** update val in place
 * add OpType
 ** forward eval to body.front()
 ** inherit ExprType
