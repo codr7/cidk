@@ -1,3 +1,4 @@
+* profile benchmarks
 * add Go benchmarks
 * finish for op
 ** add ValType.iter(const Val &src, function<void (const Val &)>)

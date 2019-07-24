@@ -38,7 +38,7 @@ namespace cidk {
                      const Val &val,
                      Env &env,
                      Stack &stack) const {
-    stack.emplace_back(val);
+    stack.push_back(val);
   }
 
   void ValType::get_ids(const Val &val, IdSet &out) const {}
