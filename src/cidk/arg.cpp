@@ -20,7 +20,9 @@ namespace cidk {
     vector<const Sym *> ids;
     
     for (auto i(vs.begin()); i != vs.end(); i++) {
-      if (i->type == &cx.sym_type) {
+      if (i->type == &cx.nil_type) {
+        ids.push_back(nullptr);
+      } else if (i->type == &cx.sym_type) {
         ids.push_back(i->as_sym);
       } else if (i->type == &cx.list_type) {
         for (auto &id: i->as_list->items) {
@@ -30,7 +32,7 @@ namespace cidk {
 
           ids.push_back((id.type == &cx.sym_type) ? id.as_sym : nullptr);
         }
-      } else if (i->type != &cx.nil_type) {
+      } else {
         throw ESys(pos, "Invalid argument: ", i->type->id);
       }
 
