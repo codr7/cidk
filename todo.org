@@ -1,4 +1,10 @@
-* add const lookup to sym reader
+* add OpType
+** forward eval to body.front()
+** inherit ExprType
+** derive Expr
+** add Type.isa(parent)
+** switch Expr checks to use Type.isa
+** bench
 * finish for op
 ** add ValType.iter(const Val &src, function<void (const Val &)>)
 *** call with src in default imp
@@ -7,13 +13,6 @@
 *** let / del
 **** add Env.del
 *** update val in place
-* add OpType
-** forward eval to body.front()
-** inherit ExprType
-** derive Expr
-** add Type.isa(parent)
-** switch Expr checks to use Type.isa
-** bench
 * --
 * move Def.cx to Type
 * add @ char reader

@@ -18,10 +18,7 @@ namespace cidk {
                         Env &env,
                         Stack &stack,
                         Opts *opts) const {
-    if (auto i(env.try_get(val.as_sym)); i) {
-      i->val.eval(cx, pos, env, stack);
-      val = pop(pos, stack);
-    }
+    if (auto i(env.try_get(val.as_sym)); i) { i->val.clone(pos, val); }
   }
 
   void SymType::cp(Val &dst, const Val &src) const { dst.as_sym = src.as_sym; }
