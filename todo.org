@@ -1,10 +1,4 @@
-* add OpType
-** forward eval to body.front()
-** inherit ExprType
-** derive Expr
-** add Type.isa(parent)
-** switch Expr checks to use Type.isa
-** bench
+* add Go benchmarks
 * finish for op
 ** add ValType.iter(const Val &src, function<void (const Val &)>)
 *** call with src in default imp
@@ -50,3 +44,7 @@ fun (fib ((n a b) Int) Int
 )
 
 
+* add isa x? y? op
+* add return support
+** add eval state
+** handle in Call.eval

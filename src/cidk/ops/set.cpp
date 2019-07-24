@@ -19,7 +19,7 @@ namespace cidk::ops {
   SetType::SetType(const string &id): OpType(id) {}
 
   void SetType::init(Cx &cx, Op &op, const Val &key, const Val &val) const {
-    op.data = SetData(key, val, val.type == &cx.expr_type);
+    op.data = SetData(key, val, val.type->isa(&cx.expr_type));
   }
 
   void SetType::compile(Cx &cx,

@@ -27,6 +27,7 @@ namespace cidk {
   struct NilType;
   struct PopType;
   struct Ref;
+  struct SexprType;
   struct StrType;
   struct SymType;
   
@@ -54,7 +55,10 @@ namespace cidk {
     BoolType &bool_type;
     CharType &char_type;
     EnvType &env_type;
+
     ExprType &expr_type;
+    SexprType &sexpr_type;
+
     FunType &fun_type;
     IntType &int_type;
     ListType &list_type;
@@ -62,7 +66,7 @@ namespace cidk {
     PopType &pop_type;
     StrType &str_type;
     SymType &sym_type;
-
+    
     vector<Ops *> ops;
     EvalState eval_state;
     Call *call;

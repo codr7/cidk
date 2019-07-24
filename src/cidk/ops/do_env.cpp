@@ -74,15 +74,11 @@ namespace cidk::ops {
   void DoEnvType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
     auto _in(read_val(cx, pos, in));
-    if (!_in) { throw ESys(p, "Missing do-env input"); }
+    if (!_in || _in->is_eop()) { throw ESys(p, "Missing do-env input"); }
 
     auto body(read_val(cx, pos, in));
-    if (!body) { throw ESys(p, "Missing do-env body"); }
+    if (!body || body->is_eop()) { throw ESys(p, "Missing do-env body"); }
 
-    if (body->type != &cx.expr_type) {
-      throw ESys(p, "Expected Expr, was: ", body->type->id);
-    }
-    
     read_eop(pos, in);
     out.emplace_back(cx, p, *this, *_in, *body);
   }

@@ -9,6 +9,7 @@
 #include "cidk/types/expr.hpp"
 #include "cidk/types/list.hpp"
 #include "cidk/types/pop.hpp"
+#include "cidk/types/sexpr.hpp"
 #include "cidk/types/str.hpp"
 #include "cidk/types/sym.hpp"
 
@@ -118,8 +119,10 @@ namespace cidk {
         throw ESys(pos, "Open expr");
       }
     }
-    
-    return Val(cx.expr_type, out);
+
+    return (out->body.size() == 1)
+      ? Val(cx.sexpr_type, out)
+      : Val(cx.expr_type, out);
   }
 
   Val read_id(Cx &cx, Pos &pos, istream &in) {

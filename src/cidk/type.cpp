@@ -8,7 +8,23 @@ namespace cidk {
     for (auto pt: parents) { derive(cx, *pt); }
   }
   
-  void Type::derive(Cx &cx, Type &parent) { env.merge(cx, parent.env); }
+  void Type::derive(Cx &cx, Type &parent) {
+    env.merge(cx, parent.env);
+    Type *p(&parent);
+    parents.emplace(p, p);
+    
+    for(auto &i: parent.parents) {
+      Type *pp(i.first);
+      env.merge(cx, pp->env);
+      parents.emplace(pp, p);
+    }
+  }
+
+  Type *Type::isa(Type *parent) const {
+    if (parent == this) { return parent; }
+    auto i(parents.find(parent));
+    return (i == parents.end()) ? nullptr : i->second;
+  }
   
   void Type::mark() {
     if (!ref_mark) {

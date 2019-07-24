@@ -66,15 +66,10 @@ namespace cidk::ops {
     Pos p(pos);
 
     auto nreps(read_val(cx, pos, in));
-    if (!nreps) { throw ESys(p, "Missing clock nreps"); }
+    if (!nreps || nreps->is_eop()) { throw ESys(p, "Missing clock nreps"); }
 
     auto body(read_val(cx, pos, in));
-    if (!body) { throw ESys(p, "Missing clock body"); }
-
-    if (body->type != &cx.expr_type) {
-      throw ESys(p, "Expected Expr, was: ", body->type->id);
-    }
-
+    if (!body || body->is_eop()) { throw ESys(p, "Missing clock body"); }
     read_eop(pos, in);
     
     out.emplace_back(cx, p, *this, *nreps, *body);
