@@ -2,7 +2,7 @@
   
 ```
 defun fib(n Int)(Int) {
-  if {lt n 2;} n {
+  lt n 2; if $ n {
     dec n;
     call fib;
     dec n;
