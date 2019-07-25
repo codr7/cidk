@@ -3,11 +3,16 @@
 #include "cidk/ops/is.hpp"
 #include "cidk/read.hpp"
 #include "cidk/types/bool.hpp"
+#include "cidk/types/expr.hpp"
+#include "cidk/types/pop.hpp"
 
 namespace cidk::ops {
   struct IsData {
     Val x, y;
-    IsData(const Val &x, const Val &y): x(x), y(y) {}
+    bool x_expr, y_expr;
+    
+    IsData(const Val &x, bool x_expr, const Val &y, bool y_expr):
+      x(x), y(y), x_expr(x_expr), y_expr(y_expr) {}
   };
   
   const IsType Is("is");
@@ -15,7 +20,7 @@ namespace cidk::ops {
   IsType::IsType(const string &id): OpType(id) {}
 
   void IsType::init(Cx &cx, Op &op, const Val &x, const Val &y) const {
-    op.data = IsData(x, y);
+    op.data = IsData(x, x.type->isa(cx.expr_type), y, y.type->isa(cx.expr_type));
   }
 
   void IsType::compile(Cx &cx,
@@ -34,10 +39,10 @@ namespace cidk::ops {
   void IsType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
     const Pos &p(op.pos);
     const IsData &d(op.as<IsData>());
-    d.x.eval(cx, p, env, stack);
-    auto x(pop(p, stack));
-    d.y.eval(cx, p, env, stack);
-    auto y(pop(p, stack));
+    if (d.x_expr) { d.x.eval(cx, p, env, stack); }
+    auto x((d.x_expr || d.x.type == &cx.pop_type) ? pop(p, stack) : d.x);
+    if (d.y_expr) { d.y.eval(cx, p, env, stack); }
+    auto y((d.y_expr || d.y.type == &cx.pop_type) ? pop(p, stack) : d.y);
     stack.emplace_back(cx.bool_type, x.is(y));
   }
 

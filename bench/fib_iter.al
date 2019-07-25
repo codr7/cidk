@@ -26,7 +26,5 @@ defun fib2(_ Int)(Int) {
   swap; drop;
 };
 
-push N; call fib2; dump;
-
 clock REPS {push N; call fib2; drop;};
 dump;

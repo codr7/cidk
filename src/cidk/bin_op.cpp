@@ -37,11 +37,11 @@ namespace cidk::ops {
     auto &d(op.as<BinOpData>());
     Fun *f(d.fun);
     d.x.eval(cx, p, env, stack);
-    ValType *xt(stack.back().type);
     d.y.eval(cx, p, env, stack);
     
     if (!f) {
-      ValType *yt(stack.back().type);
+      auto i(stack.end()-1), j(i-1);
+      ValType *xt(i->type), *yt(j->type);
       const Sym *fun_id(get_fun_id(cx));
       auto id((xt == yt) ? fun_id : cx.intern(str(fun_id->name, '[', yt->id, ']')));
       auto &fv(xt->env.get(p, id));
