@@ -34,9 +34,9 @@ fun (fib ((n a b) Int) Int
 ** use to pick fn at read-time in BinOp
 * push Fun on stack from Defun if missing id
 * add Fun arg type checking
-** skip args with type A
+** skip type A
 * add Quote type
-** struct with embedded Val
+** like ConstType
 ** add '-reader
 * add Splice support
 ** splice list items automagically
