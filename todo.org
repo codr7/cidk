@@ -15,7 +15,6 @@ fun (fib ((n a b) Int) Int
 *** let / del
 **** add Env.del
 *** update val in place
-** bench fib_iter
 * --
 * move Def.cx to Type
 * add @ char reader

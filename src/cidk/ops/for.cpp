@@ -4,18 +4,16 @@
 #include "cidk/ops/for.hpp"
 #include "cidk/read.hpp"
 #include "cidk/stack.hpp"
-#include "cidk/types/expr.hpp"
-#include "cidk/types/nil.hpp"
+#include "cidk/types/bool.hpp"
 #include "cidk/types/sym.hpp"
 
 namespace cidk::ops {
   struct ForData {
-    Val src;
-    const Sym *var;
-    Expr &body;
-    
-    ForData(const Val &src, const Sym *var, Expr &body):
-      src(src), var(var), body(body) {}
+    Val src, var, body;
+    bool push;
+
+    ForData(const Val &src, const Val &var, const Val &body, bool push):
+      src(src), var(var), body(body), push(push) {}
   };
 
   const ForType For("for");
@@ -23,23 +21,24 @@ namespace cidk::ops {
   ForType::ForType(const string &id): OpType(id) {}
   
   void ForType::init(Cx &cx,
-                    Op &op,
-                    const Val &src,
-                    const Sym *var,
-                    Expr &body) const {
-    op.data = ForData(src, var, body);
+                     Op &op,
+                     const Val &src,
+                     const Val &var,
+                     const Val &body) const {
+    op.data = ForData(src, var, body, var.type == &cx.bool_type && var.as_bool);
   }
 
   void ForType::compile(Cx &cx,
-                       OpIter &in,
-                       const OpIter &end,
-                       Env &env,
-                       Stack &stack,
-                       Ops &out,
-                       Opts *opts) const {
+                        OpIter &in,
+                        const OpIter &end,
+                        Env &env,
+                        Stack &stack,
+                        Ops &out,
+                        Opts *opts) const {
+    const Pos &p(in->pos);
     auto &d(in->as<ForData>());
-    d.src.compile(cx, in->pos, env, stack, opts);
-    cx.compile(d.body.ops, opts, env, stack);
+    d.src.compile(cx, p, env, stack, opts);
+    d.body.compile(cx, p, env, stack, opts);
     out.push_back(*in);
   }
 
@@ -50,21 +49,21 @@ namespace cidk::ops {
     Val src(pop(p, stack));
     
     for (Int i(0); i < src.as_int; i++) {
-      stack.emplace_back(cx.int_type, i);
-      cx.eval(d.body.ops, env, stack);
+      if (d.push) { stack.emplace_back(cx.int_type, i); }
+      d.body.eval(cx, p, env, stack);
     }
   }
 
   void ForType::get_ids(const Op &op, IdSet &out) const {
     auto &d(op.as<ForData>());
     d.src.get_ids(out);
-    cidk::get_ids(d.body.ops, out);
+    d.body.get_ids(out);
   }
 
   void ForType::mark_refs(Op &op) const {
     auto &d(op.as<ForData>());
     d.src.mark_refs();
-    d.body.mark();
+    d.body.mark_refs();
   }
 
   void ForType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
@@ -76,18 +75,14 @@ namespace cidk::ops {
     auto var(read_val(cx, pos, in));
     if (!var || var->is_eop()) { throw ESys(p, "Missing for var"); }
 
+    if (var->type != &cx.bool_type && var->type != &cx.sym_type) {
+      throw ESys(p, "Invalid for var: ", var->type->id);
+    }
+
     auto body(read_val(cx, pos, in));
     if (!body || body->is_eop()) { throw ESys(p, "Missing for body"); }
 
-    if (!body->type->isa(cx.expr_type)) {
-      throw ESys(p, "Invalid for body, expected Expr: ", body->type->id);
-    }
-    
     read_eop(pos, in);
-
-    out.emplace_back(cx, p, *this,
-                     *src,
-                     (var->type == &cx.sym_type) ? var->as_sym : nullptr,
-                     *body->as_expr);
+    out.emplace_back(cx, p, *this, *src, *var, *body);
   }
 }
