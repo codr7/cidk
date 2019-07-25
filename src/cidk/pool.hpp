@@ -9,18 +9,18 @@
 namespace cidk {
   template <typename T>
   struct Pool {
-    using Item = typename aligned_storage<sizeof(T), alignof(T)>::type;
+    using Slot = typename aligned_storage<sizeof(T), alignof(T)>::type;
 
     size_t slab_size, slab_offs;
-    vector<Item *> slabs;
+    vector<Slot *> slabs;
     vector<T *> free;
     
     Pool(): slab_size(CIDK_POOL_INIT), slab_offs(0) {
-      slabs.emplace_back(new Item[slab_size]);
+      slabs.emplace_back(new Slot[slab_size]);
     }
 
     ~Pool() {
-      for (Item *i: slabs) { delete[] i; }        
+      for (Slot *i: slabs) { delete[] i; }        
     }
     
     template <typename...Args>
@@ -34,18 +34,18 @@ namespace cidk {
 
     T *alloc() {
 #ifndef CIDK_USE_POOL
-      return reinterpret_cast<T *>(new Item());
+      return reinterpret_cast<T *>(new Slot());
 #endif
       T *p(nullptr);
       
       if (free.empty()) {
-        Item *s(nullptr);
+        Slot *s(nullptr);
         
         if (slab_offs < slab_size) {
           s = slabs.back();
         } else {
           slab_size *= 2;
-          s = new Item[slab_size];
+          s = new Slot[slab_size];
           slabs.push_back(s);
           slab_offs = 0;
         }
