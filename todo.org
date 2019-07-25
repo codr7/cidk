@@ -1,3 +1,11 @@
+fun (fib (n Int) Int
+  if n.< 2 n fib(n.- 1).+ fib(n.- 2)
+)
+
+fun (fib ((n a b) Int) Int
+  if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
+)
+
 * add Go benchmarks
 * finish for op
 ** add ValType.iter(const Val &src, function<void (const Val &)>)
@@ -35,17 +43,7 @@
 ** splice list items automagically
 * add mod op like mul
 ** add math/int_mod
-
-fun (fib (n Int) Int
-  if n.< 2 n fib(n.- 1).+ fib(n.- 2)
-)
-
-fun (fib ((n a b) Int) Int
-  if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
-)
-
-
 * add isa x? y? op
-* add return support
+* add return
 ** add eval state
 ** handle in Call.eval
