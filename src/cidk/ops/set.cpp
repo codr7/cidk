@@ -38,9 +38,6 @@ namespace cidk::ops {
     const Pos &p(op.pos);
     const SetData &d(op.as<SetData>());
 
-    Val v;
-    d.val.clone(p, v);
-
     if (d.is_expr) {
       if (d.key.type == &cx.int_type) {
         stack.push_back(stack[d.key.as_int]);
@@ -48,9 +45,8 @@ namespace cidk::ops {
         stack.push_back(env.get(p, d.key.as_sym));
       }
     }
-    
-    v.eval(cx, p, env, stack);
-    v = pop(p, stack);
+
+    Val v(d.val.get_arg(cx, p, env, stack));
   
     if (d.key.type == &cx.int_type) {
       stack[d.key.as_int] = v;

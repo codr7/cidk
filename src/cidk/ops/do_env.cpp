@@ -4,7 +4,6 @@
 #include "cidk/read.hpp"
 #include "cidk/types/bool.hpp"
 #include "cidk/types/env.hpp"
-#include "cidk/types/expr.hpp"
 #include "cidk/types/nil.hpp"
 #include "cidk/types/pop.hpp"
 

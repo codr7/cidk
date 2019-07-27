@@ -3,16 +3,12 @@
 #include "cidk/ops/is.hpp"
 #include "cidk/read.hpp"
 #include "cidk/types/bool.hpp"
-#include "cidk/types/expr.hpp"
 #include "cidk/types/pop.hpp"
 
 namespace cidk::ops {
   struct IsData {
-    Val x, y;
-    bool x_expr, y_expr;
-    
-    IsData(const Val &x, bool x_expr, const Val &y, bool y_expr):
-      x(x), y(y), x_expr(x_expr), y_expr(y_expr) {}
+    Val x, y;    
+    IsData(const Val &x, const Val &y): x(x), y(y) {}
   };
   
   const IsType Is("is");
@@ -20,7 +16,7 @@ namespace cidk::ops {
   IsType::IsType(const string &id): OpType(id) {}
 
   void IsType::init(Cx &cx, Op &op, const Val &x, const Val &y) const {
-    op.data = IsData(x, x.type->isa(cx.expr_type), y, y.type->isa(cx.expr_type));
+    op.data = IsData(x, y);
   }
 
   void IsType::compile(Cx &cx,

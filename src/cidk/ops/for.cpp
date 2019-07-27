@@ -1,6 +1,5 @@
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
-#include "cidk/expr.hpp"
 #include "cidk/ops/for.hpp"
 #include "cidk/read.hpp"
 #include "cidk/stack.hpp"

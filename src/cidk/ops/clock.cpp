@@ -3,7 +3,6 @@
 #include "cidk/ops/clock.hpp"
 #include "cidk/read.hpp"
 #include "cidk/timer.hpp"
-#include "cidk/types/expr.hpp"
 
 namespace cidk::ops {
   struct ClockData {

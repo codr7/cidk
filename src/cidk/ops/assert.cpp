@@ -1,6 +1,5 @@
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
-#include "cidk/expr.hpp"
 #include "cidk/list.hpp"
 #include "cidk/ops/assert.hpp"
 #include "cidk/read.hpp"
