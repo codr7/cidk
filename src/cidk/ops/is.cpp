@@ -39,10 +39,11 @@ namespace cidk::ops {
   void IsType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
     const Pos &p(op.pos);
     const IsData &d(op.as<IsData>());
-    if (d.x_expr) { d.x.eval(cx, p, env, stack); }
-    auto x((d.x_expr || d.x.type == &cx.pop_type) ? pop(p, stack) : d.x);
-    if (d.y_expr) { d.y.eval(cx, p, env, stack); }
-    auto y((d.y_expr || d.y.type == &cx.pop_type) ? pop(p, stack) : d.y);
+
+    Val
+      x(d.x.get_arg(cx, p, env, stack)),
+      y(d.y.get_arg(cx, p, env, stack));
+    
     stack.emplace_back(cx.bool_type, x.is(y));
   }
 

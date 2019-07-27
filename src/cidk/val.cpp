@@ -1,5 +1,7 @@
 #include "cidk/cx.hpp"
+#include "cidk/types/pop.hpp"
 #include "cidk/types/sym.hpp"
+#include "cidk/types/expr.hpp"
 #include "cidk/val.hpp"
 
 namespace cidk {
@@ -40,6 +42,18 @@ namespace cidk {
     return type->eval(cx, pos, *this, env, stack);
   }
 
+  Val Val::get_arg(Cx &cx, const Pos &pos, Env &env, Stack &stack) const {
+    if (type == &cx.expr_type) {
+      eval(cx, pos, env, stack);
+      return pop(pos, stack);
+    }
+
+    if (type == &cx.pop_type)  { return pop(pos, stack); }
+      
+    Val v;
+    return clone(pos, v);
+  }
+  
   void Val::get_ids(IdSet &out) const { type->get_ids(*this, out); }
 
   bool Val::is(const Val &y) const {

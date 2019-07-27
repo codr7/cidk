@@ -2,18 +2,14 @@
 #include "cidk/e.hpp"
 #include "cidk/ops/let.hpp"
 #include "cidk/read.hpp"
-#include "cidk/types/expr.hpp"
-#include "cidk/types/pop.hpp"
 #include "cidk/types/sym.hpp"
 
 namespace cidk::ops {
   struct LetData {
     const Sym *key;
     Val val;
-    bool is_expr;
     
-    LetData(const Sym *key, const Val &val, bool is_expr):
-      key(key), val(val), is_expr(is_expr) {}
+    LetData(const Sym *key, const Val &val): key(key), val(val) {}
   };
 
   const LetType Let("let");
@@ -21,7 +17,7 @@ namespace cidk::ops {
   LetType::LetType(const string &id): OpType(id) {}
 
   void LetType::init(Cx &cx, Op &op, const Sym *key, const Val &val) const {
-    op.data = LetData(key, val, val.type->isa(cx.expr_type));
+    op.data = LetData(key, val);
   }
 
   void LetType::compile(Cx &cx,
@@ -39,19 +35,7 @@ namespace cidk::ops {
   void LetType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
     const Pos &p(op.pos);
     const LetData &d(op.as<LetData>());
-
-    if (d.is_expr) {
-      d.val.eval(cx, p, env, stack);
-      env.let(cx, p, d.key, pop(p, stack));
-    } else {
-      if (d.val.type == &cx.pop_type)  {
-        env.let(cx, p, d.key, pop(p, stack));
-      } else {
-        Val v;
-        d.val.clone(p, v);
-        env.let(cx, p, d.key, v);
-      }
-    }
+    env.let(cx, p, d.key, d.val.get_arg(cx, p, env, stack));
   }
 
   void LetType::get_ids(const Op &op, IdSet &out) const {
