@@ -6,6 +6,8 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
+* revert Sexpr & bench
+* revert Let fast path & bench
 * add Go benchmarks
 * finish for op
 ** add ValType.iter(const Val &src, function<void (const Val &)>)
@@ -15,7 +17,6 @@ fun (fib ((n a b) Int) Int
 *** let / del
 **** add Env.del
 *** update val in place
-* --
 * move Def.cx to Type
 * add @ char reader
 ** read utf8
