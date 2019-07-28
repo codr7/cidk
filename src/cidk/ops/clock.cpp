@@ -37,7 +37,7 @@ namespace cidk::ops {
     const ClockData &d(op.as<ClockData>());
     Stack bs;
 
-    d.nreps.eval(cx, op.pos, env, stack);
+    d.nreps.push(cx, op.pos, env, stack);
     auto nreps(pop(op.pos, stack));
 
     if (nreps.type != &cx.int_type) {

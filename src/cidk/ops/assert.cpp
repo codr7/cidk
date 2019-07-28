@@ -44,8 +44,8 @@ namespace cidk::ops {
       for (auto &a: d.args.as_list->items) { a.eval(cx, p, env, args); }
     }
     
-    d.body.eval(cx, p, env, stack);
-    Val ok(pop(op.pos, stack));
+    d.body.push(cx, p, env, stack);
+    auto &ok(pop(op.pos, stack));
     
     if (ok.type != &cx.bool_type) {
       throw ESys(p, "Expected Bool, was: ", ok.type->id);
