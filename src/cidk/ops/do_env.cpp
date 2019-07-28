@@ -54,7 +54,7 @@ namespace cidk::ops {
       de = &pop(p, stack).get_env();
     }
 
-    d.body.eval(cx, p, *de, stack);
+    d.body.push(cx, p, *de, stack);
   }
 
   void DoEnvType::get_ids(const Op &op, IdSet &out) const {

@@ -49,7 +49,7 @@ namespace cidk::ops {
     
     for (Int i(0); i < src.as_int; i++) {
       if (d.push) { stack.emplace_back(cx.int_type, i); }
-      d.body.eval(cx, p, env, stack);
+      d.body.push(cx, p, env, stack);
     }
   }
 
