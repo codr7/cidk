@@ -50,9 +50,8 @@ namespace cidk::ops {
     } else if (d.in.type == &cx.bool_type && d.in.as_bool) {
       de = cx.env_pool.get(cx, env);
     } else {
-      d.in.eval(cx, p, env, stack);
-      auto in(pop(p, stack));
-      de = &in.get_env();
+      d.in.push(cx, p, env, stack);
+      de = &pop(p, stack).get_env();
     }
 
     d.body.eval(cx, p, *de, stack);

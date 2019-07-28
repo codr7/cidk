@@ -43,9 +43,9 @@ namespace cidk::ops {
     d.cond.push(cx, p, env, stack);
       
     if (pop(p, stack).get_bool()) {
-      if (d.x.type != &cx.nil_type) { d.x.eval(cx, p, env, stack); }
+      if (d.x.type != &cx.nil_type) { d.x.push(cx, p, env, stack); }
     } else if (d.y.type != &cx.nil_type) {
-      d.y.eval(cx, p, env, stack);
+      d.y.push(cx, p, env, stack);
     }
   }
 

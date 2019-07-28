@@ -22,11 +22,7 @@ namespace cidk::ops {
   }
 
   void PushType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
-    const Pos &p(op.pos);
-    
-    Val v;
-    op.as<Val>().clone(p, v);
-    v.eval(cx, p, env, stack);
+    op.as<Val>().push(cx, op.pos, env, stack);
   }
 
   void PushType::get_ids(const Op &op, IdSet &out) const {

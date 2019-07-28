@@ -39,7 +39,7 @@ namespace cidk::ops {
     auto &d(op.as<PokeData>());
     auto ss(stack.size());
     if (d.is_expr && d.offs > 1) { stack.push_back(stack[ss - d.offs]); }
-    d.val.eval(cx, p, env, stack);
+    d.val.push(cx, p, env, stack);
     swap(stack.back(), stack[ss - d.offs]);
     if (!d.is_expr || d.offs > 1) { stack.pop_back(); }
   }
