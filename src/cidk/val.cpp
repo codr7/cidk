@@ -60,12 +60,11 @@ namespace cidk {
   }
 
   void Val::push(Cx &cx, const Pos &pos, Env &env, Stack &stack) const {
-    if (type == &cx.expr_type) {
+    if (type == &cx.expr_type || type == &cx.sym_type) {
       eval(cx, pos, env, stack);
     } else if (type != &cx.pop_type)  {
-      Val v;
-      clone(pos, v);
-      stack.push_back(v);
+      stack.emplace_back(*type);
+      type->clone(pos, stack.back(), *this);
     }
   }
 

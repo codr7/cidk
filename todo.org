@@ -6,10 +6,6 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* switch BinOp to use Val.push
-* switch clone to take Stack & like push
-* switch cp to take Stack & like push
-* ---
 * finish for op
 ** add ValType.iter(const Val &src, function<void (const Val &)>)
 *** call with src in default imp
