@@ -7,9 +7,9 @@ namespace cidk {
     for (Val &v: s) { v.mark_refs(); }
   }
 
-  Val pop(const Pos &pos, Stack &s) {
+  const Val &pop(const Pos &pos, Stack &s) {
     if (s.empty()) { throw ESys(pos, "Stack is empty"); }
-    Val out(s.back());
+    Val &out(s.back());
     s.pop_back();
     return out;
   }
