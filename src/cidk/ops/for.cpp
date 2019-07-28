@@ -44,12 +44,12 @@ namespace cidk::ops {
   void ForType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
     auto &p(op.pos);
     auto &d(op.as<ForData>());
-    d.src.eval(cx, p, env, stack);
+    d.src.push(cx, p, env, stack);
     Val src(pop(p, stack));
     
     for (Int i(0); i < src.as_int; i++) {
       if (d.push) { stack.emplace_back(cx.int_type, i); }
-      d.body.eval(cx, p, env, stack);
+      d.body.push(cx, p, env, stack);
     }
   }
 
