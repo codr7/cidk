@@ -6,10 +6,9 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* switch Val.get_arg to take Stack &out instead of dst
-** bench
-* switch cp to take Stack &out
-* switch clone to take Stack &out
+* switch BinOp to use Val.push
+* switch clone to take Stack & like push
+* switch cp to take Stack & like push
 * ---
 * finish for op
 ** add ValType.iter(const Val &src, function<void (const Val &)>)

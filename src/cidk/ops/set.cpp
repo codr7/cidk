@@ -46,12 +46,12 @@ namespace cidk::ops {
       }
     }
 
-    Val v(d.val.get_arg(cx, p, env, stack));
+    d.val.push(cx, p, env, stack);
   
     if (d.key.type == &cx.int_type) {
-      stack[d.key.as_int] = v;
+      stack[d.key.as_int] = pop(p, stack);
     } else {
-      env.set(cx, p, d.key.as_sym, v);
+      env.set(cx, p, d.key.as_sym, pop(p, stack));
     }
   }
 

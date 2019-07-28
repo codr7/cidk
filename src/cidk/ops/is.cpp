@@ -35,12 +35,9 @@ namespace cidk::ops {
   void IsType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
     const Pos &p(op.pos);
     const IsData &d(op.as<IsData>());
-
-    Val
-      x(d.x.get_arg(cx, p, env, stack)),
-      y(d.y.get_arg(cx, p, env, stack));
-    
-    stack.emplace_back(cx.bool_type, x.is(y));
+    d.x.push(cx, p, env, stack);
+    d.y.push(cx, p, env, stack);
+    stack.emplace_back(cx.bool_type, pop(p, stack).is(pop(p, stack)));
   }
 
   void IsType::get_ids(const Op &op, IdSet &out) const {
