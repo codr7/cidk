@@ -39,7 +39,7 @@ assert(stack) {eq stack (1 4 3);};
 do-env T {
   let foo 1;
   set foo 2;
-  assert(stack) {eq foo 2;};
+  assert(foo) {eq foo 2;};
 };
 
 do-env T {

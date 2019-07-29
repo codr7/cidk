@@ -21,13 +21,16 @@ namespace cidk::ops {
                          Opts *opts) const {
     Val &f(in->as<Val>());
     f.compile(cx, in->pos, env, stack, opts);
-    Type *ft(f.type);
-    if (ft != &cx.fun_type) { throw ESys(in->pos, "Invalid call target: ", ft->id); }
     out.push_back(*in);
   }
 
   void CallType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
-    cidk::Call(op.pos, *op.as<Val>().as_fun).eval(cx, env, stack);
+    const Pos &p(op.pos);
+    op.as<Val>().push(cx, p, env, stack);
+    auto &f(pop(p, stack));
+    Type *ft(f.type);
+    if (ft != &cx.fun_type) { throw ESys(p, "Invalid call target: ", ft->id); }
+    cidk::Call(p, *f.as_fun).eval(cx, env, stack);
   }
 
   void CallType::get_ids(const Op &op, IdSet &out) const {
@@ -47,6 +50,6 @@ namespace cidk::ops {
       out.emplace_back(cx, p, *this, *v);
     }
 
-    if (!n) { out.emplace_back(cx, p, *this, Val(cx.pop_type)); }
+    if (!n) { out.emplace_back(cx, p, *this, cx.$); }
   }
 }
