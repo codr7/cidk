@@ -49,13 +49,6 @@ namespace cidk::ops {
     }
   }
 
-  void IfType::get_ids(const Op &op, IdSet &out) const {
-    auto &d(op.as<IfData>());
-    d.cond.get_ids(out);
-    d.x.get_ids(out);
-    d.y.get_ids(out);
-  }
-
   void IfType::mark_refs(Op &op) const {
     auto &d(op.as<IfData>());
     d.cond.mark_refs();

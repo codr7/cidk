@@ -54,12 +54,6 @@ namespace cidk::ops {
     if (!ok.as_bool) { throw ESys(p, "Test failed: ", args); }
   }
 
-  void AssertType::get_ids(const Op &op, IdSet &out) const {
-    auto &d(op.as<AssertData>());
-    d.args.get_ids(out);
-    d.body.get_ids(out);
-  }
-
   void AssertType::mark_refs(Op &op) const {
     auto &d(op.as<AssertData>());
     d.args.mark_refs();

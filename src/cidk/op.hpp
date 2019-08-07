@@ -33,7 +33,6 @@ namespace cidk {
                          Opts &opts) const;
 
     virtual void eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const;
-    virtual void get_ids(const Op &op, IdSet &out) const;
     virtual void mark_refs(Op &op) const;
     virtual void read(Cx &cx, Pos &pos, istream &in, Ops &out) const = 0;
   };
@@ -65,7 +64,6 @@ namespace cidk {
                  Opts &opts);
 
     void eval(Cx &cx, Env &env, Reg *regs, Stack &stack);
-    void get_ids(IdSet &out) const;
     void mark_refs();
   };
 }

@@ -45,8 +45,6 @@ namespace cidk {
     env.get(pos, val.as_sym).eval(cx, pos, env, regs, stack);
   }
 
-  void SymType::get_ids(const Val &val, IdSet &out) const { out.emplace(val.as_sym); }
-
   bool SymType::is(const Val &x, const Val &y) const { return x.as_sym == y.as_sym; }
 
   void SymType::set(Val &dst, const Sym *val) const { dst.as_sym = val; }

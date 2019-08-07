@@ -6,7 +6,6 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* remove Op/Val.get_ids() fns
 * remove Env.use()
 * remove IdSet
 ** test.al
@@ -15,6 +14,9 @@ fun (fib ((n a b) Int) Int
 * simplify Env
 ** replace EnvItem with Val
 * --
+* switch Reg type to Val
+** add Val.reg_id
+*** default null
 * add cx.stack
 ** remove stack args
 ** add stackp like regs

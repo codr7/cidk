@@ -50,12 +50,6 @@ namespace cidk::ops {
     copy(ds.begin(), ds.end(), back_inserter(stack));
   }
 
-  void DoStackType::get_ids(const Op &op, IdSet &out) const {
-    auto &d(op.as<DoStackData>());
-    d.in.get_ids(out);
-    d.body.get_ids(out);
-  }
-
   void DoStackType::mark_refs(Op &op) const {
     auto &d(op.as<DoStackData>());
     d.in.mark_refs();

@@ -43,10 +43,6 @@ namespace cidk {
     stack.push_back(v);
   }
 
-  void ConstType::get_ids(const Val &val, IdSet &out) const {
-    val_type.get_ids(val, out);
-  }
-
   bool ConstType::is(const Val &x, const Val &y) const {
     return val_type.is(x, y);
   }

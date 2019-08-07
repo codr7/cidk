@@ -51,12 +51,6 @@ namespace cidk::ops {
          get_ref(cx, p, d.y, env, regs, stack));
   }
 
-  void SwapType::get_ids(const Op &op, IdSet &out) const {
-    auto &d(op.as<SwapData>());
-    d.x.get_ids(out);
-    d.y.get_ids(out);
-  }
-
   void SwapType::mark_refs(Op &op) const {
     auto &d(op.as<SwapData>());
     d.x.mark_refs();

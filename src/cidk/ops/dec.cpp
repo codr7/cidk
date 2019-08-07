@@ -53,12 +53,6 @@ namespace cidk::ops {
     n.as_int -= delta.as_int;
   }
 
-  void DecType::get_ids(const Op &op, IdSet &out) const {
-    auto &d(op.as<DecData>());
-    d.n.get_ids(out);
-    d.delta.get_ids(out);
-  }
-
   void DecType::mark_refs(Op &op) const {
     auto &d(op.as<DecData>());
     d.n.mark_refs();

@@ -33,10 +33,6 @@ namespace cidk::ops {
     cidk::Call(p, *f.as_fun).eval(cx, env, stack);
   }
 
-  void CallType::get_ids(const Op &op, IdSet &out) const {
-    op.as<Val>().get_ids(out);
-  }
-
   void CallType::mark_refs(Op &op) const { op.as<Val>().mark_refs(); }
 
   void CallType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {

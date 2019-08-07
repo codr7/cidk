@@ -64,12 +64,6 @@ namespace cidk::ops {
     }
   }
 
-  void SetType::get_ids(const Op &op, IdSet &out) const {
-    const auto &d(op.as<SetData>());
-    d.key.get_ids(out);
-    d.val.get_ids(out);
-  }
-
   void SetType::mark_refs(Op &op) const { op.as<SetData>().val.mark_refs(); }
 
   void SetType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {

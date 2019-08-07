@@ -41,12 +41,6 @@ namespace cidk::ops {
     x.reset(cx.bool_type, x.is(y));
   }
 
-  void IsType::get_ids(const Op &op, IdSet &out) const {
-    auto &d(op.as<IsData>());
-    d.x.get_ids(out);
-    d.y.get_ids(out);
-  }
-
   void IsType::mark_refs(Op &op) const {
     auto &d(op.as<IsData>());
     d.x.mark_refs();

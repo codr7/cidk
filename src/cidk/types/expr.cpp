@@ -33,10 +33,6 @@ namespace cidk {
     cx.eval(val.as_expr->ops, env, regs, stack);
   }
 
-  void ExprType::get_ids(const Val &val, IdSet &out) const {
-    cidk::get_ids(val.as_expr->ops, out);
-  }
-
   bool ExprType::is(const Val &x, const Val &y) const {
     return x.as_expr == y.as_expr;
   }

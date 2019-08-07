@@ -40,12 +40,6 @@ namespace cidk::ops {
     x.reset(cx.bool_type, x.eq(p, y));
   }
 
-  void EqType::get_ids(const Op &op, IdSet &out) const {
-    auto &d(op.as<EqData>());
-    d.x.get_ids(out);
-    d.y.get_ids(out);
-  }
-
   void EqType::mark_refs(Op &op) const {
     auto &d(op.as<EqData>());
     d.x.mark_refs();

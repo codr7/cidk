@@ -56,12 +56,6 @@ namespace cidk::ops {
     Call(p, *f).eval(cx, env, stack);
   }
 
-  void BinOp::get_ids(const Op &op, IdSet &out) const {
-    auto &d(op.as<BinOpData>());
-    d.x.get_ids(out);
-    d.y.get_ids(out);
-  }
-
   void BinOp::mark_refs(Op &op) const {
     auto &d(op.as<BinOpData>());
     d.x.mark_refs();

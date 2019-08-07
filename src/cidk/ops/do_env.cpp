@@ -58,12 +58,6 @@ namespace cidk::ops {
     d.body.eval(cx, p, *de, regs, stack);
   }
 
-  void DoEnvType::get_ids(const Op &op, IdSet &out) const {
-    auto &d(op.as<DoEnvData>());
-    d.in.get_ids(out);
-    d.body.get_ids(out);
-  }
-
   void DoEnvType::mark_refs(Op &op) const {
     auto &d(op.as<DoEnvData>());
     d.in.mark_refs();

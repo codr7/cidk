@@ -29,10 +29,6 @@ namespace cidk::ops {
     op.as<Val>().eval(cx, op.pos, env, regs, stack);
   }
 
-  void PushType::get_ids(const Op &op, IdSet &out) const {
-    op.as<Val>().get_ids(out);
-  }
-
   void PushType::mark_refs(Op &op) const { op.as<Val>().mark_refs(); }
 
   void PushType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {

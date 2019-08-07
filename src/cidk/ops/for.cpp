@@ -53,12 +53,6 @@ namespace cidk::ops {
     }
   }
 
-  void ForType::get_ids(const Op &op, IdSet &out) const {
-    auto &d(op.as<ForData>());
-    d.src.get_ids(out);
-    d.body.get_ids(out);
-  }
-
   void ForType::mark_refs(Op &op) const {
     auto &d(op.as<ForData>());
     d.src.mark_refs();

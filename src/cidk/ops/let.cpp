@@ -42,10 +42,6 @@ namespace cidk::ops {
     set_reg(regs, d.reg, d.id, pop(p, stack));
   }
 
-  void LetType::get_ids(const Op &op, IdSet &out) const {
-    op.as<LetData>().val.get_ids(out);
-  }
-
   void LetType::mark_refs(Op &op) const { op.as<LetData>().val.mark_refs(); }
 
   void LetType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {

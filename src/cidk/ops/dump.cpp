@@ -31,10 +31,6 @@ namespace cidk::ops {
     out << endl;
   }
 
-  void DumpType::get_ids(const Op &op, IdSet &out) const {
-    op.as<Val>().get_ids(out);
-  }
-
   void DumpType::mark_refs(Op &op) const { op.as<Val>().mark_refs(); }
 
   void DumpType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {

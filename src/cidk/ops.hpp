@@ -13,7 +13,6 @@ namespace cidk {
   using Ops = vector<Op>;
   using OpIter = Ops::iterator;
   
-  void get_ids(const Ops &in, IdSet &out);
   void mark_refs(Ops &ops);
 }
 

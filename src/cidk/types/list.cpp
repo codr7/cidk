@@ -70,10 +70,6 @@ namespace cidk {
     stack.emplace_back(cx.list_type, l);
   }
 
-  void ListType::get_ids(const Val &val, IdSet &out) const {
-    for (auto &v: val.as_list->items) { v.get_ids(out); }
-  }
-
   bool ListType::is(const Val &x, const Val &y) const {
     return x.as_list == y.as_list;
   }

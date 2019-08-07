@@ -49,12 +49,6 @@ namespace cidk::ops {
     stack.emplace_back(cx.int_type, Int(t.ms()));
   }
 
-  void ClockType::get_ids(const Op &op, IdSet &out) const {
-    auto &d(op.as<ClockData>());
-    d.nreps.get_ids(out);
-    d.body.get_ids(out);
-  }
-
   void ClockType::mark_refs(Op &op) const {
     auto &d(op.as<ClockData>());
     d.nreps.mark_refs();

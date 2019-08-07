@@ -54,7 +54,6 @@ namespace cidk {
     void dump(ostream &out) const;
     bool eq(const Pos &pos, const Val &y) const;
     void eval(Cx &cx, const Pos &pos, Env &env, Reg *regs, Stack &stack) const;
-    void get_ids(IdSet &out) const;
     bool is(const Val &y) const;
     bool is_eop() const;
     void mark_refs();

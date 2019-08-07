@@ -43,8 +43,6 @@ namespace cidk {
     return type->eval(cx, pos, *this, env, regs, stack);
   }
   
-  void Val::get_ids(IdSet &out) const { type->get_ids(*this, out); }
-
   bool Val::is(const Val &y) const {
     if (type != y.type) { return false; }
     return type->is(*this, y);

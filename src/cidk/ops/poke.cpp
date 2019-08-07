@@ -44,11 +44,6 @@ namespace cidk::ops {
     if (!d.is_expr || d.offs > 1) { stack.pop_back(); }
   }
 
-  void PokeType::get_ids(const Op &op, IdSet &out) const {
-    auto &d(op.as<PokeData>());
-    d.val.get_ids(out);
-  }
-
   void PokeType::mark_refs(Op &op) const {
     auto &d(op.as<PokeData>());
     d.val.mark_refs();
