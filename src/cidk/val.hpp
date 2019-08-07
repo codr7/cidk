@@ -1,6 +1,7 @@
 #ifndef CIDK_VAL_HPP
 #define CIDK_VAL_HPP
 
+#include "cidk/e.hpp"
 #include "cidk/opts.hpp"
 #include "cidk/pos.hpp"
 #include "cidk/types/char.hpp"
@@ -72,6 +73,24 @@ namespace cidk {
   };
 
   ostream &operator <<(ostream &out, const Val &v);
+
+  inline void mark_items(Stack &s) {
+    for (Val &v: s) { v.mark_refs(); }
+  }
+
+  inline Val &pop(const Pos &pos, Stack &s) {
+    if (s.empty()) { throw ESys(pos, "Stack is empty"); }
+    Val &out(s.back());
+    s.pop_back();
+    return out;
+  }
+
+  inline optional<Val> try_pop(Stack &s) {
+    if (s.empty()) { return {}; }
+    Val out(s.back());
+    s.pop_back();
+    return out;
+  }
 }
 
 #endif
