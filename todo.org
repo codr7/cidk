@@ -6,7 +6,7 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* reuse stack.back in is-op?
+* reuse stack in eq/is
 * remove Op/Val.get_ids() fns
 * remove Env.use()
 * remove IdSet
