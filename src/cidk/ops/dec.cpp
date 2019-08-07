@@ -36,8 +36,8 @@ namespace cidk::ops {
   void DecType::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {
     auto &p(op.pos);
     auto &d(op.as<DecData>());
-    d.n.push(cx, p, env, regs, stack);
-    d.delta.push(cx, p, env, regs, stack);
+    d.n.eval(cx, p, env, regs, stack);
+    d.delta.eval(cx, p, env, regs, stack);
     auto &delta(pop(p, stack));
 
     if (delta.type != &cx.int_type) {

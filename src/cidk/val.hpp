@@ -58,8 +58,6 @@ namespace cidk {
     bool is_eop() const;
     void mark_refs();
 
-    void push(Cx &cx, const Pos &pos, Env &env, Reg *regs, Stack &stack) const;
-
     template <typename ValT>
     void reset(TValType<ValT> &type, ValT val) {
       this->type = &type;

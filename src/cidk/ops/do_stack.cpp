@@ -32,7 +32,7 @@ namespace cidk::ops {
     Stack ds;
 
     if (d.in.type != &cx.nil_type) {
-      d.in.push(cx, p, env, cx.regp, stack);
+      d.in.eval(cx, p, env, cx.regp, stack);
       pop(p, stack).splat(p, env, ds);
     }
 
@@ -46,7 +46,7 @@ namespace cidk::ops {
     Stack ds;
     
     if (d.in.type != &cx.nil_type) { d.in.splat(p, env, ds); }
-    d.body.push(cx, p, env, regs, ds);
+    d.body.eval(cx, p, env, regs, ds);
     copy(ds.begin(), ds.end(), back_inserter(stack));
   }
 

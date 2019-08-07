@@ -37,7 +37,7 @@ namespace cidk::ops {
     auto &d(op.as<ClockData>());
     Stack bs;
 
-    d.nreps.push(cx, op.pos, env, regs, stack);
+    d.nreps.eval(cx, op.pos, env, regs, stack);
     auto nreps(pop(op.pos, stack));
 
     if (nreps.type != &cx.int_type) {
@@ -45,7 +45,7 @@ namespace cidk::ops {
     }
 
     Timer t;
-    for (int i(0); i < nreps.as_int; i++) { d.body.push(cx, op.pos, env, regs, bs); }
+    for (int i(0); i < nreps.as_int; i++) { d.body.eval(cx, op.pos, env, regs, bs); }
     stack.emplace_back(cx.int_type, Int(t.ms()));
   }
 

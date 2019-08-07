@@ -40,12 +40,12 @@ namespace cidk::ops {
   void IfType::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {
     auto &p(op.pos);
     auto &d(op.as<IfData>());
-    d.cond.push(cx, p, env, regs, stack);
+    d.cond.eval(cx, p, env, regs, stack);
       
     if (pop(p, stack).get_bool()) {
-      if (d.x.type != &cx.nil_type) { d.x.push(cx, p, env, regs, stack); }
+      if (d.x.type != &cx.nil_type) { d.x.eval(cx, p, env, regs, stack); }
     } else if (d.y.type != &cx.nil_type) {
-      d.y.push(cx, p, env, regs, stack);
+      d.y.eval(cx, p, env, regs, stack);
     }
   }
 

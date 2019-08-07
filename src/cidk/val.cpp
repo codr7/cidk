@@ -60,15 +60,6 @@ namespace cidk {
     type->mark_refs(*this);
   }
 
-  void Val::push(Cx &cx, const Pos &pos, Env &env, Reg *regs, Stack &stack) const {
-    if (type == &cx.expr_type || type == &cx.reg_type || type == &cx.sym_type) {
-      type->eval(cx, pos, *this, env, regs, stack);
-    } else if (type != &cx.pop_type)  {
-      stack.emplace_back(*type);
-      type->clone(pos, stack.back(), *this);
-    }
-  }
-
   void Val::splat(const Pos &pos, Env &env, Stack &stack) const {
     return type->splat(pos, *this, env, stack);
   }

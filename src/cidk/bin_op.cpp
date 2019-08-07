@@ -36,8 +36,8 @@ namespace cidk::ops {
     auto &p(op.pos);
     auto &d(op.as<BinOpData>());
     Fun *f(d.fun);
-    d.x.push(cx, p, env, regs, stack);
-    d.y.push(cx, p, env, regs, stack);
+    d.x.eval(cx, p, env, regs, stack);
+    d.y.eval(cx, p, env, regs, stack);
     
     if (!f) {
       auto i(stack.end()-1), j(i-1);

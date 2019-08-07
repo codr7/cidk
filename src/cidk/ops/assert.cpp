@@ -41,10 +41,10 @@ namespace cidk::ops {
     
     if (!d.args.as_list->items.empty()) {
       copy(stack.begin(), stack.end(), back_inserter(args));
-      for (auto &a: d.args.as_list->items) { a.push(cx, p, env, regs, args); }
+      for (auto &a: d.args.as_list->items) { a.eval(cx, p, env, regs, args); }
     }
     
-    d.body.push(cx, p, env, regs, stack);
+    d.body.eval(cx, p, env, regs, stack);
     auto &ok(pop(op.pos, stack));
     
     if (ok.type != &cx.bool_type) {

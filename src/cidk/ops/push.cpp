@@ -26,7 +26,7 @@ namespace cidk::ops {
                       Env &env,
                       Reg *regs,
                       Stack &stack) const {
-    op.as<Val>().push(cx, op.pos, env, regs, stack);
+    op.as<Val>().eval(cx, op.pos, env, regs, stack);
   }
 
   void PushType::get_ids(const Op &op, IdSet &out) const {

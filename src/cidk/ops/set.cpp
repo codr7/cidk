@@ -55,7 +55,7 @@ namespace cidk::ops {
       }
     }
 
-    d.val.push(cx, p, env, regs, stack);
+    d.val.eval(cx, p, env, regs, stack);
   
     if (d.key.type == &cx.int_type) {
       stack[d.key.as_int] = pop(p, stack);

@@ -51,11 +51,11 @@ namespace cidk::ops {
     } else if (d.in.type == &cx.bool_type && d.in.as_bool) {
       de = cx.env_pool.get(cx, env);
     } else {
-      d.in.push(cx, p, env, regs, stack);
+      d.in.eval(cx, p, env, regs, stack);
       de = &pop(p, stack).get_env();
     }
 
-    d.body.push(cx, p, *de, regs, stack);
+    d.body.eval(cx, p, *de, regs, stack);
   }
 
   void DoEnvType::get_ids(const Op &op, IdSet &out) const {

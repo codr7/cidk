@@ -34,8 +34,8 @@ namespace cidk::ops {
   void EqType::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {
     auto &p(op.pos);
     auto &d(op.as<EqData>());
-    d.x.push(cx, p, env, regs, stack);
-    d.y.push(cx, p, env, regs, stack);
+    d.x.eval(cx, p, env, regs, stack);
+    d.y.eval(cx, p, env, regs, stack);
     stack.emplace_back(cx.bool_type, pop(p, stack).eq(p, pop(p, stack)));
   }
 

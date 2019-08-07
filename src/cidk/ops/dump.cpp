@@ -26,7 +26,7 @@ namespace cidk::ops {
   void DumpType::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {
     auto &p(op.pos);
     auto &out(*cx.stderr);
-    op.as<Val>().push(cx, p, env, regs, stack);
+    op.as<Val>().eval(cx, p, env, regs, stack);
     pop(p, stack).dump(out);
     out << endl;
   }

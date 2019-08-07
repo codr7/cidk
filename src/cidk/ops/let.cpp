@@ -38,7 +38,7 @@ namespace cidk::ops {
   void LetType::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {
     auto &p(op.pos);
     auto &d(op.as<LetData>());
-    d.val.push(cx, p, env, regs, stack);
+    d.val.eval(cx, p, env, regs, stack);
     set_reg(regs, d.reg, d.id, pop(p, stack));
   }
 
