@@ -6,22 +6,15 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* remove Env.use()
-* remove IdSet
-** test.al
-* clone fun in defun eval
-** copy ops
 * simplify Env
 ** replace EnvItem with Val
-* --
-* switch Reg type to Val
-** add Val.reg_id
-*** default null
 * add cx.stack
 ** remove stack args
 ** add stackp like regs
-* copy regs into env arg in env op
-** add failing test
+* switch Reg type to Val
+** add Val.reg_id
+*** default null
+* --
 * mark regs in cx.mark()
 * replace cx.ops with cx.on_mark
 ** function<void ()>
@@ -33,6 +26,8 @@ fun (fib ((n a b) Int) Int
 *** let / del
 **** add Env.del
 *** update val in place
+* copy regs into env arg in env op
+** failing test
 * --
 * add Splat op
 ** vararg like Push

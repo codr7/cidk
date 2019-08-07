@@ -35,7 +35,8 @@ namespace cidk::ops {
     auto &ep(cx.env_pool);
     Env &de((d.in.type == &cx.nil_type) ? *ep.get(cx) : *ep.get(cx, env));
 
-    if (de.items.empty()) { de.use(cx, env, {cx.intern("env")}); }  
+    //if (de.items.empty()) { de.use(cx, env, {cx.intern("env")}); }
+    
     Opts body_opts;
     d.body.compile(cx, in->pos, de, stack, body_opts);
     out.push_back(*in);
