@@ -32,27 +32,27 @@ namespace cidk {
 
   void Env::clear(Cx &cx) { items.clear(); }
 
-  typename Env::Iter Env::find(const Sym *key) {
+  typename Env::Iter Env::find(const Sym *id) {
     for (auto i(items.begin()); i != items.end(); i++) {
-      if (i->id >= key) { return i; }
+      if (i->id >= id) { return i; }
     }
 
     return items.end();
   }
 
-  Val &Env::get(const Pos &pos, const Sym *key) {
-    auto i(find(key));
-    if (i == items.end() || i->id != key) { throw ESys(pos, "Unknown id: ", key); }
+  Val &Env::get(const Pos &pos, const Sym *id) {
+    auto i(find(id));
+    if (i == items.end() || i->id != id) { throw ESys(pos, "Unknown id: ", id); }
     return *i;
   }
 
-  void Env::let(Cx &cx, const Pos &pos, const Sym *key, const Val &val) {
-    auto i(find(key));
+  void Env::let(Cx &cx, const Pos &pos, const Sym *id, const Val &val) {
+    auto i(find(id));
     
-    if (i == items.end() || i->id != key) {
-      items.insert(i, val)->id = key;
+    if (i == items.end() || i->id != id) {
+      items.insert(i, val)->id = id;
     } else {
-      throw ESys(pos, "Duplicate binding: ", key);
+      throw ESys(pos, "Duplicate binding: ", id);
     }
   }
 
@@ -93,11 +93,11 @@ namespace cidk {
     }
   }
 
-  void Env::set(Cx &cx, const Pos &pos, const Sym *key, const Val &val) {
-    auto i(find(key));
+  void Env::set(Cx &cx, const Pos &pos, const Sym *id, const Val &val) {
+    auto i(find(id));
     
-    if (i == items.end() || i->id != key) {
-      throw ESys(pos, "Missing binding: ", key);
+    if (i == items.end() || i->id != id) {
+      throw ESys(pos, "Missing binding: ", id);
     }
 
     *i = val;
@@ -108,8 +108,8 @@ namespace cidk {
     cx.env_pool.put(this);
   }
 
-  Val *Env::try_get(const Sym *key) {
-    auto i(find(key));
-    return (i == items.end() || i->id != key) ? nullptr : &*i;
+  Val *Env::try_get(const Sym *id) {
+    auto i(find(id));
+    return (i == items.end() || i->id != id) ? nullptr : &*i;
   }
 }

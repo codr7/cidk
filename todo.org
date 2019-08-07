@@ -10,7 +10,7 @@ fun (fib ((n a b) Int) Int
 ** remove stack args
 ** add stackp like regs
 * switch Reg type to Val
-** add Val.reg_id
+** use Val.id
 *** default null
 * --
 * mark regs in cx.mark()

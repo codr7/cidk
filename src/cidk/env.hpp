@@ -32,7 +32,7 @@ namespace cidk {
     Env(const Env &src) = delete;
     Env &operator =(const Env &) = delete;
 
-    bool add(Cx &cx, const Pos &pos, const Sym *key, const Val &val, bool silent);
+    bool add(Cx &cx, const Pos &pos, const Sym *id, const Val &val, bool silent);
     void add_const(Cx &cx, const Pos &pos, const string &id, const Val &val);
     void add_const(Cx &cx, const Pos &pos, const Sym *id, const Val &val);
     void add_const_expr(Cx &cx, const Pos &pos, const string &id, const Ops &ops);
@@ -66,15 +66,15 @@ namespace cidk {
     void add_var(Cx &cx, const Pos &pos, const string &id, const Val &val);
 
     void clear(Cx &cx);
-    Iter find(const Sym *key);
-    Val &get(const Pos &pos, const Sym *key);
-    void let(Cx &cx, const Pos &pos, const Sym *key, const Val &val);
+    Iter find(const Sym *id);
+    Val &get(const Pos &pos, const Sym *id);
+    void let(Cx &cx, const Pos &pos, const Sym *id, const Val &val);
     void mark();
     void mark_items();
     void merge(Cx &cx, Env &src);
-    void set(Cx &cx, const Pos &pos, const Sym *key, const Val &val);
+    void set(Cx &cx, const Pos &pos, const Sym *id, const Val &val);
     virtual void sweep(Cx &cx, const Pos &pos) override;
-    Val *try_get(const Sym *key);
+    Val *try_get(const Sym *id);
   };
 }
 
