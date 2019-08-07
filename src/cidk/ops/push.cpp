@@ -24,7 +24,7 @@ namespace cidk::ops {
   void PushType::eval(Cx &cx,
                       Op &op,
                       Env &env,
-                      Regs &regs,
+                      Reg *regs,
                       Stack &stack) const {
     op.as<Val>().push(cx, op.pos, env, regs, stack);
   }

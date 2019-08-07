@@ -32,7 +32,7 @@ namespace cidk::ops {
     out.push_back(*in);
   }
   
-  void ClockType::eval(Cx &cx, Op &op, Env &env, Regs &regs, Stack &stack) const {
+  void ClockType::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {
     auto &p(op.pos);
     auto &d(op.as<ClockData>());
     Stack bs;

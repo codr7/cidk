@@ -40,7 +40,7 @@ namespace cidk {
                      const Pos &pos,
                      const Val &val,
                      Env &env,
-                     Regs &regs,
+                     Reg *regs,
                      Stack &stack) const {
     env.get(pos, val.as_sym).eval(cx, pos, env, regs, stack);
   }

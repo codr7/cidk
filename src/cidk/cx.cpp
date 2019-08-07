@@ -51,6 +51,7 @@ namespace cidk {
     str_type(env.add_type<StrType>(*this, Pos::_, "Str", {&any_type})),
     sym_type(env.add_type<SymType>(*this, Pos::_, "Sym", {&any_type})),
     eval_state(EvalState::go),
+    regp(&regs[0]),
     call(nullptr),
     _(nil_type),
     $(pop_type),
@@ -85,7 +86,7 @@ namespace cidk {
     env.ref_mark = true;
   }
 
-  void Cx::eval(Ops &in, Env &env, Regs &regs, Stack &stack) {
+  void Cx::eval(Ops &in, Env &env, Reg *regs, Stack &stack) {
     ops.push_back(&in);
     
     for (Op &o: in) { 

@@ -24,10 +24,8 @@ int main(int argc, char *argv[]) {
     else {
       cidk::Ops ops;  
       cidk::Opts opts;
-      cx.load(p, a, env, stack, ops, opts);    
-
-      cidk::Regs regs;
-      cx.eval(ops, env, regs, stack);
+      cx.load(p, a, env, stack, ops, opts);
+      cx.eval(ops, env, cx.regp, stack);
       m = Mode::load;
     }
   }

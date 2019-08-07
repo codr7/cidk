@@ -68,6 +68,10 @@ namespace cidk {
     
     vector<Ops *> ops;
     EvalState eval_state;
+
+    array<Reg, CIDK_MAX_REG> regs;
+    Reg *regp;
+    
     Call *call;
     
     const Val _, $, T, F, eop;
@@ -81,7 +85,7 @@ namespace cidk {
     void deinit();
     void clear_refs();
     void compile(Ops &ops, Opts &opts, Env &env, Stack &stack);
-    void eval(Ops &in, Env &env, Regs &regs, Stack &stack);
+    void eval(Ops &in, Env &env, Reg *regs, Stack &stack);
     const Sym *intern(const string &name);
 
     void load(const Pos &pos,

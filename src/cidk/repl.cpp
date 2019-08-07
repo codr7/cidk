@@ -23,7 +23,6 @@ namespace cidk {
     string line;
     Ops ops;
     Opts opts;
-    Regs regs;
 
     while (getline(in, line)) {
       if (line.empty()) {
@@ -32,7 +31,7 @@ namespace cidk {
         if (buf.tellp()) {
           read_ops(cx, p, buf, ops);
           cx.compile(ops, opts, env, stack);
-          cx.eval(ops, env, regs, stack);
+          cx.eval(ops, env, cx.regp, stack);
         } else {
           stack.clear();
         }

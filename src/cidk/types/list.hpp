@@ -28,7 +28,7 @@ namespace cidk {
                       const Pos &pos,
                       const Val &val,
                       Env &env,
-                      Regs &regs,
+                      Reg *regs,
                       Stack &stack) const override;
 
     virtual void get_ids(const Val &val, IdSet &out) const override;

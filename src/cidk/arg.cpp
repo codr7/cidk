@@ -41,8 +41,7 @@ namespace cidk {
       Type *type(nullptr);
 
       if (i->type != &cx.nil_type) {
-        Regs regs;
-        i->eval(cx, pos, env, regs, stack);
+        i->eval(cx, pos, env, cx.regp, stack);
         auto typev(pop(pos, stack));
 
         if (typev.type != &cx.meta_type) {

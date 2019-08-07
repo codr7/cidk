@@ -37,7 +37,7 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void IfType::eval(Cx &cx, Op &op, Env &env, Regs &regs, Stack &stack) const {
+  void IfType::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {
     auto &p(op.pos);
     auto &d(op.as<IfData>());
     d.cond.push(cx, p, env, regs, stack);

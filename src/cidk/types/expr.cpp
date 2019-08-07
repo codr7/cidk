@@ -28,7 +28,7 @@ namespace cidk {
                       const Pos &pos,
                       const Val &val,
                       Env &env,
-                      Regs &regs,
+                      Reg *regs,
                       Stack &stack) const {
     cx.eval(val.as_expr->ops, env, regs, stack);
   }

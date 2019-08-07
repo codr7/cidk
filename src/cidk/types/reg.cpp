@@ -19,7 +19,7 @@ namespace cidk {
                      const Pos &pos,
                      const Val &val,
                      Env &env,
-                     Regs &regs,
+                     Reg *regs,
                      Stack &stack) const {
     stack.emplace_back();
     regs[val.as_reg].second.clone(pos, stack.back());

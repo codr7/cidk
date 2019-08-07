@@ -36,14 +36,14 @@ namespace cidk::ops {
                       const Pos &pos,
                       Val &place,
                       Env &env,
-                      Regs &regs,
+                      Reg *regs,
                       Stack &stack) {
     if (place.type == &cx.int_type) { return stack[stack.size() - place.as_int - 1]; }
     if (place.type == &cx.reg_type) { return regs[place.as_reg].second; }
     return env.get(pos, place.as_sym);
   }
   
-  void SwapType::eval(Cx &cx, Op &op, Env &env, Regs &regs, Stack &stack) const {
+  void SwapType::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {
     auto &p(op.pos);
     auto &d(op.as<SwapData>());
 

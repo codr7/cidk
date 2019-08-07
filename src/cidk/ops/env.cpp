@@ -20,7 +20,7 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void EnvType::eval(Cx &cx, Op &op, cidk::Env &env, Regs &regs, Stack &stack) const {
+  void EnvType::eval(Cx &cx, Op &op, cidk::Env &env, Reg *regs, Stack &stack) const {
     stack.emplace_back(cx.env_type, &env);
   }
 

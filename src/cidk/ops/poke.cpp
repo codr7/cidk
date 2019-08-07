@@ -34,7 +34,7 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void PokeType::eval(Cx &cx, Op &op, Env &env, Regs &regs, Stack &stack) const {
+  void PokeType::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {
     auto &p(op.pos);
     auto &d(op.as<PokeData>());
     auto ss(stack.size());

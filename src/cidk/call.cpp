@@ -20,11 +20,13 @@ namespace cidk {
     
     if (imp) { imp(cx, pos, fun, env, stack); }
     else {
-      Regs regs;
+      Reg *regs(cx.regp);
+      cx.regp += fun.body_opts.regs.size();
 
       for (auto &src: fun.body_opts.ext_ids) { 
         set_reg(regs, src.dst_reg, src.id, src.val);
       }
+
     recall:
       cx.eval(fun.body, fun.env, regs, stack);
       
@@ -32,6 +34,8 @@ namespace cidk {
         cx.eval_state = EvalState::go;
         goto recall;
       }
+
+      cx.regp = regs;
     }
   }
 }

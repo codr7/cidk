@@ -6,10 +6,6 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* move Call regs to cx.regs
-** reserve capacity in Call
-** switch regs args to Reg *
-** simplify set_reg
 * remove Op/Val.get_ids() fns
 * remove Env.use()
 * remove IdSet
@@ -22,9 +18,9 @@ fun (fib ((n a b) Int) Int
 * --
 * clone in default ValType.eval
 ** replace Val.push calls with Val.eval
-* replace cx.ops with cx.markers
+* mark regs in cx.mark()
+* replace cx.ops with cx.on_mark
 ** function<void ()>
-** mark in/regs/stack in cx.eval
 * finish for op
 ** add ValType.iter(const Val &src, function<void (const Val &)>)
 *** call with src in default imp
@@ -33,6 +29,10 @@ fun (fib ((n a b) Int) Int
 *** let / del
 **** add Env.del
 *** update val in place
+* add cx.stack
+** remove stack args
+** add stackp like regs
+* --
 * add Splat op
 ** vararg like Push
 ** call splat on eval

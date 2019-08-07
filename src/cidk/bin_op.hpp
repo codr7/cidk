@@ -22,7 +22,7 @@ namespace cidk::ops {
     virtual void eval(Cx &cx,
                       Op &op,
                       Env &env,
-                      Regs &regs,
+                      Reg *regs,
                       Stack &stack) const override;
     
     virtual const Sym *get_fun_id(Cx &cx) const = 0;

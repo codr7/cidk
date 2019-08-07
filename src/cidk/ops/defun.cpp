@@ -50,13 +50,14 @@ namespace cidk::ops {
 
     auto &b(d.body.as_expr->ops);
     copy(b.begin(), b.end(), back_inserter(f.body));
-    cx.compile(f.body, f.body_opts, *cx.env_pool.get(cx, env), stack);
-    for (auto &r: f.body_opts.ext_ids) { r.src_reg = opts.regs[r.id]; }
+    f.env.let(cx, p, f.id, Val(cx.fun_type, &f));
+    cx.compile(f.body, f.body_opts, f.env, stack);
+    for (auto &r: f.body_opts.ext_ids) { r.src_reg = opts.get_reg(p, r.id); }
     d.fun = &f;
     out.push_back(*in);
   }
   
-  void DefunType::eval(Cx &cx, Op &op, Env &env, Regs &regs, Stack &stack) const {
+  void DefunType::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {
     auto &f(*op.as<DefunData>().fun);
     for (auto &r: f.body_opts.ext_ids) { regs[r.src_reg].second.cp(r.val); }
   }

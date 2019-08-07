@@ -20,7 +20,7 @@ namespace cidk::ops {
     virtual void eval(Cx &cx,
                       Op &op,
                       Env &env,
-                      Regs &regs,
+                      Reg *regs,
                       Stack &stack) const override;
     
     virtual void mark_refs(Op &op) const override;

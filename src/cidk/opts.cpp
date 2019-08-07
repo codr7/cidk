@@ -4,6 +4,12 @@
 #include "cidk/sym.hpp"
 
 namespace cidk {
+  size_t Opts::get_reg(const Pos &pos, const Sym *id) {
+    auto i(regs.find(id));
+    if (i == regs.end()) { throw ESys(pos, "Unknown id: ", id); }
+    return i->second;
+  }
+
   size_t Opts::push_ext_id(const Sym *id) {
     auto i(*push_reg(id));
     ext_ids.emplace_back(id, i);

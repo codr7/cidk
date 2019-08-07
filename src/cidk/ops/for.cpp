@@ -41,7 +41,7 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void ForType::eval(Cx &cx, Op &op, Env &env, Regs &regs, Stack &stack) const {
+  void ForType::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {
     auto &p(op.pos);
     auto &d(op.as<ForData>());
     d.src.push(cx, p, env, regs, stack);

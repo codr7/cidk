@@ -39,7 +39,7 @@ namespace cidk {
   
   bool Val::eq(const Pos &pos, const Val &y) const { return type->eq(pos, *this, y); }
 
-  void Val::eval(Cx &cx, const Pos &pos, Env &env, Regs &regs, Stack &stack) const {
+  void Val::eval(Cx &cx, const Pos &pos, Env &env, Reg *regs, Stack &stack) const {
     return type->eval(cx, pos, *this, env, regs, stack);
   }
   
@@ -60,7 +60,7 @@ namespace cidk {
     type->mark_refs(*this);
   }
 
-  void Val::push(Cx &cx, const Pos &pos, Env &env, Regs &regs, Stack &stack) const {
+  void Val::push(Cx &cx, const Pos &pos, Env &env, Reg *regs, Stack &stack) const {
     if (type == &cx.expr_type || type == &cx.reg_type || type == &cx.sym_type) {
       type->eval(cx, pos, *this, env, regs, stack);
     } else if (type != &cx.pop_type)  {

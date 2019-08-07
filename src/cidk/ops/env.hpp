@@ -20,7 +20,7 @@ namespace cidk::ops {
     virtual void eval(Cx &cx,
                       Op &op,
                       cidk::Env &env,
-                      Regs &regs,
+                      Reg *regs,
                       Stack &stack) const override;
     
     virtual void read(Cx &cx, Pos &pos, istream &in, Ops &out) const override;

@@ -62,7 +62,7 @@ namespace cidk {
                       const Pos &pos,
                       const Val &val,
                       Env &env,
-                      Regs &regs,
+                      Reg *regs, 
                       Stack &stack) const {
     Stack out;
     for (auto &v: val.as_list->items) { v.eval(cx, pos, env, regs, out); }
