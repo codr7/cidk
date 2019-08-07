@@ -19,6 +19,7 @@ namespace cidk {
                      const Pos &pos,
                      const Val &val,
                      Env &env,
+                     Regs &regs,
                      Stack &stack) const {}
 
   bool PopType::is(const Val &x, const Val &y) const { return false; }

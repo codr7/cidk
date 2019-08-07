@@ -19,7 +19,7 @@ namespace cidk {
                          Val &val,
                          Env &env,
                          Stack &stack,
-                         Opts *opts) const override;
+                         Opts &opts) const override;
 
     virtual void dump(const Val &val, ostream &out) const override;
     virtual bool eq(const Pos &pos, const Val &x, const Val &y) const override;
@@ -28,6 +28,7 @@ namespace cidk {
                       const Pos &pos,
                       const Val &val,
                       Env &env,
+                      Regs &regs,
                       Stack &stack) const override;
 
     virtual void get_ids(const Val &val, IdSet &out) const override;

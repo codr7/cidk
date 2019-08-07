@@ -1,5 +1,6 @@
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
+#include "cidk/ext_id.hpp"
 #include "cidk/ops/do_env.hpp"
 #include "cidk/read.hpp"
 #include "cidk/types/bool.hpp"
@@ -27,7 +28,7 @@ namespace cidk::ops {
                           Env &env,
                           Stack &stack,
                           Ops &out,
-                          Opts *opts) const {
+                          Opts &opts) const {
     auto &d(in->as<DoEnvData>());
     d.in.compile(cx, in->pos, env, stack, opts);
 
@@ -35,14 +36,14 @@ namespace cidk::ops {
     Env &de((d.in.type == &cx.nil_type) ? *ep.get(cx) : *ep.get(cx, env));
 
     if (de.items.empty()) { de.use(cx, env, {cx.intern("env")}); }  
-    if (opts) { opts->env_escape = true; }
-    d.body.compile(cx, in->pos, de, stack, opts);
+    Opts body_opts;
+    d.body.compile(cx, in->pos, de, stack, body_opts);
     out.push_back(*in);
   }
 
-  void DoEnvType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
-    const Pos &p(op.pos);
-    const DoEnvData &d(op.as<DoEnvData>());
+  void DoEnvType::eval(Cx &cx, Op &op, Env &env, Regs &regs, Stack &stack) const {
+    auto &p(op.pos);
+    auto &d(op.as<DoEnvData>());
     Env *de(nullptr);
 
     if (d.in.type == &cx.nil_type) {
@@ -50,15 +51,15 @@ namespace cidk::ops {
     } else if (d.in.type == &cx.bool_type && d.in.as_bool) {
       de = cx.env_pool.get(cx, env);
     } else {
-      d.in.push(cx, p, env, stack);
+      d.in.push(cx, p, env, regs, stack);
       de = &pop(p, stack).get_env();
     }
 
-    d.body.push(cx, p, *de, stack);
+    d.body.push(cx, p, *de, regs, stack);
   }
 
   void DoEnvType::get_ids(const Op &op, IdSet &out) const {
-    DoEnvData d(op.as<DoEnvData>());
+    auto &d(op.as<DoEnvData>());
     d.in.get_ids(out);
     d.body.get_ids(out);
   }

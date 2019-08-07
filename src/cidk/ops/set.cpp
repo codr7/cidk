@@ -8,10 +8,11 @@
 namespace cidk::ops {
   struct SetData {
     Val key, val;
+    Int reg;
     bool is_expr;
     
     SetData(const Val &key, const Val &val, bool is_expr):
-      key(key), val(val), is_expr(is_expr) {}
+      key(key), val(val), reg(-1), is_expr(is_expr) {}
   };
 
   const SetType Set("set");
@@ -28,30 +29,38 @@ namespace cidk::ops {
                         Env &env,
                         Stack &stack,
                         Ops &out,
-                        Opts *opts) const {
-    if (opts) { opts->env_extend = true; }
-    in->as<SetData>().val.compile(cx, in->pos, env, stack, opts);
+                        Opts &opts) const {
+    auto &p(in->pos);
+    auto &d(in->as<SetData>());
+    d.val.compile(cx, p, env, stack, opts);
+    
+    if (d.key.type == &cx.sym_type) {      
+      if (auto found(opts.regs.find(d.key.as_sym)); found != opts.regs.end()) {
+        d.reg = found->second;
+      }
+    }
+                 
     out.push_back(*in);
   }
 
-  void SetType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
-    const Pos &p(op.pos);
-    const SetData &d(op.as<SetData>());
+  void SetType::eval(Cx &cx, Op &op, Env &env, Regs &regs, Stack &stack) const {
+    auto &p(op.pos);
+    auto &d(op.as<SetData>());
 
     if (d.is_expr) {
       if (d.key.type == &cx.int_type) {
         stack.push_back(stack[d.key.as_int]);
       } else {
-        stack.push_back(env.get(p, d.key.as_sym));
+        stack.push_back(regs[d.reg].second);
       }
     }
 
-    d.val.push(cx, p, env, stack);
+    d.val.push(cx, p, env, regs, stack);
   
     if (d.key.type == &cx.int_type) {
       stack[d.key.as_int] = pop(p, stack);
     } else {
-      env.set(cx, p, d.key.as_sym, pop(p, stack));
+      regs[d.reg].second = pop(p, stack);
     }
   }
 

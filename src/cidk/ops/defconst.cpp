@@ -25,7 +25,7 @@ namespace cidk::ops {
                              Env &env,
                              Stack &stack,
                              Ops &out,
-                             Opts *opts) const {
+                             Opts &opts) const {
     auto &d(in->as<DefconstData>());
     d.val.compile(cx, in->pos, env, stack, opts);
     env.add_const(cx, in->pos, d.id, d.val);

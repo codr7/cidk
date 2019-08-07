@@ -1,5 +1,6 @@
 #include "cidk/call.hpp"
 #include "cidk/cx.hpp"
+#include "cidk/ext_id.hpp"
 #include "cidk/libs/math.hpp"
 #include "cidk/str.hpp"
 #include "cidk/types/bool.hpp"

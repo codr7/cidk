@@ -17,7 +17,7 @@ namespace cidk::ops {
                             Env &env,
                             Stack &stack,
                             Ops &out,
-                            Opts *opts) const {
+                            Opts &opts) const {
     cx.load(in->pos, in->as<string>(), env, stack, out, opts);    
     out.push_back(*in);
   }

@@ -1,7 +1,8 @@
 #include "cidk/cx.hpp"
-#include "cidk/types/pop.hpp"
-#include "cidk/types/sym.hpp"
 #include "cidk/types/expr.hpp"
+#include "cidk/types/pop.hpp"
+#include "cidk/types/reg.hpp"
+#include "cidk/types/sym.hpp"
 #include "cidk/val.hpp"
 
 namespace cidk {
@@ -30,7 +31,7 @@ namespace cidk {
     return dst;
   }
 
-  void Val::compile(Cx &cx, const Pos &pos, Env &env, Stack &stack, Opts *opts) {
+  void Val::compile(Cx &cx, const Pos &pos, Env &env, Stack &stack, Opts &opts) {
     type->compile(cx, pos, *this, env, stack, opts);
   }
 
@@ -38,8 +39,8 @@ namespace cidk {
   
   bool Val::eq(const Pos &pos, const Val &y) const { return type->eq(pos, *this, y); }
 
-  void Val::eval(Cx &cx, const Pos &pos, Env &env, Stack &stack) const {
-    return type->eval(cx, pos, *this, env, stack);
+  void Val::eval(Cx &cx, const Pos &pos, Env &env, Regs &regs, Stack &stack) const {
+    return type->eval(cx, pos, *this, env, regs, stack);
   }
   
   void Val::get_ids(IdSet &out) const { type->get_ids(*this, out); }
@@ -59,9 +60,9 @@ namespace cidk {
     type->mark_refs(*this);
   }
 
-  void Val::push(Cx &cx, const Pos &pos, Env &env, Stack &stack) const {
-    if (type == &cx.expr_type || type == &cx.sym_type) {
-      eval(cx, pos, env, stack);
+  void Val::push(Cx &cx, const Pos &pos, Env &env, Regs &regs, Stack &stack) const {
+    if (type == &cx.expr_type || type == &cx.reg_type || type == &cx.sym_type) {
+      type->eval(cx, pos, *this, env, regs, stack);
     } else if (type != &cx.pop_type)  {
       stack.emplace_back(*type);
       type->clone(pos, stack.back(), *this);

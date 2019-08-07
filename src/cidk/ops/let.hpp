@@ -7,7 +7,7 @@
 namespace cidk::ops {
   struct LetType: OpType {
     LetType(const string &id);
-    void init(Cx &cx, Op &op, const Sym *key, const Val &val) const;
+    void init(Cx &cx, Op &op, const Sym *id, const Val &val) const;
 
     virtual void compile(Cx &cx,
                          OpIter &in,
@@ -15,9 +15,14 @@ namespace cidk::ops {
                          Env &env,
                          Stack &stack,
                          Ops &out,
-                         Opts *opts) const override;
+                         Opts &opts) const override;
 
-    virtual void eval(Cx &cx, Op &op, Env &env, Stack &stack) const override;
+    virtual void eval(Cx &cx,
+                      Op &op,
+                      Env &env,
+                      Regs &regs,
+                      Stack &stack) const override;
+    
     void get_ids(const Op &op, IdSet &out) const override;
     virtual void mark_refs(Op &op) const override;
     virtual void read(Cx &cx, Pos &pos, istream &in, Ops &out) const override;

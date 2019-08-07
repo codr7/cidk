@@ -4,6 +4,7 @@
 #include "cidk/cidk.hpp"
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
+#include "cidk/ext_id.hpp"
 #include "cidk/libs/math.hpp"
 #include "cidk/op.hpp"
 #include "cidk/ops/env.hpp"
@@ -17,6 +18,7 @@
 #include "cidk/types/nil.hpp"
 #include "cidk/types/list.hpp"
 #include "cidk/types/pop.hpp"
+#include "cidk/types/reg.hpp"
 #include "cidk/types/str.hpp"
 #include "cidk/types/sym.hpp"
 #include "cidk/val.hpp"
@@ -45,6 +47,7 @@ namespace cidk {
     list_type(env.add_type<ListType>(*this, Pos::_, "List", {&any_type})),
     ostream_type(env.add_type<OStreamType>(*this, Pos::_, "OStream", {&any_type})),
     pop_type(env.add_type<PopType>(*this, Pos::_, "Pop", {&any_type})),
+    reg_type(env.add_type<RegType>(*this, Pos::_, "Reg", {&any_type})),
     str_type(env.add_type<StrType>(*this, Pos::_, "Str", {&any_type})),
     sym_type(env.add_type<SymType>(*this, Pos::_, "Sym", {&any_type})),
     eval_state(EvalState::go),
@@ -82,11 +85,11 @@ namespace cidk {
     env.ref_mark = true;
   }
 
-  void Cx::eval(Ops &in, Env &env, Stack &stack) {
+  void Cx::eval(Ops &in, Env &env, Regs &regs, Stack &stack) {
     ops.push_back(&in);
     
     for (Op &o: in) { 
-      o.eval(*this, env, stack); 
+      o.eval(*this, env, regs, stack); 
       if (eval_state != EvalState::go) { break; }
     }
 
@@ -101,7 +104,7 @@ namespace cidk {
     return s;
   }
 
-  void Cx::compile(Ops &ops, Opts *opts, Env &env, Stack &stack) {
+  void Cx::compile(Ops &ops, Opts &opts, Env &env, Stack &stack) {
     Ops tmp;
 
     for (auto i(ops.begin()); i != ops.end(); i++) {
@@ -116,7 +119,7 @@ namespace cidk {
                 Env &env,
                 Stack &stack,
                 Ops &out,
-                Opts *opts) {
+                Opts &opts) {
     auto fp(src.is_absolute() ? src : load_path/src);
     ifstream f(fp);
     if (f.fail()) { throw ESys(pos, "File not found: ", fp); }

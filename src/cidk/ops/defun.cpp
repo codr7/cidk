@@ -1,5 +1,6 @@
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
+#include "cidk/ext_id.hpp"
 #include "cidk/list.hpp"
 #include "cidk/ops/defun.hpp"
 #include "cidk/ops/let.hpp"
@@ -35,8 +36,8 @@ namespace cidk::ops {
                           Env &env,
                           Stack &stack,
                           Ops &out,
-                          Opts *opts) const {
-    const Pos &p(in->pos);
+                          Opts &opts) const {
+    auto &p(in->pos);
     auto &d(in->as<DefunData>());
     Fun &f(env.add_fun(cx, p, d.id, {}, {}));
 
@@ -49,22 +50,15 @@ namespace cidk::ops {
 
     auto &b(d.body.as_expr->ops);
     copy(b.begin(), b.end(), back_inserter(f.body));
-    cx.compile(f.body, &f.body_opts, *cx.env_pool.get(cx, env), stack);
-    cidk::get_ids(f.body, f.body_ids);
-    f.env.use(cx, env, f.body_ids);
-    if (opts) { opts->env_escape = true; }
+    cx.compile(f.body, f.body_opts, *cx.env_pool.get(cx, env), stack);
+    for (auto &r: f.body_opts.ext_ids) { r.src_reg = opts.regs[r.id]; }
     d.fun = &f;
     out.push_back(*in);
   }
   
-  void DefunType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
+  void DefunType::eval(Cx &cx, Op &op, Env &env, Regs &regs, Stack &stack) const {
     auto &f(*op.as<DefunData>().fun);
-    f.env.use(cx, env, f.body_ids);
-  }
-
-  void DefunType::get_ids(const Op &op, IdSet &out) const {
-    IdSet &ids(op.as<DefunData>().fun->body_ids);
-    out.insert(ids.begin(), ids.end());
+    for (auto &r: f.body_opts.ext_ids) { regs[r.src_reg].second.cp(r.val); }
   }
 
   void DefunType::mark_refs(Op &op) const { op.as<DefunData>().fun->mark(); }

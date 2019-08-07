@@ -18,15 +18,15 @@ namespace cidk::ops {
                          Env &env,
                          Stack &stack,
                          Ops &out,
-                         Opts *opts) const {
+                         Opts &opts) const {
     Val &f(in->as<Val>());
     f.compile(cx, in->pos, env, stack, opts);
     out.push_back(*in);
   }
 
-  void CallType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
-    const Pos &p(op.pos);
-    op.as<Val>().push(cx, p, env, stack);
+  void CallType::eval(Cx &cx, Op &op, Env &env, Regs &regs, Stack &stack) const {
+    auto &p(op.pos);
+    op.as<Val>().push(cx, p, env, regs, stack);
     auto &f(pop(p, stack));
     Type *ft(f.type);
     if (ft != &cx.fun_type) { throw ESys(p, "Invalid call target: ", ft->id); }

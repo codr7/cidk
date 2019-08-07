@@ -2,6 +2,7 @@
 
 #include "cidk/cx.hpp"
 #include "cidk/types/env.hpp"
+#include "cidk/types/reg.hpp"
 #include "cidk/types/sym.hpp"
 #include "cidk/val.hpp"
 
@@ -17,8 +18,18 @@ namespace cidk {
                         Val &val,
                         Env &env,
                         Stack &stack,
-                        Opts *opts) const {
-    if (auto i(env.try_get(val.as_sym)); i) { i->val.clone(pos, val); }
+                        Opts &opts) const {
+    auto s(val.as_sym);
+    
+    if (auto reg(opts.regs.find(s)); reg == opts.regs.end()) {
+      if (auto i(env.try_get(s)); i) {
+        i->val.clone(pos, val);
+      } else {
+        val.reset(cx.reg_type, opts.push_ext_id(s));
+      }
+    } else {
+      val.reset(cx.reg_type, reg->second);
+    }
   }
 
   void SymType::cp(Val &dst, const Val &src) const { dst.as_sym = src.as_sym; }
@@ -29,8 +40,9 @@ namespace cidk {
                      const Pos &pos,
                      const Val &val,
                      Env &env,
+                     Regs &regs,
                      Stack &stack) const {
-    env.get(pos, val.as_sym).eval(cx, pos, env, stack);
+    env.get(pos, val.as_sym).eval(cx, pos, env, regs, stack);
   }
 
   void SymType::get_ids(const Val &val, IdSet &out) const { out.emplace(val.as_sym); }

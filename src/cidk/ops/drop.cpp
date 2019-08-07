@@ -10,8 +10,8 @@ namespace cidk::ops {
 
   void DropType::init(Cx &cx, Op &op, Int n) const { op.data = n; }
 
-  void DropType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
-    const Pos &p(op.pos);
+  void DropType::eval(Cx &cx, Op &op, Env &env, Regs &regs, Stack &stack) const {
+    auto &p(op.pos);
     if (stack.empty()) { throw ESys(p, "Nothing to drop"); }
     auto n(op.as<Int>());
     if (n > stack.size()) { throw ESys(p, "Nothing to drop"); }

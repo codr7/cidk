@@ -8,7 +8,13 @@ namespace cidk::ops {
   struct SweepType: OpType {
     SweepType(const string &id);
     void init(Cx &cx, Op &op) const;
-    virtual void eval(Cx &cx, Op &op, Env &env, Stack &stack) const override;
+
+    virtual void eval(Cx &cx,
+                      Op &op,
+                      Env &env,
+                      Regs &regs,
+                      Stack &stack) const override;
+    
     virtual void read(Cx &cx, Pos &pos, istream &in, Ops &out) const override;
   };
 

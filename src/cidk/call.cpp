@@ -1,6 +1,7 @@
 #include "cidk/call.hpp"
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
+#include "cidk/ext_id.hpp"
 #include "cidk/expr.hpp"
 
 namespace cidk {  
@@ -19,20 +20,17 @@ namespace cidk {
     
     if (imp) { imp(cx, pos, fun, env, stack); }
     else {
-      const Opts &opt(fun.body_opts);
-      Env &e(opt.env_extend ? *cx.env_pool.get(cx, fun.env) : fun.env);
+      Regs regs;
+
+      for (auto &src: fun.body_opts.ext_ids) { 
+        set_reg(regs, src.dst_reg, src.id, src.val);
+      }
     recall:
-      cx.eval(fun.body, e, stack);
+      cx.eval(fun.body, fun.env, regs, stack);
       
       if (cx.eval_state == EvalState::recall) {
-        if (opt.env_extend) { e.restore(cx, fun.env); }
         cx.eval_state = EvalState::go;
         goto recall;
-      }
-
-      if (opt.env_extend && !opt.env_escape) {
-        dynamic_cast<Ref &>(e).unlink();
-        e.sweep(cx, pos);
       }
     }
   }

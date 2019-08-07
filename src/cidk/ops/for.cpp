@@ -33,23 +33,23 @@ namespace cidk::ops {
                         Env &env,
                         Stack &stack,
                         Ops &out,
-                        Opts *opts) const {
-    const Pos &p(in->pos);
+                        Opts &opts) const {
+    auto &p(in->pos);
     auto &d(in->as<ForData>());
     d.src.compile(cx, p, env, stack, opts);
     d.body.compile(cx, p, env, stack, opts);
     out.push_back(*in);
   }
 
-  void ForType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
+  void ForType::eval(Cx &cx, Op &op, Env &env, Regs &regs, Stack &stack) const {
     auto &p(op.pos);
     auto &d(op.as<ForData>());
-    d.src.push(cx, p, env, stack);
+    d.src.push(cx, p, env, regs, stack);
     Val src(pop(p, stack));
     
     for (Int i(0); i < src.as_int; i++) {
       if (d.push) { stack.emplace_back(cx.int_type, i); }
-      d.body.push(cx, p, env, stack);
+      d.body.push(cx, p, env, regs, stack);
     }
   }
 

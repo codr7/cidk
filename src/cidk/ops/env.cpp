@@ -16,12 +16,11 @@ namespace cidk::ops {
                         cidk::Env &env,
                         Stack &stack,
                         Ops &out,
-                        Opts *opts) const {
-    if (opts) { opts->env_escape = true; }
+                        Opts &opts) const {
     out.push_back(*in);
   }
 
-  void EnvType::eval(Cx &cx, Op &op, cidk::Env &env, Stack &stack) const {
+  void EnvType::eval(Cx &cx, Op &op, cidk::Env &env, Regs &regs, Stack &stack) const {
     stack.emplace_back(cx.env_type, &env);
   }
 

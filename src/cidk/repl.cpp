@@ -3,6 +3,7 @@
 #include "cidk/cidk.hpp"
 #include "cidk/cx.hpp"
 #include "cidk/env.hpp"
+#include "cidk/ext_id.hpp"
 #include "cidk/pos.hpp"
 #include "cidk/read.hpp"
 #include "cidk/repl.hpp"
@@ -21,6 +22,8 @@ namespace cidk {
     stringstream buf;
     string line;
     Ops ops;
+    Opts opts;
+    Regs regs;
 
     while (getline(in, line)) {
       if (line.empty()) {
@@ -28,8 +31,8 @@ namespace cidk {
 
         if (buf.tellp()) {
           read_ops(cx, p, buf, ops);
-          cx.compile(ops, nullptr, env, stack);
-          cx.eval(ops, env, stack);
+          cx.compile(ops, opts, env, stack);
+          cx.eval(ops, env, regs, stack);
         } else {
           stack.clear();
         }

@@ -18,7 +18,7 @@ namespace cidk::ops {
     op.data = CpData(offs, len);
   }
 
-  void CpType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
+  void CpType::eval(Cx &cx, Op &op, Env &env, Regs &regs, Stack &stack) const {
     const auto &d(op.as<CpData>());
     auto ss(stack.size());
       

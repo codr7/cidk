@@ -16,7 +16,7 @@ namespace cidk {
                          Val &val,
                          Env &env,
                          Stack &stack,
-                         Opts *opts) const {
+                         Opts &opts) const {
     cx.compile(val.as_expr->ops, opts, env, stack);
   }
 
@@ -28,8 +28,9 @@ namespace cidk {
                       const Pos &pos,
                       const Val &val,
                       Env &env,
+                      Regs &regs,
                       Stack &stack) const {
-    cx.eval(val.as_expr->ops, env, stack);
+    cx.eval(val.as_expr->ops, env, regs, stack);
   }
 
   void ExprType::get_ids(const Val &val, IdSet &out) const {

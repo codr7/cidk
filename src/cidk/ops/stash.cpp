@@ -11,7 +11,11 @@ namespace cidk::ops {
 
   void StashType::init(Cx &cx, Op &op) const {}
 
-  void StashType::eval(Cx &cx, Op &op, cidk::Env &env, Stack &stack) const {
+  void StashType::eval(Cx &cx,
+                       Op &op,
+                       cidk::Env &env,
+                       Regs &regs,
+                       Stack &stack) const {
     List *out(cx.list_type.pool.get(cx));
     move(stack.begin(), stack.end(), back_inserter(out->items));
     stack.clear();

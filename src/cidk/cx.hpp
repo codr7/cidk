@@ -10,6 +10,7 @@
 #include "cidk/op.hpp"
 #include "cidk/path.hpp"
 #include "cidk/pool.hpp"
+#include "cidk/reg.hpp"
 #include "cidk/stack.hpp"
 #include "cidk/sym.hpp"
 #include "cidk/types/fun.hpp"
@@ -27,6 +28,7 @@ namespace cidk {
   struct NilType;
   struct PopType;
   struct Ref;
+  struct RegType;
   struct StrType;
   struct SymType;
   
@@ -60,6 +62,7 @@ namespace cidk {
     ListType &list_type;
     OStreamType &ostream_type;
     PopType &pop_type;
+    RegType &reg_type;
     StrType &str_type;
     SymType &sym_type;
     
@@ -77,8 +80,8 @@ namespace cidk {
 
     void deinit();
     void clear_refs();
-    void compile(Ops &ops, Opts *opts, Env &env, Stack &stack);
-    void eval(Ops &in, Env &env, Stack &stack);
+    void compile(Ops &ops, Opts &opts, Env &env, Stack &stack);
+    void eval(Ops &in, Env &env, Regs &regs, Stack &stack);
     const Sym *intern(const string &name);
 
     void load(const Pos &pos,
@@ -86,7 +89,7 @@ namespace cidk {
               Env &env,
               Stack &stack,              
               Ops &out,
-              Opts *opts);
+              Opts &opts);
     
     void mark_refs();
     void sweep_refs(const Pos &pos);

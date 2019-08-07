@@ -2,6 +2,7 @@
 #include "cidk/e.hpp"
 #include "cidk/ops/swap.hpp"
 #include "cidk/read.hpp"
+#include "cidk/types/reg.hpp"
 #include "cidk/types/sym.hpp"
 
 namespace cidk::ops {
@@ -18,22 +19,50 @@ namespace cidk::ops {
     op.data = SwapData(x, y);
   }
 
-  void SwapType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
-    const Pos &p(op.pos);
-    const auto &d(op.as<SwapData>());
-    const auto ss(stack.size());
-    
-    Val
-      &x((d.x.type == &cx.int_type)
-         ? stack[ss - d.x.as_int - 1]
-         : env.get(p, d.x.as_sym)),
-      &y((d.y.type == &cx.int_type)
-         ? stack[ss - d.y.as_int - 1]
-         : env.get(p, d.y.as_sym));
+  void SwapType::compile(Cx &cx,
+                         OpIter &in,
+                         const OpIter &end,
+                         Env &env,
+                         Stack &stack,
+                         Ops &out,
+                         Opts &opts) const {
+    auto &d(in->as<SwapData>());
+    d.x.compile(cx, in->pos, env, stack, opts);
+    d.y.compile(cx, in->pos, env, stack, opts);
+    out.push_back(*in);
+  }
+  
+  static Val &get_ref(Cx &cx,
+                      const Pos &pos,
+                      Val &place,
+                      Env &env,
+                      Regs &regs,
+                      Stack &stack) {
+    if (place.type == &cx.int_type) { return stack[stack.size() - place.as_int - 1]; }
+    if (place.type == &cx.reg_type) { return regs[place.as_reg].second; }
+    return env.get(pos, place.as_sym);
+  }
+  
+  void SwapType::eval(Cx &cx, Op &op, Env &env, Regs &regs, Stack &stack) const {
+    auto &p(op.pos);
+    auto &d(op.as<SwapData>());
 
-    swap(x, y);
+    swap(get_ref(cx, p, d.x, env, regs, stack),
+         get_ref(cx, p, d.y, env, regs, stack));
   }
 
+  void SwapType::get_ids(const Op &op, IdSet &out) const {
+    auto &d(op.as<SwapData>());
+    d.x.get_ids(out);
+    d.y.get_ids(out);
+  }
+
+  void SwapType::mark_refs(Op &op) const {
+    auto &d(op.as<SwapData>());
+    d.x.mark_refs();
+    d.y.mark_refs();
+  }
+  
   void SwapType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
     int n(0);
@@ -43,7 +72,9 @@ namespace cidk::ops {
       if (!x) { throw ESys(p, "Missing ;"); }
       if (x->is_eop()) { break; }
 
-      if (x->type != &cx.int_type && x->type != &cx.sym_type) {
+      if (x->type != &cx.int_type &&
+          x->type != &cx.reg_type &&
+          x->type != &cx.sym_type) {
         throw ESys(p, "Invalid swap place", x->type->id);
       }
 

@@ -27,7 +27,7 @@ namespace cidk {
                         Val &val,
                         Env &env,
                         Stack &stack,
-                        Opts *opts) const {}
+                        Opts &opts) const {}
 
   bool ValType::eq(const Pos &pos, const Val &x, const Val &y) const {
     return is(x, y);
@@ -37,9 +37,8 @@ namespace cidk {
                      const Pos &pos,
                      const Val &val,
                      Env &env,
-                     Stack &stack) const {
-    stack.push_back(val);
-  }
+                     Regs &regs,
+                     Stack &stack) const { stack.push_back(val); }
 
   void ValType::get_ids(const Val &val, IdSet &out) const {}
 

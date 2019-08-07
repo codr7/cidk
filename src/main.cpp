@@ -2,6 +2,7 @@
 #include <cassert>
 
 #include "cidk/cx.hpp"
+#include "cidk/ext_id.hpp"
 #include "cidk/repl.hpp"
 
 using namespace std;
@@ -22,9 +23,11 @@ int main(int argc, char *argv[]) {
     if (a == "-debug") { cx.debug = true; }
     else {
       cidk::Ops ops;  
+      cidk::Opts opts;
+      cx.load(p, a, env, stack, ops, opts);    
 
-      cx.load(p, a, env, stack, ops, nullptr);    
-      cx.eval(ops, env, stack);
+      cidk::Regs regs;
+      cx.eval(ops, env, regs, stack);
       m = Mode::load;
     }
   }

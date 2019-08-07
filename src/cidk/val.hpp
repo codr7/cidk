@@ -23,17 +23,18 @@ namespace cidk {
     ValType *type;
     
     union {
-      bool as_bool;
-      Char as_char;
-      Env *as_env;
-      Expr *as_expr;
-      Fun *as_fun;
-      Int as_int;
-      List *as_list;
-      OStream *as_ostream;
-      Str *as_str;
+      bool       as_bool;
+      Char       as_char;
+      Env       *as_env;
+      Expr      *as_expr;
+      Fun       *as_fun;
+      Int        as_int;
+      List      *as_list;
+      OStream   *as_ostream;
+      size_t     as_reg;
+      Str       *as_str;
       const Sym *as_sym;
-      Type *as_type;
+      Type      *as_type;
     };
         
     Val();
@@ -48,16 +49,16 @@ namespace cidk {
     
     Val &clone(const Pos &pos, Val &dst) const;
     Val &cp(Val &dst) const;
-    void compile(Cx &cx, const Pos &pos, Env &env, Stack &stack, Opts *opts);
+    void compile(Cx &cx, const Pos &pos, Env &env, Stack &stack, Opts &opts);
     void dump(ostream &out) const;
     bool eq(const Pos &pos, const Val &y) const;
-    void eval(Cx &cx, const Pos &pos, Env &env, Stack &stack) const;
+    void eval(Cx &cx, const Pos &pos, Env &env, Regs &regs, Stack &stack) const;
     void get_ids(IdSet &out) const;
     bool is(const Val &y) const;
     bool is_eop() const;
     void mark_refs();
 
-    void push(Cx &cx, const Pos &pos, Env &env, Stack &stack) const;
+    void push(Cx &cx, const Pos &pos, Env &env, Regs &regs, Stack &stack) const;
 
     template <typename ValT>
     void reset(TValType<ValT> &type, ValT val) {

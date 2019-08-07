@@ -6,6 +6,24 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
+* move Regs to cx.regs
+** reserve capacity in Call eval
+** simplify set_reg
+* remove Op/Val.get_ids() fns
+* remove Env.use()
+* remove IdSet
+** test.al
+* copy regs into env arg in env op
+* clone fun in defun eval
+** copy ops
+* simplify Env
+** replace EnvItem with Val
+* --
+* clone in default ValType.eval
+** replace Val.push calls with Val.eval
+* replace cx.ops with cx.markers
+** function<void ()>
+** mark in/regs/stack in cx.eval
 * finish for op
 ** add ValType.iter(const Val &src, function<void (const Val &)>)
 *** call with src in default imp
@@ -14,17 +32,15 @@ fun (fib ((n a b) Int) Int
 *** let / del
 **** add Env.del
 *** update val in place
-* move Def.cx to Type
-* add @ char reader
-** read utf8
 * add Splat op
 ** vararg like Push
 ** call splat on eval
 * add len op
 ** forward to type env
 ** add Str/List/Env.len funs
+* add Fun.rets (Rets)
+** match against stack suffix if cx.debug
 * add stack type inference
-** add Fun.rets (Rets)
 ** process stack in compile
 ** add Undef type
 *** store actual as_type
@@ -44,3 +60,5 @@ fun (fib ((n a b) Int) Int
 * add return
 ** add eval state
 ** handle in Call.eval
+* block setting of const vals
+** check for const_type

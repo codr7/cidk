@@ -29,7 +29,7 @@ namespace cidk::ops {
                        Env &env,
                        Stack &stack,
                        Ops &out,
-                       Opts *opts) const {
+                       Opts &opts) const {
     auto &d(in->as<IfData>());
     d.cond.compile(cx, in->pos, env, stack, opts);
     d.x.compile(cx, in->pos, env, stack, opts);
@@ -37,15 +37,15 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void IfType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
+  void IfType::eval(Cx &cx, Op &op, Env &env, Regs &regs, Stack &stack) const {
     auto &p(op.pos);
     auto &d(op.as<IfData>());
-    d.cond.push(cx, p, env, stack);
+    d.cond.push(cx, p, env, regs, stack);
       
     if (pop(p, stack).get_bool()) {
-      if (d.x.type != &cx.nil_type) { d.x.push(cx, p, env, stack); }
+      if (d.x.type != &cx.nil_type) { d.x.push(cx, p, env, regs, stack); }
     } else if (d.y.type != &cx.nil_type) {
-      d.y.push(cx, p, env, stack);
+      d.y.push(cx, p, env, regs, stack);
     }
   }
 

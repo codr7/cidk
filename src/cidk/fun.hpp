@@ -20,7 +20,6 @@ namespace cidk {
     ArgList args;
     Fimp imp;
     Ops body;
-    IdSet body_ids;
     Opts body_opts;
     
     template <typename ArgsT, typename RetsT>

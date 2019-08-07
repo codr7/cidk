@@ -3,6 +3,7 @@
 
 #include "cidk/ops.hpp"
 #include "cidk/opts.hpp"
+#include "cidk/reg.hpp"
 #include "cidk/stack.hpp"
 #include "cidk/sym.hpp"
 #include "cidk/type.hpp"
@@ -26,7 +27,7 @@ namespace cidk {
                          const Pos &pos,
                          Val &val,
                          Env &env, Stack &stack,
-                         Opts *opts) const;
+                         Opts &opts) const;
 
     virtual void dump(const Val &val, ostream &out) const = 0;
     virtual bool eq(const Pos &pos, const Val &x, const Val &y) const;
@@ -34,7 +35,9 @@ namespace cidk {
     virtual void eval(Cx &cx,
                       const Pos &pos,
                       const Val &val,
-                      Env &env, Stack &stack) const;
+                      Env &env,
+                      Regs &regs,
+                      Stack &stack) const;
 
     virtual void get_ids(const Val &val, IdSet &out) const;
     virtual bool is(const Val &x, const Val &y) const = 0;

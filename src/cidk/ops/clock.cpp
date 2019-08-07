@@ -25,19 +25,19 @@ namespace cidk::ops {
                           Env &env,
                           Stack &stack,
                           Ops &out,
-                          Opts *opts) const {
+                          Opts &opts) const {
     auto &d(in->as<ClockData>());
     d.nreps.compile(cx, in->pos, env, stack, opts);
     d.body.compile(cx, in->pos, env, stack, opts);
     out.push_back(*in);
   }
   
-  void ClockType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
-    const Pos &p(op.pos);
-    const ClockData &d(op.as<ClockData>());
+  void ClockType::eval(Cx &cx, Op &op, Env &env, Regs &regs, Stack &stack) const {
+    auto &p(op.pos);
+    auto &d(op.as<ClockData>());
     Stack bs;
 
-    d.nreps.push(cx, op.pos, env, stack);
+    d.nreps.push(cx, op.pos, env, regs, stack);
     auto nreps(pop(op.pos, stack));
 
     if (nreps.type != &cx.int_type) {
@@ -45,12 +45,12 @@ namespace cidk::ops {
     }
 
     Timer t;
-    for (int i(0); i < nreps.as_int; i++) { d.body.push(cx, op.pos, env, bs); }
+    for (int i(0); i < nreps.as_int; i++) { d.body.push(cx, op.pos, env, regs, bs); }
     stack.emplace_back(cx.int_type, Int(t.ms()));
   }
 
   void ClockType::get_ids(const Op &op, IdSet &out) const {
-    ClockData d(op.as<ClockData>());
+    auto &d(op.as<ClockData>());
     d.nreps.get_ids(out);
     d.body.get_ids(out);
   }

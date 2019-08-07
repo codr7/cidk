@@ -24,15 +24,16 @@ namespace cidk::ops {
                             Env &env,
                             Stack &stack,
                             Ops &out,
-                            Opts *opts) const {
-    const Pos &p(in->pos);
+                            Opts &opts) const {
+    auto &p(in->pos);
     auto &d(in->as<DoStackData>());
-    d.in.compile(cx, p, env, stack, opts);
+    Regs regs;
 
+    d.in.compile(cx, p, env, stack, opts);
     Stack ds;
 
     if (d.in.type != &cx.nil_type) {
-      d.in.push(cx, p, env, stack);
+      d.in.push(cx, p, env, regs, stack);
       pop(p, stack).splat(p, env, ds);
     }
 
@@ -40,18 +41,18 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void DoStackType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
-    const Pos &p(op.pos);
-    const DoStackData &d(op.as<DoStackData>());
+  void DoStackType::eval(Cx &cx, Op &op, Env &env, Regs &regs, Stack &stack) const {
+    auto &p(op.pos);
+    auto &d(op.as<DoStackData>());
     Stack ds;
     
     if (d.in.type != &cx.nil_type) { d.in.splat(p, env, ds); }
-    d.body.push(cx, op.pos, env, ds);
+    d.body.push(cx, p, env, regs, ds);
     copy(ds.begin(), ds.end(), back_inserter(stack));
   }
 
   void DoStackType::get_ids(const Op &op, IdSet &out) const {
-    DoStackData d(op.as<DoStackData>());
+    auto &d(op.as<DoStackData>());
     d.in.get_ids(out);
     d.body.get_ids(out);
   }

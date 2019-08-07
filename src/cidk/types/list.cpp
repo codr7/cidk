@@ -28,7 +28,7 @@ namespace cidk {
                          Val &val,
                          Env &env,
                          Stack &stack,
-                         Opts *opts) const {
+                         Opts &opts) const {
     for (auto &v: val.as_list->items) { v.compile(cx, pos, env, stack, opts); }
   }
   
@@ -62,9 +62,10 @@ namespace cidk {
                       const Pos &pos,
                       const Val &val,
                       Env &env,
+                      Regs &regs,
                       Stack &stack) const {
     Stack out;
-    for (auto &v: val.as_list->items) { v.eval(cx, pos, env, out); }
+    for (auto &v: val.as_list->items) { v.eval(cx, pos, env, regs, out); }
     List *l(cx.list_type.pool.get(cx, out));
     stack.emplace_back(cx.list_type, l);
   }

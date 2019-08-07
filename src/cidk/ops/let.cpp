@@ -6,18 +6,19 @@
 
 namespace cidk::ops {
   struct LetData {
-    const Sym *key;
+    const Sym *id;
     Val val;
+    Int reg;
     
-    LetData(const Sym *key, const Val &val): key(key), val(val) {}
+    LetData(const Sym *id, const Val &val): id(id), val(val), reg(-1) {}
   };
 
   const LetType Let("let");
 
   LetType::LetType(const string &id): OpType(id) {}
 
-  void LetType::init(Cx &cx, Op &op, const Sym *key, const Val &val) const {
-    op.data = LetData(key, val);
+  void LetType::init(Cx &cx, Op &op, const Sym *id, const Val &val) const {
+    op.data = LetData(id, val);
   }
 
   void LetType::compile(Cx &cx,
@@ -26,17 +27,19 @@ namespace cidk::ops {
                         Env &env,
                         Stack &stack,
                         Ops &out,
-                        Opts *opts) const {
-    if (opts) { opts->env_extend = true; }
-    in->as<LetData>().val.compile(cx, in->pos, env, stack, opts);
+                        Opts &opts) const {
+    auto &p(in->pos);
+    auto &d(in->as<LetData>());
+    d.val.compile(cx, p, env, stack, opts);
+    d.reg = opts.push_reg(p, d.id);
     out.push_back(*in);
   }
 
-  void LetType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
-    const Pos &p(op.pos);
-    const LetData &d(op.as<LetData>());
-    d.val.push(cx, p, env, stack);    
-    env.let(cx, p, d.key, pop(p, stack));
+  void LetType::eval(Cx &cx, Op &op, Env &env, Regs &regs, Stack &stack) const {
+    auto &p(op.pos);
+    auto &d(op.as<LetData>());
+    d.val.push(cx, p, env, regs, stack);
+    set_reg(regs, d.reg, d.id, pop(p, stack));
   }
 
   void LetType::get_ids(const Op &op, IdSet &out) const {

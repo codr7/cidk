@@ -21,12 +21,12 @@ namespace cidk {
                           Val &val,
                           Env &env,
                           Stack &stack,
-                          Opts *opts) const {
+                          Opts &opts) const {
     val_type.compile(cx, pos, val, env, stack, opts);
   }
 
   void ConstType::dump(const Val &val, ostream &out) const {
-    out << "const:";
+    out << "Const@";
     val_type.dump(val, out);
   }
 
@@ -36,6 +36,7 @@ namespace cidk {
                        const Pos &pos,
                        const Val &val,
                        Env &env,
+                       Regs &regs,
                        Stack &stack) const {
     Val v;
     clone(pos, v, val);

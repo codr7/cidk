@@ -26,18 +26,18 @@ namespace cidk::ops {
                         Env &env,
                         Stack &stack,
                         Ops &out,
-                        Opts *opts) const {
+                        Opts &opts) const {
     auto &d(in->as<DecData>());
     d.n.compile(cx, in->pos, env, stack, opts);
     d.delta.compile(cx, in->pos, env, stack, opts);
     out.push_back(*in);
   }
 
-  void DecType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
-    const Pos &p(op.pos);
+  void DecType::eval(Cx &cx, Op &op, Env &env, Regs &regs, Stack &stack) const {
+    auto &p(op.pos);
     auto &d(op.as<DecData>());
-    d.n.push(cx, p, env, stack);
-    d.delta.push(cx, p, env, stack);
+    d.n.push(cx, p, env, regs, stack);
+    d.delta.push(cx, p, env, regs, stack);
     auto &delta(pop(p, stack));
 
     if (delta.type != &cx.int_type) {

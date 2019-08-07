@@ -16,13 +16,17 @@ namespace cidk::ops {
                          Env &env,
                          Stack &stack,
                          Ops &out,
-                         Opts *opts) const {
+                         Opts &opts) const {
     in->as<Val>().compile(cx, in->pos, env, stack, opts);
     out.push_back(*in);
   }
 
-  void PushType::eval(Cx &cx, Op &op, Env &env, Stack &stack) const {
-    op.as<Val>().push(cx, op.pos, env, stack);
+  void PushType::eval(Cx &cx,
+                      Op &op,
+                      Env &env,
+                      Regs &regs,
+                      Stack &stack) const {
+    op.as<Val>().push(cx, op.pos, env, regs, stack);
   }
 
   void PushType::get_ids(const Op &op, IdSet &out) const {
