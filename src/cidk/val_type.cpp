@@ -18,10 +18,6 @@ namespace cidk {
     return *_const_type;
   }
 
-  void ValType::clone(const Pos &pos, Val &dst, const Val &src) const {
-    return cp(dst, src);
-  }
-
   void ValType::compile(Cx &cx,
                         const Pos &pos,
                         Val &val,

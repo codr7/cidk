@@ -19,10 +19,13 @@ namespace cidk {
     ValType(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents);
 
     ConstType &const_type(const Pos &pos);
-    
-    virtual void clone(const Pos &pos, Val &dst, const Val &src) const;
+
     virtual void cp(Val &dst, const Val &src) const = 0;
 
+    virtual void clone(const Pos &pos, Val &dst, const Val &src) const {
+      return cp(dst, src);
+    }
+    
     virtual void compile(Cx &cx,
                          const Pos &pos,
                          Val &val,
