@@ -21,8 +21,7 @@ namespace cidk {
                      Env &env,
                      Reg *regs,
                      Stack &stack) const {
-    stack.emplace_back();
-    regs[val.as_reg].second.clone(pos, stack.back());
+    stack.push_back(regs[val.as_reg].second);
   }
 
   bool RegType::is(const Val &x, const Val &y) const { return x.as_reg == y.as_reg; }

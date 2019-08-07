@@ -38,25 +38,28 @@ namespace cidk::ops {
     auto &p(op.pos);
     auto &d(op.as<DecData>());
 
-    if (d.n.type != &cx.reg_type) {
-      d.n.eval(cx, p, env, regs, stack);
-    }
-    
-    d.delta.eval(cx, p, env, regs, stack);
-    auto &delta(pop(p, stack));
+    if (d.n.type == &cx.reg_type) {
+      d.delta.eval(cx, p, env, regs, stack);
+      auto &delta(stack.back());
+      
+      if (delta.type != &cx.int_type) {
+        throw ESys(p, "Expected Int, was: ", delta.type->id);
+      }
 
-    if (delta.type != &cx.int_type) {
-      throw ESys(p, "Expected Int, was: ", delta.type->id);
-    }
-    
-    auto &n((d.n.type == &cx.reg_type) ? regs[d.n.as_reg].second : stack.back());
+      auto &n(regs[d.n.as_reg].second);
+      n.as_int -= delta.as_int;
+      delta.as_int = n.as_int;
+    } else {
+      d.n.eval(cx, p, env, regs, stack); 
+      d.delta.eval(cx, p, env, regs, stack);
+      auto &delta(pop(p, stack));
+      
+      if (delta.type != &cx.int_type) {
+        throw ESys(p, "Expected Int, was: ", delta.type->id);
+      }
 
-    if (n.type != &cx.int_type) {
-      throw ESys(p, "Expected Int, was: ", n.type->id);
+      stack.back().as_int -= delta.as_int;
     }
-
-    n.as_int -= delta.as_int;
-    if (d.n.type == &cx.reg_type) { stack.push_back(n); }
   }
 
   void DecType::mark_refs(Op &op) const {
