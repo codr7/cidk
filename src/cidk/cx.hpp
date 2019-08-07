@@ -6,7 +6,6 @@
 #include <unordered_map>
 
 #include "cidk/env.hpp"
-#include "cidk/env_item.hpp"
 #include "cidk/op.hpp"
 #include "cidk/path.hpp"
 #include "cidk/pool.hpp"
@@ -16,14 +15,17 @@
 #include "cidk/types/fun.hpp"
 #include "cidk/types/meta.hpp"
 #include "cidk/types/ostream.hpp"
+#include "cidk/val.hpp"
 
 namespace cidk {
   namespace fs = experimental::filesystem;
 
   struct Call;
+  struct CharType;
   struct BoolType;
   struct EnvType;
   struct ExprType;
+  struct IntType;
   struct ListType;
   struct NilType;
   struct PopType;
@@ -38,7 +40,6 @@ namespace cidk {
     bool debug;
     
     Pool<Env> env_pool;
-    Pool<EnvItem> env_item_pool;
     Pool<Sym> sym_pool;    
 
     unordered_map<string, const Sym *> syms;

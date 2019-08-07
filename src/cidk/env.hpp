@@ -13,7 +13,6 @@
 namespace cidk {
   using namespace std;
 
-  struct EnvItem;
   struct Fun;
   struct Pos;
   struct Sym;
@@ -23,7 +22,7 @@ namespace cidk {
   struct CxEnvs {};
   
   struct Env: Ref, Ls<Env, CxEnvs> {
-    using Items = vector<pair<const Sym *, EnvItem *>>;
+    using Items = vector<Val>;
     using Iter = Items::iterator;
     
     Items items;
@@ -69,14 +68,13 @@ namespace cidk {
     void clear(Cx &cx);
     Iter find(const Sym *key);
     Val &get(const Pos &pos, const Sym *key);
-    EnvItem &get_item(const Pos &pos, const Sym *key);
     void let(Cx &cx, const Pos &pos, const Sym *key, const Val &val);
     void mark();
     void mark_items();
     void merge(Cx &cx, Env &src);
     void set(Cx &cx, const Pos &pos, const Sym *key, const Val &val);
     virtual void sweep(Cx &cx, const Pos &pos) override;
-    EnvItem *try_get(const Sym *key);
+    Val *try_get(const Sym *key);
   };
 }
 

@@ -20,12 +20,14 @@ namespace cidk {
   }
 
   Val &Val::clone(const Pos &pos, Val &dst) const {
+    dst.id = id;
     dst.type = type;
     type->clone(pos, dst, *this);
     return dst;
   }
 
   Val &Val::cp(Val &dst) const {
+    dst.id = id;
     dst.type = type;
     type->cp(dst, *this);
     return dst;

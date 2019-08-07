@@ -23,7 +23,7 @@ namespace cidk {
     
     if (auto reg(opts.regs.find(s)); reg == opts.regs.end()) {
       if (auto i(env.try_get(s)); i) {
-        i->val.clone(pos, val);
+        i->clone(pos, val);
       } else {
         val.reset(cx.reg_type, opts.push_ext_id(s));
       }

@@ -139,9 +139,9 @@ namespace cidk {
     if (!in.eof()) { in.unget();}
     auto s(cx.intern(out.str()));
     
-    if (auto i(cx.env.try_get(s)); i && i->val.type->is_const) {
+    if (auto i(cx.env.try_get(s)); i && i->type->is_const) {
       Val v;
-      i->val.clone(pos, v);
+      i->clone(pos, v);
       return v;
     }
 

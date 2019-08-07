@@ -21,6 +21,7 @@ namespace cidk {
   struct TValType;
   
   struct Val {
+    const Sym *id = nullptr;
     ValType *type;
     
     union {

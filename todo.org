@@ -6,8 +6,6 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* simplify Env
-** replace EnvItem with Val
 * add cx.stack
 ** remove stack args
 ** add stackp like regs

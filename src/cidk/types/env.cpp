@@ -21,7 +21,7 @@ namespace cidk {
     
     for (auto &v: val.as_env->items) {
       if (sep) { out << sep; }
-      out << v.first << ':' << v.second->val;
+      out << v.id << ':' << v;
       sep = ' ';
     }
 
@@ -36,8 +36,8 @@ namespace cidk {
          xi != xl.end() || yi != yl.end();
          xi++, yi++) {
       if (xi == xl.end() || yi == yl.end() ||
-          xi->first != yi->first ||
-          !xi->second->val.eq(pos, yi->second->val)) { return false; }
+          xi->id != yi->id ||
+          !xi->eq(pos, *yi)) { return false; }
     }
 
     return true;
