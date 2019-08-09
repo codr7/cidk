@@ -16,9 +16,10 @@ namespace cidk {
     vector<ExtId> ext_ids;
 
     size_t get_reg(const Pos &pos, const Sym *id);
-    size_t push_ext_id(const Sym *id);
+    void mark_refs();
+    size_t push_ext_id(const Pos &pos, const Sym *id);
     size_t push_reg(const Pos &pos, const Sym *id);
-    optional<size_t> push_reg(const Sym *id);
+    optional<size_t> try_push_reg(const Pos &pos, const Sym *id);
   };
 };
 

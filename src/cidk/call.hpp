@@ -2,7 +2,6 @@
 #define CIDK_CALL_HPP
 
 #include "cidk/pos.hpp"
-#include "cidk/stack.hpp"
 
 namespace cidk {  
   struct Cx;
@@ -18,7 +17,7 @@ namespace cidk {
     Call(const Pos &pos, Fun &fun);
     ~Call() noexcept(false);
 
-    void eval(Cx &cx, Env &env, Stack &stack);
+    void eval(Cx &cx, Env &env);
   };
 }
 

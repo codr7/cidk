@@ -4,8 +4,6 @@
 #include <string>
 #include <vector>
 
-#include "cidk/stack.hpp"
-
 namespace cidk {
   using namespace std;
 
@@ -28,7 +26,7 @@ namespace cidk {
 
   struct ArgList {
     vector<Arg> items;
-    void parse(Cx &cx, const Pos &pos, const List &in, Env &env, Stack &stack);
+    void parse(Cx &cx, const Pos &pos, const List &in, Env &env);
   };
   
   struct Ret {

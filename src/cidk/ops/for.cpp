@@ -2,7 +2,6 @@
 #include "cidk/e.hpp"
 #include "cidk/ops/for.hpp"
 #include "cidk/read.hpp"
-#include "cidk/stack.hpp"
 #include "cidk/types/bool.hpp"
 #include "cidk/types/sym.hpp"
 
@@ -31,25 +30,24 @@ namespace cidk::ops {
                         OpIter &in,
                         const OpIter &end,
                         Env &env,
-                        Stack &stack,
                         Ops &out,
                         Opts &opts) const {
     auto &p(in->pos);
     auto &d(in->as<ForData>());
-    d.src.compile(cx, p, env, stack, opts);
-    d.body.compile(cx, p, env, stack, opts);
+    d.src.compile(cx, p, env, opts);
+    d.body.compile(cx, p, env, opts);
     out.push_back(*in);
   }
 
-  void ForType::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {
+  void ForType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &d(op.as<ForData>());
-    d.src.eval(cx, p, env, regs, stack);
-    Val src(pop(p, stack));
+    d.src.eval(cx, p, env, regs);
+    auto n(cx.pop(p).as_int);
     
-    for (Int i(0); i < src.as_int; i++) {
-      if (d.push) { stack.emplace_back(cx.int_type, i); }
-      d.body.eval(cx, p, env, regs, stack);
+    for (Int i(0); i < n; i++) {
+      if (d.push) { cx.push(p, cx.int_type, i); }
+      d.body.eval(cx, p, env, regs);
     }
   }
 

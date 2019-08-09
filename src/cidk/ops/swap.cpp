@@ -23,12 +23,11 @@ namespace cidk::ops {
                          OpIter &in,
                          const OpIter &end,
                          Env &env,
-                         Stack &stack,
                          Ops &out,
                          Opts &opts) const {
     auto &d(in->as<SwapData>());
-    d.x.compile(cx, in->pos, env, stack, opts);
-    d.y.compile(cx, in->pos, env, stack, opts);
+    d.x.compile(cx, in->pos, env, opts);
+    d.y.compile(cx, in->pos, env, opts);
     out.push_back(*in);
   }
   
@@ -36,19 +35,21 @@ namespace cidk::ops {
                       const Pos &pos,
                       Val &place,
                       Env &env,
-                      Reg *regs,
-                      Stack &stack) {
-    if (place.type == &cx.int_type) { return stack[stack.size() - place.as_int - 1]; }
+                      Reg *regs) {
+    if (place.type == &cx.int_type) {
+      return cx.stack[cx.stackp - cx.stack.begin() - place.as_int - 1];
+    }
+    
     if (place.type == &cx.reg_type) { return regs[place.as_reg].second; }
     return env.get(pos, place.as_sym);
   }
   
-  void SwapType::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {
+  void SwapType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &d(op.as<SwapData>());
 
-    swap(get_ref(cx, p, d.x, env, regs, stack),
-         get_ref(cx, p, d.y, env, regs, stack));
+    swap(get_ref(cx, p, d.x, env, regs),
+         get_ref(cx, p, d.y, env, regs));
   }
 
   void SwapType::mark_refs(Op &op) const {

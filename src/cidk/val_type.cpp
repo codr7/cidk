@@ -22,7 +22,6 @@ namespace cidk {
                         const Pos &pos,
                         Val &val,
                         Env &env,
-                        Stack &stack,
                         Opts &opts) const {}
 
   bool ValType::eq(const Pos &pos, const Val &x, const Val &y) const {
@@ -33,16 +32,14 @@ namespace cidk {
                      const Pos &pos,
                      const Val &val,
                      Env &env,
-                     Reg *regs,
-                     Stack &stack) const {
-    stack.emplace_back(*val.type);
-    val.clone(pos, stack.back());
+                     Reg *regs) const {
+    val.clone(pos, cx.push(pos));
   }
 
   void ValType::mark_refs(const Val &val) const {}
 
-  void ValType::splat(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
-    stack.push_back(val);
+  void ValType::splat(const Pos &pos, const Val &val, Env &env) const {
+    cx.push(pos, val);
   }
 
   void ValType::sweep(const Pos &pos, Val &val) {}

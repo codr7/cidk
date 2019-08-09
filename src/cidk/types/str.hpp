@@ -26,8 +26,7 @@ namespace cidk {
 
     virtual void splat(const Pos &pos,
                        const Val &val,
-                       Env &env, Stack
-                       &stack) const override;
+                       Env &env) const override;
     
     virtual void sweep(const Pos &pos, Val &val) override;
 

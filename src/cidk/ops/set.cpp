@@ -27,12 +27,11 @@ namespace cidk::ops {
                         OpIter &in,
                         const OpIter &end,
                         Env &env,
-                        Stack &stack,
                         Ops &out,
                         Opts &opts) const {
     auto &p(in->pos);
     auto &d(in->as<SetData>());
-    d.val.compile(cx, p, env, stack, opts);
+    d.val.compile(cx, p, env, opts);
     
     if (d.key.type == &cx.sym_type) {      
       if (auto found(opts.regs.find(d.key.as_sym)); found != opts.regs.end()) {
@@ -43,24 +42,23 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void SetType::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {
+  void SetType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &d(op.as<SetData>());
 
     if (d.is_expr) {
-      if (d.key.type == &cx.int_type) {
-        stack.push_back(stack[d.key.as_int]);
-      } else {
-        stack.push_back(regs[d.reg].second);
-      }
+      cx.push(p,
+              (d.key.type == &cx.int_type)
+              ? cx.stack[d.key.as_int]
+              : regs[d.reg].second);
     }
 
-    d.val.eval(cx, p, env, regs, stack);
+    d.val.eval(cx, p, env, regs);
   
     if (d.key.type == &cx.int_type) {
-      stack[d.key.as_int] = pop(p, stack);
+      cx.stack[d.key.as_int] = cx.pop(p);
     } else {
-      regs[d.reg].second = pop(p, stack);
+      regs[d.reg].second = cx.pop(p);
     }
   }
 

@@ -25,40 +25,39 @@ namespace cidk::ops {
                         OpIter &in,
                         const OpIter &end,
                         Env &env,
-                        Stack &stack,
                         Ops &out,
                         Opts &opts) const {
     auto &d(in->as<DecData>());
-    d.n.compile(cx, in->pos, env, stack, opts);
-    d.delta.compile(cx, in->pos, env, stack, opts);
+    d.n.compile(cx, in->pos, env, opts);
+    d.delta.compile(cx, in->pos, env, opts);
     out.push_back(*in);
   }
 
-  void DecType::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {
+  void DecType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &d(op.as<DecData>());
 
     if (d.n.type == &cx.reg_type) {
-      d.delta.eval(cx, p, env, regs, stack);
-      auto &delta(stack.back());
+      d.delta.eval(cx, p, env, regs);
+      auto &delta(cx.peek(p));
       
       if (delta.type != &cx.int_type) {
         throw ESys(p, "Expected Int, was: ", delta.type->id);
       }
 
-      auto &n(regs[d.n.as_reg].second);
-      n.as_int -= delta.as_int;
-      delta.as_int = n.as_int;
+      auto &n(regs[d.n.as_reg].second.as_int);
+      n -= delta.as_int;
+      delta.as_int = n;
     } else {
-      d.n.eval(cx, p, env, regs, stack); 
-      d.delta.eval(cx, p, env, regs, stack);
-      auto &delta(pop(p, stack));
+      d.n.eval(cx, p, env, regs); 
+      d.delta.eval(cx, p, env, regs);
+      auto &delta(cx.pop(p));
       
       if (delta.type != &cx.int_type) {
         throw ESys(p, "Expected Int, was: ", delta.type->id);
       }
 
-      stack.back().as_int -= delta.as_int;
+      cx.peek(p).as_int -= delta.as_int;
     }
   }
 

@@ -10,7 +10,6 @@
 #include "cidk/path.hpp"
 #include "cidk/pool.hpp"
 #include "cidk/reg.hpp"
-#include "cidk/stack.hpp"
 #include "cidk/sym.hpp"
 #include "cidk/types/fun.hpp"
 #include "cidk/types/meta.hpp"
@@ -35,7 +34,9 @@ namespace cidk {
   struct SymType;
   
   enum struct EvalState { go, recall };
-    
+
+  using Stack = Val *;
+
   struct Cx {
     bool debug;
     
@@ -70,9 +71,12 @@ namespace cidk {
     vector<Ops *> ops;
     EvalState eval_state;
 
-    array<Reg, CIDK_MAX_REG> regs;
+    array<Reg, CIDK_REG_MAX> regs;
     Reg *regp;
-    
+
+    array<Val, CIDK_STACK_SIZE> stack;
+    Val *stackp;
+        
     Call *call;
     
     const Val _, $, T, F, eop;
@@ -85,19 +89,44 @@ namespace cidk {
 
     void deinit();
     void clear_refs();
-    void compile(Ops &ops, Opts &opts, Env &env, Stack &stack);
-    void eval(Ops &in, Env &env, Reg *regs, Stack &stack);
+    void compile(Ops &ops, Opts &opts, Env &env);
+    void dump_stack(ostream &out) const;
+    void eval(Ops &in, Env &env, Reg *regs);
     const Sym *intern(const string &name);
 
     void load(const Pos &pos,
               const Path &src,
               Env &env,
-              Stack &stack,              
               Ops &out,
               Opts &opts);
     
     void mark_refs();
+    
+    Val &peek(const Pos &pos) {
+      if (stackp == &stack[0]) { throw ESys(pos, "Stack is empty"); }
+      return *(stackp - 1);
+    }
+
+    Val &pop(const Pos &pos) {
+      if (stackp == &stack[0]) { throw ESys(pos, "Stack is empty"); }
+      return *--stackp;
+    }
+
+    template <typename...Args>
+    Val &push(const Pos &p, Args &&...args) {
+      if (stackp == stack.end()) { throw ESys(p, "Stack overflow"); }
+      auto &dst(*stackp);
+      dst = Val(forward<Args>(args)...);
+      stackp++;
+      return dst;
+    }
+
     void sweep_refs(const Pos &pos);
+
+    optional<Val> try_pop() {
+      if (stackp == &stack[0]) { return {}; }
+      return *--stackp;
+    }
   };
 
   template <typename...Rest>

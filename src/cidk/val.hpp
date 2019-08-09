@@ -51,10 +51,10 @@ namespace cidk {
     
     Val &clone(const Pos &pos, Val &dst) const;
     Val &cp(Val &dst) const;
-    void compile(Cx &cx, const Pos &pos, Env &env, Stack &stack, Opts &opts);
+    void compile(Cx &cx, const Pos &pos, Env &env, Opts &opts);
     void dump(ostream &out) const;
     bool eq(const Pos &pos, const Val &y) const;
-    void eval(Cx &cx, const Pos &pos, Env &env, Reg *regs, Stack &stack) const;
+    void eval(Cx &cx, const Pos &pos, Env &env, Reg *regs) const;
     bool is(const Val &y) const;
     bool is_eop() const;
     void mark_refs();
@@ -65,7 +65,7 @@ namespace cidk {
       type.set(*this, val);
     }
 
-    void splat(const Pos &pos, Env &env, Stack &stack) const;
+    void splat(const Pos &pos, Env &env) const;
     void sweep(const Pos &pos);
 
     bool get_bool() const;
@@ -73,24 +73,6 @@ namespace cidk {
   };
 
   ostream &operator <<(ostream &out, const Val &v);
-
-  inline void mark_items(Stack &s) {
-    for (Val &v: s) { v.mark_refs(); }
-  }
-
-  inline Val &pop(const Pos &pos, Stack &s) {
-    if (s.empty()) { throw ESys(pos, "Stack is empty"); }
-    Val &out(s.back());
-    s.pop_back();
-    return out;
-  }
-
-  inline optional<Val> try_pop(Stack &s) {
-    if (s.empty()) { return {}; }
-    Val out(s.back());
-    s.pop_back();
-    return out;
-  }
 }
 
 #endif

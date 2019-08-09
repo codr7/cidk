@@ -8,7 +8,6 @@
 #include "cidk/fimp.hpp"
 #include "cidk/ops.hpp"
 #include "cidk/opts.hpp"
-#include "cidk/stack.hpp"
 
 namespace cidk {
   struct Call;

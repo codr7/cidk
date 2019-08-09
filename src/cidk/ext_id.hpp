@@ -10,6 +10,7 @@ namespace cidk {
     Val val;
     
     ExtId(const Sym *id, size_t dst_reg);
+    void mark_refs();
   };
 }
 

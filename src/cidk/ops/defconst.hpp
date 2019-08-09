@@ -13,7 +13,6 @@ namespace cidk::ops {
                          OpIter &in,
                          const OpIter &end,
                          Env &env,
-                         Stack &stack,
                          Ops &out,
                          Opts &opts) const override;
 

@@ -14,11 +14,10 @@ namespace cidk {
                        OpIter &in,
                        const OpIter &end,
                        Env &env,
-                       Stack &stack,
                        Ops &out,
                        Opts &opts) const { out.push_back(*in); }
 
-  void OpType::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {}
+  void OpType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {}
 
   void OpType::mark_refs(Op &op) const {}
 
@@ -26,14 +25,13 @@ namespace cidk {
                    OpIter &in,
                    const OpIter &end,
                    Env &env,
-                   Stack &stack,
                    Ops &out,
                    Opts &opts) {
-    type->compile(cx, in, end, env, stack, out, opts);
+    type->compile(cx, in, end, env, out, opts);
   }
 
-  void Op::eval(Cx &cx, Env &env, Reg *regs, Stack &stack) {
-    type->eval(cx, *this, env, regs, stack);
+  void Op::eval(Cx &cx, Env &env, Reg *regs) {
+    type->eval(cx, *this, env, regs);
   }
 
   void Op::mark_refs() { type->mark_refs(*this); }

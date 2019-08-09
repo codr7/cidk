@@ -14,8 +14,7 @@ namespace cidk {
   void ArgList::parse(Cx &cx,
                       const Pos &pos,
                       const List &in,
-                      Env &env,
-                      Stack &stack) {
+                      Env &env) {
     auto &vs(in.items);
     vector<const Sym *> ids;
     
@@ -41,8 +40,8 @@ namespace cidk {
       Type *type(nullptr);
 
       if (i->type != &cx.nil_type) {
-        i->eval(cx, pos, env, cx.regp, stack);
-        auto typev(pop(pos, stack));
+        i->eval(cx, pos, env, cx.regp);
+        auto typev(cx.pop(pos));
 
         if (typev.type != &cx.meta_type) {
           throw ESys(pos, "Invalid argument type: ", typev.type->id);

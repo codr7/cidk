@@ -3,7 +3,6 @@
 
 #include "cidk/ops.hpp"
 #include "cidk/ref.hpp"
-#include "cidk/stack.hpp"
 
 namespace cidk {
   struct Env;

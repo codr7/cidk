@@ -23,11 +23,10 @@ namespace cidk::ops {
                              OpIter &in,
                              const OpIter &end,
                              Env &env,
-                             Stack &stack,
                              Ops &out,
                              Opts &opts) const {
     auto &d(in->as<DefconstData>());
-    d.val.compile(cx, in->pos, env, stack, opts);
+    d.val.compile(cx, in->pos, env, opts);
     env.add_const(cx, in->pos, d.id, d.val);
   }
 

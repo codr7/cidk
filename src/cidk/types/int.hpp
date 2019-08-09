@@ -18,8 +18,7 @@ namespace cidk {
 
     virtual void splat(const Pos &pos,
                        const Val &val,
-                       Env &env,
-                       Stack &stack) const override;
+                       Env &env) const override;
 
     virtual bool get_bool(const Val &val) const override;
   };

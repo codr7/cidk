@@ -27,21 +27,20 @@ namespace cidk::ops {
                          OpIter &in,
                          const OpIter &end,
                          Env &env,
-                         Stack &stack,
                          Ops &out,
                          Opts &opts) const {
-    in->as<PokeData>().val.compile(cx, in->pos, env, stack, opts);
+    in->as<PokeData>().val.compile(cx, in->pos, env, opts);
     out.push_back(*in);
   }
 
-  void PokeType::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {
+  void PokeType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &d(op.as<PokeData>());
-    auto ss(stack.size());
-    if (d.is_expr && d.offs > 1) { stack.push_back(stack[ss - d.offs]); }
-    d.val.eval(cx, p, env, regs, stack);
-    swap(stack.back(), stack[ss - d.offs]);
-    if (!d.is_expr || d.offs > 1) { stack.pop_back(); }
+    auto ss(cx.stackp - cx.stack.begin());
+    if (d.is_expr && d.offs > 1) { cx.push(p, cx.stack[ss - d.offs]); }
+    d.val.eval(cx, p, env, regs);
+    swap(cx.peek(p), cx.stack[ss - d.offs]);
+    if (!d.is_expr || d.offs > 1) { cx.pop(p); }
   }
 
   void PokeType::mark_refs(Op &op) const {

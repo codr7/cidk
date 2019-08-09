@@ -23,30 +23,28 @@ namespace cidk::ops {
                           OpIter &in,
                           const OpIter &end,
                           Env &env,
-                          Stack &stack,
                           Ops &out,
                           Opts &opts) const {
     auto &d(in->as<ClockData>());
-    d.nreps.compile(cx, in->pos, env, stack, opts);
-    d.body.compile(cx, in->pos, env, stack, opts);
+    d.nreps.compile(cx, in->pos, env, opts);
+    d.body.compile(cx, in->pos, env, opts);
     out.push_back(*in);
   }
   
-  void ClockType::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {
+  void ClockType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &d(op.as<ClockData>());
-    Stack bs;
 
-    d.nreps.eval(cx, op.pos, env, regs, stack);
-    auto nreps(pop(op.pos, stack));
+    d.nreps.eval(cx, p, env, regs);
+    auto nreps(cx.pop(p));
 
     if (nreps.type != &cx.int_type) {
       throw ESys(p, "Invalid nreps: ", nreps.type->id);
     }
 
     Timer t;
-    for (int i(0); i < nreps.as_int; i++) { d.body.eval(cx, op.pos, env, regs, bs); }
-    stack.emplace_back(cx.int_type, Int(t.ms()));
+    for (int i(0); i < nreps.as_int; i++) { d.body.eval(cx, p, env, regs); }
+    cx.push(p, cx.int_type, Int(t.ms()));
   }
 
   void ClockType::mark_refs(Op &op) const {

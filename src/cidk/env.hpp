@@ -7,7 +7,6 @@
 #include "cidk/ls.hpp"
 #include "cidk/ops.hpp"
 #include "cidk/ref.hpp"
-#include "cidk/stack.hpp"
 #include "cidk/sym.hpp"
 
 namespace cidk {

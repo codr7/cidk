@@ -15,7 +15,6 @@ int main(int argc, char *argv[]) {
   
   cidk::Cx cx;
   cidk::Env &env(*cx.env_pool.get(cx, cx.env));
-  cidk::Stack stack;
   
   while (--argc && ++argv) {
     string a(*argv);
@@ -24,8 +23,8 @@ int main(int argc, char *argv[]) {
     else {
       cidk::Ops ops;  
       cidk::Opts opts;
-      cx.load(p, a, env, stack, ops, opts);
-      cx.eval(ops, env, cx.regp, stack);
+      cx.load(p, a, env, ops, opts);
+      cx.eval(ops, env, cx.regp);
       m = Mode::load;
     }
   }

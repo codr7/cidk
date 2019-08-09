@@ -15,9 +15,8 @@ namespace cidk {
                          const Pos &pos,
                          Val &val,
                          Env &env,
-                         Stack &stack,
                          Opts &opts) const {
-    cx.compile(val.as_expr->ops, opts, env, stack);
+    cx.compile(val.as_expr->ops, opts, env);
   }
 
   void ExprType::dump(const Val &val, ostream &out) const {    
@@ -28,10 +27,7 @@ namespace cidk {
                       const Pos &pos,
                       const Val &val,
                       Env &env,
-                      Reg *regs,
-                      Stack &stack) const {
-    cx.eval(val.as_expr->ops, env, regs, stack);
-  }
+                      Reg *regs) const { cx.eval(val.as_expr->ops, env, regs); }
 
   bool ExprType::is(const Val &x, const Val &y) const {
     return x.as_expr == y.as_expr;

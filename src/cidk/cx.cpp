@@ -7,7 +7,6 @@
 #include "cidk/ext_id.hpp"
 #include "cidk/libs/math.hpp"
 #include "cidk/op.hpp"
-#include "cidk/ops/env.hpp"
 #include "cidk/ops/stash.hpp"
 #include "cidk/read.hpp"
 #include "cidk/str.hpp"
@@ -24,8 +23,8 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  static void bool_imp(Cx &cx, const Pos &p, const Fun &f, Env &env, Stack &stack) {
-    auto &v(stack.back());
+  static void bool_imp(Cx &cx, const Pos &p, const Fun &f, Env &env) {
+    auto &v(*cx.stackp);
     v.reset(cx.bool_type, v.get_bool());
   }
   
@@ -52,6 +51,7 @@ namespace cidk {
     sym_type(env.add_type<SymType>(*this, Pos::_, "Sym", {&any_type})),
     eval_state(EvalState::go),
     regp(&regs[0]),
+    stackp(&stack[0]),
     call(nullptr),
     _(nil_type),
     $(pop_type),
@@ -65,7 +65,6 @@ namespace cidk {
     env.add_const(*this, Pos::_, "T", T);
     env.add_const(*this, Pos::_, "F", F);
     
-    env.add_const_expr(*this, Pos::_, "env", {Op(*this, Pos::_, ops::Env)});
     env.add_const_expr(*this, Pos::_, "stack", {Op(*this, Pos::_, ops::Stash)});
     
     env.add_fun(*this, Pos::_, "bool", {Arg("val")}, {Ret(bool_type)}, bool_imp);
@@ -86,11 +85,11 @@ namespace cidk {
     env.ref_mark = true;
   }
 
-  void Cx::eval(Ops &in, Env &env, Reg *regs, Stack &stack) {
+  void Cx::eval(Ops &in, Env &env, Reg *regs) {
     ops.push_back(&in);
     
     for (Op &o: in) { 
-      o.eval(*this, env, regs, stack); 
+      o.eval(*this, env, regs); 
       if (eval_state != EvalState::go) { break; }
     }
 
@@ -105,11 +104,11 @@ namespace cidk {
     return s;
   }
 
-  void Cx::compile(Ops &ops, Opts &opts, Env &env, Stack &stack) {
+  void Cx::compile(Ops &ops, Opts &opts, Env &env) {
     Ops tmp;
 
     for (auto i(ops.begin()); i != ops.end(); i++) {
-      i->compile(*this, i, ops.end(), env, stack, tmp, opts);
+      i->compile(*this, i, ops.end(), env, tmp, opts);
     }
     
     swap(ops, tmp);
@@ -118,7 +117,6 @@ namespace cidk {
   void Cx::load(const Pos &pos,
                 const Path &src,
                 Env &env,
-                Stack &stack,
                 Ops &out,
                 Opts &opts) {
     auto fp(src.is_absolute() ? src : load_path/src);
@@ -130,7 +128,7 @@ namespace cidk {
     load_path = src.parent_path();
     Ops ops;
     read_ops(*this, p, f, ops);
-    compile(ops, opts, env, stack);
+    compile(ops, opts, env);
     copy(ops.begin(), ops.end(), back_inserter(out));
     load_path = prev;
   }
@@ -142,12 +140,25 @@ namespace cidk {
     for (Call *c(call); c; c = c->prev) { c->fun.mark(); }
     for (auto i(envs.next); i != &envs; i = i->next) { i->val().mark_items(); }
   }
-  
+
+  void Cx::dump_stack(ostream &out) const {
+    out << '(';
+    char sep(0);
+      
+    for (const Val *v = &stack[0]; v != stackp; v++) {
+      if (sep) { out << sep; }
+      v->dump(out);
+      sep = ' ';
+    }
+      
+    out << ')';
+  }
+
   void Cx::sweep_refs(const Pos &pos) {
     for (auto i(refs.prev); i != &refs;) {
       Ref &r(i->val());
       i = i->prev;
-
+      
       if (!r.ref_mark) {
         r.unlink();
         r.sweep(*this, pos);

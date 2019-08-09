@@ -15,15 +15,13 @@ namespace cidk::ops {
                          OpIter &in,
                          const OpIter &end,
                          Env &env,
-                         Stack &stack,
                          Ops &out,
                          Opts &opts) const override;
 
     virtual void eval(Cx &cx,
                       Op &op,
                       Env &env,
-                      Reg *regs,
-                      Stack &stack) const override;
+                      Reg *regs) const override;
     
     virtual const Sym *get_fun_id(Cx &cx) const = 0;
     virtual void mark_refs(Op &op) const override;

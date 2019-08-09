@@ -25,21 +25,20 @@ namespace cidk::ops {
                         OpIter &in,
                         const OpIter &end,
                         Env &env,
-                        Stack &stack,
                         Ops &out,
                         Opts &opts) const {
     auto &p(in->pos);
     auto &d(in->as<LetData>());
-    d.val.compile(cx, p, env, stack, opts);
+    d.val.compile(cx, p, env, opts);
     d.reg = opts.push_reg(p, d.id);
     out.push_back(*in);
   }
 
-  void LetType::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {
+  void LetType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &d(op.as<LetData>());
-    d.val.eval(cx, p, env, regs, stack);
-    set_reg(regs, d.reg, d.id, pop(p, stack));
+    d.val.eval(cx, p, env, regs);
+    set_reg(regs, d.reg, d.id, cx.pop(p));
   }
 
   void LetType::mark_refs(Op &op) const { op.as<LetData>().val.mark_refs(); }

@@ -13,11 +13,10 @@ namespace cidk {
     out <<
       "cidk v" << VERSION[0] << '.' << VERSION[1] << endl << endl <<
       "Press Return on empty row to evaluate." << endl <<
-      "Evaluating nothing clears stack and Ctrl+D exits." << endl << endl <<
+      "Empty input clears stack and Ctrl+D exits." << endl << endl <<
       "  ";
 
     Env &env(cx.env);
-    Stack stack;
     Pos p("repl");
     stringstream buf;
     string line;
@@ -30,13 +29,14 @@ namespace cidk {
 
         if (buf.tellp()) {
           read_ops(cx, p, buf, ops);
-          cx.compile(ops, opts, env, stack);
-          cx.eval(ops, env, cx.regp, stack);
+          cx.compile(ops, opts, env);
+          cx.eval(ops, env, cx.regp);
         } else {
-          stack.clear();
+          cx.stackp = &cx.stack[0];
         }
         
-        out << stack << endl;
+        cx.dump_stack(out);
+        out << endl;
         stringstream().swap(buf);
       } else {
         buf << line << endl;

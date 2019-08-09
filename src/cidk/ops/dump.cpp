@@ -16,18 +16,17 @@ namespace cidk::ops {
                          OpIter &in,
                          const OpIter &end,
                          Env &env,
-                         Stack &stack,
                          Ops &out,
                          Opts &opts) const {
-    in->as<Val>().compile(cx, in->pos, env, stack, opts);
+    in->as<Val>().compile(cx, in->pos, env, opts);
     out.push_back(*in);
   }
   
-  void DumpType::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {
+  void DumpType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &out(*cx.stderr);
-    op.as<Val>().eval(cx, p, env, regs, stack);
-    pop(p, stack).dump(out);
+    op.as<Val>().eval(cx, p, env, regs);
+    cx.pop(p).dump(out);
     out << endl;
   }
 

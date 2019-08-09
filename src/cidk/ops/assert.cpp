@@ -25,27 +25,21 @@ namespace cidk::ops {
                            OpIter &in,
                            const OpIter &end,
                            Env &env,
-                           Stack &stack,
                            Ops &out,
                            Opts &opts) const {
     auto &d(in->as<AssertData>());
-    d.args.compile(cx, in->pos, env, stack, opts);
-    d.body.compile(cx, in->pos, env, stack, opts);
+    d.args.compile(cx, in->pos, env, opts);
+    d.body.compile(cx, in->pos, env, opts);
     out.push_back(*in);
   }
 
-  void AssertType::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {
+  void AssertType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &d(op.as<AssertData>());
-    Stack args;
-    
-    if (!d.args.as_list->items.empty()) {
-      copy(stack.begin(), stack.end(), back_inserter(args));
-      for (auto &a: d.args.as_list->items) { a.eval(cx, p, env, regs, args); }
-    }
-    
-    d.body.eval(cx, p, env, regs, stack);
-    auto &ok(pop(op.pos, stack));
+    d.args.eval(cx, p, env, regs);
+    Val args(cx.pop(p));
+    d.body.eval(cx, p, env, regs);
+    auto &ok(cx.pop(p));
     
     if (ok.type != &cx.bool_type) {
       throw ESys(p, "Expected Bool, was: ", ok.type->id);

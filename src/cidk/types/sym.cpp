@@ -17,7 +17,6 @@ namespace cidk {
                         const Pos &pos,
                         Val &val,
                         Env &env,
-                        Stack &stack,
                         Opts &opts) const {
     auto s(val.as_sym);
     
@@ -25,7 +24,7 @@ namespace cidk {
       if (auto i(env.try_get(s)); i) {
         i->clone(pos, val);
       } else {
-        val.reset(cx.reg_type, opts.push_ext_id(s));
+        val.reset(cx.reg_type, opts.push_ext_id(pos, s));
       }
     } else {
       val.reset(cx.reg_type, reg->second);
@@ -40,9 +39,8 @@ namespace cidk {
                      const Pos &pos,
                      const Val &val,
                      Env &env,
-                     Reg *regs,
-                     Stack &stack) const {
-    env.get(pos, val.as_sym).eval(cx, pos, env, regs, stack);
+                     Reg *regs) const {
+    env.get(pos, val.as_sym).eval(cx, pos, env, regs);
   }
 
   bool SymType::is(const Val &x, const Val &y) const { return x.as_sym == y.as_sym; }

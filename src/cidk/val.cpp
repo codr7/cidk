@@ -29,20 +29,20 @@ namespace cidk {
   Val &Val::cp(Val &dst) const {
     dst.id = id;
     dst.type = type;
-    type->cp(dst, *this);
+    if (type) { type->cp(dst, *this); }
     return dst;
   }
 
-  void Val::compile(Cx &cx, const Pos &pos, Env &env, Stack &stack, Opts &opts) {
-    type->compile(cx, pos, *this, env, stack, opts);
+  void Val::compile(Cx &cx, const Pos &pos, Env &env, Opts &opts) {
+    type->compile(cx, pos, *this, env, opts);
   }
 
   void Val::dump(ostream &out) const { type->dump(*this, out); }
   
   bool Val::eq(const Pos &pos, const Val &y) const { return type->eq(pos, *this, y); }
 
-  void Val::eval(Cx &cx, const Pos &pos, Env &env, Reg *regs, Stack &stack) const {
-    return type->eval(cx, pos, *this, env, regs, stack);
+  void Val::eval(Cx &cx, const Pos &pos, Env &env, Reg *regs) const {
+    return type->eval(cx, pos, *this, env, regs);
   }
   
   bool Val::is(const Val &y) const {
@@ -60,8 +60,8 @@ namespace cidk {
     type->mark_refs(*this);
   }
 
-  void Val::splat(const Pos &pos, Env &env, Stack &stack) const {
-    return type->splat(pos, *this, env, stack);
+  void Val::splat(const Pos &pos, Env &env) const {
+    return type->splat(pos, *this, env);
   }
 
   void Val::sweep(const Pos &pos) { return type->sweep(pos, *this); }

@@ -14,19 +14,17 @@ namespace cidk::ops {
                          OpIter &in,
                          const OpIter &end,
                          Env &env,
-                         Stack &stack,
                          Ops &out,
                          Opts &opts) const {
-    in->as<Val>().compile(cx, in->pos, env, stack, opts);
+    in->as<Val>().compile(cx, in->pos, env, opts);
     out.push_back(*in);
   }
 
   void PushType::eval(Cx &cx,
                       Op &op,
                       Env &env,
-                      Reg *regs,
-                      Stack &stack) const {
-    op.as<Val>().eval(cx, op.pos, env, regs, stack);
+                      Reg *regs) const {
+    op.as<Val>().eval(cx, op.pos, env, regs);
   }
 
   void PushType::mark_refs(Op &op) const { op.as<Val>().mark_refs(); }

@@ -10,6 +10,7 @@ namespace cidk {
       ref_mark = true;
       env.mark();
       mark_refs(body);
+      body_opts.mark_refs();
     }
   }  
 

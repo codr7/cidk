@@ -23,24 +23,23 @@ namespace cidk::ops {
                       OpIter &in,
                       const OpIter &end,
                       Env &env,
-                      Stack &stack,
                       Ops &out,
                       Opts &opts) const {
     auto &d(in->as<BinOpData>());
-    d.x.compile(cx, in->pos, env, stack, opts);
-    d.y.compile(cx, in->pos, env, stack, opts);
+    d.x.compile(cx, in->pos, env, opts);
+    d.y.compile(cx, in->pos, env, opts);
     out.push_back(*in);
   }
 
-  void BinOp::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {
+  void BinOp::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &d(op.as<BinOpData>());
     Fun *f(d.fun);
-    d.x.eval(cx, p, env, regs, stack);
-    d.y.eval(cx, p, env, regs, stack);
+    d.x.eval(cx, p, env, regs);
+    d.y.eval(cx, p, env, regs);
     
     if (!f) {
-      auto i(stack.end()-1), j(i-1);
+      auto i(cx.stackp-1), j(i-1);
       ValType *xt(i->type), *yt(j->type);
       const Sym *fun_id(get_fun_id(cx));
       auto id((xt == yt) ? fun_id : cx.intern(str(fun_id->name, '[', yt->id, ']')));
@@ -53,7 +52,7 @@ namespace cidk::ops {
       f = fv.as_fun;
     }
     
-    Call(p, *f).eval(cx, env, stack);
+    Call(p, *f).eval(cx, env);
   }
 
   void BinOp::mark_refs(Op &op) const {

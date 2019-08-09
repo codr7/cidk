@@ -9,7 +9,6 @@
 #include "cidk/opts.hpp"
 #include "cidk/pos.hpp"
 #include "cidk/reg.hpp"
-#include "cidk/stack.hpp"
 #include "cidk/sym.hpp"
 
 namespace cidk {
@@ -28,11 +27,10 @@ namespace cidk {
                          OpIter &in,
                          const OpIter &end,
                          Env &env,
-                         Stack &stack,
                          Ops &out,
                          Opts &opts) const;
 
-    virtual void eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const;
+    virtual void eval(Cx &cx, Op &op, Env &env, Reg *regs) const;
     virtual void mark_refs(Op &op) const;
     virtual void read(Cx &cx, Pos &pos, istream &in, Ops &out) const = 0;
   };
@@ -59,11 +57,10 @@ namespace cidk {
                  OpIter &in,
                  const OpIter &end,
                  Env &env, 
-                 Stack &stack, 
                  Ops &out, 
                  Opts &opts);
 
-    void eval(Cx &cx, Env &env, Reg *regs, Stack &stack);
+    void eval(Cx &cx, Env &env, Reg *regs);
     void mark_refs();
   };
 }

@@ -1,4 +1,4 @@
-do-env _ {
+do-env {
   defun foo()() {
     let bar 42;
     defun baz()() {push bar;};
@@ -7,5 +7,5 @@ do-env _ {
 
   call foo;
   call;
-  assert(stack) {eq stack (42);};
+  assert({cp;}) {is 42;};
 };

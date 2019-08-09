@@ -6,21 +6,19 @@
 namespace cidk::ops {
   struct DoStackType: OpType {
     DoStackType(const string &id);
-    void init(Cx &cx, Op &op, const Val &in, const Val &body) const;
+    void init(Cx &cx, Op &op, const Val &body) const;
 
     virtual void compile(Cx &cx,
                          OpIter &in,
                          const OpIter &end,
                          Env &env,
-                         Stack &stack,
                          Ops &out,
                          Opts &opts) const override;
 
     virtual void eval(Cx &cx,
                       Op &op,
                       Env &env,
-                      Reg *regs,
-                      Stack &stack) const override;
+                      Reg *regs) const override;
     
     virtual void mark_refs(Op &op) const override;
     virtual void read(Cx &cx, Pos &pos, istream &in, Ops &out) const override;

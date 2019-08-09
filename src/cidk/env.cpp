@@ -2,7 +2,6 @@
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
 #include "cidk/env.hpp"
-#include "cidk/ops/env.hpp"
 #include "cidk/types/expr.hpp"
 
 namespace cidk {  

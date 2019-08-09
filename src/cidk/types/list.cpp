@@ -27,9 +27,8 @@ namespace cidk {
                          const Pos &pos,
                          Val &val,
                          Env &env,
-                         Stack &stack,
                          Opts &opts) const {
-    for (auto &v: val.as_list->items) { v.compile(cx, pos, env, stack, opts); }
+    for (auto &v: val.as_list->items) { v.compile(cx, pos, env, opts); }
   }
   
   void ListType::dump(const Val &val, ostream &out) const {
@@ -62,12 +61,13 @@ namespace cidk {
                       const Pos &pos,
                       const Val &val,
                       Env &env,
-                      Reg *regs, 
-                      Stack &stack) const {
-    Stack out;
-    for (auto &v: val.as_list->items) { v.eval(cx, pos, env, regs, out); }
-    List *l(cx.list_type.pool.get(cx, out));
-    stack.emplace_back(cx.list_type, l);
+                      Reg *regs) const {
+    Val *beg(cx.stackp);
+    for (auto &v: val.as_list->items) { v.eval(cx, pos, env, regs); }
+    List *l(cx.list_type.pool.get(cx));
+    move(beg, cx.stackp, back_inserter(l->items));
+    cx.stackp = beg;
+    cx.push(pos, cx.list_type, l);
   }
 
   bool ListType::is(const Val &x, const Val &y) const {
@@ -78,8 +78,8 @@ namespace cidk {
 
   void ListType::set(Val &dst, List *val) const { dst.as_list = val; }
 
-  void ListType::splat(const Pos &pos, const Val &val, Env &env, Stack &stack) const {
-    for (auto &v: val.as_list->items) { stack.push_back(v); }
+  void ListType::splat(const Pos &pos, const Val &val, Env &env) const {
+    for (auto &v: val.as_list->items) { cx.push(pos, v); }
   }
 
   void ListType::sweep(const Pos &pos, Val &val) { val.as_list->sweep(cx, pos); }

@@ -18,19 +18,21 @@ namespace cidk::ops {
     op.data = CpData(offs, len);
   }
 
-  void CpType::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {
-    const auto &d(op.as<CpData>());
-    auto ss(stack.size());
+  void CpType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
+    auto &p(op.pos);
+    auto &d(op.as<CpData>());
+    auto ss(cx.stackp - cx.stack.begin());
       
     auto
       offs((d.offs == -1) ? ss - 1 : d.offs),
       len((d.len == -1) ? offs + 1 : d.len);
 
     if (len == 1) {
-      stack.push_back(stack[ss - offs - 1]);
+      cx.push(p, cx.peek(p));
     } else {
-      auto i(stack.end() - offs - 1), j(i + len);
-      copy(i, j, back_inserter(stack));
+      auto i(cx.stackp - offs - 1);
+      copy(i, i + len, cx.stackp);
+      cx.stackp += len;
     }
   }
 

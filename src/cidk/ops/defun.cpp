@@ -34,14 +34,13 @@ namespace cidk::ops {
                           OpIter &in,
                           const OpIter &end,
                           Env &env,
-                          Stack &stack,
                           Ops &out,
                           Opts &opts) const {
     auto &p(in->pos);
     auto &d(in->as<DefunData>());
     Fun &f(env.add_fun(cx, p, d.id, {}, {}));
 
-    f.args.parse(cx, p, *d.args.as_list, env, stack);
+    f.args.parse(cx, p, *d.args.as_list, env);
     auto &as(f.args.items);
 
     for (auto i(as.rbegin()); i != as.rend(); i++) {
@@ -51,13 +50,13 @@ namespace cidk::ops {
     auto &b(d.body.as_expr->ops);
     copy(b.begin(), b.end(), back_inserter(f.body));
     f.env.let(cx, p, f.id, Val(cx.fun_type, &f));
-    cx.compile(f.body, f.body_opts, f.env, stack);
+    cx.compile(f.body, f.body_opts, f.env);
     for (auto &r: f.body_opts.ext_ids) { r.src_reg = opts.get_reg(p, r.id); }
     d.fun = &f;
     out.push_back(*in);
   }
   
-  void DefunType::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {
+  void DefunType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &f(*op.as<DefunData>().fun);
     for (auto &r: f.body_opts.ext_ids) { regs[r.src_reg].second.cp(r.val); }
   }

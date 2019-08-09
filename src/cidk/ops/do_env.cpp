@@ -10,70 +10,56 @@
 
 namespace cidk::ops {
   struct DoEnvData {
-    Val in, body;
-    DoEnvData(const Val &in, const Val &body): in(in), body(body) {}
+    Val body;
+    Opts body_opts;
+    DoEnvData(const Val &body): body(body) {}
   };
   
   const DoEnvType DoEnv("do-env");
 
   DoEnvType::DoEnvType(const string &id): OpType(id) {}
 
-  void DoEnvType::init(Cx &cx, Op &op, const Val &in, const Val &body) const {
-    op.data = DoEnvData(in, body);
+  void DoEnvType::init(Cx &cx, Op &op, const Val &body) const {
+    op.data = DoEnvData(body);
   }
 
   void DoEnvType::compile(Cx &cx,
                           OpIter &in,
                           const OpIter &end,
                           Env &env,
-                          Stack &stack,
                           Ops &out,
                           Opts &opts) const {
     auto &d(in->as<DoEnvData>());
-    d.in.compile(cx, in->pos, env, stack, opts);
-
-    auto &ep(cx.env_pool);
-    Env &de((d.in.type == &cx.nil_type) ? *ep.get(cx) : *ep.get(cx, env));
-
-    //if (de.items.empty()) { de.use(cx, env, {cx.intern("env")}); }
-    
-    Opts body_opts;
-    d.body.compile(cx, in->pos, de, stack, body_opts);
+    d.body.compile(cx, in->pos, *cx.env_pool.get(cx, env), d.body_opts);
     out.push_back(*in);
   }
 
-  void DoEnvType::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {
+  void DoEnvType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &d(op.as<DoEnvData>());
-    Env *de(nullptr);
+    
+    Reg *body_regs(cx.regp);
+    cx.regp += d.body_opts.regs.size();
 
-    if (d.in.type == &cx.nil_type) {
-      de = cx.env_pool.get(cx);
-    } else if (d.in.type == &cx.bool_type && d.in.as_bool) {
-      de = cx.env_pool.get(cx, env);
-    } else {
-      d.in.eval(cx, p, env, regs, stack);
-      de = &pop(p, stack).get_env();
+    for (auto &src: d.body_opts.ext_ids) {
+      set_reg(body_regs, src.dst_reg, src.id, src.val);
     }
 
-    d.body.eval(cx, p, *de, regs, stack);
+    d.body.eval(cx, p, *cx.env_pool.get(cx), body_regs);
+    cx.regp = body_regs;
   }
 
   void DoEnvType::mark_refs(Op &op) const {
     auto &d(op.as<DoEnvData>());
-    d.in.mark_refs();
     d.body.mark_refs();
+    d.body_opts.mark_refs();
   }
 
   void DoEnvType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
-    auto _in(read_val(cx, pos, in));
-    if (!_in || _in->is_eop()) { throw ESys(p, "Missing do-env input"); }
-
     auto body(read_val(cx, pos, in));
-    if (!body || body->is_eop()) { throw ESys(p, "Missing do-env body"); }
-
+    if (!body || body->is_eop()) { throw ESys(p, "Missing body"); }
     read_eop(pos, in);
-    out.emplace_back(cx, p, *this, *_in, *body);
+    out.emplace_back(cx, p, *this, *body);
   }
 }

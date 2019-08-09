@@ -6,16 +6,16 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* add cx.stack
-** remove stack args
-** add stackp like regs
 * switch Reg type to Val
 ** use Val.id
 *** default null
 * --
-* mark regs in cx.mark()
-* replace cx.ops with cx.on_mark
-** function<void ()>
+* drop ValType.compile/eval cx arg
+* catch repl errors
+* drop first class envs
+** drop env type
+** remove env ref
+* mark regs/stack in cx.mark()
 * finish for op
 ** add ValType.iter(const Val &src, function<void (const Val &)>)
 *** call with src in default imp
@@ -27,9 +27,6 @@ fun (fib ((n a b) Int) Int
 * copy regs into env arg in env op
 ** failing test
 * --
-* add Splat op
-** vararg like Push
-** call splat on eval
 * add len op
 ** forward to type env
 ** add Str/List/Env.len funs
@@ -57,3 +54,7 @@ fun (fib ((n a b) Int) Int
 ** handle in Call.eval
 * block setting of const vals
 ** check for const_type
+* replace cx.ops with cx.on_mark
+** function<void ()>* add Splat op
+** vararg like Push
+** call splat on eval

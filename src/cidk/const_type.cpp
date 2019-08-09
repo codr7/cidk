@@ -20,9 +20,8 @@ namespace cidk {
                           const Pos &pos,
                           Val &val,
                           Env &env,
-                          Stack &stack,
                           Opts &opts) const {
-    val_type.compile(cx, pos, val, env, stack, opts);
+    val_type.compile(cx, pos, val, env, opts);
   }
 
   void ConstType::dump(const Val &val, ostream &out) const {
@@ -36,16 +35,9 @@ namespace cidk {
                        const Pos &pos,
                        const Val &val,
                        Env &env,
-                       Reg *regs,
-                       Stack &stack) const {
-    Val v;
-    clone(pos, v, val);
-    stack.push_back(v);
-  }
+                       Reg *regs) const { val.clone(pos, cx.push(pos)); }
 
-  bool ConstType::is(const Val &x, const Val &y) const {
-    return val_type.is(x, y);
-  }
+  bool ConstType::is(const Val &x, const Val &y) const { return val_type.is(x, y); }
 
   void ConstType::mark_refs(const Val &val) const { val_type.mark_refs(val); }
 

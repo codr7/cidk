@@ -12,7 +12,6 @@ namespace cidk {
                          const Pos &pos,
                          Val &val,
                          Env &env,
-                         Stack &stack,
                          Opts &opts) const override;
 
     virtual void cp(Val &dst, const Val &src) const override;
@@ -22,8 +21,7 @@ namespace cidk {
                       const Pos &pos,
                       const Val &val,
                       Env &env,
-                      Reg *regs,
-                      Stack &stack) const override;
+                      Reg *regs) const override;
     
     virtual bool is(const Val &x, const Val &y) const override;
     virtual void set(Val &dst, const Sym *val) const override;

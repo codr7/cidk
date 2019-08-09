@@ -2,7 +2,6 @@
 #include "cidk/e.hpp"
 #include "cidk/ops/if.hpp"
 #include "cidk/read.hpp"
-#include "cidk/stack.hpp"
 #include "cidk/types/nil.hpp"
 
 namespace cidk::ops {
@@ -27,25 +26,24 @@ namespace cidk::ops {
                        OpIter &in,
                        const OpIter &end,
                        Env &env,
-                       Stack &stack,
                        Ops &out,
                        Opts &opts) const {
     auto &d(in->as<IfData>());
-    d.cond.compile(cx, in->pos, env, stack, opts);
-    d.x.compile(cx, in->pos, env, stack, opts);
-    d.y.compile(cx, in->pos, env, stack, opts);
+    d.cond.compile(cx, in->pos, env, opts);
+    d.x.compile(cx, in->pos, env, opts);
+    d.y.compile(cx, in->pos, env, opts);
     out.push_back(*in);
   }
 
-  void IfType::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {
+  void IfType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &d(op.as<IfData>());
-    d.cond.eval(cx, p, env, regs, stack);
+    d.cond.eval(cx, p, env, regs);
       
-    if (pop(p, stack).get_bool()) {
-      if (d.x.type != &cx.nil_type) { d.x.eval(cx, p, env, regs, stack); }
+    if (cx.pop(p).get_bool()) {
+      if (d.x.type != &cx.nil_type) { d.x.eval(cx, p, env, regs); }
     } else if (d.y.type != &cx.nil_type) {
-      d.y.eval(cx, p, env, regs, stack);
+      d.y.eval(cx, p, env, regs);
     }
   }
 

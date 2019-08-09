@@ -30,10 +30,10 @@ $ ./cidk ../test/run.al
 39
 ()
 $ rlwrap ./cidk
-cidk v0.6
+cidk v0.7
 
 Press Return on empty row to evaluate.
-Evaluating nothing clears stack and Ctrl+D exits.
+Empty input clears stack and Ctrl+D exits.
 
   push 7 14 21;
   
@@ -101,7 +101,7 @@ Passing `T` starts at the beginning and/or copies to end.
 Defines compile time constants for pairs of ids and values.
 
 ```
-  do-env T {
+  do-env {
     defconst foo 35 bar 7;
     push foo bar;
     add;
@@ -115,32 +115,33 @@ Error in 'test.al' on row 1, col 5:
 Unknown id: foo
 ```
 
-#### do-env in? body
-Evaluates body in environment. Passing `_` creates a new empty environment, while `T` creates one derived from the current.
-
-`env` evaluates to the current environment.
+#### do-env body
+Evaluates body in a fresh environment.
 
 ```
-  do-env _ {push env;};
-  
-(... ())
-```
-
-#### do-stack in? body
-Evaluates body on stack. Passing `_` creates a new empty stack.
-
-```
-  do-stack (35 7) {add;};
+  do-env {let foo 42; push foo;};
 
 (... 42)
 ```
 
-`stack` evaluates to the current stack.
+#### do-stack body
+Evaluates body on a fresh stack.
 
 ```
-  do-stack (1 2) {push 3 4 stack 5 6;};
+  do-stack {
+    push 1 2;
+    do-stack {push 3 4 stack;};
+  };
 
-(... (1 2 3 4) 5 6)
+(... 1 2 (3 4))
+```
+
+`stack` pushes the contents of the stack as a list.
+
+```
+  do-stack {push 1 2 stack};
+
+(... (1 2))
 ```
 
 #### drop [n 1]
@@ -230,7 +231,7 @@ Updates values on stack or in environment depending on key type. `val` is popped
 ```
 
 ```
-  do-env T {
+  do-env {
     let foo 1;
     push foo;
     set foo 2;
@@ -243,7 +244,7 @@ Updates values on stack or in environment depending on key type. `val` is popped
 Expressions are evaluated with current value pushed on stack.
 
 ```
-  do-env T {
+  do-env {
     let foo 1;
     set foo {add 41;};
     push foo;
@@ -276,7 +277,7 @@ Default place is end of stack.
 While symbols act on the environment.
 
 ```
-  do-env T {
+  do-env {
     let foo 1 bar 2;
     swap foo bar;
     push foo bar;
@@ -288,7 +289,7 @@ While symbols act on the environment.
 Mixing is fine too.
 
 ```
-  do-env T {
+  do-env {
     let foo 1;
     push 2;
     swap foo;

@@ -14,8 +14,7 @@ namespace cidk {
                       const Pos &pos,
                       const Val &val,
                       Env &env,
-                      Reg *regs,
-                      Stack &stack) const override;
+                      Reg *regs) const override;
     
     virtual bool is(const Val &x, const Val &y) const override;
   };

@@ -18,7 +18,6 @@ namespace cidk {
                          const Pos &pos,
                          Val &val,
                          Env &env,
-                         Stack &stack,
                          Opts &opts) const override;
 
     virtual void dump(const Val &val, ostream &out) const override;
@@ -28,8 +27,7 @@ namespace cidk {
                       const Pos &pos,
                       const Val &val,
                       Env &env,
-                      Reg *regs,
-                      Stack &stack) const override;
+                      Reg *regs) const override;
 
     virtual bool is(const Val &x, const Val &y) const override;
     virtual void mark_refs(const Val &val) const override;
@@ -37,8 +35,7 @@ namespace cidk {
 
     virtual void splat(const Pos &pos,
                        const Val &val,
-                       Env &env, Stack
-                       &stack) const override;
+                       Env &env) const override;
     
     virtual void sweep(const Pos &pos, Val &val) override;
 

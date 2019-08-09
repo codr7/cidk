@@ -4,7 +4,6 @@
 #include "cidk/ops.hpp"
 #include "cidk/opts.hpp"
 #include "cidk/reg.hpp"
-#include "cidk/stack.hpp"
 #include "cidk/sym.hpp"
 #include "cidk/type.hpp"
 
@@ -23,13 +22,13 @@ namespace cidk {
     virtual void cp(Val &dst, const Val &src) const = 0;
 
     virtual void clone(const Pos &pos, Val &dst, const Val &src) const {
-      return cp(dst, src);
+      cp(dst, src);
     }
     
     virtual void compile(Cx &cx,
                          const Pos &pos,
                          Val &val,
-                         Env &env, Stack &stack,
+                         Env &env,
                          Opts &opts) const;
 
     virtual void dump(const Val &val, ostream &out) const = 0;
@@ -39,12 +38,11 @@ namespace cidk {
                       const Pos &pos,
                       const Val &val,
                       Env &env,
-                      Reg *regs,
-                      Stack &stack) const;
+                      Reg *regs) const;
 
     virtual bool is(const Val &x, const Val &y) const = 0;
     virtual void mark_refs(const Val &val) const;
-    virtual void splat(const Pos &pos, const Val &val, Env &env, Stack &stack) const;
+    virtual void splat(const Pos &pos, const Val &val, Env &env) const;
     
     using Type::sweep;
     virtual void sweep(const Pos &pos, Val &val);

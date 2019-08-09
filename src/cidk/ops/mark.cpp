@@ -9,7 +9,7 @@ namespace cidk::ops {
 
   void MarkType::init(Cx &cx, Op &op) const {}
 
-  void MarkType::eval(Cx &cx, Op &op, Env &env, Reg *regs, Stack &stack) const {
+  void MarkType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     cx.mark_refs();
   }
 
