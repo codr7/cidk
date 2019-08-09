@@ -31,7 +31,7 @@ namespace cidk::ops {
                         Opts &opts) const {
     auto &p(in->pos);
     auto &d(in->as<SetData>());
-    d.val.compile(cx, p, env, opts);
+    d.val.compile(p, env, opts);
     
     if (d.key.type == &cx.sym_type) {      
       if (auto found(opts.regs.find(d.key.as_sym)); found != opts.regs.end()) {
@@ -53,7 +53,7 @@ namespace cidk::ops {
               : regs[d.reg]);
     }
 
-    d.val.eval(cx, p, env, regs);
+    d.val.eval(p, env, regs);
   
     if (d.key.type == &cx.int_type) {
       cx.stack[d.key.as_int] = cx.pop(p);

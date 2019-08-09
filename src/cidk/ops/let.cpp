@@ -29,7 +29,7 @@ namespace cidk::ops {
                         Opts &opts) const {
     auto &p(in->pos);
     auto &d(in->as<LetData>());
-    d.val.compile(cx, p, env, opts);
+    d.val.compile(p, env, opts);
     d.reg = opts.push_reg(p, d.id);
     out.push_back(*in);
   }
@@ -37,7 +37,7 @@ namespace cidk::ops {
   void LetType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &d(op.as<LetData>());
-    d.val.eval(cx, p, env, regs);
+    d.val.eval(p, env, regs);
     regs[d.reg] = cx.pop(p);
   }
 

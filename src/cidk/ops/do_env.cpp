@@ -30,7 +30,7 @@ namespace cidk::ops {
                           Ops &out,
                           Opts &opts) const {
     auto &d(in->as<DoEnvData>());
-    d.body.compile(cx, in->pos, *cx.env_pool.get(cx, env), d.body_opts);
+    d.body.compile(in->pos, *cx.env_pool.get(cx, env), d.body_opts);
     out.push_back(*in);
   }
 
@@ -41,7 +41,7 @@ namespace cidk::ops {
     Reg *body_regs(cx.regp);
     cx.regp += d.body_opts.regs.size();
     for (auto &src: d.body_opts.ext_ids) { body_regs[src.dst_reg] = src.val; }
-    d.body.eval(cx, p, *cx.env_pool.get(cx), body_regs);
+    d.body.eval(p, *cx.env_pool.get(cx), body_regs);
     cx.regp = body_regs;
   }
 

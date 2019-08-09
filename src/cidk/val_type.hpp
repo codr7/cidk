@@ -25,20 +25,10 @@ namespace cidk {
       cp(dst, src);
     }
     
-    virtual void compile(Cx &cx,
-                         const Pos &pos,
-                         Val &val,
-                         Env &env,
-                         Opts &opts) const;
-
+    virtual void compile(const Pos &pos, Val &val, Env &env, Opts &opts) const;
     virtual void dump(const Val &val, ostream &out) const = 0;
     virtual bool eq(const Pos &pos, const Val &x, const Val &y) const;
-
-    virtual void eval(Cx &cx,
-                      const Pos &pos,
-                      const Val &val,
-                      Env &env,
-                      Reg *regs) const;
+    virtual void eval(const Pos &pos, const Val &val, Env &env, Reg *regs) const;
 
     virtual bool is(const Val &x, const Val &y) const = 0;
     virtual void mark_refs(const Val &val) const;

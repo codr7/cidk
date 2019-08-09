@@ -27,9 +27,10 @@ namespace cidk::ops {
                         Env &env,
                         Ops &out,
                         Opts &opts) const {
+    auto &p(in->pos);
     auto &d(in->as<DecData>());
-    d.n.compile(cx, in->pos, env, opts);
-    d.delta.compile(cx, in->pos, env, opts);
+    d.n.compile(p, env, opts);
+    d.delta.compile(p, env, opts);
     out.push_back(*in);
   }
 
@@ -38,7 +39,7 @@ namespace cidk::ops {
     auto &d(op.as<DecData>());
 
     if (d.n.type == &cx.reg_type) {
-      d.delta.eval(cx, p, env, regs);
+      d.delta.eval(p, env, regs);
       auto &delta(cx.peek(p));
       
       if (delta.type != &cx.int_type) {
@@ -49,8 +50,8 @@ namespace cidk::ops {
       n -= delta.as_int;
       delta.as_int = n;
     } else {
-      d.n.eval(cx, p, env, regs); 
-      d.delta.eval(cx, p, env, regs);
+      d.n.eval(p, env, regs); 
+      d.delta.eval(p, env, regs);
       auto &delta(cx.pop(p));
       
       if (delta.type != &cx.int_type) {

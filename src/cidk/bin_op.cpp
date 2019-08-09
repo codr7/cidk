@@ -26,8 +26,8 @@ namespace cidk::ops {
                       Ops &out,
                       Opts &opts) const {
     auto &d(in->as<BinOpData>());
-    d.x.compile(cx, in->pos, env, opts);
-    d.y.compile(cx, in->pos, env, opts);
+    d.x.compile(in->pos, env, opts);
+    d.y.compile(in->pos, env, opts);
     out.push_back(*in);
   }
 
@@ -35,8 +35,8 @@ namespace cidk::ops {
     auto &p(op.pos);
     auto &d(op.as<BinOpData>());
     Fun *f(d.fun);
-    d.x.eval(cx, p, env, regs);
-    d.y.eval(cx, p, env, regs);
+    d.x.eval(p, env, regs);
+    d.y.eval(p, env, regs);
     
     if (!f) {
       auto i(cx.stackp-1), j(i-1);

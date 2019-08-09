@@ -13,11 +13,7 @@ namespace cidk {
                    const vector<Type *> &parents):
     TValType<const Sym *>(cx, pos, id, parents) {}
 
-  void SymType::compile(Cx &cx,
-                        const Pos &pos,
-                        Val &val,
-                        Env &env,
-                        Opts &opts) const {
+  void SymType::compile(const Pos &pos, Val &val, Env &env, Opts &opts) const {
     auto s(val.as_sym);
     
     if (auto reg(opts.regs.find(s)); reg == opts.regs.end()) {
@@ -35,12 +31,8 @@ namespace cidk {
 
   void SymType::dump(const Val &val, ostream &out) const { out << val.as_sym; }
 
-  void SymType::eval(Cx &cx,
-                     const Pos &pos,
-                     const Val &val,
-                     Env &env,
-                     Reg *regs) const {
-    env.get(pos, val.as_sym).eval(cx, pos, env, regs);
+  void SymType::eval(const Pos &pos, const Val &val, Env &env, Reg *regs) const {
+    env.get(pos, val.as_sym).eval(pos, env, regs);
   }
 
   bool SymType::is(const Val &x, const Val &y) const { return x.as_sym == y.as_sym; }

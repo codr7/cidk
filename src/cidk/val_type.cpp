@@ -18,21 +18,13 @@ namespace cidk {
     return *_const_type;
   }
 
-  void ValType::compile(Cx &cx,
-                        const Pos &pos,
-                        Val &val,
-                        Env &env,
-                        Opts &opts) const {}
+  void ValType::compile(const Pos &pos, Val &val, Env &env, Opts &opts) const {}
 
   bool ValType::eq(const Pos &pos, const Val &x, const Val &y) const {
     return is(x, y);
   }
 
-  void ValType::eval(Cx &cx,
-                     const Pos &pos,
-                     const Val &val,
-                     Env &env,
-                     Reg *regs) const {
+  void ValType::eval(const Pos &pos, const Val &val, Env &env, Reg *regs) const {
     val.clone(pos, cx.push(pos));
   }
 

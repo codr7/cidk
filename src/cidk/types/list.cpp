@@ -23,12 +23,11 @@ namespace cidk {
 
   void ListType::cp(Val &dst, const Val &src) const { dst.as_list = src.as_list; }
 
-  void ListType::compile(Cx &cx,
-                         const Pos &pos,
+  void ListType::compile(const Pos &pos,
                          Val &val,
                          Env &env,
                          Opts &opts) const {
-    for (auto &v: val.as_list->items) { v.compile(cx, pos, env, opts); }
+    for (auto &v: val.as_list->items) { v.compile(pos, env, opts); }
   }
   
   void ListType::dump(const Val &val, ostream &out) const {
@@ -57,13 +56,12 @@ namespace cidk {
     return true;
   }
 
-  void ListType::eval(Cx &cx,
-                      const Pos &pos,
+  void ListType::eval(const Pos &pos,
                       const Val &val,
                       Env &env,
                       Reg *regs) const {
     Val *beg(cx.stackp);
-    for (auto &v: val.as_list->items) { v.eval(cx, pos, env, regs); }
+    for (auto &v: val.as_list->items) { v.eval(pos, env, regs); }
     List *l(cx.list_type.pool.get(cx));
     move(beg, cx.stackp, back_inserter(l->items));
     cx.stackp = beg;

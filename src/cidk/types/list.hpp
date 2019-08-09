@@ -14,8 +14,7 @@ namespace cidk {
     virtual void clone(const Pos &pos, Val &dst, const Val &src) const override;
     virtual void cp(Val &dst, const Val &src) const override;
 
-    virtual void compile(Cx &cx,
-                         const Pos &pos,
+    virtual void compile(const Pos &pos,
                          Val &val,
                          Env &env,
                          Opts &opts) const override;
@@ -23,8 +22,7 @@ namespace cidk {
     virtual void dump(const Val &val, ostream &out) const override;
     virtual bool eq(const Pos &pos, const Val &x, const Val &y) const override;
 
-    virtual void eval(Cx &cx,
-                      const Pos &pos,
+    virtual void eval(const Pos &pos,
                       const Val &val,
                       Env &env,
                       Reg *regs) const override;

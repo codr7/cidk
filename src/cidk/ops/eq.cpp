@@ -25,16 +25,16 @@ namespace cidk::ops {
                        Ops &out,
                        Opts &opts) const {
     auto &d(in->as<EqData>());
-    d.x.compile(cx, in->pos, env, opts);
-    d.y.compile(cx, in->pos, env, opts);
+    d.x.compile(in->pos, env, opts);
+    d.y.compile(in->pos, env, opts);
     out.push_back(*in);
   }
 
   void EqType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &d(op.as<EqData>());
-    d.x.eval(cx, p, env, regs);
-    d.y.eval(cx, p, env, regs);
+    d.x.eval(p, env, regs);
+    d.y.eval(p, env, regs);
     auto &y(cx.pop(p)), &x(cx.peek(p));
     x.reset(cx.bool_type, x.eq(p, y));
   }

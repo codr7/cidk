@@ -33,16 +33,16 @@ namespace cidk {
     return dst;
   }
 
-  void Val::compile(Cx &cx, const Pos &pos, Env &env, Opts &opts) {
-    type->compile(cx, pos, *this, env, opts);
+  void Val::compile(const Pos &pos, Env &env, Opts &opts) {
+    type->compile(pos, *this, env, opts);
   }
 
   void Val::dump(ostream &out) const { type->dump(*this, out); }
   
   bool Val::eq(const Pos &pos, const Val &y) const { return type->eq(pos, *this, y); }
 
-  void Val::eval(Cx &cx, const Pos &pos, Env &env, Reg *regs) const {
-    return type->eval(cx, pos, *this, env, regs);
+  void Val::eval(const Pos &pos, Env &env, Reg *regs) const {
+    return type->eval(pos, *this, env, regs);
   }
   
   bool Val::is(const Val &y) const {

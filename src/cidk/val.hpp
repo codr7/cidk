@@ -51,10 +51,10 @@ namespace cidk {
     
     Val &clone(const Pos &pos, Val &dst) const;
     Val &cp(Val &dst) const;
-    void compile(Cx &cx, const Pos &pos, Env &env, Opts &opts);
+    void compile(const Pos &pos, Env &env, Opts &opts);
     void dump(ostream &out) const;
     bool eq(const Pos &pos, const Val &y) const;
-    void eval(Cx &cx, const Pos &pos, Env &env, Reg *regs) const;
+    void eval(const Pos &pos, Env &env, Reg *regs) const;
     bool is(const Val &y) const;
     bool is_eop() const;
     void mark_refs();

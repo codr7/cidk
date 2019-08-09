@@ -29,7 +29,7 @@ namespace cidk::ops {
                          Env &env,
                          Ops &out,
                          Opts &opts) const {
-    in->as<PokeData>().val.compile(cx, in->pos, env, opts);
+    in->as<PokeData>().val.compile(in->pos, env, opts);
     out.push_back(*in);
   }
 
@@ -38,7 +38,7 @@ namespace cidk::ops {
     auto &d(op.as<PokeData>());
     auto ss(cx.stackp - cx.stack.begin());
     if (d.is_expr && d.offs > 1) { cx.push(p, cx.stack[ss - d.offs]); }
-    d.val.eval(cx, p, env, regs);
+    d.val.eval(p, env, regs);
     swap(cx.peek(p), cx.stack[ss - d.offs]);
     if (!d.is_expr || d.offs > 1) { cx.pop(p); }
   }

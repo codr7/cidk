@@ -26,8 +26,8 @@ namespace cidk::ops {
                          Ops &out,
                          Opts &opts) const {
     auto &d(in->as<SwapData>());
-    d.x.compile(cx, in->pos, env, opts);
-    d.y.compile(cx, in->pos, env, opts);
+    d.x.compile(in->pos, env, opts);
+    d.y.compile(in->pos, env, opts);
     out.push_back(*in);
   }
   

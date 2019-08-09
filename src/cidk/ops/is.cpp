@@ -25,17 +25,18 @@ namespace cidk::ops {
                        Env &env,
                        Ops &out,
                        Opts &opts) const {
+    auto &p(in->pos);
     auto &d(in->as<IsData>());
-    d.x.compile(cx, in->pos, env, opts);
-    d.y.compile(cx, in->pos, env, opts);
+    d.x.compile(p, env, opts);
+    d.y.compile(p, env, opts);
     out.push_back(*in);
   }
 
   void IsType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &d(op.as<IsData>());
-    d.x.eval(cx, p, env, regs);
-    d.y.eval(cx, p, env, regs);
+    d.x.eval(p, env, regs);
+    d.y.eval(p, env, regs);
     auto &y(cx.pop(p)), &x(cx.peek(p));    
     x.reset(cx.bool_type, x.is(y));
   }

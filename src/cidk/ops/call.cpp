@@ -19,13 +19,13 @@ namespace cidk::ops {
                          Ops &out,
                          Opts &opts) const {
     Val &f(in->as<Val>());
-    f.compile(cx, in->pos, env, opts);
+    f.compile(in->pos, env, opts);
     out.push_back(*in);
   }
 
   void CallType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
-    op.as<Val>().eval(cx, p, env, regs);
+    op.as<Val>().eval(p, env, regs);
     auto &f(cx.pop(p));
     Type *ft(f.type);
     if (ft != &cx.fun_type) { throw ESys(p, "Invalid call target: ", ft->id); }

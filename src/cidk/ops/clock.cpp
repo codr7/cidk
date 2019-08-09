@@ -25,9 +25,10 @@ namespace cidk::ops {
                           Env &env,
                           Ops &out,
                           Opts &opts) const {
+    auto &p(in->pos);
     auto &d(in->as<ClockData>());
-    d.nreps.compile(cx, in->pos, env, opts);
-    d.body.compile(cx, in->pos, env, opts);
+    d.nreps.compile(p, env, opts);
+    d.body.compile(p, env, opts);
     out.push_back(*in);
   }
   
@@ -35,7 +36,7 @@ namespace cidk::ops {
     auto &p(op.pos);
     auto &d(op.as<ClockData>());
 
-    d.nreps.eval(cx, p, env, regs);
+    d.nreps.eval(p, env, regs);
     auto nreps(cx.pop(p));
 
     if (nreps.type != &cx.int_type) {
@@ -43,7 +44,7 @@ namespace cidk::ops {
     }
 
     Timer t;
-    for (int i(0); i < nreps.as_int; i++) { d.body.eval(cx, p, env, regs); }
+    for (int i(0); i < nreps.as_int; i++) { d.body.eval(p, env, regs); }
     cx.push(p, cx.int_type, Int(t.ms()));
   }
 
