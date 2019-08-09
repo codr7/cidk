@@ -52,14 +52,3 @@ assert({cp;}) {is 42;};
 
 push 1 2 3; poke {mul 2;} _; stash;
 assert({cp;}) {eq (1 4 3);};
-
-do-stack {
-  push 1 2;
-
-  do-stack {
-    push 3 4; stash;
-    assert({cp;}) {eq (3 4);};
-  };
-
-  drop 2;
-};

@@ -124,26 +124,6 @@ Evaluates body in a fresh environment.
 (... 42)
 ```
 
-#### do-stack body
-Evaluates body on a fresh stack.
-
-```
-  do-stack {
-    push 1 2;
-    do-stack {push 3 4 stack;};
-  };
-
-(... 1 2 (3 4))
-```
-
-`stack` pushes the contents of the stack as a list.
-
-```
-  do-stack {push 1 2 stack};
-
-(... (1 2))
-```
-
 #### drop [n 1]
 Drops `n` values from stack.
 

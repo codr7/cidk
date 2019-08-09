@@ -9,7 +9,6 @@ fun (fib ((n a b) Int) Int
 * switch Reg type to Val
 ** use Val.id
 *** default null
-* --
 * drop ValType.compile/eval cx arg
 * catch repl errors
 * drop first class envs
