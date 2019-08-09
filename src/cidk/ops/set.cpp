@@ -50,7 +50,7 @@ namespace cidk::ops {
       cx.push(p,
               (d.key.type == &cx.int_type)
               ? cx.stack[d.key.as_int]
-              : regs[d.reg].second);
+              : regs[d.reg]);
     }
 
     d.val.eval(cx, p, env, regs);
@@ -58,7 +58,7 @@ namespace cidk::ops {
     if (d.key.type == &cx.int_type) {
       cx.stack[d.key.as_int] = cx.pop(p);
     } else {
-      regs[d.reg].second = cx.pop(p);
+      regs[d.reg] = cx.pop(p);
     }
   }
 

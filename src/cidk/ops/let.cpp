@@ -38,7 +38,7 @@ namespace cidk::ops {
     auto &p(op.pos);
     auto &d(op.as<LetData>());
     d.val.eval(cx, p, env, regs);
-    set_reg(regs, d.reg, d.id, cx.pop(p));
+    regs[d.reg] = cx.pop(p);
   }
 
   void LetType::mark_refs(Op &op) const { op.as<LetData>().val.mark_refs(); }

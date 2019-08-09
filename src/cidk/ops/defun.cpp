@@ -58,7 +58,7 @@ namespace cidk::ops {
   
   void DefunType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &f(*op.as<DefunData>().fun);
-    for (auto &r: f.body_opts.ext_ids) { regs[r.src_reg].second.cp(r.val); }
+    for (auto &r: f.body_opts.ext_ids) { r.val = regs[r.src_reg]; }
   }
 
   void DefunType::mark_refs(Op &op) const { op.as<DefunData>().fun->mark(); }

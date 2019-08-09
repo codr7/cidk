@@ -22,10 +22,7 @@ namespace cidk {
     else {
       Reg *regs(cx.regp);
       cx.regp += fun.body_opts.regs.size();
-
-      for (auto &src: fun.body_opts.ext_ids) { 
-        set_reg(regs, src.dst_reg, src.id, src.val);
-      }
+      for (auto &src: fun.body_opts.ext_ids) { regs[src.dst_reg] = src.val; }
     recall:
       cx.eval(fun.body, fun.env, regs);
       

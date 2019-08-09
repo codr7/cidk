@@ -40,11 +40,7 @@ namespace cidk::ops {
     
     Reg *body_regs(cx.regp);
     cx.regp += d.body_opts.regs.size();
-
-    for (auto &src: d.body_opts.ext_ids) {
-      set_reg(body_regs, src.dst_reg, src.id, src.val);
-    }
-
+    for (auto &src: d.body_opts.ext_ids) { body_regs[src.dst_reg] = src.val; }
     d.body.eval(cx, p, *cx.env_pool.get(cx), body_regs);
     cx.regp = body_regs;
   }

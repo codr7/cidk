@@ -45,7 +45,7 @@ namespace cidk::ops {
         throw ESys(p, "Expected Int, was: ", delta.type->id);
       }
 
-      auto &n(regs[d.n.as_reg].second.as_int);
+      auto &n(regs[d.n.as_reg].as_int);
       n -= delta.as_int;
       delta.as_int = n;
     } else {

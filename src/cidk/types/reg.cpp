@@ -19,7 +19,7 @@ namespace cidk {
                      const Pos &pos,
                      const Val &val,
                      Env &env,
-                     Reg *regs) const { cx.push(pos, regs[val.as_reg].second); }
+                     Reg *regs) const { cx.push(pos, regs[val.as_reg]); }
 
   bool RegType::is(const Val &x, const Val &y) const { return x.as_reg == y.as_reg; }
 

@@ -9,9 +9,7 @@ namespace cidk {
   struct Sym;
   struct Val;
 
-  using Reg = pair<const Sym *, Val>;
-
-  void set_reg(Reg *in, size_t i, const Sym *id, const Val &val);
+  using Reg = Val;
 }
 
 #endif

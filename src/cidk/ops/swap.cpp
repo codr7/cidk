@@ -39,9 +39,10 @@ namespace cidk::ops {
     if (place.type == &cx.int_type) {
       return cx.stack[cx.stackp - cx.stack.begin() - place.as_int - 1];
     }
-    
-    if (place.type == &cx.reg_type) { return regs[place.as_reg].second; }
-    return env.get(pos, place.as_sym);
+
+    return (place.type == &cx.reg_type)
+      ? regs[place.as_reg]
+      : env.get(pos, place.as_sym);
   }
   
   void SwapType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
