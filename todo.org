@@ -23,9 +23,6 @@ fun (fib ((n a b) Int) Int
 *** let / del
 **** add Env.del
 *** update val in place
-* copy regs into env arg in env op
-** failing test
-* --
 * add len op
 ** forward to type env
 ** add Str/List/Env.len funs
