@@ -7,9 +7,14 @@ fun (fib ((n a b) Int) Int
 )
 
 * catch repl errors
+* switch as_reg to Val *
+** store pointer to reg
+** switch ExtId.src/dst_reg to Val *
+** grep _reg
 * drop first class envs
 ** drop env type
 ** remove env ref
+* profile bench
 * --
 * mark regs/stack in cx.mark()
 * finish for op
@@ -51,3 +56,6 @@ fun (fib ((n a b) Int) Int
 ** function<void ()>* add Splat op
 ** vararg like Push
 ** call splat on eval
+* implement arithmetic expression evaluator
+** add Reader type
+*** add reader arg to repl
