@@ -18,17 +18,9 @@ namespace cidk {
                          Opts &opts) const override;
 
     virtual void dump(const Val &val, ostream &out) const override;
-
-    virtual void eval(const Pos &pos,
-                      const Val &val,
-                      Env &env,
-                      Reg *regs) const override;
-
     virtual bool is(const Val &x, const Val &y) const override;
     virtual void mark_refs(const Val &val) const override;
-
     virtual bool get_bool(const Val &val) const override;
-    virtual Env &get_env(Val &val) const override;
   };
 }
 

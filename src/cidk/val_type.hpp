@@ -25,19 +25,23 @@ namespace cidk {
       cp(dst, src);
     }
     
-    virtual void compile(const Pos &pos, Val &val, Env &env, Opts &opts) const;
+    virtual void compile(const Pos &pos, Val &val, Env &env, Opts &opts) const {}
     virtual void dump(const Val &val, ostream &out) const = 0;
-    virtual bool eq(const Pos &pos, const Val &x, const Val &y) const;
+
+    virtual bool eq(const Pos &pos, const Val &x, const Val &y) const {
+      return is(x, y);
+    }
+
     virtual void eval(const Pos &pos, const Val &val, Env &env, Reg *regs) const;
 
     virtual bool is(const Val &x, const Val &y) const = 0;
-    virtual void mark_refs(const Val &val) const;
+    virtual void mark_refs(const Val &val) const {};
     virtual void splat(const Pos &pos, const Val &val, Env &env) const;
     
     using Type::sweep;
-    virtual void sweep(const Pos &pos, Val &val);
+    virtual void sweep(const Pos &pos, Val &val) {}
 
-    virtual bool get_bool(const Val &val) const;
+    virtual bool get_bool(const Val &val) const { return true; }
     virtual Env &get_env(Val &val) const;
   };
   
