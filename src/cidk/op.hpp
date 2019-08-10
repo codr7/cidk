@@ -28,10 +28,10 @@ namespace cidk {
                          const OpIter &end,
                          Env &env,
                          Ops &out,
-                         Opts &opts) const;
-
-    virtual void eval(Cx &cx, Op &op, Env &env, Reg *regs) const;
-    virtual void mark_refs(Op &op) const;
+                         Opts &opts) const { out.push_back(*in); }
+    
+    virtual void eval(Cx &cx, Op &op, Env &env, Reg *regs) const {}
+    virtual void mark_refs(Op &op) const {}
     virtual void read(Cx &cx, Pos &pos, istream &in, Ops &out) const = 0;
   };
 
@@ -56,12 +56,13 @@ namespace cidk {
     void compile(Cx &cx,
                  OpIter &in,
                  const OpIter &end,
-                 Env &env, 
-                 Ops &out, 
-                 Opts &opts);
-
-    void eval(Cx &cx, Env &env, Reg *regs);
-    void mark_refs();
+                 Env &env,
+                 Ops &out,
+                 Opts &opts) { type->compile(cx, in, end, env, out, opts); }
+    
+    void eval(Cx &cx, Env &env, Reg *regs) { type->eval(cx, *this, env, regs); }
+    
+    void mark_refs() { type->mark_refs(*this); }
   };
 }
 
