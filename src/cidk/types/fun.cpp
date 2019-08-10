@@ -25,6 +25,4 @@ namespace cidk {
   void FunType::set(Val &dst, Fun *val) const { dst.as_fun = val; }
 
   void FunType::sweep(const Pos &pos, Val &val) { val.as_fun->sweep(cx, pos); }
-
-  Env &FunType::get_env(Val &val) const { return val.as_fun->env; }
 }

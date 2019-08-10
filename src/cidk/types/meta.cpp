@@ -25,6 +25,4 @@ namespace cidk {
   void MetaType::set(Val &dst, Type *val) const { dst.as_type = val; }
 
   void MetaType::sweep(const Pos &pos, Val &val) { val.as_type->sweep(cx, pos); }
-
-  Env &MetaType::get_env(Val &val) const { return val.as_type->env; }
 }

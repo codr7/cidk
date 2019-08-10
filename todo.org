@@ -6,8 +6,6 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* inline Op
-* drop get_env() fn
 * mark regs/stack in cx.mark()
 * add Lua bench
 * add isa x? y? op

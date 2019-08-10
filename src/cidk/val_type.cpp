@@ -25,6 +25,4 @@ namespace cidk {
   void ValType::splat(const Pos &pos, const Val &val, Env &env) const {
     cx.push(pos, val);
   }
-
-  Env &ValType::get_env(Val &val) const { return val.type->env; }
 }

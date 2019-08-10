@@ -5,17 +5,19 @@
 
 namespace cidk {  
   struct PopType: ValType {
-    PopType(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents);
+    PopType(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents):
+      ValType(cx, pos, id, parents) {}
 
-    virtual void cp(Val &dst, const Val &src) const override;
-    virtual void dump(const Val &val, ostream &out) const override;
+    virtual void cp(Val &dst, const Val &src) const override {}
+
+    virtual void dump(const Val &val, ostream &out) const override { out << '$'; }
 
     virtual void eval(const Pos &pos,
                       const Val &val,
                       Env &env,
-                      Reg *regs) const override;
+                      Reg *regs) const override {}
     
-    virtual bool is(const Val &x, const Val &y) const override;
+    virtual bool is(const Val &x, const Val &y) const override { return true; }
   };
 }
 

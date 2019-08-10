@@ -42,7 +42,6 @@ namespace cidk {
     virtual void sweep(const Pos &pos, Val &val) {}
 
     virtual bool get_bool(const Val &val) const { return true; }
-    virtual Env &get_env(Val &val) const;
   };
   
   template <typename ValT>

@@ -16,20 +16,8 @@ namespace cidk {
     dst.type = &val_type;
   }
 
-  void ConstType::compile(const Pos &pos, Val &val, Env &env, Opts &opts) const {
-    val_type.compile(pos, val, env, opts);
-  }
-
   void ConstType::dump(const Val &val, ostream &out) const {
     out << "Const@";
     val_type.dump(val, out);
   }
-
-  void ConstType::cp(Val &dst, const Val &src) const { val_type.cp(dst, src); }
-
-  bool ConstType::is(const Val &x, const Val &y) const { return val_type.is(x, y); }
-
-  void ConstType::mark_refs(const Val &val) const { val_type.mark_refs(val); }
-
-  bool ConstType::get_bool(const Val &val) const { return val_type.get_bool(val); }
 }
