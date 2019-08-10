@@ -17,7 +17,7 @@ namespace cidk {
       "  ";
 
     Env &env(cx.env);
-    Pos p("repl");
+    Pos p("n/a");
     stringstream buf;
     string line;
     Ops ops;
@@ -28,9 +28,13 @@ namespace cidk {
         ops.clear();
 
         if (buf.tellp()) {
-          read_ops(cx, p, buf, ops);
-          cx.compile(ops, opts, env);
-          cx.eval(ops, env, cx.regp);
+          try {
+            read_ops(cx, p, buf, ops);
+            cx.compile(ops, opts, env);
+            cx.eval(ops, env, cx.regp);
+          } catch (const exception &e) {
+            out << e.what() << endl;
+          }
         } else {
           cx.stackp = &cx.stack[0];
         }

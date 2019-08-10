@@ -33,7 +33,7 @@ namespace cidk {
     auto id(idv->as_sym->name);
     auto found(cx.op_types.find(id));
     if (id == "") { throw exception(); }
-    if (found == cx.op_types.end()) { throw ESys(pos, "Unknown op: ", id); } 
+    if (found == cx.op_types.end()) { throw ESys(p, "Unknown op: ", id); } 
     OpType &ot(*found->second);
     ot.read(cx, pos, in, out);
     return true;

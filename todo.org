@@ -6,11 +6,6 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* catch repl errors
-* switch as_reg to Val *
-** store pointer to reg
-** switch ExtId.src/dst_reg to Val *
-** grep _reg
 * drop first class envs
 ** drop env type
 ** remove env ref
