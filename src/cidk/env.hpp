@@ -4,10 +4,7 @@
 #include <vector>
 
 #include "cidk/arg.hpp"
-#include "cidk/ls.hpp"
 #include "cidk/ops.hpp"
-#include "cidk/ref.hpp"
-#include "cidk/sym.hpp"
 
 namespace cidk {
   using namespace std;
@@ -20,7 +17,7 @@ namespace cidk {
 
   struct CxEnvs {};
   
-  struct Env: Ref, Ls<Env, CxEnvs> {
+  struct Env: Ls<Env, CxEnvs> {
     using Items = vector<Val>;
     using Iter = Items::iterator;
     
@@ -28,6 +25,7 @@ namespace cidk {
     
     Env(Cx &cx);
     Env(Cx &cx, const Env &src);
+    
     Env(const Env &src) = delete;
     Env &operator =(const Env &) = delete;
 
@@ -68,11 +66,9 @@ namespace cidk {
     Iter find(const Sym *id);
     Val &get(const Pos &pos, const Sym *id);
     void let(Cx &cx, const Pos &pos, const Sym *id, const Val &val);
-    void mark();
-    void mark_items();
+    void mark_refs();
     void merge(Cx &cx, Env &src);
     void set(Cx &cx, const Pos &pos, const Sym *id, const Val &val);
-    virtual void sweep(Cx &cx, const Pos &pos) override;
     Val *try_get(const Sym *id);
   };
 }

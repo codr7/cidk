@@ -11,7 +11,6 @@
 #include "cidk/read.hpp"
 #include "cidk/str.hpp"
 #include "cidk/types/bool.hpp"
-#include "cidk/types/env.hpp"
 #include "cidk/types/expr.hpp"
 #include "cidk/types/int.hpp"
 #include "cidk/types/nil.hpp"
@@ -29,7 +28,6 @@ namespace cidk {
   }
   
   Cx::Cx():
-    debug(false),
     op_types(Op::types()),
     env(*this),
     meta_type(env.add_type<MetaType>(*this, Pos::_, "Meta")),
@@ -39,7 +37,6 @@ namespace cidk {
     num_type(env.add_type<Type>(*this, Pos::_, "Num")),
     bool_type(env.add_type<BoolType>(*this, Pos::_, "Bool", {&any_type})),
     char_type(env.add_type<CharType>(*this, Pos::_, "Char", {&any_type})),
-    env_type(env.add_type<EnvType>(*this, Pos::_, "Env", {&any_type})),
     expr_type(env.add_type<ExprType>(*this, Pos::_, "Expr", {&any_type})),
     fun_type(env.add_type<FunType>(*this, Pos::_, "Fun", {&any_type})),
     int_type(env.add_type<IntType>(*this, Pos::_, "Int", {&any_type, &num_type})),
@@ -82,7 +79,6 @@ namespace cidk {
 
   void Cx::clear_refs() {
     for (auto i(refs.next); i != &refs; i = i->next) { i->val().ref_mark = false; }
-    env.ref_mark = true;
   }
 
   void Cx::eval(Ops &in, Env &env, Reg *regs) {
@@ -135,10 +131,9 @@ namespace cidk {
   
   void Cx::mark_refs() {
     clear_refs();
-
+    env.mark_refs();
     for (Ops *os: ops) { cidk::mark_refs(*os); }
     for (Call *c(call); c; c = c->prev) { c->fun.mark(); }
-    for (auto i(envs.next); i != &envs; i = i->next) { i->val().mark_items(); }
   }
 
   void Cx::dump_stack(ostream &out) const {

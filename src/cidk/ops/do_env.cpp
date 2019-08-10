@@ -4,7 +4,6 @@
 #include "cidk/ops/do_env.hpp"
 #include "cidk/read.hpp"
 #include "cidk/types/bool.hpp"
-#include "cidk/types/env.hpp"
 #include "cidk/types/nil.hpp"
 #include "cidk/types/pop.hpp"
 
@@ -12,6 +11,7 @@ namespace cidk::ops {
   struct DoEnvData {
     Val body;
     Opts body_opts;
+    
     DoEnvData(const Val &body): body(body) {}
   };
   
@@ -30,7 +30,8 @@ namespace cidk::ops {
                           Ops &out,
                           Opts &opts) const {
     auto &d(in->as<DoEnvData>());
-    d.body.compile(in->pos, *cx.env_pool.get(cx, env), d.body_opts);
+    Env body_env(cx, env);
+    d.body.compile(in->pos, body_env, d.body_opts);
     out.push_back(*in);
   }
 
@@ -41,7 +42,7 @@ namespace cidk::ops {
     Reg *body_regs(cx.regp);
     cx.regp += d.body_opts.regs.size();
     for (auto &src: d.body_opts.ext_ids) { body_regs[src.dst_reg] = src.val; }
-    d.body.eval(p, *cx.env_pool.get(cx), body_regs);
+    d.body.eval(p, env, body_regs);
     cx.regp = body_regs;
   }
 

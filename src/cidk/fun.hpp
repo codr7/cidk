@@ -5,17 +5,17 @@
 
 #include "cidk/arg.hpp"
 #include "cidk/def.hpp"
+#include "cidk/env.hpp"
 #include "cidk/fimp.hpp"
 #include "cidk/ops.hpp"
 #include "cidk/opts.hpp"
 
 namespace cidk {
   struct Call;
-  struct Env;
   struct Pos;
   
   struct Fun: Def {
-    Env &env;
+    Env env;
     ArgList args;
     Fimp imp;
     Ops body;

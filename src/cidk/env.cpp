@@ -5,11 +5,9 @@
 #include "cidk/types/expr.hpp"
 
 namespace cidk {  
-  Env::Env(Cx &cx): Ref(cx) { cx.envs.push(*this); }
+  Env::Env(Cx &cx) {}
 
-  Env::Env(Cx &cx, const Env &src): Ref(cx), items(src.items) {
-    cx.envs.push(*this);
-  }
+  Env::Env(Cx &cx, const Env &src): items(src.items) {}
 
   void Env::add_const(Cx &cx, const Pos &pos, const string &id, const Val &val) {
     add_const(cx, pos, cx.intern(id), val);
@@ -55,14 +53,7 @@ namespace cidk {
     }
   }
 
-  void Env::mark() {
-    if (!ref_mark) {
-      ref_mark = true;
-      mark_items();
-    }
-  }
-  
-  void Env::mark_items() {
+  void Env::mark_refs() {
     for (auto &i: items) { i.mark_refs(); }
   }
 
@@ -100,11 +91,6 @@ namespace cidk {
     }
 
     *i = val;
-  }
-
-  void Env::sweep(Cx &cx, const Pos &pos) {
-    dynamic_cast<Ls<Env, CxEnvs> *>(this)->unlink();
-    cx.env_pool.put(this);
   }
 
   Val *Env::try_get(const Sym *id) {

@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
   Mode m(Mode::repl);
   
   cidk::Cx cx;
-  cidk::Env &env(*cx.env_pool.get(cx, cx.env));
+  cidk::Env env(cx, cx.env);
   
   while (--argc && ++argv) {
     string a(*argv);

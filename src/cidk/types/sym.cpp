@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include "cidk/cx.hpp"
-#include "cidk/types/env.hpp"
 #include "cidk/types/reg.hpp"
 #include "cidk/types/sym.hpp"
 #include "cidk/val.hpp"

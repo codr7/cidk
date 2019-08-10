@@ -8,7 +8,7 @@ namespace cidk {
   void Fun::mark() {
     if (!ref_mark) {
       ref_mark = true;
-      env.mark();
+      env.mark_refs();
       mark_refs(body);
       body_opts.mark_refs();
     }

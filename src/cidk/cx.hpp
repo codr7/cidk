@@ -22,7 +22,6 @@ namespace cidk {
   struct Call;
   struct CharType;
   struct BoolType;
-  struct EnvType;
   struct ExprType;
   struct IntType;
   struct ListType;
@@ -38,16 +37,13 @@ namespace cidk {
   using Stack = Val *;
 
   struct Cx {
-    bool debug;
+    bool debug = false;
     
-    Pool<Env> env_pool;
     Pool<Sym> sym_pool;    
-
     unordered_map<string, const Sym *> syms;
     
     Ls<Ref, CxRefs> refs;
     unordered_map<string, OpType *> op_types;
-    Ls<Env, CxEnvs> envs;
     Env env;
     
     MetaType &meta_type;
@@ -57,7 +53,6 @@ namespace cidk {
     
     BoolType &bool_type;
     CharType &char_type;
-    EnvType &env_type;
     ExprType &expr_type;
     FunType &fun_type;
     IntType &int_type;
@@ -180,9 +175,7 @@ namespace cidk {
            const Sym *id,
            const ArgsT &args,
            const RetsT &rets,
-           Fimp imp):
-    Def(cx, pos, id), env(*cx.env_pool.get(cx)), imp(imp) {
-
+           Fimp imp): Def(cx, pos, id), env(cx), imp(imp) {
     for (auto a: args) {
       if (!a.id) { a.id = cx.intern(a.id_name); }
       this->args.items.push_back(a);

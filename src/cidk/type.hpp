@@ -12,7 +12,7 @@ namespace cidk {
 
   struct Type: Def {
     map<Type *, Type *> parents;
-    Env &env;
+    Env env;
     
     Type(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents);
 
