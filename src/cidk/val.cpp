@@ -6,13 +6,11 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  Val::Val(): type(nullptr) {}
+  Val::Val() {}
   
   Val::Val(const Val &src): type(src.type) { src.cp(*this); }
 
   Val::Val(ValType &type): type(&type) {}
-
-  Val::~Val() {}
 
   const Val &Val::operator =(const Val &src) {
     src.cp(*this);
