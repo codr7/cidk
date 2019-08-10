@@ -29,7 +29,7 @@ namespace cidk::ops {
     auto &f(cx.pop(p));
     Type *ft(f.type);
     if (ft != &cx.fun_type) { throw ESys(p, "Invalid call target: ", ft->id); }
-    cidk::Call(p, *f.as_fun).eval(cx, env);
+    f.as_fun->call(cx, p, env);
   }
 
   void CallType::mark_refs(Op &op) const { op.as<Val>().mark_refs(); }

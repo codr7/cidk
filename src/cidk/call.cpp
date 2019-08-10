@@ -15,23 +15,18 @@ namespace cidk {
     c = prev;
   }
 
-  void Call::eval(Cx &cx, Env &env) {
-    auto imp(fun.imp);
+  void Call::eval(Cx &cx) {
+    Reg *regs(cx.regp);
+    cx.regp += fun.body_opts.regs.size();
+    for (auto &src: fun.body_opts.ext_ids) { regs[src.dst_reg] = src.val; }
+  recall:
+    cx.eval(fun.body, fun.env, regs);
     
-    if (imp) { imp(cx, pos, fun, env); }
-    else {
-      Reg *regs(cx.regp);
-      cx.regp += fun.body_opts.regs.size();
-      for (auto &src: fun.body_opts.ext_ids) { regs[src.dst_reg] = src.val; }
-    recall:
-      cx.eval(fun.body, fun.env, regs);
-      
-      if (cx.eval_state == EvalState::recall) {
-        cx.eval_state = EvalState::go;
-        goto recall;
-      }
-
-      cx.regp = regs;
+    if (cx.eval_state == EvalState::recall) {
+      cx.eval_state = EvalState::go;
+      goto recall;
     }
+    
+    cx.regp = regs;
   }
 }

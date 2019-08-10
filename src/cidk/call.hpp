@@ -17,7 +17,7 @@ namespace cidk {
     Call(const Pos &pos, Fun &fun);
     ~Call() noexcept(false);
 
-    void eval(Cx &cx, Env &env);
+    void eval(Cx &cx);
   };
 }
 

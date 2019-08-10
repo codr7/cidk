@@ -52,7 +52,7 @@ namespace cidk::ops {
       f = fv.as_fun;
     }
     
-    Call(p, *f).eval(cx, env);
+    f->call(cx, p, env);
   }
 
   void BinOp::mark_refs(Op &op) const {

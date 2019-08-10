@@ -11,7 +11,6 @@
 #include "cidk/opts.hpp"
 
 namespace cidk {
-  struct Call;
   struct Pos;
   
   struct Fun: Def {
@@ -29,6 +28,7 @@ namespace cidk {
         const RetsT &rets,
         Fimp imp = nullptr);
 
+    void call(Cx &cx, const Pos &pos, Env &env);
     void mark();
     virtual void sweep(Cx &cx, const Pos &pos) override;
   };
