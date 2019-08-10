@@ -6,7 +6,20 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
+* inline Op
+* drop get_env() fn
 * mark regs/stack in cx.mark()
+* add Lua bench
+* add isa x? y? op
+* implement arithmetic evaluator
+** separate project
+** add Reader type
+*** add reader arg to repl
+** implement as op type
+** calc {35 + 7};
+** add library
+* add link op
+** use dl
 * finish for op
 ** add ValType.iter(const Val &src, function<void (const Val &)>)
 *** call with src in default imp
@@ -16,8 +29,10 @@ fun (fib ((n a b) Int) Int
 **** add Env.del
 *** update val in place
 * add len op
-** forward to type env
 ** add Str/List/Env.len funs
+* add Quote type
+** like ConstType
+** add '-reader
 * add Fun.rets (Rets)
 ** match against stack suffix if cx.debug
 * add stack type inference
@@ -29,14 +44,10 @@ fun (fib ((n a b) Int) Int
 * push Fun on stack from Defun if missing id
 * add Fun arg type checking
 ** skip type A
-* add Quote type
-** like ConstType
-** add '-reader
 * add Splice support
 ** splice list items automagically
 * add mod op like mul
 ** add math/int_mod
-* add isa x? y? op
 * add return
 ** add eval state
 ** handle in Call.eval
@@ -46,6 +57,3 @@ fun (fib ((n a b) Int) Int
 ** function<void ()>* add Splat op
 ** vararg like Push
 ** call splat on eval
-* implement arithmetic evaluator
-** add Reader type
-*** add reader arg to repl

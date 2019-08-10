@@ -17,9 +17,6 @@ namespace cidk {
   struct Str;
   struct ValType;
   
-  template <typename ValT>
-  struct TValType;
-  
   struct Val {
     const Sym *id = nullptr;
     ValType *type = nullptr;
@@ -39,24 +36,58 @@ namespace cidk {
       Type      *as_type;
     };
         
-    Val();
-    Val(const Val &src);
-    Val(ValType &type);
+    Val() {}
+  
+    Val(const Val &src): type(src.type) { src.cp(*this); }
+
+    Val(ValType &type): type(&type) {}
 
     template <typename ValT>
     Val(TValType<ValT> &type, ValT val): type(&type) { type.set(*this, val); }
     
-    const Val &operator =(const Val &src);
+    const Val &operator =(const Val &src) {
+      src.cp(*this);
+      return *this;
+    }
     
-    Val &clone(const Pos &pos, Val &dst) const;
-    Val &cp(Val &dst) const;
-    void compile(const Pos &pos, Env &env, Opts &opts);
-    void dump(ostream &out) const;
-    bool eq(const Pos &pos, const Val &y) const;
-    void eval(const Pos &pos, Env &env, Reg *regs) const;
-    bool is(const Val &y) const;
+    Val &clone(const Pos &pos, Val &dst) const {
+      dst.id = id;
+      dst.type = type;
+      type->clone(pos, dst, *this);
+      return dst;
+    }
+
+    Val &cp(Val &dst) const {
+      dst.id = id;
+      dst.type = type;
+      if (type) { type->cp(dst, *this); }
+      return dst;
+    }
+
+
+    void compile(const Pos &pos, Env &env, Opts &opts) {
+      type->compile(pos, *this, env, opts);
+    }
+
+    void dump(ostream &out) const { type->dump(*this, out); }
+
+    bool eq(const Pos &pos, const Val &y) const { return type->eq(pos, *this, y); }
+
+    void eval(const Pos &pos, Env &env, Reg *regs) const {
+      return type->eval(pos, *this, env, regs);
+    }
+
+    bool is(const Val &y) const {
+      if (type != y.type) { return false; }
+      return type->is(*this, y);
+    }
+
     bool is_eop() const;
-    void mark_refs();
+
+    void mark_refs() {
+      type->mark();
+      type->mark_refs(*this);
+    }
 
     template <typename ValT>
     void reset(TValType<ValT> &type, ValT val) {
@@ -64,14 +95,19 @@ namespace cidk {
       type.set(*this, val);
     }
 
-    void splat(const Pos &pos, Env &env) const;
-    void sweep(const Pos &pos);
+    void splat(const Pos &pos, Env &env) const {
+      return type->splat(pos, *this, env);
+    }
+    
+    void sweep(const Pos &pos) { return type->sweep(pos, *this); }
 
-    bool get_bool() const;
-    Env &get_env();
+    bool get_bool() const { return type->get_bool(*this); }
   };
 
-  ostream &operator <<(ostream &out, const Val &v);
+  inline ostream &operator <<(ostream &out, const Val &v) {
+    v.dump(out);
+    return out;
+  }
 }
 
 #endif

@@ -14,6 +14,7 @@
 #include "cidk/types/fun.hpp"
 #include "cidk/types/meta.hpp"
 #include "cidk/types/ostream.hpp"
+#include "cidk/types/sym.hpp"
 #include "cidk/val.hpp"
 
 namespace cidk {
@@ -30,7 +31,6 @@ namespace cidk {
   struct Ref;
   struct RegType;
   struct StrType;
-  struct SymType;
   
   enum struct EvalState { go, recall };
 
@@ -180,6 +180,11 @@ namespace cidk {
       if (!a.id) { a.id = cx.intern(a.id_name); }
       this->args.items.push_back(a);
     }
+  }
+
+  inline bool Val::is_eop() const {
+    auto &cx(type->cx);
+    return type == &cx.sym_type && as_sym == cx.eop.as_sym;
   }
 }
 

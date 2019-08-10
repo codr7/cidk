@@ -18,7 +18,6 @@
 #include "cidk/types/pop.hpp"
 #include "cidk/types/reg.hpp"
 #include "cidk/types/str.hpp"
-#include "cidk/types/sym.hpp"
 #include "cidk/val.hpp"
 
 namespace cidk {
