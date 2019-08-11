@@ -18,5 +18,14 @@ target_link_libraries(cidk stdc++fs)
 file(GLOB root_inc src/cidk/*.hpp)
 install(FILES ${root_inc} DESTINATION include/cidk)
 
+file(GLOB libs_inc src/cidk/libs/*.hpp)
+install(FILES ${libs_inc} DESTINATION include/cidk/libs)
+
+file(GLOB ops_inc src/cidk/ops/*.hpp)
+install(FILES ${ops_inc} DESTINATION include/cidk/ops)
+
+file(GLOB types_inc src/cidk/types/*.hpp)
+install(FILES ${types_inc} DESTINATION include/cidk/types)
+
 install(FILES build/cidk DESTINATION bin PERMISSIONS WORLD_EXECUTE)
 install(FILES build/libcidk.a DESTINATION lib)

@@ -9,6 +9,7 @@
 #include "cidk/op.hpp"
 #include "cidk/path.hpp"
 #include "cidk/pool.hpp"
+#include "cidk/read.hpp"
 #include "cidk/reg.hpp"
 #include "cidk/sym.hpp"
 #include "cidk/types/fun.hpp"
@@ -91,6 +92,7 @@ namespace cidk {
 
     void load(const Pos &pos,
               const Path &src,
+              Read read,
               Env &env,
               Ops &out,
               Opts &opts);

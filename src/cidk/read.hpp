@@ -1,12 +1,16 @@
 #ifndef CIDK_READ_HPP
 #define CIDK_READ_HPP
 
+#include <functional>
+
 #include "cidk/ops.hpp"
 
 namespace cidk {
   struct Env;
   struct Pos;
   struct Val;
+
+  using Read = function<void (Cx &cx, Pos &pos, istream &in, Ops &out)>;
   
   void read_ops(Cx &cx, Pos &pos, istream &in, Ops &out);
   bool read_op(Cx &cx, Pos &pos, istream &in, Ops &out);

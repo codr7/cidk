@@ -6,16 +6,14 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* mark regs/stack in cx.mark()
-* implement arithmetic evaluator
-** separate project
-** add Reader type
-*** add reader arg to repl
-** implement as op type
+* finish calcl
+** add reader
+** add op
 ** calc {35 + 7};
-** add library
 ** add link op
 *** dl
+* --
+* mark regs/stack in cx.mark()
 * finish for op
 ** add ValType.iter(const Val &src, function<void (const Val &)>)
 *** call with src in default imp

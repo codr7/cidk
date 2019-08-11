@@ -111,6 +111,7 @@ namespace cidk {
   
   void Cx::load(const Pos &pos,
                 const Path &src,
+                Read read,
                 Env &env,
                 Ops &out,
                 Opts &opts) {
@@ -122,9 +123,9 @@ namespace cidk {
     auto prev(load_path);
     load_path = src.parent_path();
     Ops ops;
-    read_ops(*this, p, f, ops);
+    read(*this, p, f, ops);
     compile(ops, opts, env);
-    copy(ops.begin(), ops.end(), back_inserter(out));
+    move(ops.begin(), ops.end(), back_inserter(out));
     load_path = prev;
   }
   

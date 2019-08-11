@@ -8,7 +8,7 @@ namespace cidk {
   
   struct Cx;
   
-  void repl(Cx &cx, istream &in, ostream &out);
+  void repl(Cx &cx, const string &header, Read read, istream &in, ostream &out);
 }
 
 #endif
