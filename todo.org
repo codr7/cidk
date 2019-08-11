@@ -6,12 +6,21 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* finish calcl
-** add reader
-** add op
-** calc {35 + 7};
+* calcl
+** change read to treat every second val as Op/Val regardless of type
+*** use read_val
+*** remove ReadCx
+**** complete sequence in read_next
+*** move BinOp from cidk
+**** add support for X.y ids
+**** call Int.+ etc manually
+**** move type magic to runtime
+**** drop Add/Sub/Div/Mul
+** add calc op
+*** calc 35 + 7;
 ** add link op
 *** dl
+** add op precedence support
 * --
 * mark regs/stack in cx.mark()
 * finish for op

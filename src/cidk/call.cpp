@@ -1,5 +1,6 @@
 #include "cidk/call.hpp"
 #include "cidk/cx.hpp"
+#include "cidk/defer.hpp"
 #include "cidk/e.hpp"
 #include "cidk/ext_id.hpp"
 #include "cidk/expr.hpp"
@@ -17,6 +18,7 @@ namespace cidk {
 
   void Call::eval(Cx &cx) {
     Reg *regs(cx.regp);
+    defer({cx.regp = regs;});
     cx.regp += fun.body_opts.regs.size();
     for (auto &src: fun.body_opts.ext_ids) { regs[src.dst_reg] = src.val; }
   recall:
@@ -26,7 +28,5 @@ namespace cidk {
       cx.eval_state = EvalState::go;
       goto recall;
     }
-    
-    cx.regp = regs;
   }
 }
