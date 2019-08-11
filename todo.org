@@ -20,7 +20,7 @@ fun (fib ((n a b) Int) Int
 *** calc 35 + 7;
 ** add link op
 *** dl
-** add op precedence support
+** add op precedence
 * --
 * mark regs/stack in cx.mark()
 * finish for op
@@ -53,7 +53,4 @@ fun (fib ((n a b) Int) Int
 ** handle in Call.eval
 * block setting of const vals
 ** check for const_type
-* replace cx.ops with cx.on_mark
-** function<void ()>* add Splat op
-** vararg like Push
-** call splat on eval
+
