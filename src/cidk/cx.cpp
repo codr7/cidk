@@ -93,11 +93,12 @@ namespace cidk {
     eval(in, env, regs);
   }
 
-  const Sym *Cx::intern(const string &name) {
+  const Sym *Cx::intern(const string &name, const vector<Type *> &args) {
     auto ok(syms.find(name));
     if (ok != syms.end()) { return ok->second; }
     auto s(sym_pool.get(name));
     syms.emplace(make_pair(name, s));
+    copy(args.begin(), args.end(), back_inserter(s->args));
     return s;
   }
   

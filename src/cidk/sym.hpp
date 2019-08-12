@@ -4,8 +4,11 @@
 #include "cidk/def.hpp"
 
 namespace cidk {
+  struct Type;
+  
   struct Sym {
     string name;
+    vector<Type *> args;
     
     Sym(string name);
   };

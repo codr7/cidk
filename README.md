@@ -55,10 +55,16 @@ Each statement starts with an opcode and ends with semicolon, arguments are sepa
 (... 42)
 ```
 
+### Performance
+cidk currently runs 1-15x faster than Python3, as far as available [benchmarks](https://github.com/codr7/cidk/tree/master/bench) go.
+
 ### Opcodes
 
 #### call fun+
 Calls functions in specified order. `fun` is popped from stack if missing.
+
+#### call-bin op+
+Calls binary operators in specified order. `op` is popped from stack if missing. Operators are parameterized using values from the stack on evaluation.
 
 #### cp [offs 0] [len 1]
 Copies `nvals` items starting at `offs` to end of stack.

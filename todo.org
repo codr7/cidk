@@ -6,11 +6,7 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-** add vector<Type *> Sym.args
-*** read id args as vals until ']'
-*** compile/eval and use stack
-*** generate final id using args
-* --
+* calcl
 ** change read to treat every second val as Op/Val regardless of type
 *** remove ReadCx
 **** complete sequence in read_next

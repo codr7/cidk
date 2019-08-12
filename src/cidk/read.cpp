@@ -127,31 +127,62 @@ namespace cidk {
     Pos p(pos);
     stringstream out;
     char c(0);
-    int pdepth(0);
     
     for (;;) {  
       if (!in.get(c) ||
-          (!pdepth &&
-           (c == '(' || c == ')' || c == '{' || c == '}' || c == ';' ||
-            !isgraph(c)))) { break; }
-      
-      out << c;
-
-      switch(c) {
-      case '[':
-        pdepth++;
-        break;
-      case ']':
-        pdepth--;
-      default:
+          !isgraph(c) ||
+          c == '(' || c == ')' ||
+          c == '{' || c == '}' ||
+          c == '[' || c == ']' ||
+          c == ';') {
         break;
       }
       
+      out << c;
       pos.col++;
     }
 
-    if (!in.eof()) { in.unget();}
-    auto s(cx.intern(out.str()));
+    vector<Type *> args;
+
+    if (!in.eof()) {  
+      if (c == '[') {
+        out << '[';
+        
+        for (;;) {
+          if (!in.get(c)) { throw ESys(p, "Open args"); }
+          
+          if (c == ']') {
+            pos.col++;
+            break;
+          } 
+          
+          in.unget();
+          auto v(read_val(cx, pos, in));
+          if (!v) { throw ESys(p, "Open args"); }
+          
+          if (v->type != &cx.sym_type) {
+            throw ESys(p, "Expected type: ", v->type->id);
+          }
+          
+          auto &tv(cx.env.get(p, v->as_sym));
+
+          if (tv.type != &cx.meta_type) {
+            throw ESys(p, "Expected type: ", tv.type->id);
+          }
+
+          auto t(tv.as_type);
+          if (!args.empty()) { out << ' '; }
+          out << t->id;
+          args.push_back(t);
+        }
+
+        out << ']';
+      } else {
+        in.unget();
+      }
+    }
+    
+    auto s(cx.intern(out.str(), args));
     
     if (auto i(cx.env.try_get(s)); i && i->type->is_const) {
       Val v;

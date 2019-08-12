@@ -106,7 +106,7 @@ namespace cidk {
       }
     }
     
-    const Sym *intern(const string &name);
+    const Sym *intern(const string &name, const vector<Type *> &args = {});
 
     void load(const Pos &pos,
               const Path &src,
