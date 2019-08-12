@@ -7,19 +7,15 @@ fun (fib ((n a b) Int) Int
 )
 
 * calcl
+*** drop Add/Sub/Div/Mul
+**** call +[Int Int] etc manually
+** rename BinOp to CallBin
+*** call-bin
+*** generate id in eval
 ** change read to treat every second val as Op/Val regardless of type
 *** use read_val
 *** remove ReadCx
 **** complete sequence in read_next
-** add support for X.y ids
-*** handle in SymType::compile
-*** add ValType::resolve(id)
-**** use for i > 0
-** rename BinOp to CallBin
-*** call-bin
-*** generate id in eval
-*** drop Add/Sub/Div/Mul
-**** call Int.+ etc manually
 ** add calc op
 *** calc 35 + 7;
 ** add link op
