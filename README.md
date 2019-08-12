@@ -37,10 +37,10 @@ Empty input clears stack and Ctrl+D exits.
   push 7 14 21;
   
 (7 14 21)
-  call +[Int Int];
+  call-bin +;
   
 (7 35)
-  call +[Int Int];
+  call-bin +;
 
 (42)
 ```
@@ -50,7 +50,7 @@ Each statement starts with an opcode and ends with semicolon, arguments are sepa
 
 ```
   push 35 7;
-  call +[Int Int];
+  call-bin +;
 
 (... 42)
 ```
@@ -93,7 +93,7 @@ Defines compile time constants for pairs of ids and values.
   do-env {
     defconst foo 35 bar 7;
     push foo bar;
-    call +[Int Int];
+    call-bin +;
   };
   
 (... 42)
@@ -176,7 +176,7 @@ Expressions are evaluated with current value pushed on stack.
 
 ```
   push 1 2 3;
-  poke {push 21; call *[Int Int];} _;
+  poke {push 21; call-bin *;} _;
 
 (... 1 42 3)
 ```
@@ -206,7 +206,7 @@ Expressions are evaluated with current value pushed on stack.
 ```
   do-env {
     let foo 1;
-    set foo {push 41; call +[Int Int]};
+    set foo {push 41; call-bin +};
     push foo;
   };
 

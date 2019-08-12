@@ -44,7 +44,6 @@ namespace cidk {
     unordered_map<string, const Sym *> syms;
     
     Ls<Ref, CxRefs> refs;
-    unordered_map<string, OpType *> op_types;
     Env env;
     
     MetaType &meta_type;
@@ -100,9 +99,9 @@ namespace cidk {
     
     void mark_refs();
     
-    Val &peek(const Pos &pos) {
-      if (stackp == &stack[0]) { throw ESys(pos, "Stack is empty"); }
-      return *(stackp - 1);
+    Val &peek(const Pos &pos, size_t offs = 0) {
+      if (stackp - offs <= &stack[0]) { throw ESys(pos, "Stack is empty"); }
+      return *(stackp - (offs + 1));
     }
 
     Val &pop(const Pos &pos) {

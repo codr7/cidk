@@ -5,7 +5,7 @@ defun fib1(n Int)(Int) {
     dec n;
     call fib1;
     dec n;
-    call fib1 +[Int Int]; 
+    call fib1 +[Int Int];
   };
 };
 

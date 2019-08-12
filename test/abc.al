@@ -13,10 +13,10 @@ assert({cp;}) {is 7;};
 push (1 2 3) (1 2 3);
 assert({cp 1;}) {eq;};
 
-push 7 14; call <[Int Int];
+push 7 14; call-bin <;
 assert({cp;}) {is T;};
 
-push 7 14; call >[Int Int];
+push 7 14; call-bin >;
 assert({cp;}) {is F;};
 
 assert() {eq "foo\"bar" "foo\"bar";};
@@ -38,7 +38,7 @@ if F 42 7;
 assert({cp;}) {is 7;};
 
 do-env {
-  defun foo(_ Int)(Int) { cp; call +[Int Int]; };
+  defun foo(_ Int)(Int) { cp; call-bin +; };
   push 21;
   call foo;
   assert({cp;}) {is 42;};

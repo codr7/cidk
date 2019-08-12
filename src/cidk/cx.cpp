@@ -28,7 +28,6 @@ namespace cidk {
   }
   
   Cx::Cx():
-    op_types(Op::types()),
     env(*this),
     meta_type(env.add_type<MetaType>(*this, Pos::_, "Meta")),
     a_type(env.add_type<Type>(*this, Pos::_, "A")),
