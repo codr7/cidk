@@ -1,4 +1,5 @@
 #include "cidk/cx.hpp"
+#include "cidk/ext_id.hpp"
 #include "cidk/types/expr.hpp"
 #include "cidk/val.hpp"
 
@@ -16,7 +17,7 @@ namespace cidk {
   }
 
   void ExprType::dump(const Val &val, ostream &out) const {    
-    out << "expr:" << val.as_expr;
+    out << "Expr@" << val.as_expr;
   }
 
   void ExprType::eval(const Pos &pos, const Val &val, Env &env, Reg *regs) const {

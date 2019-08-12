@@ -7,27 +7,29 @@ fun (fib ((n a b) Int) Int
 )
 
 * calcl
-** read id args as vals until ']'
-*** add vector<Type *> Sym.args
-**** compile/eval and use stack
-**** generate final id using args
-** call +[Int Int] etc.
-*** pass env in add_fun and use to init f.env
-*** extract opts.update_regs(cx, regs) from main.cpp/do_env/call
-*** call update_regs from repl
+** pass env in add_fun and use to init f.env
+* --   
+** add vector<Type *> Sym.args
+*** read id args as vals until ']'
+*** compile/eval and use stack
+*** generate final id using args
+* --
 ** rename BinOp to CallBin
 *** call-bin
 *** generate id in eval
+* --
 ** change read to treat every second val as Op/Val regardless of type
 *** use read_val
 *** remove ReadCx
 **** complete sequence in read_next
+*** call +[Int Int] etc.
+* --
 ** add calc op
 *** calc 35 + 7;
 ** add link op
 *** dl
 ** add op precedence
-* --
+* ---
 * mark regs/stack in cx.mark()
 * add repl break loop
 ** add restarts

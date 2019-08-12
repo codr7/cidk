@@ -87,6 +87,7 @@ namespace cidk {
     void clear_refs();
     void compile(Ops &ops, Opts &opts, Env &env);
     void dump_stack(ostream &out) const;
+    void eval(Ops &in, Env &env, const Opts &opts, Reg *regs);
     void eval(Ops &in, Env &env, Reg *regs);
     const Sym *intern(const string &name);
 

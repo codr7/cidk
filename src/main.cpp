@@ -25,13 +25,9 @@ int main(int argc, char *argv[]) {
     else {
       Ops ops;  
       Opts opts;
+      
       cx.load(p, a, read_ops, env, ops, opts);
-
-      Reg *regs(cx.regp);
-      defer({cx.regp = regs;});
-      cx.regp += opts.regs.size();
-      for (auto &src: opts.ext_ids) { regs[src.dst_reg] = src.val; }
-      cx.eval(ops, env, regs);
+      cx.eval(ops, env, opts, cx.regp);
       
       m = Mode::load;
     }

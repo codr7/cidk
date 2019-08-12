@@ -20,18 +20,16 @@ namespace cidk {
     Pos p("n/a");
     stringstream buf;
     string line;
-    Ops ops;
-    Opts opts;
 
     while (getline(in, line)) {
       if (line.empty()) {
-        ops.clear();
-
         if (buf.tellp()) {
           try {
+            Ops ops;
+            Opts opts;
             read(cx, p, buf, ops);
             cx.compile(ops, opts, env);
-            cx.eval(ops, env, cx.regp);
+            cx.eval(ops, env, opts, cx.regp);
           } catch (const exception &e) {
             out << e.what() << endl;
           }

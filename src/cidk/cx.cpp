@@ -3,6 +3,7 @@
 #include "cidk/call.hpp"
 #include "cidk/cidk.hpp"
 #include "cidk/cx.hpp"
+#include "cidk/defer.hpp"
 #include "cidk/e.hpp"
 #include "cidk/ext_id.hpp"
 #include "cidk/libs/math.hpp"
@@ -80,17 +81,26 @@ namespace cidk {
     for (auto i(refs.next); i != &refs; i = i->next) { i->val().ref_mark = false; }
   }
 
-  void Cx::eval(Ops &in, Env &env, Reg *regs) {
+  void Cx::eval(Ops &in, Env &env, const Opts &opts, Reg *regs) {
     ops.push_back(&in);
-    
+    regp += opts.regs.size();
+
+    auto d1(defer([&]{
+          regp = regs;
+          ops.pop_back();
+        }));
+
+    for (auto &src: opts.ext_ids) { regs[src.dst_reg] = src.val; }
+    eval(in, env, regs);
+  }
+
+  void Cx::eval(Ops &in, Env &env, Reg *regs) {
     for (Op &o: in) { 
       o.eval(*this, env, regs); 
       if (eval_state != EvalState::go) { break; }
     }
-
-    ops.pop_back();
   }
-
+  
   const Sym *Cx::intern(const string &name) {
     auto ok(syms.find(name));
     if (ok != syms.end()) { return ok->second; }
