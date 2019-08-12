@@ -12,11 +12,9 @@ fun (fib ((n a b) Int) Int
 **** compile/eval and use stack
 **** generate final id using args
 ** call +[Int Int] etc.
-*** bench/fib_rec.al
 *** pass env in add_fun and use to init f.env
 *** extract opts.update_regs(cx, regs) from main.cpp/do_env/call
 *** call update_regs from repl
-*** update bench/test/README
 ** rename BinOp to CallBin
 *** call-bin
 *** generate id in eval

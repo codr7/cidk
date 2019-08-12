@@ -2,12 +2,11 @@
   
 ```
 defun fib(n Int)(Int) {
-  lt n 2; if $ n {
+  push n 2; call <[Int Int]; if $ n {
     dec n;
     call fib;
     dec n;
-    call fib; 
-    add;
+    call fib +[Int Int]; 
   };
 };
 ```
@@ -30,7 +29,7 @@ $ ./cidk ../test/run.al
 39
 ()
 $ rlwrap ./cidk
-cidk v0.7
+cidk v0.8
 
 Press Return on empty row to evaluate.
 Empty input clears stack and Ctrl+D exits.
@@ -38,10 +37,10 @@ Empty input clears stack and Ctrl+D exits.
   push 7 14 21;
   
 (7 14 21)
-  add;
+  call +[Int Int];
   
 (7 35)
-  add;
+  call +[Int Int];
 
 (42)
 ```
@@ -51,22 +50,12 @@ Each statement starts with an opcode and ends with semicolon, arguments are sepa
 
 ```
   push 35 7;
-  add;
+  call +[Int Int];
 
 (... 42)
 ```
 
 ### Opcodes
-
-#### add x y z*
-Adds arguments and pushes result. `x` and `y` are popped from stack if missing.
-
-```
-  push 14;
-  add 7 $ 21;
-
-(... 42)
-```
 
 #### call fun+
 Calls functions in specified order. `fun` is popped from stack if missing.
@@ -104,7 +93,7 @@ Defines compile time constants for pairs of ids and values.
   do-env {
     defconst foo 35 bar 7;
     push foo bar;
-    add;
+    call +[Int Int];
   };
   
 (... 42)
@@ -158,15 +147,6 @@ Pushes `T` if all arguments are the same value, `F` otherwise. `x` and `y` are p
 (... T)
 ```
 
-#### lt x y
-Pushes `T` if `x` is less than `y`, otherwise `F`. `x` and `y` are popped from stack if missing.
-
-```
-  lt 7 14;
-
-(... T)
-```
-
 #### mark
 Marks non-reachable references for sweeping.
 
@@ -196,7 +176,7 @@ Expressions are evaluated with current value pushed on stack.
 
 ```
   push 1 2 3;
-  poke {mul 21;} _;
+  poke {push 21; call *[Int Int];} _;
 
 (... 1 42 3)
 ```
@@ -226,7 +206,7 @@ Expressions are evaluated with current value pushed on stack.
 ```
   do-env {
     let foo 1;
-    set foo {add 41;};
+    set foo {push 41; call +[Int Int]};
     push foo;
   };
 

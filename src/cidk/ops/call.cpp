@@ -25,11 +25,23 @@ namespace cidk::ops {
 
   void CallType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
-    op.as<Val>().eval(p, env, regs);
-    auto &f(cx.pop(p));
-    Type *ft(f.type);
-    if (ft != &cx.fun_type) { throw ESys(p, "Invalid call target: ", ft->id); }
-    f.as_fun->call(cx, p, env);
+    auto &v(op.as<Val>());
+    Fun *f(nullptr);
+    
+    if (v.type == &cx.fun_type) {
+      f = v.as_fun;
+    } else {
+      v.eval(p, env, regs);
+      auto &fv(cx.pop(p));
+      
+      if (Type *ft(fv.type); ft != &cx.fun_type) {
+        throw ESys(p, "Invalid call target: ", ft->id);
+      }
+      
+      f = fv.as_fun;
+    }
+    
+    f->call(cx, p, env);
   }
 
   void CallType::mark_refs(Op &op) const { op.as<Val>().mark_refs(); }

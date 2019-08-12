@@ -5,7 +5,7 @@ defun fib1(n Int)(Int) {
   
   dec n; for $ F {
     swap a b;
-    set b {add a;}; 
+    set b {push a; call +[Int Int];}; 
   };
 
   push b;
@@ -20,7 +20,7 @@ defun fib2(_ Int)(Int) {
    
   dec; for $ F {
     cp; swap 2;
-    add;
+    call +[Int Int];
   };
 
   swap; drop;
