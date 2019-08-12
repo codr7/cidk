@@ -11,11 +11,15 @@ fun (fib ((n a b) Int) Int
 *** use read_val
 *** remove ReadCx
 **** complete sequence in read_next
-*** move BinOp from cidk
-**** add support for X.y ids
+** add support for X.y ids
+*** handle in SymType::compile
+*** add ValType::resolve(id)
+**** use for i > 0
+** rename BinOp to CallBin
+*** call-bin
+*** generate id in eval
+*** drop Add/Sub/Div/Mul
 **** call Int.+ etc manually
-**** move type magic to runtime
-**** drop Add/Sub/Div/Mul
 ** add calc op
 *** calc 35 + 7;
 ** add link op
