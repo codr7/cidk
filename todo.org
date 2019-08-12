@@ -7,6 +7,10 @@ fun (fib ((n a b) Int) Int
 )
 
 * calcl
+** read id args as vals until ']'
+*** add vector<Type *> Sym.args
+**** compile/eval and use stack
+**** generate final id using args
 ** call +[Int Int] etc.
 *** bench/fib_rec.al
 *** pass env in add_fun and use to init f.env
