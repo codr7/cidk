@@ -105,7 +105,7 @@ namespace cidk {
     
     for (;;) {
       skip_ws(pos, in);
-      if (!in.get(c)) { throw ESys(pos, "Open expr"); }
+      if (!in.get(c)) { throw ESys(pos, "Open expression"); }
 
       if (c == '}') {
         pos.col++;
@@ -115,7 +115,7 @@ namespace cidk {
       in.unget();
 
       if (!read_op(cx, pos, in, out->ops)) {
-        throw ESys(pos, "Open expr");
+        throw ESys(pos, "Open expression");
       }
     }
 
@@ -126,13 +126,26 @@ namespace cidk {
     Pos p(pos);
     stringstream out;
     char c(0);
+    int pdepth(0);
     
     for (;;) {  
       if (!in.get(c) ||
-          c == '(' || c == ')' || c == '{' || c == '}' || c == ';' ||
-          !isgraph(c)) { break; }
+          (!pdepth &&
+           (c == '(' || c == ')' || c == '{' || c == '}' || c == ';' ||
+            !isgraph(c)))) { break; }
       
       out << c;
+
+      switch(c) {
+      case '[':
+        pdepth++;
+        break;
+      case ']':
+        pdepth--;
+      default:
+        break;
+      }
+      
       pos.col++;
     }
 

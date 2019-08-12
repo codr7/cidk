@@ -57,41 +57,41 @@ namespace cidk::libs {
   }
 
   void init_math(Cx &cx) {
-    cx.int_type.env.add_fun(cx, Pos::_,
-                            "+",
-                            {Arg("x"), Arg("y")},
-                            {Ret(cx.int_type)},
-                            int_add_imp);
+    cx.env.add_fun(cx, Pos::_,
+                   "+[Int Int]",
+                   {Arg("x"), Arg("y")},
+                   {Ret(cx.int_type)},
+                   int_add_imp);
 
-    cx.int_type.env.add_fun(cx, Pos::_,
-                            "-",
-                            {Arg("x"), Arg("y")},
-                            {Ret(cx.int_type)},
-                            int_sub_imp);
+    cx.env.add_fun(cx, Pos::_,
+                   "-[Int Int]",
+                   {Arg("x"), Arg("y")},
+                   {Ret(cx.int_type)},
+                   int_sub_imp);
 
-    cx.int_type.env.add_fun(cx, Pos::_,
-                            "*",
-                            {Arg("x"), Arg("y")},
-                            {Ret(cx.int_type)},
-                            int_mul_imp);
+    cx.env.add_fun(cx, Pos::_,
+                   "*[Int Int]",
+                   {Arg("x"), Arg("y")},
+                   {Ret(cx.int_type)},
+                   int_mul_imp);
 
-    cx.int_type.env.add_fun(cx, Pos::_,
-                            "/",
-                            {Arg("x"), Arg("y")},
-                            {Ret(cx.int_type)},
-                            int_div_imp);
+    cx.env.add_fun(cx, Pos::_,
+                   "/[Int Int]",
+                   {Arg("x"), Arg("y")},
+                   {Ret(cx.int_type)},
+                   int_div_imp);
 
-    cx.int_type.env.add_fun(cx, Pos::_,
-                            "<",
-                            {Arg("x"), Arg("y")},
-                            {Ret(cx.bool_type)},
-                            int_lt_imp);
+    cx.env.add_fun(cx, Pos::_,
+                   "<[Int Int]",
+                   {Arg("x"), Arg("y")},
+                   {Ret(cx.bool_type)},
+                   int_lt_imp);
 
-    cx.int_type.env.add_fun(cx, Pos::_,
-                            ">",
-                            {Arg("x"), Arg("y")},
-                            {Ret(cx.bool_type)},
-                            int_gt_imp);
+    cx.env.add_fun(cx, Pos::_,
+                   ">[Int Int]",
+                   {Arg("x"), Arg("y")},
+                   {Ret(cx.bool_type)},
+                   int_gt_imp);
   }
 }
 

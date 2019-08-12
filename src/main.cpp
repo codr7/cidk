@@ -2,6 +2,7 @@
 #include <cassert>
 
 #include "cidk/cx.hpp"
+#include "cidk/defer.hpp"
 #include "cidk/ext_id.hpp"
 #include "cidk/repl.hpp"
 
@@ -15,7 +16,7 @@ int main(int argc, char *argv[]) {
   Mode m(Mode::repl);
   
   Cx cx;
-  Env env(cx, cx.env);
+  Env &env(cx.env);
   
   while (--argc && ++argv) {
     string a(*argv);
@@ -25,7 +26,13 @@ int main(int argc, char *argv[]) {
       Ops ops;  
       Opts opts;
       cx.load(p, a, read_ops, env, ops, opts);
-      cx.eval(ops, env, cx.regp);
+
+      Reg *regs(cx.regp);
+      defer({cx.regp = regs;});
+      cx.regp += opts.regs.size();
+      for (auto &src: opts.ext_ids) { regs[src.dst_reg] = src.val; }
+      cx.eval(ops, env, regs);
+      
       m = Mode::load;
     }
   }
