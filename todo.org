@@ -7,16 +7,14 @@ fun (fib ((n a b) Int) Int
 )
 
 * calcl
-** pass env in add_fun and use to init f.env
+** rename BinOp to CallBin
+*** call-bin
+*** generate id in eval
 * --   
 ** add vector<Type *> Sym.args
 *** read id args as vals until ']'
 *** compile/eval and use stack
 *** generate final id using args
-* --
-** rename BinOp to CallBin
-*** call-bin
-*** generate id in eval
 * --
 ** change read to treat every second val as Op/Val regardless of type
 *** use read_val

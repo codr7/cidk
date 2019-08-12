@@ -23,6 +23,7 @@ namespace cidk {
     template <typename ArgsT, typename RetsT>
     Fun(Cx &cx,
         const Pos &pos,
+        Env &env,
         const Sym *id,
         const ArgsT &args,
         const RetsT &rets,
