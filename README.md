@@ -45,6 +45,9 @@ Empty input clears stack and Ctrl+D exits.
 (42)
 ```
 
+### Performance
+cidk currently runs at 2-15x the speed of Python3, as far as available [benchmarks](https://github.com/codr7/cidk/tree/master/bench) go. As an added bonus, launching the interpreter is roughly 200x as fast.
+
 ### Syntax
 Each statement starts with an opcode and ends with semicolon, arguments are separated by whitespace.
 
@@ -54,9 +57,6 @@ Each statement starts with an opcode and ends with semicolon, arguments are sepa
 
 (... 42)
 ```
-
-### Performance
-cidk currently runs at 2-15x the speed of Python3, as far as available [benchmarks](https://github.com/codr7/cidk/tree/master/bench) go. As an added bonus, launching the interpreter is roughly 200x as fast.
 
 ### Opcodes
 
