@@ -84,10 +84,28 @@ namespace cidk {
 
     void deinit();
     void clear_refs();
-    void compile(Ops &ops, Opts &opts, Env &env);
+
+    void compile(Ops &ops, Opts &opts, Env &env) {
+      Ops tmp;
+      
+      for (auto i(ops.begin()); i != ops.end(); i++) {
+        i->compile(*this, i, ops.end(), env, tmp, opts);
+      }
+      
+      swap(ops, tmp);
+    }
+
+    
     void dump_stack(ostream &out) const;
     void eval(Ops &in, Env &env, const Opts &opts, Reg *regs);
-    void eval(Ops &in, Env &env, Reg *regs);
+
+    void eval(Ops &in, Env &env, Reg *regs) {
+      for (Op &o: in) { 
+        o.eval(*this, env, regs); 
+        if (eval_state != EvalState::go) { break; }
+      }
+    }
+    
     const Sym *intern(const string &name);
 
     void load(const Pos &pos,

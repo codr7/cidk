@@ -1,11 +1,10 @@
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
+#include "cidk/expr.hpp"
 #include "cidk/ext_id.hpp"
 #include "cidk/ops/do_env.hpp"
 #include "cidk/read.hpp"
-#include "cidk/types/bool.hpp"
-#include "cidk/types/nil.hpp"
-#include "cidk/types/pop.hpp"
+#include "cidk/types/expr.hpp"
 
 namespace cidk::ops {
   struct DoEnvData {
@@ -36,14 +35,8 @@ namespace cidk::ops {
   }
 
   void DoEnvType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
-    auto &p(op.pos);
     auto &d(op.as<DoEnvData>());
-    
-    Reg *body_regs(cx.regp);
-    cx.regp += d.body_opts.regs.size();
-    for (auto &src: d.body_opts.ext_ids) { body_regs[src.dst_reg] = src.val; }
-    d.body.eval(p, env, body_regs);
-    cx.regp = body_regs;
+    cx.eval(d.body.as_expr->ops, env, d.body_opts, regs);
   }
 
   void DoEnvType::mark_refs(Op &op) const {
@@ -56,6 +49,11 @@ namespace cidk::ops {
     Pos p(pos);
     auto body(read_val(cx, pos, in));
     if (!body || body->is_eop()) { throw ESys(p, "Missing body"); }
+
+    if (body->type != &cx.expr_type) {
+      throw ESys(p, "Invalid body: ", body->type->id);
+    }
+
     read_eop(pos, in);
     out.emplace_back(cx, p, *this, *body);
   }

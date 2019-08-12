@@ -67,7 +67,7 @@ namespace cidk::ops {
     Pos p(pos);
 
     auto id(read_val(cx, pos, in));
-    if (!id || id->is_eop()) { throw ESys(p, "Missing function id"); }
+    if (!id || id->is_eop()) { throw ESys(p, "Missing id"); }
 
     auto args(read_val(cx, pos, in));
     if (!args || args->is_eop()) { throw ESys(p, "Missing argument list"); }
@@ -84,10 +84,10 @@ namespace cidk::ops {
     }
 
     auto body(read_val(cx, pos, in));
-    if (!body || body->is_eop()) { throw ESys(p, "Missing function body"); }
+    if (!body || body->is_eop()) { throw ESys(p, "Missing body"); }
 
-    if (!body->type->isa(cx.expr_type)) {
-      throw ESys(p, "Invalid function body: ", body->type->id);
+    if (body->type != &cx.expr_type) {
+      throw ESys(p, "Invalid body: ", body->type->id);
     }
 
     read_eop(pos, in);    

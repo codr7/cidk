@@ -93,29 +93,12 @@ namespace cidk {
     eval(in, env, regs);
   }
 
-  void Cx::eval(Ops &in, Env &env, Reg *regs) {
-    for (Op &o: in) { 
-      o.eval(*this, env, regs); 
-      if (eval_state != EvalState::go) { break; }
-    }
-  }
-  
   const Sym *Cx::intern(const string &name) {
     auto ok(syms.find(name));
     if (ok != syms.end()) { return ok->second; }
     auto s(sym_pool.get(name));
     syms.emplace(make_pair(name, s));
     return s;
-  }
-
-  void Cx::compile(Ops &ops, Opts &opts, Env &env) {
-    Ops tmp;
-
-    for (auto i(ops.begin()); i != ops.end(); i++) {
-      i->compile(*this, i, ops.end(), env, tmp, opts);
-    }
-    
-    swap(ops, tmp);
   }
   
   void Cx::load(const Pos &pos,
