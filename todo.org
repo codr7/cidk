@@ -23,26 +23,20 @@ fun (fib ((n a b) Int) Int
 ** add op precedence
 * --
 * mark regs/stack in cx.mark()
+* add repl break loop
+** add restarts
+** gfu
 * finish for op
 ** add ValType.iter(const Val &src, function<void (const Val &)>)
 *** call with src in default imp
 *** update for op to use iter
 ** bind var if not _
-*** let / del
-**** add Env.del
-*** update val in place
 * add Quote type
 ** like ConstType
 ** add '-reader
 * add Fun.rets (Rets)
 ** match against stack suffix if cx.debug
-* add stack type inference
-** process stack in compile
-** add Undef type
-*** store actual as_type
-** add unify(Stack &x, Stack &y)
-** use to pick fn at read-time in BinOp
-* add anon fun
+* add anon fun support
 ** push on stack from Defun if nil id
 * add Fun arg type checking if cx.debug
 ** skip type A
