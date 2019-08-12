@@ -56,7 +56,7 @@ Each statement starts with an opcode and ends with semicolon, arguments are sepa
 ```
 
 ### Performance
-cidk currently runs 1-15x faster than Python3, as far as available [benchmarks](https://github.com/codr7/cidk/tree/master/bench) go.
+cidk currently runs at 2-15x the speed of Python3, as far as available [benchmarks](https://github.com/codr7/cidk/tree/master/bench) go. As an added bonus, launching the interpreter is roughly 200x as fast.
 
 ### Opcodes
 
