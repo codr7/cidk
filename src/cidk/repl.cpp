@@ -16,7 +16,7 @@ namespace cidk {
       "Empty input clears stack and Ctrl+D exits." << endl << endl <<
       "  ";
 
-    Env &env(cx.env);
+    Env env(cx, cx.env);
     Pos p("n/a");
     stringstream buf;
     string line;

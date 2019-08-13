@@ -183,6 +183,7 @@ namespace cidk {
     }
     
     auto s(cx.intern(out.str(), args));
+
     
     if (auto i(cx.env.try_get(s)); i && i->type->is_const) {
       Val v;

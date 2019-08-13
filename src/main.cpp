@@ -12,11 +12,11 @@ using namespace cidk;
 enum struct Mode {load, repl};
 
 int main(int argc, char *argv[]) {
-  const Pos &p(Pos::_);
   Mode m(Mode::repl);
   
   Cx cx;
-  Env &env(cx.env);
+  Env env(cx, cx.env);
+  const Pos &p(Pos::_);
   
   while (--argc && ++argv) {
     string a(*argv);
