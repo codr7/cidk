@@ -6,13 +6,16 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
+* add op Val args[CIDK_OP_ARGS_MAX]
+** use instead of data/as
+** bench
 * remove read_id env lookup
 ** change ops to check types in compile
 *** store vals
-** check consts before env in Sym compile
 ** eval val in defconst compile
-** block let override
+** block let const override
 *** check in compile
+** block set of const
 * --
 * calcl
 ** change read to treat every second val as Op/Val regardless of type
@@ -50,6 +53,4 @@ fun (fib ((n a b) Int) Int
 * add return
 ** add eval state
 ** handle in Call.eval
-* block setting of const vals
-** check for const_type
 
