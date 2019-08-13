@@ -6,6 +6,11 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
+* improve Pool
+** replace vectors
+*** add Slab/Slot structs with next-ptr
+** bench
+* --
 * calcl
 ** change read to treat every second val as Op/Val regardless of type
 *** remove ReadCx
