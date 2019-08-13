@@ -6,12 +6,13 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* add unordered_map<Sym, Val> cx.consts
-** change defconst to use consts
-*** add const in op init
-** switch read_id to use consts
-** remove const_type
-** update readme
+* remove read_id env lookup
+** change ops to check types in compile
+*** store vals
+** check consts before env in Sym compile
+** eval val in defconst compile
+** block let override
+*** check in compile
 * --
 * calcl
 ** change read to treat every second val as Op/Val regardless of type
