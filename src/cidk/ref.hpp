@@ -9,9 +9,7 @@ namespace cidk {
   struct Cx;
   struct Pos;
 
-  struct CxRefs {};
-
-  struct Ref: Ls<Ref, CxRefs> {    
+  struct Ref: Ls<Ref> {    
     bool ref_mark;
 
     Ref(Cx &cx);

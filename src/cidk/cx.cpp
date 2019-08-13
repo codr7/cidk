@@ -74,7 +74,7 @@ namespace cidk {
   }
 
   void Cx::clear_refs() {
-    for (auto i(refs.next); i != &refs; i = i->next) { i->val().ref_mark = false; }
+    for (auto i(refs.next); i != &refs; i = i->next) { i->get().ref_mark = false; }
   }
 
   void Cx::eval(Ops &in, Env &env, const Opts &opts, Reg *regs) {
@@ -171,7 +171,7 @@ namespace cidk {
 
   void Cx::sweep_refs(const Pos &pos) {
     for (auto i(refs.prev); i != &refs;) {
-      Ref &r(i->val());
+      Ref &r(i->get());
       i = i->prev;
       
       if (!r.ref_mark) {

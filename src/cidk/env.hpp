@@ -15,9 +15,7 @@ namespace cidk {
   struct Type;
   struct Val;
 
-  struct CxEnvs {};
-  
-  struct Env: Ls<Env, CxEnvs> {
+  struct Env: Ls<Env> {
     using Items = vector<Val>;
     using Iter = Items::iterator;
     

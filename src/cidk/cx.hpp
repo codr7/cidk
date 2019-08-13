@@ -43,7 +43,7 @@ namespace cidk {
     Pool<Sym> sym_pool;    
     unordered_map<string, Sym *> syms;
     
-    Ls<Ref, CxRefs> refs;
+    Ls<Ref> refs;
     Env env;
     
     MetaType &meta_type;

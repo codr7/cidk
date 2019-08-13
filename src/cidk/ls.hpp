@@ -22,7 +22,7 @@ namespace cidk {
       next->prev = prev;
     }
 
-    T &val() { return static_cast<T &>(*this); }
+    T &get() { return static_cast<T &>(*this); }
   };
 }
 
