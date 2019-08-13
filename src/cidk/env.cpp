@@ -10,7 +10,7 @@ namespace cidk {
   Env::Env(Cx &cx, const Env &src): items(src.items) {}
 
   void Env::add_const(Cx &cx, const Pos &pos, const string &id, const Val &val) {
-    add_const(cx, pos, cx.intern(id), val);
+    add_const(cx, pos, cx.intern(pos, id), val);
   }
 
   void Env::add_const(Cx &cx, const Pos &pos, const Sym *id, const Val &val) {
@@ -24,7 +24,7 @@ namespace cidk {
   }
 
   void Env::add_var(Cx &cx, const Pos &pos, const string &id, const Val &val) {
-    let(cx, Pos::_, cx.intern(id), val);
+    let(cx, Pos::_, cx.intern(pos, id), val);
   }
 
   void Env::clear(Cx &cx) { items.clear(); }

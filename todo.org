@@ -6,10 +6,6 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* move id arg parsing to cx.intern
-** track depth in read-id
-** remove intern-arg
-* --
 * finish op args
 ** convert cp/drop/poke/set ops
 ** remove Op.data/as

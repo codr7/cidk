@@ -22,7 +22,7 @@ namespace cidk::ops {
     }
     
     auto &x(cx.peek(p, 1)), &y(cx.peek(p));
-    auto &f(env.get(p, cx.intern(str(id, '[', x.type->id, ' ', y.type->id, ']'))));
+    auto &f(env.get(p, cx.intern(p, str(id, '[', x.type->id, ' ', y.type->id, ']'))));
     if (f.type != &cx.fun_type) { throw ESys(p, "Expected Fun, was: ", f.type->id); }
     f.as_fun->call(cx, p, env);
   }

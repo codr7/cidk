@@ -53,7 +53,7 @@ namespace cidk {
     $(pop_type),
     T(bool_type, true),
     F(bool_type, false),
-    eop(sym_type, intern(";")),
+    eop(sym_type, intern(Pos::_, ";")),
     stdin(&cin), stdout(&cout), stderr(&cerr) {
     libs::init_math(*this);
     env.add_const(*this, Pos::_, "_", _);
@@ -93,12 +93,42 @@ namespace cidk {
     eval(in, env, regs);
   }
 
-  const Sym *Cx::intern(const string &name, const vector<Type *> &args) {
+  const Sym *Cx::intern(const Pos &pos, const string &name) {
     auto ok(syms.find(name));
-    if (ok != syms.end()) { return ok->second; }
+    if (ok != syms.end()) { return ok->second; }    
     auto s(sym_pool.get(name));
+
+    if (name.back() == ']') {
+      Pos p(pos);
+      auto i(name.find('['));
+      if (i == string::npos) { throw ESys(pos, "Invalid args: ", name); }
+      
+      stringstream in(name.substr(i+1));
+      char c(0);
+
+      for (;;) {
+        if (!in.get(c)) { throw ESys(pos, "Open args"); }
+        if (c == ']') { break; } 
+        in.unget();
+
+        auto v(read_val(*this, p, in));
+        if (!v) { throw ESys(pos, "Open args"); }
+        
+        if (v->type != &sym_type) {
+          throw ESys(pos, "Expected type: ", v->type->id);
+        }
+        
+        auto &tv(env.get(p, v->as_sym));
+        
+        if (tv.type != &meta_type) {
+          throw ESys(pos, "Expected type: ", tv.type->id);
+        }
+        
+        s->args.push_back(tv.as_type);
+      }
+    }
+    
     syms.emplace(make_pair(name, s));
-    copy(args.begin(), args.end(), back_inserter(s->args));
     return s;
   }
   

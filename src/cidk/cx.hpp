@@ -106,7 +106,7 @@ namespace cidk {
       }
     }
     
-    const Sym *intern(const string &name, const vector<Type *> &args = {});
+    const Sym *intern(const Pos &pos, const string &name);
 
     void load(const Pos &pos,
               const Path &src,
@@ -151,7 +151,7 @@ namespace cidk {
                     const vector<Arg> &args,
                     const vector<Ret> &rets,
                     Rest &&...rest) {
-    return add_fun(cx, pos, cx.intern(id), args, rets, forward<Rest>(rest)...);
+    return add_fun(cx, pos, cx.intern(pos, id), args, rets, forward<Rest>(rest)...);
   }
 
   template <typename...Rest>
@@ -173,7 +173,7 @@ namespace cidk {
                        const string &id,
                        const vector<Type *> parents,
                        Rest &&...rest) {
-    TypeT *t(new TypeT(cx, pos, cx.intern(id), parents, forward<Rest>(rest)...));
+    TypeT *t(new TypeT(cx, pos, cx.intern(pos, id), parents, forward<Rest>(rest)...));
     
     let(cx,
         pos,
@@ -237,7 +237,7 @@ namespace cidk {
            const RetsT &rets,
            Fimp imp): Def(cx, pos, id), env(cx, env), imp(imp) {
     for (auto a: args) {
-      if (!a.id) { a.id = cx.intern(a.id_name); }
+      if (!a.id) { a.id = cx.intern(pos, a.id_name); }
       this->args.items.push_back(a);
     }
   }
