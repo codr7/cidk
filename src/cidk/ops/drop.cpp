@@ -8,11 +8,26 @@ namespace cidk::ops {
 
   DropType::DropType(const string &id): OpType(id) {}
 
-  void DropType::init(Cx &cx, Op &op, Int n) const { op.data = n; }
+  void DropType::init(Cx &cx, Op &op, const Val &n) const {
+    op.args[0] = n;
+  }
+
+  void DropType::compile(Cx &cx,
+                         OpIter &in,
+                         const OpIter &end,
+                         Env &env,
+                         Ops &out,
+                         Opts &opts) const {
+    auto &p(in->pos);
+    auto &n(in->args[0]);
+    n.compile(in->pos, env, opts);
+    if (n.type != &cx.int_type) { throw ESys(p, "Expected Int: ", n.type->id); }
+    out.push_back(*in);
+  }
 
   void DropType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
-    auto n(op.as<Int>());
+    auto n(op.args[0].as_int);
     if (n > cx.stackp - cx.stack.begin()) { throw ESys(p, "Nothing to drop"); }
     cx.stackp -= n;
   }
@@ -21,17 +36,14 @@ namespace cidk::ops {
     Pos vp(pos);
     auto v(read_val(cx, pos, in));
     if (!v) { throw ESys(pos, "Missing ;"); }
+    
     Int n(1);
 
     if (!v->is_eop()) {
-      if (v->type != &cx.int_type) {
-        throw ESys(vp, "Invalid drop n, expected Int: ", v->type->id);
-      }
-
       n = v->as_int;
       read_eop(pos, in);
     }
 
-    out.emplace_back(cx, pos, *this, n);
+    out.emplace_back(cx, pos, *this, Val(cx.int_type, n));
   }
 }

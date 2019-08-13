@@ -7,7 +7,14 @@
 namespace cidk::ops {
   struct DropType: OpType {
     DropType(const string &id);
-    void init(Cx &cx, Op &op, Int n) const;
+    void init(Cx &cx, Op &op, const Val &n) const;
+
+    virtual void compile(Cx &cx,
+                         OpIter &in,
+                         const OpIter &end,
+                         Env &env,
+                         Ops &out,
+                         Opts &opts) const override;
 
     virtual void eval(Cx &cx,
                       Op &op,
