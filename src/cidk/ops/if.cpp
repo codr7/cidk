@@ -5,11 +5,6 @@
 #include "cidk/types/nil.hpp"
 
 namespace cidk::ops {
-  struct IfData {
-    Val cond, x, y;
-    IfData(const Val &cond, const Val &x, const Val &y): cond(cond), x(x), y(y) {}
-  };
-
   const IfType If("if");
 
   IfType::IfType(const string &id): OpType(id) {}
@@ -19,7 +14,9 @@ namespace cidk::ops {
                     const Val &cond,
                     const Val &x,
                     const Val &y) const {
-    op.data = IfData(cond, x, y);
+    op.args[0] = cond;
+    op.args[1] = x;
+    op.args[2] = y;
   }
 
   void IfType::compile(Cx &cx,
@@ -29,30 +26,27 @@ namespace cidk::ops {
                        Ops &out,
                        Opts &opts) const {
     auto &p(in->pos);
-    auto &d(in->as<IfData>());
-    d.cond.compile(p, env, opts);
-    d.x.compile(p, env, opts);
-    d.y.compile(p, env, opts);
+    auto &args(in->args);
+    for (int i(0); i < 3; i++) { args[i].compile(p, env, opts); }
     out.push_back(*in);
   }
 
   void IfType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
-    auto &d(op.as<IfData>());
-    d.cond.eval(p, env, regs);
-      
+    auto &args(op.args);
+    args[0].eval(p, env, regs);
+    auto &x(args[1]), &y(args[2]);
+    
     if (cx.pop(p).get_bool()) {
-      if (d.x.type != &cx.nil_type) { d.x.eval(p, env, regs); }
-    } else if (d.y.type != &cx.nil_type) {
-      d.y.eval(p, env, regs);
+      if (x.type != &cx.nil_type) { x.eval(p, env, regs); }
+    } else if (y.type != &cx.nil_type) {
+      y.eval(p, env, regs);
     }
   }
 
   void IfType::mark_refs(Op &op) const {
-    auto &d(op.as<IfData>());
-    d.cond.mark_refs();
-    d.x.mark_refs();
-    d.y.mark_refs();
+    auto &args(op.args);
+    for (int i(0); i < 3; i++) { args[i].mark_refs(); }
   }
 
   void IfType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {

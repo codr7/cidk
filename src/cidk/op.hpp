@@ -5,11 +5,13 @@
 #include <unordered_map>
 #include <string>
 
+#include "cidk/cidk.hpp"
 #include "cidk/ops.hpp"
 #include "cidk/opts.hpp"
 #include "cidk/pos.hpp"
 #include "cidk/reg.hpp"
 #include "cidk/sym.hpp"
+#include "cidk/val.hpp"
 
 namespace cidk {
   using namespace std;
@@ -40,8 +42,9 @@ namespace cidk {
 
     Pos pos;
     const OpType *type;
+    array<Val, CIDK_OP_ARG_MAX> args;
     any data;
-    
+
     template <typename T, typename...Args>
     Op(Cx &cx, const Pos &pos, const T &type, Args &&...args): pos(pos), type(&type) {
       type.init(cx, *this, forward<Args>(args)...);

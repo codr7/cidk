@@ -6,17 +6,13 @@
 #include "cidk/types/pop.hpp"
 
 namespace cidk::ops {
-  struct IsData {
-    Val x, y;    
-    IsData(const Val &x, const Val &y): x(x), y(y) {}
-  };
-  
   const IsType Is("is");
 
   IsType::IsType(const string &id): OpType(id) {}
 
   void IsType::init(Cx &cx, Op &op, const Val &x, const Val &y) const {
-    op.data = IsData(x, y);
+    op.args[0] = x;
+    op.args[1] = y;
   }
 
   void IsType::compile(Cx &cx,
@@ -26,25 +22,22 @@ namespace cidk::ops {
                        Ops &out,
                        Opts &opts) const {
     auto &p(in->pos);
-    auto &d(in->as<IsData>());
-    d.x.compile(p, env, opts);
-    d.y.compile(p, env, opts);
+    auto &args(in->args);
+    for (int i(0); i < 2; i++) { args[i].compile(p, env, opts); }
     out.push_back(*in);
   }
 
   void IsType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
-    auto &d(op.as<IsData>());
-    d.x.eval(p, env, regs);
-    d.y.eval(p, env, regs);
+    auto &args(op.args);
+    for (int i(0); i < 2; i++) { args[i].eval(p, env, regs); }
     auto &y(cx.pop(p)), &x(cx.peek(p));    
     x.reset(cx.bool_type, x.is(y));
   }
 
   void IsType::mark_refs(Op &op) const {
-    auto &d(op.as<IsData>());
-    d.x.mark_refs();
-    d.y.mark_refs();
+    auto &args(op.args);
+    for (int i(0); i < 2; i++) { args[i].mark_refs(); }
   }
 
   void IsType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {

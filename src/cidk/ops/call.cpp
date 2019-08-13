@@ -10,7 +10,9 @@ namespace cidk::ops {
 
   CallType::CallType(const string &id): OpType(id) {}
 
-  void CallType::init(Cx &cx, Op &op, const Val &target) const { op.data = target; }
+  void CallType::init(Cx &cx, Op &op, const Val &target) const {
+    op.args[0] = target;
+  }
 
   void CallType::compile(Cx &cx,
                          OpIter &in,
@@ -18,14 +20,14 @@ namespace cidk::ops {
                          Env &env,
                          Ops &out,
                          Opts &opts) const {
-    Val &f(in->as<Val>());
+    Val &f(in->args[0]);
     f.compile(in->pos, env, opts);
     out.push_back(*in);
   }
 
   void CallType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
-    auto &v(op.as<Val>());
+    auto &v(op.args[0]);
     Fun *f(nullptr);
     
     if (v.type == &cx.fun_type) {
@@ -44,7 +46,7 @@ namespace cidk::ops {
     f->call(cx, p, env);
   }
 
-  void CallType::mark_refs(Op &op) const { op.as<Val>().mark_refs(); }
+  void CallType::mark_refs(Op &op) const { op.args[0].mark_refs(); }
 
   void CallType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);

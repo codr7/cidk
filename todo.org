@@ -6,9 +6,10 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* add op Val args[CIDK_OP_ARGS_MAX]
-** use instead of data/as
-** bench
+* finish op args
+** convert cp/drop/poke/set ops
+** remove Op.data/as
+** commit op args
 * remove read_id env lookup
 ** change ops to check types in compile
 *** store vals
@@ -16,20 +17,31 @@ fun (fib ((n a b) Int) Int
 ** block let const override
 *** check in compile
 ** block set of const
+* remove Type.env
+* --
+* move id arg parsing to cx.intern
+** track depth in read-id
+** remove intern-arg
 * --
 * calcl
 ** change read to treat every second val as Op/Val regardless of type
+*** read num if digit else id
 *** remove ReadCx
 **** complete sequence in read_next
 *** use read_val
 *** use call-bin
+* add read_expr
+** copy cidk::read_list and emit expr
 * --
 ** add calc op
 *** calc 35 + 7;
 ** add link op
 *** dl
-** add op precedence
+** add tests using link/calc
 * ---
+* add Fix type
+** store value
+** use number of decimals to determine scale
 * mark regs/stack in cx.mark()
 * add repl break loop
 ** add restarts
@@ -53,4 +65,3 @@ fun (fib ((n a b) Int) Int
 * add return
 ** add eval state
 ** handle in Call.eval
-

@@ -8,7 +8,7 @@ namespace cidk::ops {
 
   PushType::PushType(const string &id): OpType(id) {}
 
-  void PushType::init(Cx &cx, Op &op, const Val &val) const { op.data = val; }
+  void PushType::init(Cx &cx, Op &op, const Val &val) const { op.args[0] = val; }
 
   void PushType::compile(Cx &cx,
                          OpIter &in,
@@ -16,15 +16,15 @@ namespace cidk::ops {
                          Env &env,
                          Ops &out,
                          Opts &opts) const {
-    in->as<Val>().compile(in->pos, env, opts);
+    in->args[0].compile(in->pos, env, opts);
     out.push_back(*in);
   }
 
   void PushType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
-    op.as<Val>().eval(op.pos, env, regs);
+    op.args[0].eval(op.pos, env, regs);
   }
 
-  void PushType::mark_refs(Op &op) const { op.as<Val>().mark_refs(); }
+  void PushType::mark_refs(Op &op) const { op.args[0].mark_refs(); }
 
   void PushType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);

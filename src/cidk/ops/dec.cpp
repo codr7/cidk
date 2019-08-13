@@ -8,17 +8,13 @@
 #include "cidk/types/sym.hpp"
 
 namespace cidk::ops {
-  struct DecData {
-    Val n, delta;
-    DecData(const Val &n, const Val &delta): n(n), delta(delta) {}
-  };
-  
   const DecType Dec("dec");
 
   DecType::DecType(const string &id): OpType(id) {}
 
   void DecType::init(Cx &cx, Op &op, const Val &n, const Val &delta) const {
-    op.data = DecData(n, delta);
+    op.args[0] = n;
+    op.args[1] = delta;
   }
 
   void DecType::compile(Cx &cx,
@@ -28,44 +24,43 @@ namespace cidk::ops {
                         Ops &out,
                         Opts &opts) const {
     auto &p(in->pos);
-    auto &d(in->as<DecData>());
-    d.n.compile(p, env, opts);
-    d.delta.compile(p, env, opts);
+    auto &args(in->args);
+    for (int i(0); i < 2; i++) { args[i].compile(p, env, opts); }
     out.push_back(*in);
   }
 
   void DecType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
-    auto &d(op.as<DecData>());
-
-    if (d.n.type == &cx.reg_type) {
-      d.delta.eval(p, env, regs);
-      auto &delta(cx.peek(p));
+    auto &args(op.args);
+    auto &n(args[0]), &delta(args[1]);
+    
+    if (n.type == &cx.reg_type) {
+      delta.eval(p, env, regs);
+      auto &dv(cx.peek(p));
       
-      if (delta.type != &cx.int_type) {
-        throw ESys(p, "Expected Int, was: ", delta.type->id);
+      if (dv.type != &cx.int_type) {
+        throw ESys(p, "Expected Int, was: ", dv.type->id);
       }
 
-      auto &n(regs[d.n.as_reg].as_int);
-      n -= delta.as_int;
-      delta.as_int = n;
+      auto &nv(regs[n.as_reg].as_int);
+      nv -= dv.as_int;
+      dv.as_int = nv;
     } else {
-      d.n.eval(p, env, regs); 
-      d.delta.eval(p, env, regs);
-      auto &delta(cx.pop(p));
+      n.eval(p, env, regs); 
+      delta.eval(p, env, regs);
+      auto &dv(cx.pop(p));
       
-      if (delta.type != &cx.int_type) {
-        throw ESys(p, "Expected Int, was: ", delta.type->id);
+      if (dv.type != &cx.int_type) {
+        throw ESys(p, "Expected Int, was: ", dv.type->id);
       }
 
-      cx.peek(p).as_int -= delta.as_int;
+      cx.peek(p).as_int -= dv.as_int;
     }
   }
 
   void DecType::mark_refs(Op &op) const {
-    auto &d(op.as<DecData>());
-    d.n.mark_refs();
-    d.delta.mark_refs();
+    auto &args(op.args);
+    for (int i(0); i < 2; i++) { args[i].mark_refs(); }
   }
 
   void DecType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {

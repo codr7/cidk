@@ -6,17 +6,13 @@
 #include "cidk/types/sym.hpp"
 
 namespace cidk::ops {
-  struct SwapData {
-    Val x, y;
-    SwapData(const Val &x, const Val &y): x(x), y(y) {}
-  };
-
   const SwapType Swap("swap");
 
   SwapType::SwapType(const string &id): OpType(id) {}
 
   void SwapType::init(Cx &cx, Op &op, const Val &x, const Val &y) const {
-    op.data = SwapData(x, y);
+    op.args[0] = x;
+    op.args[1] = y;
   }
 
   void SwapType::compile(Cx &cx,
@@ -25,9 +21,8 @@ namespace cidk::ops {
                          Env &env,
                          Ops &out,
                          Opts &opts) const {
-    auto &d(in->as<SwapData>());
-    d.x.compile(in->pos, env, opts);
-    d.y.compile(in->pos, env, opts);
+    auto &args(in->args);
+    for (int i(0); i < 2; i++) { args[i].compile(in->pos, env, opts); }
     out.push_back(*in);
   }
   
@@ -47,16 +42,15 @@ namespace cidk::ops {
   
   void SwapType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
-    auto &d(op.as<SwapData>());
+    auto &args(op.args);
 
-    swap(get_ref(cx, p, d.x, env, regs),
-         get_ref(cx, p, d.y, env, regs));
+    swap(get_ref(cx, p, args[0], env, regs),
+         get_ref(cx, p, args[1], env, regs));
   }
 
   void SwapType::mark_refs(Op &op) const {
-    auto &d(op.as<SwapData>());
-    d.x.mark_refs();
-    d.y.mark_refs();
+    auto &args(op.args);
+    for (int i(0); i < 2; i++) { args[i].mark_refs(); }
   }
   
   void SwapType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
