@@ -64,6 +64,7 @@ namespace cidk {
 
     void clear(Cx &cx);
     Iter find(const Sym *id);
+
     Val &get(const Pos &pos, const Sym *id);
     void let(Cx &cx, const Pos &pos, const Sym *id, const Val &val);
     void mark_refs();
