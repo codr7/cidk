@@ -4,6 +4,7 @@
 #include <functional>
 
 #include "cidk/arg.hpp"
+#include "cidk/call.hpp"
 #include "cidk/def.hpp"
 #include "cidk/env.hpp"
 #include "cidk/fimp.hpp"
@@ -29,7 +30,14 @@ namespace cidk {
         const RetsT &rets,
         Fimp imp = nullptr);
 
-    void call(Cx &cx, const Pos &pos, Env &env);
+    void call(Cx &cx, const Pos &pos, Env &env) {
+      if (imp) {
+        imp(cx, pos, *this, env);
+      } else {
+        Call(pos, *this).eval(cx);
+      }
+    }
+
     void mark();
     virtual void sweep(Cx &cx, const Pos &pos) override;
   };
