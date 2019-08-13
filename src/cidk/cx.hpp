@@ -41,7 +41,7 @@ namespace cidk {
     bool debug = false;
     
     Pool<Sym> sym_pool;    
-    unordered_map<string, const Sym *> syms;
+    unordered_map<string, Sym *> syms;
     
     Ls<Ref, CxRefs> refs;
     Env env;
@@ -69,7 +69,7 @@ namespace cidk {
     array<Reg, CIDK_REG_MAX> regs;
     Reg *regp;
 
-    array<Val, CIDK_STACK_SIZE> stack;
+    array<Val, CIDK_STACK_MAX> stack;
     Val *stackp;
         
     Call *call;

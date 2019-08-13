@@ -15,7 +15,7 @@ namespace cidk {
     vector<Slot *> slabs;
     vector<T *> free;
     
-    Pool(): slab_size(CIDK_POOL_INIT), slab_offs(0) {
+    Pool(): slab_size(CIDK_POOL_MIN), slab_offs(0) {
       slabs.emplace_back(new Slot[slab_size]);
     }
 
@@ -25,17 +25,10 @@ namespace cidk {
     
     template <typename...Args>
     T *get(Args &&...args) {
-#ifndef CIDK_USE_POOL
-      return new T(forward<Args>(args)...);
-#endif
-      
       return new (alloc()) T(forward<Args>(args)...);
     }
 
     T *alloc() {
-#ifndef CIDK_USE_POOL
-      return reinterpret_cast<T *>(new Slot());
-#endif
       T *p(nullptr);
       
       if (free.empty()) {
@@ -60,12 +53,8 @@ namespace cidk {
     }
 
     void put(T *item) {
-#ifdef CIDK_USE_POOL
       item->~T();
       free.push_back(item);
-#else
-      delete item;
-#endif
     }
   };
 }

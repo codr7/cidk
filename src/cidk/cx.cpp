@@ -70,10 +70,7 @@ namespace cidk {
     clear_refs();
     env.clear(*this);
     sweep_refs(Pos::_);
-
-#ifndef CIDK_USE_POOL
-    for (auto &s: syms) { delete s.second; }
-#endif
+    for (auto &s: syms) { sym_pool.put(s.second); }
   }
 
   void Cx::clear_refs() {

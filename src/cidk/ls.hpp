@@ -2,7 +2,7 @@
 #define CIDK_LS_HPP
 
 namespace cidk {  
-  template <typename T, typename TagT>
+  template <typename T, typename TagT = T>
   struct Ls {
     Ls<T, TagT> *prev, *next;
 
