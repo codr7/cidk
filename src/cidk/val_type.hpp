@@ -9,6 +9,7 @@
 
 namespace cidk {
   struct ConstType;
+  struct Env;
   struct Val;
 
   struct ValType: Type {

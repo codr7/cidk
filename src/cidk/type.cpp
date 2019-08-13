@@ -4,18 +4,16 @@
 
 namespace cidk {
   Type::Type(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents):
-    Def(cx, pos, id), env(cx) {
+    Def(cx, pos, id) {
     for (auto pt: parents) { derive(cx, *pt); }
   }
   
   void Type::derive(Cx &cx, Type &parent) {
-    env.merge(cx, parent.env);
     Type *p(&parent);
     parents.emplace(p, p);
     
     for(auto &i: parent.parents) {
       Type *pp(i.first);
-      env.merge(cx, pp->env);
       parents.emplace(pp, p);
     }
   }
@@ -27,12 +25,7 @@ namespace cidk {
     return (i == parents.end()) ? nullptr : i->second;
   }
   
-  void Type::mark() {
-    if (!ref_mark) {
-      ref_mark = true;
-      env.mark_refs();
-    }
-  }
+  void Type::mark() { ref_mark = true; }
   
   void Type::sweep(Cx &cx, const Pos &pos) { delete this; }
 }
