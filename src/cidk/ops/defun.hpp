@@ -7,7 +7,12 @@
 namespace cidk::ops {
   struct DefunType: OpType {
     DefunType(const string &id);
-    void init(Cx &cx, Op &op, const Sym *id, const Val &args, const Val &body) const;
+    void init(Cx &cx,
+              Op &op,
+              const Val &id,
+              const Val &args,
+              const Val &rets,
+              const Val &body) const;
     
     virtual void compile(Cx &cx,
                          OpIter &in,

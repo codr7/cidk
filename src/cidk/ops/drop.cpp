@@ -20,7 +20,7 @@ namespace cidk::ops {
                          Opts &opts) const {
     auto &p(in->pos);
     auto &n(in->args[0]);
-    n.compile(in->pos, env, opts);
+    n.compile(p, env, opts);
     if (n.type != &cx.int_type) { throw ESys(p, "Expected Int: ", n.type->id); }
     out.push_back(*in);
   }

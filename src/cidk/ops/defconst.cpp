@@ -27,10 +27,7 @@ namespace cidk::ops {
     if (id.type != &cx.sym_type) { throw ESys(p, "Expected id: ", id.type->id); }
 
     auto &v(args[1]);
-    v.compile(p, env, opts);
-    v.eval(p, env, cx.regp);
-    v = cx.pop(p);
-    
+    v.compile(p, env, opts);    
     env.add_const(cx, p, id.as_sym, v);
   }
 
