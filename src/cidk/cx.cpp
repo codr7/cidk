@@ -22,11 +22,6 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  static void bool_imp(Cx &cx, const Pos &p, const Fun &f, Env &env) {
-    auto &v(*cx.stackp);
-    v.reset(cx.bool_type, v.get_bool());
-  }
-  
   Cx::Cx():
     env(*this),
     meta_type(env.add_type<MetaType>(*this, Pos::_, "Meta")),
@@ -62,8 +57,6 @@ namespace cidk {
     env.add_const(*this, Pos::_, "F", F);
     
     env.add_const_expr(*this, Pos::_, "stack", {Op(*this, Pos::_, ops::Stash)});
-    
-    env.add_fun(*this, Pos::_, "bool", {Arg("val")}, {Ret(bool_type)}, bool_imp);
   }
 
   void Cx::deinit() {
