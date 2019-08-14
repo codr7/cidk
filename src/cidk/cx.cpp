@@ -51,11 +51,9 @@ namespace cidk {
     eop(sym_type, intern(Pos::_, ";")),
     stdin(&cin), stdout(&cout), stderr(&cerr) {
     libs::init_math(*this);
-    env.add_const(*this, Pos::_, "_", _);
     env.add_const(*this, Pos::_, "$", $);
     env.add_const(*this, Pos::_, "T", T);
-    env.add_const(*this, Pos::_, "F", F);
-    
+    env.add_const(*this, Pos::_, "F", F);   
     env.add_const_expr(*this, Pos::_, "stack", {Op(*this, Pos::_, ops::Stash)});
   }
 
