@@ -40,9 +40,7 @@ fun (fib ((n a b) Int) Int
 *** call with src in default imp
 *** update for op to use iter
 ** bind var if not _
-* add Fun.rets (Rets)
-** match against stack suffix if cx.debug
 * add anon fun support
 ** push on stack from Defun if nil id
-* add Fun arg type checking if cx.debug
-** skip type A
+* add Fun.rets (Rets)
+** match against stack suffix if cx.debug
