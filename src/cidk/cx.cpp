@@ -94,38 +94,15 @@ namespace cidk {
     auto ok(syms.find(name));
     if (ok != syms.end()) { return ok->second; }    
     auto s(sym_pool.get(name));
+    syms.emplace(make_pair(name, s));
 
     if (name.back() == ']') {
       Pos p(pos);
       auto i(name.find('['));
-      if (i == string::npos) { throw ESys(pos, "Invalid args: ", name); }
-      
-      stringstream in(name.substr(i+1));
-      char c(0);
-
-      for (;;) {
-        if (!in.get(c)) { throw ESys(pos, "Open args"); }
-        if (c == ']') { break; } 
-        in.unget();
-
-        auto v(read_val(*this, p, in));
-        if (!v) { throw ESys(pos, "Open args"); }
-        
-        if (v->type != &sym_type) {
-          throw ESys(pos, "Expected type: ", v->type->id);
-        }
-        
-        auto &tv(env.get(p, v->as_sym));
-        
-        if (tv.type != &meta_type) {
-          throw ESys(pos, "Expected type: ", tv.type->id);
-        }
-        
-        s->args.push_back(tv.as_type);
-      }
+      if (i == string::npos) { throw ESys(pos, "Invalid id: ", name); }
+      s->root = intern(pos, name.substr(0, i));
     }
     
-    syms.emplace(make_pair(name, s));
     return s;
   }
   

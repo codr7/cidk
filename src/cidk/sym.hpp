@@ -8,7 +8,7 @@ namespace cidk {
   
   struct Sym {
     string name;
-    vector<Type *> args;
+    const Sym *root;
     
     Sym(string name);
   };

@@ -16,7 +16,7 @@ fun (fib ((n a b) Int) Int
 * rename call-bin to dispatch
 ** remove vararg
 ** add nargs
-** lookup list on compile
+** lookup root sym list on compile
 ** call first match
 * --
 * add read_parens
