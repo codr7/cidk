@@ -5,18 +5,13 @@
 #include "cidk/types/sym.hpp"
 
 namespace cidk::ops {
-  struct DefconstData {
-    const Sym *id;
-    Val val;
-    DefconstData(const Sym *id, const Val &val): id(id), val(val) {}
-  };
-    
   const DefconstType Defconst("defconst");
 
   DefconstType::DefconstType(const string &id): OpType(id) {}
 
-  void DefconstType::init(Cx &cx, Op &op, const Sym *id, const Val &val) const {
-    op.data = DefconstData(id, val);
+  void DefconstType::init(Cx &cx, Op &op, const Val &id, const Val &val) const {
+    op.args[0] = id;
+    op.args[1] = val;
   }
 
   void DefconstType::compile(Cx &cx,
@@ -26,9 +21,17 @@ namespace cidk::ops {
                              Ops &out,
                              Opts &opts) const {
     auto &p(in->pos);
-    auto &d(in->as<DefconstData>());
-    d.val.compile(p, env, opts);
-    env.add_const(cx, p, d.id, d.val);
+    auto &args(in->args);
+    
+    auto &id(args[0]);
+    if (id.type != &cx.sym_type) { throw ESys(p, "Expected id: ", id.type->id); }
+
+    auto &v(args[1]);
+    v.compile(p, env, opts);
+    v.eval(p, env, cx.regp);
+    v = cx.pop(p);
+    
+    env.add_const(cx, p, id.as_sym, v);
   }
 
   void DefconstType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
@@ -40,13 +43,9 @@ namespace cidk::ops {
       if (!id) { throw ESys(p, "Missing ;"); }
       if (id->is_eop()) { break; }
 
-      if (id->type != &cx.sym_type) {
-        throw ESys(p, "Invalid const id: ", id->type->id);
-      }
-
       auto v(read_val(cx, pos, in));
-      if (!v) { throw ESys(p, "Missing const value"); }
-      out.emplace_back(cx, p, *this, id->as_sym, *v);
+      if (!v) { throw ESys(p, "Missing value"); }
+      out.emplace_back(cx, p, *this, *id, *v);
       n++;
     }
   }

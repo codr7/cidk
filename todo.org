@@ -7,9 +7,9 @@ fun (fib ((n a b) Int) Int
 )
 
 * finish op args
+** convert ops
 ** remove Op.data/as
 * remove read_id env lookup
-* eval val in defconst compile
 * block let/set const
 ** check in compile
 * --
