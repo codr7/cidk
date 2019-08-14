@@ -6,14 +6,6 @@
 #include "cidk/types/sym.hpp"
 
 namespace cidk::ops {
-  struct ForData {
-    Val src, var, body;
-    bool push;
-
-    ForData(const Val &src, const Val &var, const Val &body, bool push):
-      src(src), var(var), body(body), push(push) {}
-  };
-
   const ForType For("for");
 
   ForType::ForType(const string &id): OpType(id) {}
@@ -23,7 +15,9 @@ namespace cidk::ops {
                      const Val &src,
                      const Val &var,
                      const Val &body) const {
-    op.data = ForData(src, var, body, var.type == &cx.bool_type && var.as_bool);
+    op.args[0] = src;
+    op.args[1] = var;
+    op.args[2] = body;
   }
 
   void ForType::compile(Cx &cx,
@@ -33,28 +27,35 @@ namespace cidk::ops {
                         Ops &out,
                         Opts &opts) const {
     auto &p(in->pos);
-    auto &d(in->as<ForData>());
-    d.src.compile(p, env, opts);
-    d.body.compile(p, env, opts);
+    auto &args(in->args);
+    for (int i(0); i < 3; i++) { args[i].compile(p, env, opts); }
+    auto &var(args[1]);
+
+    if (var.type != &cx.bool_type && var.type != &cx.sym_type) {
+      throw ESys(p, "Invalid var: ", var);
+    }
+
     out.push_back(*in);
   }
 
   void ForType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
-    auto &d(op.as<ForData>());
-    d.src.eval(p, env, regs);
+    auto &args(op.args);
+    
+    args[0].eval(p, env, regs);
     auto n(cx.pop(p).as_int);
+    auto &var(args[1]), &body(args[2]);
+    bool push(var.type == &cx.bool_type && var.as_bool);
     
     for (Int i(0); i < n; i++) {
-      if (d.push) { cx.push(p, cx.int_type, i); }
-      d.body.eval(p, env, regs);
+      if (push) { cx.push(p, cx.int_type, i); }
+      body.eval(p, env, regs);
     }
   }
 
   void ForType::mark_refs(Op &op) const {
-    auto &d(op.as<ForData>());
-    d.src.mark_refs();
-    d.body.mark_refs();
+    auto &args(op.args);
+    for (int i(0); i < 3; i++) { args[i].mark_refs(); }
   }
 
   void ForType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
@@ -65,10 +66,6 @@ namespace cidk::ops {
 
     auto var(read_val(cx, pos, in));
     if (!var || var->is_eop()) { throw ESys(p, "Missing for var"); }
-
-    if (var->type != &cx.bool_type && var->type != &cx.sym_type) {
-      throw ESys(p, "Invalid for var: ", var->type->id);
-    }
 
     auto body(read_val(cx, pos, in));
     if (!body || body->is_eop()) { throw ESys(p, "Missing for body"); }

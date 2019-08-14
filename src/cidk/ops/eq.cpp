@@ -5,17 +5,13 @@
 #include "cidk/types/bool.hpp"
 
 namespace cidk::ops {
-  struct EqData {
-    Val x, y;
-    EqData(const Val &x, const Val &y): x(x), y(y) {}
-  };
-  
   const EqType Eq("eq");
 
   EqType::EqType(const string &id): OpType(id) {}
 
   void EqType::init(Cx &cx, Op &op, const Val &x, const Val &y) const {
-    op.data = EqData(x, y);
+    op.args[0] = x;
+    op.args[1] = y;
   }
 
   void EqType::compile(Cx &cx,
@@ -24,25 +20,22 @@ namespace cidk::ops {
                        Env &env,
                        Ops &out,
                        Opts &opts) const {
-    auto &d(in->as<EqData>());
-    d.x.compile(in->pos, env, opts);
-    d.y.compile(in->pos, env, opts);
+    auto &args(in->args);
+    for (int i(0); i < 2; i++) { args[i].compile(in->pos, env, opts); }
     out.push_back(*in);
   }
 
   void EqType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
-    auto &d(op.as<EqData>());
-    d.x.eval(p, env, regs);
-    d.y.eval(p, env, regs);
+    auto &args(op.args);
+    for (int i(0); i < 2; i++) { args[i].eval(p, env, regs); }
     auto &y(cx.pop(p)), &x(cx.peek(p));
     x.reset(cx.bool_type, x.eq(p, y));
   }
 
   void EqType::mark_refs(Op &op) const {
-    auto &d(op.as<EqData>());
-    d.x.mark_refs();
-    d.y.mark_refs();
+    auto &args(op.args);
+    for (int i(0); i < 2; i++) { args[i].mark_refs(); }
   }
 
   void EqType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
