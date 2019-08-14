@@ -4,7 +4,7 @@ assert({cp;}) {eq (1 2 3 3);};
 push 1 2 3 4 5; cp 3 3; stash;
 assert({cp;}) {eq (1 2 3 4 5 2 3 4);};
 
-push 1 2 3; cp T T; stash;
+push 1 2 3; cp -1 -1; stash;
 assert({cp;}) {eq (1 2 3 1 2 3);};
 
 push 1 2 3; swap 0 1; stash;

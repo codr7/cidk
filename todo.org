@@ -7,7 +7,7 @@ fun (fib ((n a b) Int) Int
 )
 
 * finish op args
-** convert cp/set ops
+** convert set op
 ** bench
 ** remove Op.data/as
 ** commit op args

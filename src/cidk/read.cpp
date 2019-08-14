@@ -71,7 +71,15 @@ namespace cidk {
       case ';':
         pos.col++;
         return cx.eop;
-      default:
+      default:        
+        if (c == '-') {
+          char c1(in.get());
+          in.unget();
+          in.unget();
+          if (isdigit(c1)) { return read_num(cx, pos, in); }
+          return read_id(cx, pos, in);
+        }
+
         in.unget();
         if (isdigit(c)) { return read_num(cx, pos, in); }
         if (isgraph(c)) { return read_id(cx, pos, in); }
@@ -192,7 +200,7 @@ namespace cidk {
     char c(0);
     
     for (;;) {
-      if (!in.get(c) || !isdigit(c)) { break; }
+      if (!in.get(c) || (!isdigit(c) && (c != '-' || out.tellg()))) { break; }
       out << c;
       pos.col++;
     }

@@ -14,21 +14,45 @@ namespace cidk::ops {
 
   CpType::CpType(const string &id): OpType(id) {}
 
-  void CpType::init(Cx &cx, Op &op, Int offs, Int len) const {
-    op.data = CpData(offs, len);
+  void CpType::init(Cx &cx, Op &op, const Val &offs, const Val &len) const {
+    op.args[0] = offs;
+    op.args[1] = len;
+  }
+
+  void CpType::compile(Cx &cx,
+                       OpIter &in,
+                       const OpIter &end,
+                       Env &env,
+                       Ops &out,
+                       Opts &opts) const {
+    auto &p(in->pos);
+    auto &args(in->args);
+    for (int i(0); i < 2; i++) { args[i].compile(in->pos, env, opts); }
+    auto &offs(args[0]);
+
+    if (offs.type != &cx.int_type) {
+      throw ESys(p, "Invalid offset: ", offs.type->id);
+    }
+
+    auto &len(args[1]);
+    
+    if (len.type != &cx.int_type) {
+      throw ESys(p, "Invalid length: ", len.type->id);
+    }
+    
+    out.push_back(*in);
   }
 
   void CpType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
-    auto &d(op.as<CpData>());
-    auto ss(cx.stackp - cx.stack.begin());
-      
-    auto
-      offs((d.offs == -1) ? ss - 1 : d.offs),
-      len((d.len == -1) ? offs + 1 : d.len);
+    auto &args(op.args);
+    auto offs(args[0].as_int), len(args[1].as_int);
+
+    if (offs == -1) { offs = cx.stackp - cx.stack.begin() - 1; }
+    if (len == -1) { len = offs + 1; }
 
     if (len == 1) {
-      cx.push(p, cx.peek(p));
+      cx.push(p, cx.peek(p, offs));
     } else {
       auto i(cx.stackp - offs - 1);
       copy(i, i + len, cx.stackp);
@@ -37,7 +61,7 @@ namespace cidk::ops {
   }
 
   void CpType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
-    Int offs(0), len(1);
+    Val offs(cx.int_type, Int(0)), len(cx.int_type, Int(1));
     bool done(false);
     Pos p(pos), vp(p);
     
@@ -47,26 +71,14 @@ namespace cidk::ops {
     if (v->is_eop()) {
       done = true;
     } else {
-      if (v->type == &cx.bool_type && v->as_bool) {
-        offs = -1;
-      } else if (v->type == &cx.int_type) {
-        offs = v->as_int;
-      } else {
-        throw ESys(p, "Invalid copy offset, expected Int: ", v->type->id);
-      }
-
+      offs = *v;
+      
       if (!(v = read_val(cx, pos, in))) { throw ESys(vp, "Missing ;"); }
 
       if (v->is_eop()) {
         done = true;
       } else {
-        if (v->type == &cx.bool_type && v->as_bool) {
-          len = -1;
-        } else if (v->type == &cx.int_type) {
-          len = v->as_int;
-        } else {
-          throw ESys(p, "Invalid copy length, expected Int: ", v->type->id);
-        }
+        len = *v;
       }
     }
 

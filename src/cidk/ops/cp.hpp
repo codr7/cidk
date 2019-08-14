@@ -7,7 +7,14 @@
 namespace cidk::ops {
   struct CpType: OpType {
     CpType(const string &id);
-    void init(Cx &cx, Op &op, Int offs, Int len) const;
+    void init(Cx &cx, Op &op, const Val &offs, const Val &len) const;
+
+    virtual void compile(Cx &cx,
+                         OpIter &in,
+                         const OpIter &end,
+                         Env &env,
+                         Ops &out,
+                         Opts &opts) const override;
 
     virtual void eval(Cx &cx,
                       Op &op,
