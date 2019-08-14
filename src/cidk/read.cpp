@@ -64,7 +64,7 @@ namespace cidk {
         return read_str(cx, pos, in);
       case '\\':
         pos.col++;
-        return read_ctrl(cx, pos, in);
+        return read_ctrl_char(cx, pos, in);
       case '_':
         pos.col++;
         return cx._;
@@ -90,7 +90,7 @@ namespace cidk {
     return {};
   }
   
-  Val read_ctrl(Cx &cx, Pos &pos, istream &in) {    
+  Val read_ctrl_char(Cx &cx, Pos &pos, istream &in) {    
     Pos p(pos);
     char c(0);
     if (!in.get(c)) { throw ESys(pos, "Invalid char literal"); }

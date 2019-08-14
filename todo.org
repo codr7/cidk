@@ -6,12 +6,10 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* block let/set const
-** check in compile
-* --
 * calcl
 ** change read to treat every second val as Op/Val regardless of type
 *** read num if digit else id
+**** extract try_read_num from read_val
 *** remove ReadCx
 **** complete sequence in read_next
 *** use read_val

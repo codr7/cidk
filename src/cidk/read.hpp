@@ -16,7 +16,7 @@ namespace cidk {
   bool read_op(Cx &cx, Pos &pos, istream &in, Ops &out);
   void read_eop(Pos &pos, istream &in);
   optional<Val> read_val(Cx &cx, Pos &pos, istream &in);
-  Val read_ctrl(Cx &cx, Pos &pos, istream &in);
+  Val read_ctrl_char(Cx &cx, Pos &pos, istream &in);
   Val read_expr(Cx &cx, Pos &pos, istream &in);
   Val read_id(Cx &cx, Pos &pos, istream &in);
   Val read_list(Cx &cx, Pos &pos, istream &in);

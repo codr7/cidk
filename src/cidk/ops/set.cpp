@@ -28,11 +28,17 @@ namespace cidk::ops {
     auto &k(args[0]);
     
     if (k.type == &cx.sym_type) {      
+      if (auto found(env.try_get(k.as_sym)); found && found->type->is_const) {
+        throw ESys(p, "Const set: ", k);
+      }
+
       if (auto found(opts.regs.find(k.as_sym)); found != opts.regs.end()) {
         k.reset(cx.reg_type, found->second);
+      } else {
+        throw ESys(p, "Unknown id: ", k);
       }
     } else if (k.type != &cx.int_type) {
-        throw ESys(p, "Invalid id: ", k.type->id);
+        throw ESys(p, "Invalid key: ", k);
     }
                  
     out.push_back(*in);
