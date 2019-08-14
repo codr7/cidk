@@ -76,11 +76,11 @@ namespace cidk {
           char c1(in.get());
           in.unget();
           in.unget();
-          if (isdigit(c1)) { return read_num(cx, pos, in); }
-          return read_id(cx, pos, in);
+          if (isdigit(c1)) { c = c1; }
+        } else {
+          in.unget();
         }
-
-        in.unget();
+        
         if (isdigit(c)) { return read_num(cx, pos, in); }
         if (isgraph(c)) { return read_id(cx, pos, in); }
         throw ESys(pos, "Invalid input: ", c);

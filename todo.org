@@ -7,22 +7,17 @@ fun (fib ((n a b) Int) Int
 )
 
 * calcl
-** change read to treat every second val as Op/Val regardless of type
-*** read num if digit else id
-**** extract try_read_num from read_val
-*** remove ReadCx
-**** complete sequence in read_next
-*** use read_val
-*** use call-bin
-* add read_expr
-** copy cidk::read_list and emit expr
-* --
+** add read_sub
+*** parens
+*** copy cidk::read_list and emit expr
 ** add calc op
 *** calc 35 + 7;
 ** add link op
 *** dl
-** add tests using link/calc
+*** add calc tests using link
 * ---
+* switch Env::Items to map
+** bench
 * add Fix type
 ** store value
 ** use number of decimals as scale
