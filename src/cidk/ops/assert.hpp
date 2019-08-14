@@ -7,7 +7,7 @@
 namespace cidk::ops {
   struct AssertType: OpType {
     AssertType(const string &id);
-    void init(Cx &cx, Op &op, const Val &args, const Val &body) const;
+    void init(Cx &cx, Op &op, const Val &msg, const Val &body) const;
 
     virtual void compile(Cx &cx,
                          OpIter &in,

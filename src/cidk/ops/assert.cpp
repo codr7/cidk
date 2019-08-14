@@ -8,17 +8,13 @@
 #include "cidk/types/nil.hpp"
 
 namespace cidk::ops {
-  struct AssertData {
-    Val args, body;
-    AssertData(const Val &args, const Val &body): args(args), body(body) {}
-  };
-
   const AssertType Assert("assert");
 
   AssertType::AssertType(const string &id): OpType(id) {}
 
-  void AssertType::init(Cx &cx, Op &op, const Val &args, const Val &body) const {
-    op.data = AssertData(args, body);
+  void AssertType::init(Cx &cx, Op &op, const Val &msg, const Val &body) const {
+    op.args[0] = msg;
+    op.args[1] = body;
   }
 
   void AssertType::compile(Cx &cx,
@@ -28,43 +24,43 @@ namespace cidk::ops {
                            Ops &out,
                            Opts &opts) const {
     auto &p(in->pos);
-    auto &d(in->as<AssertData>());
-    d.args.compile(p, env, opts);
-    d.body.compile(p, env, opts);
+    auto &args(in->args);
+    for (int i(0); i < 2; i++) { args[i].compile(p, env, opts); }
+
+    auto &msg(args[0]);
+    if (msg.type != &cx.list_type) { throw ESys(p, "Expected List: ", msg.type->id); }
     out.push_back(*in);
   }
 
   void AssertType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
-    auto &d(op.as<AssertData>());
-    d.args.eval(p, env, regs);
-    Val args(cx.pop(p));
-    d.body.eval(p, env, regs);
+    auto &args(op.args);
+    
+    args[0].eval(p, env, regs);
+    Val msg(cx.pop(p));
+
+    args[1].eval(p, env, regs);
     auto &ok(cx.pop(p));
     
     if (ok.type != &cx.bool_type) {
-      throw ESys(p, "Expected Bool, was: ", ok.type->id);
+      throw ESys(p, "Expected Bool: ", ok.type->id);
     }
 
-    if (!ok.as_bool) { throw ESys(p, "Test failed: ", args); }
+    if (!ok.as_bool) { throw ESys(p, "Test failed: ", msg); }
   }
 
   void AssertType::mark_refs(Op &op) const {
-    auto &d(op.as<AssertData>());
-    d.args.mark_refs();
-    d.body.mark_refs();
+    auto &args(op.args);
+    for (int i(0); i < 2; i++) { args[i].mark_refs(); }
   }
 
   void AssertType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
-    auto args(read_val(cx, pos, in));
-
-    if (args->type != &cx.list_type) {
-      throw ESys(p, "Expected List, was: ", args->type->id);
-    }
-
+    auto msg(read_val(cx, pos, in));
+    if (!msg || msg->is_eop()) { throw ESys(p, "Missing message"); }
     auto body(read_val(cx, pos, in));
+    if (!body || body->is_eop()) { throw ESys(p, "Missing body"); }
     read_eop(pos, in);
-    out.emplace_back(cx, pos, *this, *args, *body);
+    out.emplace_back(cx, pos, *this, *msg, *body);
   }
 }
