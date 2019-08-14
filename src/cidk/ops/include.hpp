@@ -8,7 +8,7 @@ namespace cidk::ops {
   struct IncludeType: OpType {
     IncludeType(const string &id);
 
-    void init(Cx &cx, Op &op, string val) const;
+    void init(Cx &cx, Op &op, const Val &path) const;
 
     virtual void compile(Cx &cx,
                          OpIter &in,

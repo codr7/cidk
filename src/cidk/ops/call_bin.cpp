@@ -9,21 +9,34 @@ namespace cidk::ops {
 
   CallBinType::CallBinType(const string &id): OpType(id) {}
 
-  void CallBinType::init(Cx &cx, Op &op, const Sym *id) const { op.data = id; }
+  void CallBinType::init(Cx &cx, Op &op, const Val &id) const { op.args[0] = id; }
 
+  void CallBinType::compile(Cx &cx,
+                            OpIter &in,
+                            const OpIter &end,
+                            Env &env,
+                            Ops &out,
+                            Opts &opts) const {
+    out.push_back(*in);
+  }
+  
   void CallBinType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
-    auto id(op.as<const Sym *>());
+    auto &idv(op.args[0]);
+    const Sym *id(nullptr);
 
-    if (!id) {
-      auto &idv(cx.pop(p));
-      if (idv.type != &cx.sym_type) { throw ESys(p, "Expected id: ", idv.type->id); }
+    if (idv.type == &cx.sym_type) {
+      id = idv.as_sym;
+    } else {
+      idv.eval(p, env, regs);
+      Val &idv(cx.pop(p));
+      if (idv.type != &cx.sym_type) { throw ESys(p, "Expected id: ", idv); }
       id = idv.as_sym;
     }
-    
+
     auto &x(cx.peek(p, 1)), &y(cx.peek(p));
     auto &f(env.get(p, cx.intern(p, str(id, '[', x.type->id, ' ', y.type->id, ']'))));
-    if (f.type != &cx.fun_type) { throw ESys(p, "Expected Fun, was: ", f.type->id); }
+    if (f.type != &cx.fun_type) { throw ESys(p, "Expected Fun: ", f); }
     f.as_fun->call(cx, p, env);
   }
 
@@ -35,10 +48,9 @@ namespace cidk::ops {
       auto v(read_val(cx, pos, in));
       if (!v) { throw ESys(p, "Missing ;"); }
       if (v->is_eop()) { break; }
-      if (v->type != &cx.sym_type) { throw ESys(p, "Expected id: ", v->type->id); }
-      out.emplace_back(cx, p, *this, v->as_sym);
+      out.emplace_back(cx, p, *this, *v);
     }
 
-    if (!n) { out.emplace_back(cx, p, *this, nullptr); }
+    if (!n) { out.emplace_back(cx, p, *this, cx.$); }
   }
 }

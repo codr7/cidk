@@ -55,7 +55,7 @@ namespace cidk::ops {
     auto &as(f.args.items);
 
     for (auto i(as.rbegin()); i != as.rend(); i++) {
-      if (i->id) { f.body.emplace_back(cx, p, Let, i->id, cx.$); }
+      if (i->id) { f.body.emplace_back(cx, p, Let, Val(cx.sym_type, i->id), cx.$); }
     }
 
     auto &bops(body.as_expr->ops);

@@ -6,21 +6,13 @@
 #include "cidk/types/nil.hpp"
 
 namespace cidk::ops {
-  struct PokeData {
-    size_t offs;
-    Val val;
-    bool is_expr;
-    
-    PokeData(size_t offs, const Val &val, bool is_expr):
-      offs(offs), val(val), is_expr(is_expr) {}
-  };
-  
   const PokeType Poke("poke");
 
   PokeType::PokeType(const string &id): OpType(id) {}
 
-  void PokeType::init(Cx &cx, Op &op, size_t offs, const Val &val) const {
-    op.data = PokeData(offs, val, val.type->isa(cx.expr_type));
+  void PokeType::init(Cx &cx, Op &op, const Val &offs, const Val &val) const {
+    op.args[0] = offs;
+    op.args[1] = val;
   }
 
   void PokeType::compile(Cx &cx,
@@ -29,42 +21,48 @@ namespace cidk::ops {
                          Env &env,
                          Ops &out,
                          Opts &opts) const {
-    in->as<PokeData>().val.compile(in->pos, env, opts);
+    auto &p(in->pos);
+    auto &args(in->args);
+    for (int i(0); i < 2; i++) { args[i].compile(in->pos, env, opts); }
+
+    auto &offs(args[0]);
+    if (offs.type != &cx.int_type) { throw ESys(p, "Expected Int: ", offs); }
     out.push_back(*in);
   }
 
   void PokeType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
-    auto &d(op.as<PokeData>());
+    auto &args(op.args);
+    auto offs(args[0].as_int);
+    auto &val(args[1]);
+    bool is_expr(val.type == &cx.expr_type);
     auto ss(cx.stackp - cx.stack.begin());
-    if (d.is_expr && d.offs > 1) { cx.push(p, cx.stack[ss - d.offs]); }
-    d.val.eval(p, env, regs);
-    swap(cx.peek(p), cx.stack[ss - d.offs]);
-    if (!d.is_expr || d.offs > 1) { cx.pop(p); }
+    
+    if (is_expr && offs > 1) { cx.push(p, cx.stack[ss - offs]); }
+    val.eval(p, env, regs);
+    swap(cx.peek(p), cx.stack[ss - offs]);
+    if (!is_expr || offs > 1) { cx.pop(p); }
   }
 
-  void PokeType::mark_refs(Op &op) const {
-    auto &d(op.as<PokeData>());
-    d.val.mark_refs();
-  }
+  void PokeType::mark_refs(Op &op) const { op.args[1].mark_refs(); }
 
   void PokeType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
     vector<Val> vals;
-    size_t n(0);
+    Val offs(cx.int_type, Int(0));
     
-    for (;; n++) {
+    for (;; offs.as_int++) {
       auto v(read_val(cx, pos, in));
       if (!v) { throw ESys(p, "Missing ;"); }
       if (v->is_eop()) { break; }
       vals.push_back(*v);
     }
 
-    if (!n) { throw ESys(p, "Missing poke value"); }
+    if (!offs.as_int) { throw ESys(p, "Missing poke value"); }
     
     for (auto &v: vals) {
-      if (v.type != &cx.nil_type) { out.emplace_back(cx, p, *this, n, v); }
-      n--;
+      if (v.type != &cx.nil_type) { out.emplace_back(cx, p, *this, offs, v); }
+      offs.as_int--;
     }
   }
 }

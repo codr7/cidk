@@ -7,7 +7,7 @@
 namespace cidk::ops {
   struct PokeType: OpType {
     PokeType(const string &id);
-    void init(Cx &cx, Op &op, size_t offs, const Val &val) const;
+    void init(Cx &cx, Op &op, const Val &offs, const Val &val) const;
 
     virtual void compile(Cx &cx,
                          OpIter &in,

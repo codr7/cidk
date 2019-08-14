@@ -7,7 +7,7 @@
 namespace cidk::ops {
   struct LetType: OpType {
     LetType(const string &id);
-    void init(Cx &cx, Op &op, const Sym *id, const Val &val) const;
+    void init(Cx &cx, Op &op, const Val &id, const Val &val) const;
 
     virtual void compile(Cx &cx,
                          OpIter &in,

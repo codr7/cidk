@@ -43,18 +43,11 @@ namespace cidk {
     Pos pos;
     const OpType *type;
     array<Val, CIDK_OP_ARG_MAX> args;
-    any data;
 
     template <typename T, typename...Args>
     Op(Cx &cx, const Pos &pos, const T &type, Args &&...args): pos(pos), type(&type) {
       type.init(cx, *this, forward<Args>(args)...);
     }
-
-    template <typename T>
-    T &as() { return any_cast<T &>(data); }
-
-    template <typename T>
-    const T &as() const { return any_cast<const T &>(data); }
 
     void compile(Cx &cx,
                  OpIter &in,

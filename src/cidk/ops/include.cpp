@@ -9,7 +9,7 @@ namespace cidk::ops {
 
   IncludeType::IncludeType(const string &id): OpType(id) {}
 
-  void IncludeType::init(Cx &cx, Op &op, string val) const { op.data = move(val); }
+  void IncludeType::init(Cx &cx, Op &op, const Val &path) const { op.args[0] = path; }
 
   void IncludeType::compile(Cx &cx,
                             OpIter &in,
@@ -17,7 +17,11 @@ namespace cidk::ops {
                             Env &env,
                             Ops &out,
                             Opts &opts) const {
-    cx.load(in->pos, in->as<string>(), read_ops, env, out, opts);    
+    auto &p(in->pos);
+    auto &path(in->args[0]);
+    path.compile(p, env, opts);
+    if (path.type != &cx.str_type) { throw ESys(p, "Invalid path: ", path); } 
+    cx.load(in->pos, path.as_str->to_utf8(cx), read_ops, env, out, opts);    
     out.push_back(*in);
   }
 
@@ -30,14 +34,9 @@ namespace cidk::ops {
       auto v(read_val(cx, pos, in));
       if (!v) { throw ESys(vp, "Missing ;"); }
       if (v->is_eop()) { break; }
-
-      if (v->type != &cx.str_type) {
-        throw ESys(vp, "Expected Str, was: ", v->type->id);
-      } 
-
-      out.emplace_back(cx, p, *this, v->as_str->to_utf8(cx));
+      out.emplace_back(cx, p, *this, *v);
     }
 
-    if (!n) { throw ESys(p, "Missing Include path"); }
+    if (!n) { throw ESys(p, "Missing path"); }
   }
 }
