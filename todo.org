@@ -6,7 +6,6 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* remove read_id env lookup
 * block let/set const
 ** check in compile
 * --

@@ -161,15 +161,7 @@ namespace cidk {
     }
 
     if (!in.eof()) { in.unget(); }
-    auto s(cx.intern(p, out.str()));
-    
-    if (auto i(cx.env.try_get(s)); i && i->type->is_const) {
-      Val v;
-      i->clone(pos, v);
-      return v;
-    }
-
-    return Val(cx.sym_type, s);
+    return Val(cx.sym_type, cx.intern(p, out.str()));
   }
   
   Val read_list(Cx &cx, Pos &pos, istream &in) {    
