@@ -11,6 +11,7 @@ namespace cidk {
     if (!ref_mark) {
       ref_mark = true;
       mark_refs(ops);
+      opts.mark_refs();
     }
   }
   

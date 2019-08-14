@@ -1,7 +1,9 @@
 #ifndef CIDK_EXPR_HPP
 #define CIDK_EXPR_HPP
 
+#include "cidk/ext_id.hpp"
 #include "cidk/ops.hpp"
+#include "cidk/opts.hpp"
 #include "cidk/ref.hpp"
 
 namespace cidk {
@@ -10,6 +12,7 @@ namespace cidk {
   
   struct Expr: Ref {
     Ops ops;
+    Opts opts;
     
     Expr(Cx &cx);
     Expr(Cx &cx, const Ops &ops);

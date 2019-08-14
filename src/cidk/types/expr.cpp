@@ -1,5 +1,4 @@
 #include "cidk/cx.hpp"
-#include "cidk/ext_id.hpp"
 #include "cidk/types/expr.hpp"
 #include "cidk/val.hpp"
 
