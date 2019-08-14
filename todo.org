@@ -16,6 +16,7 @@ fun (fib ((n a b) Int) Int
 ** lookup root sym list on compile
 *** use bsearch to skip weight > stack
 ** call first match
+** update test/readme
 * --
 * add read_parens
 ** copy cidk::read_list and emit expr

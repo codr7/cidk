@@ -6,6 +6,7 @@ namespace cidk {
   Type::Type(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents):
     Def(cx, pos, id), tag(cx.type_tag++) {
     if (cx.type_tag == CIDK_TYPE_MAX) { throw ESys(pos, "Max types exceeded"); }
+    for (auto &p: this->parents) { p = nullptr; }
     for (auto pt: parents) { derive(cx, *pt); }
   }
   
