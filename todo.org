@@ -6,15 +6,26 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* calcl
-** add read_sub
-*** parens
-*** copy cidk::read_list and emit expr
-** add calc op
-*** calc 35 + 7;
-** add link op
-*** dl
-*** add calc tests using link
+* add arg types to fun id automatically
+** update math lib
+** update bench/test/readme
+* store list of Fun's in reverse weight order in root sym
+*** add Cx.type_weight(1)
+*** add Type/Fun.weight
+* --
+* rename call-bin to dispatch
+** remove vararg
+** add nargs
+** lookup list on compile
+** call first match
+* --
+* add read_parens
+** copy cidk::read_list and emit expr
+* add calc op
+** calc 35 + 7;
+* add link op
+** dl
+** add calc tests using link
 * ---
 * switch Env::Items to map
 ** bench

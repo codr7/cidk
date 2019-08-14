@@ -9,9 +9,9 @@
 #include "cidk/repl.hpp"
 
 namespace cidk {
-  void repl(Cx &cx, const string &header, Read read, istream &in, ostream &out) {
+  void repl(Cx &cx, istream &in, ostream &out) {
     out <<
-      header << endl << endl <<
+      "cidk v" << VERSION[0] << '.' << VERSION[1] << endl << endl <<
       "Press Return on empty row to evaluate." << endl <<
       "Empty input clears stack and Ctrl+D exits." << endl << endl <<
       "  ";
@@ -27,7 +27,7 @@ namespace cidk {
           try {
             Ops ops;
             Opts opts;
-            read(cx, p, buf, ops);
+            read_ops(cx, p, buf, ops);
             cx.compile(ops, opts, env);
             cx.eval(ops, env, opts, cx.regp);
           } catch (const exception &e) {
