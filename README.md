@@ -83,11 +83,11 @@ Copies `nvals` items starting at `offs` to end of stack.
 (... 1 2 3 4 5 2 3 4)
 ```
 
-Passing `T` starts at the beginning and/or copies to end.
+Passing `-1` starts at the beginning and copies to end.
 
 ```
   push 1 2 3;
-  cp T T;
+  cp -1 -1;
 
 (... 1 2 3 1 2 3)
 ```

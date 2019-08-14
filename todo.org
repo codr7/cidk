@@ -8,9 +8,7 @@ fun (fib ((n a b) Int) Int
 
 * finish op args
 ** convert set op
-** bench
 ** remove Op.data/as
-** commit op args
 * remove read_id env lookup
 ** change ops to check types in compile
 *** store vals

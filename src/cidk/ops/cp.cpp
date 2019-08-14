@@ -5,11 +5,6 @@
 #include "cidk/types/bool.hpp"
 
 namespace cidk::ops {
-  struct CpData {
-    Int offs, len;
-    CpData(Int offs, Int len): offs(offs), len(len) {}
-  };
-    
   const CpType Cp("cp");
 
   CpType::CpType(const string &id): OpType(id) {}
