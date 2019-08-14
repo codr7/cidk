@@ -20,8 +20,7 @@ namespace cidk::ops {
                          Env &env,
                          Ops &out,
                          Opts &opts) const {
-    Val &f(in->args[0]);
-    f.compile(in->pos, env, opts);
+    in->args[0].compile(in->pos, env, opts);
     out.push_back(*in);
   }
 
@@ -35,11 +34,7 @@ namespace cidk::ops {
     } else {
       v.eval(p, env, regs);
       auto &fv(cx.pop(p));
-      
-      if (Type *ft(fv.type); ft != &cx.fun_type) {
-        throw ESys(p, "Invalid call target: ", ft->id);
-      }
-      
+      if (fv.type != &cx.fun_type) { throw ESys(p, "Invalid call target: ", fv); }
       f = fv.as_fun;
     }
     

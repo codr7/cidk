@@ -58,38 +58,38 @@ namespace cidk::libs {
 
   void init_math(Cx &cx) {
     cx.env.add_fun(cx, Pos::_,
-                   "+[Int Int]",
-                   {Arg("x"), Arg("y")},
+                   "+",
+                   {Arg("x", cx.int_type), Arg("y", cx.int_type)},
                    {Ret(cx.int_type)},
                    int_add_imp);
 
     cx.env.add_fun(cx, Pos::_,
-                   "-[Int Int]",
-                   {Arg("x"), Arg("y")},
+                   "-",
+                   {Arg("x", cx.int_type), Arg("y", cx.int_type)},
                    {Ret(cx.int_type)},
                    int_sub_imp);
 
     cx.env.add_fun(cx, Pos::_,
-                   "*[Int Int]",
-                   {Arg("x"), Arg("y")},
+                   "*",
+                   {Arg("x", cx.int_type), Arg("y", cx.int_type)},
                    {Ret(cx.int_type)},
                    int_mul_imp);
 
     cx.env.add_fun(cx, Pos::_,
-                   "/[Int Int]",
-                   {Arg("x"), Arg("y")},
+                   "/",
+                   {Arg("x", cx.int_type), Arg("y", cx.int_type)},
                    {Ret(cx.int_type)},
                    int_div_imp);
 
     cx.env.add_fun(cx, Pos::_,
-                   "<[Int Int]",
-                   {Arg("x"), Arg("y")},
+                   "<",
+                   {Arg("x", cx.int_type), Arg("y", cx.int_type)},
                    {Ret(cx.bool_type)},
                    int_lt_imp);
 
     cx.env.add_fun(cx, Pos::_,
-                   ">[Int Int]",
-                   {Arg("x"), Arg("y")},
+                   ">",
+                   {Arg("x", cx.int_type), Arg("y", cx.int_type)},
                    {Ret(cx.bool_type)},
                    int_gt_imp);
   }

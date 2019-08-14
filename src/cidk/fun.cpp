@@ -3,8 +3,47 @@
 #include "cidk/ext_id.hpp"
 #include "cidk/expr.hpp"
 #include "cidk/fun.hpp"
+#include "cidk/types/list.hpp"
 
-namespace cidk {  
+namespace cidk {
+  Fun::Fun(Cx &cx,
+           const Pos &pos,
+           Env &env,
+           const Sym *id,
+           const vector<Arg> &args,
+           const vector<Ret> &rets,
+           Fimp imp): Def(cx, pos, id), env(cx, pos, env), imp(imp) {
+    copy(args.begin(), args.end(), back_inserter(this->args.items));
+  }
+
+  void Fun::init(Cx &cx, const Pos &pos) {
+    Val *root(env.try_get(id));
+
+    if (!root) {
+      List *l(cx.list_type.pool.get(cx));
+      root = &env.let(cx, pos, id, Val(cx.list_type, l));
+    }
+
+    auto &rl(root->as_list->items);
+    rl.emplace_back(cx.fun_type, this);
+    
+    stringstream buf;
+    buf << id << '[';
+    char sep(0);
+    
+    for (auto &a: args.items) {
+      if (!a.id) { a.id = cx.intern(pos, a.id_name); }
+      if (!a.type) { a.type = &cx.a_type; }
+      weight += a.type->tag;
+      if (sep) { buf << sep; }
+      buf << a.type->id;
+      sep = ' ';
+    }
+
+    buf << ']';
+    id = cx.intern(pos, buf.str());
+  }
+
   void Fun::mark() {
     if (!ref_mark) {
       ref_mark = true;

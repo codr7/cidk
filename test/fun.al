@@ -2,10 +2,10 @@ do-env {
   defun foo()() {
     let bar 42;
     defun baz()() {push bar;};
-    push baz;
+    push baz[];
   };
 
-  call foo;
+  call foo[];
   call;
   assert({cp;}) {is 42;};
 };

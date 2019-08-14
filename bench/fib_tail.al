@@ -4,13 +4,13 @@ defun fib1((n a b) Int)(Int) {
   push n 1; call >[Int Int]; if $ {
     dec n; 
     push b a b; 
-    call +[Int Int] fib1;
+    call +[Int Int] fib1[Int Int Int];
   } {
     is n 0; if $ a b;
   };
 };
 
-clock REPS {push N 0 1; call fib1; drop;};
+clock REPS {push N 0 1; call fib1[Int Int Int]; drop;};
 dump;
 
 defun fib2((n a b) Int)(Int) {
@@ -24,7 +24,7 @@ defun fib2((n a b) Int)(Int) {
   };
 };
 
-clock REPS {push N 0 1; call fib2; drop;};
+clock REPS {push N 0 1; call fib2[Int Int Int]; drop;};
 dump;
 
 defun fib3((_ _ _) Int)(Int) {
@@ -44,5 +44,5 @@ defun fib3((_ _ _) Int)(Int) {
   };
 };
 
-clock REPS {push N 0 1; call fib3; drop;};
+clock REPS {push N 0 1; call fib3[Int Int Int]; drop;};
 dump;

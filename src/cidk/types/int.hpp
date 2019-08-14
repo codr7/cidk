@@ -1,13 +1,9 @@
 #ifndef CIDK_TYPE_INT_HPP
 #define CIDK_TYPE_INT_HPP
 
-#include <cstdint>
-
 #include "cidk/val_type.hpp"
 
 namespace cidk {  
-  using Int = int64_t;
-
   struct IntType: TValType<Int> {
     IntType(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents);
     

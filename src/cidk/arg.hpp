@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+#include "cidk/sym.hpp"
+
 namespace cidk {
   using namespace std;
 
@@ -17,11 +19,15 @@ namespace cidk {
   
   struct Arg {
     string id_name;
-    const Sym *id;
-    Type *type;
+    const Sym *id = nullptr;
+    Type *type = nullptr;
     
-    Arg(const Sym *id, Type *type);
-    Arg(string id, Type *type = nullptr);
+    Arg(const Sym *id, Type *type): id(id), type(type) {
+      if (id) { id_name = id->name; }
+    }
+    
+    Arg(string id): id_name(id) {}
+    Arg(string id, Type &type): id_name(id), type(&type) {}
   };
 
   struct ArgList {

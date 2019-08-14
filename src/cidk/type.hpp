@@ -3,14 +3,17 @@
 
 #include <map>
 
+#include "cidk/cidk.hpp"
 #include "cidk/def.hpp"
+#include "cidk/int.hpp"
 
 namespace cidk {
   struct Val;
   struct Pos;
 
   struct Type: Def {
-    map<Type *, Type *> parents;
+    Int tag;
+    array<Type *, CIDK_TYPE_MAX> parents;
     
     Type(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents);
 

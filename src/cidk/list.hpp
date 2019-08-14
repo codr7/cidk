@@ -1,7 +1,7 @@
 #ifndef CIDK_LIST_HPP
 #define CIDK_LIST_HPP
 
-#include <deque>
+#include <vector>
 
 #include "cidk/ref.hpp"
 
@@ -9,7 +9,7 @@ namespace cidk {
   struct Val;
   
   struct List: Ref {
-    deque<Val> items;
+    vector<Val> items;
 
     List(Cx &cx);
 

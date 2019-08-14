@@ -46,6 +46,7 @@ namespace cidk {
     Ls<Ref> refs;
     Env env;
     
+    Int type_tag = 1;
     MetaType &meta_type;
     Type &a_type;
     NilType &nil_type;    
@@ -163,6 +164,7 @@ namespace cidk {
                     Rest &&...rest) {
     auto &ft(cx.fun_type);
     Fun *f(ft.pool.get(cx, pos, *this, id, args, rets, forward<Rest>(rest)...));
+    f->init(cx, pos);
     let(cx, pos, f->id, Val(ft, f));
     return *f;
   }
@@ -203,14 +205,16 @@ namespace cidk {
     return *i;
   }
 
-  inline void Env::let(Cx &cx, const Pos &pos, const Sym *id, const Val &val) {
+  inline Val &Env::let(Cx &cx, const Pos &pos, const Sym *id, const Val &val) {
     auto i(find(id));
-    
-    if (i == items.end() || i->id != id) {
-      items.insert(i, val)->id = id;
-    } else {
+
+    if (i != items.end() && i->id == id) {
       throw ESys(pos, "Duplicate binding: ", id);
     }
+    
+    i = items.insert(i, val);
+    i->id = id;
+    return *i;
   }
 
   inline void Env::set(Cx &cx, const Pos &pos, const Sym *id, const Val &val) {
@@ -226,20 +230,6 @@ namespace cidk {
   inline Val *Env::try_get(const Sym *id) {
     auto i(find(id));
     return (i == items.end() || i->id != id) ? nullptr : &*i;
-  }
-
-  template <typename ArgsT, typename RetsT>
-  Fun::Fun(Cx &cx,
-           const Pos &pos,
-           Env &env,
-           const Sym *id,
-           const ArgsT &args,
-           const RetsT &rets,
-           Fimp imp): Def(cx, pos, id), env(cx, env), imp(imp) {
-    for (auto a: args) {
-      if (!a.id) { a.id = cx.intern(pos, a.id_name); }
-      this->args.items.push_back(a);
-    }
   }
 
   inline bool Val::is_eop() const {

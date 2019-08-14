@@ -3,6 +3,7 @@
 
 #define CIDK_POOL_MIN 10
 
+#define CIDK_TYPE_MAX 100
 #define CIDK_STACK_MAX 100
 #define CIDK_REG_MAX 100
 

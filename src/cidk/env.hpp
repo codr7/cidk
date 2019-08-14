@@ -22,7 +22,7 @@ namespace cidk {
     Items items;
     
     Env(Cx &cx) {}
-    Env(Cx &cx, const Env &src): items(src.items) {}
+    Env(Cx &cx, const Pos &pos, const Env &src);
 
     Env(const Env &src) = delete;
     Env &operator =(const Env &) = delete;
@@ -64,7 +64,7 @@ namespace cidk {
     Iter find(const Sym *id);
 
     Val &get(const Pos &pos, const Sym *id);
-    void let(Cx &cx, const Pos &pos, const Sym *id, const Val &val);
+    Val &let(Cx &cx, const Pos &pos, const Sym *id, const Val &val);
     void mark_refs();
     void set(Cx &cx, const Pos &pos, const Sym *id, const Val &val);
     Val *try_get(const Sym *id);

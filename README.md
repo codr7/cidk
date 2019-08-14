@@ -4,9 +4,9 @@
 defun fib(n Int)(Int) {
   push n 2; call <[Int Int]; if $ n {
     dec n;
-    call fib;
+    call fib[Int];
     dec n;
-    call fib +[Int Int]; 
+    call fib[Int] +[Int Int]; 
   };
 };
 ```

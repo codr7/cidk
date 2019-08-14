@@ -40,13 +40,13 @@ assert({cp;}) {is 7;};
 do-env {
   defun foo(_ Int)(Int) { cp; call-bin +; };
   push 21;
-  call foo;
+  call foo[Int];
   assert({cp;}) {is 42;};
 };
 
 do-env {
   defun foo(_ Int)() { dec; cp; if $ {recall;} _; };
   push 42;
-  call foo;
+  call foo[Int];
   assert({cp;}) {is 0;};
 };
