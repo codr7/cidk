@@ -6,17 +6,15 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
+* rename call-bin to dispatch
+** dispatch 2 + -[Int Int];
+** collect args in List
+*** expand/typecheck/sort by reverse weight on compile
+** use bsearch to skip weight > stack on eval
+*** call first match
+** update test/readme
 * throw error on missing id
 ** test.al
-* store root list in reverse weight order in Fun.init
-*** use bsearch to find pos
-* rename call-bin to dispatch
-** remove vararg
-** add nargs
-** lookup root sym list on compile
-*** use bsearch to skip weight > stack
-** call first match
-** update test/readme
 * --
 * add read_parens
 ** copy cidk::read_list and emit expr
