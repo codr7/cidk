@@ -15,7 +15,8 @@ fun (fib ((n a b) Int) Int
 * fix infinite loop 
 ** {push 42}
 * simplify ops
-** drop varargs
+** remove varargs
+** update test/bench/readme
 * --
 * add read_parens
 ** copy cidk::read_list and emit expr
