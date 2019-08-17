@@ -34,15 +34,15 @@ namespace cidk::ops {
 
   void DumpType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
-    int n(0);
-    
-    for (;; n++) {
-      auto v(read_val(cx, pos, in));
-      if (!v) { throw ESys(p, "Missing ;"); }
-      if (v->is_eop()) { break; }
-      out.emplace_back(cx, p, *this, *v);
-    }
+    auto v(read_val(cx, pos, in));
+    if (!v) { throw ESys(p, "Missing ;"); }
 
-    if (!n) { out.emplace_back(cx, p, *this, Val(cx.pop_type)); }
+    if (v->is_eop()) {
+      v = cx.$;
+    } else {
+      read_eop(pos, in);
+    }
+    
+    out.emplace_back(cx, p, *this, *v);
   }
 }

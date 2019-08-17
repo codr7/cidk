@@ -74,13 +74,10 @@ namespace cidk::ops {
   }
 
   void DispatchType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
-    for (;;) {
-      skip_ws(pos, in);
-      Pos vp(pos);
-      auto v(read_val(cx, pos, in));
-      if (!v) { throw ESys(vp, "Missing ;"); }
-      if (v->is_eop()) { break; }
-      out.emplace_back(cx, vp, *this, *v);
-    }
+    Pos p(pos);
+    auto v(read_val(cx, pos, in));
+    if (!v || v->is_eop()) { throw ESys(p, "Missing ;"); }
+    read_eop(pos, in);
+    out.emplace_back(cx, p, *this, *v);
   }
 }

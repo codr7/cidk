@@ -1,7 +1,9 @@
-defconst REPS 10 N 20;
+defconst REPS 10;
+defconst N 20;
 
 defun fib1(n Int)(Int) {
-  push n 2; 
+  push n;
+  push 2; 
   call <[Any Any];
   
   if $ n {

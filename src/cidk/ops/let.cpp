@@ -45,16 +45,19 @@ namespace cidk::ops {
   void LetType::mark_refs(Op &op) const { op.args[1].mark_refs(); }
 
   void LetType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
-    Pos p(pos);
-    
-    for (;;) {
-      auto id(read_val(cx, pos, in));
-      if (!id) { throw ESys(p, "Missing ;"); }
-      if (id->is_eop()) { break; }
+    Pos p(pos);    
+    auto id(read_val(cx, pos, in));
+    if (!id || id->is_eop()) { throw ESys(p, "Missing id"); }
 
-      auto val(read_val(cx, pos, in));
-      if (!val) { throw ESys(p, "Missing ;"); }
-      out.emplace_back(cx, p, *this, *id, val->is_eop() ? cx.$ : *val);
+    auto val(read_val(cx, pos, in));
+    if (!val) { throw ESys(p, "Missing ;"); }
+    
+    if (val->is_eop()) {
+      val = cx.$;
+    } else {
+      read_eop(pos, in);
     }
+    
+    out.emplace_back(cx, p, *this, *id, *val);
   }
 }

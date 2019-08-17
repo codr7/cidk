@@ -2,7 +2,8 @@
   
 ```
 defun fib(n Int)(Int) {
-  push n 2;
+  push n;
+  push 2;
   call <[Any Any];
 
   if $ n {
@@ -38,7 +39,9 @@ cidk v0.8
 Press Return on empty row to evaluate.
 Empty input clears stack and Ctrl+D exits.
 
-  push 7 14 21;
+  push 7;
+  push 14
+  push 21;
   
 (7 14 21)
   dispatch +;
@@ -55,17 +58,10 @@ cidk currently runs at 2-15x the speed of Python3, as far as available [benchmar
 ### Syntax
 Each statement starts with an opcode and ends with semicolon, arguments are separated by whitespace.
 
-```
-  push 35 7;
-  dispatch +;
-
-(... 42)
-```
-
 ### Opcodes
 
-#### call fun+
-Calls functions in specified order. `fun` is popped from stack if missing.
+#### call fun?
+Calls `fun` or function popped from from stack if missing.
 
 #### cp [offs 0] [len 1]
 Copies `nvals` items starting at `offs` to end of stack.
@@ -84,26 +80,28 @@ Copies `nvals` items starting at `offs` to end of stack.
 (... 1 2 3 4 5 2 3 4)
 ```
 
-Passing `-1` starts at the beginning and copies to end.
+Passing `-1` copies from beginning to end.
 
 ```
-  push 1 2 3;
+  push 1;
+  push 2;
+  push 3;
   cp -1 -1;
 
 (... 1 2 3 1 2 3)
 ```
 
-#### defconst [id val]+
-Defines compile time constants for pairs of ids and values.
+#### defconst id val
+Defines compile time constant named `id`.
 
 ```
   do-env {
-    defconst foo 35 bar 7;
-    push foo bar;
-    dispatch +;
+    defconst foo 42;
+    dump foo;
   };
-  
-(... 42)
+
+42
+(...)
 
   dump foo;
 
@@ -111,19 +109,21 @@ Error in 'test.al' on row 1, col 5:
 Unknown id: foo
 ```
 
-#### dispatch fun+
-Calls the most specific implementation for each function based on stack contents.
+#### dispatch fun
+Calls the most specific implementation for specified function based on stack contents.
 
 ```
-  push 6 4 3;
-  dispatch + *;
+  push 35;
+  push 7;
+  dispatch +;
 
 (... 42)
 ```
 An error is thrown if no matching function is found.
 
 ```
-  push "foo" 42;
+  push "foo";
+  push 42;
   dispatch +;
   
 Error in "n/a" at row 2, col 9:
@@ -144,17 +144,27 @@ Evaluates body in a fresh environment.
 Drops `n` values from stack.
 
 ```
-  push 1 2 3;
+  push 1;
+  push 2;
+  push 3;
+  push 4;
   drop 2;
 
-(... 1)
+(... 1 2)
 ```
 
-#### dump val+
-Dumps values to `stderr`. `val` is popped from stack if missing.
+#### dump val?
+Dumps `val`, or value popped from stack if missing, to `stderr`.
 
-#### include file+
-Includes the contents of specified files in the current compilation.
+```
+  dump "hello";
+
+"hello"
+(...)
+
+```
+#### include file
+Inlines the contents of specified file in the current compilation unit.
 
 The following example includes the main test suite, which prints the number if milliseconds it took to run.
 
@@ -165,50 +175,36 @@ The following example includes the main test suite, which prints the number if m
 ()
 ```
 
-#### is x y z*
-Pushes `T` if all arguments are the same value, `F` otherwise. `x` and `y` are popped from stack if missing.
+#### is x y
+Pushes `T` if `x` and `y` are the same value, otherwise `F`. `x` and `y` are popped from stack if missing.
 
 ```
-  push 42; is $ 42;
+  push 42;
+  is 42;
 
 (... T)
+```
+
+#### let id val?
+Binds `id` to `val`, or value popped from stack if missing, in the current scope.
+
+```
+  let foo 42;
+  push foo;
+
+(... 42)
 ```
 
 #### mark
 Marks non-reachable references for sweeping.
 
-#### push val+
-Pushes values on stack.
+#### push val
+Pushes `val` on stack.
 
-#### poke val+
-Updates values on stack.
+#### set key val?
+Updates value for `key` to `val` or value popped from stack if missing.
 
-```
-  push 1 2 3;
-  poke 42;
-
-(... 1 2 42)
-```
-
-`_` may be used to skip values, arguments are matched from end of stack.
-
-```
-  push 1 2 3;
-  poke 42 _;
-
-(... 1 42 3)
-```
-
-Expressions are evaluated with current value pushed on stack.
-
-```
-  push 1 2 3;
-  poke {push 21; dispatch *;} _;
-
-(... 1 42 3)
-```
-#### set [key val?]+
-Updates values on stack or in environment depending on key type. `val` is popped from stack if missing.
+Integers index the stack from end.
 
 ```
   push 1 2 3;
@@ -216,6 +212,8 @@ Updates values on stack or in environment depending on key type. `val` is popped
 
 (... 1 4 3)
 ```
+
+While symbols act on the environment.
 
 ```
   do-env {
@@ -240,23 +238,16 @@ Expressions are evaluated with current value pushed on stack.
 (... 42)
 ```
 
-#### swap [x y?]?
-Swaps values.
+#### swap x y?
+Swaps value of `x` and `y`.
 
 Integers index the stack from end.
 
 ```
-  push 1 2 3;
+  push 1;
+  push 2;
+  push 3;
   swap 0 1;
-
-(... 1 3 2)
-```
-
-Default place is end of stack.
-
-```
-  push 1 2 3;
-  swap 1;
 
 (... 1 3 2)
 ```
@@ -267,7 +258,8 @@ While symbols act on the environment.
   do-env {
     let foo 1 bar 2;
     swap foo bar;
-    push foo bar;
+    push foo;
+    push bar;
   };
 
 (... 2 1)
@@ -284,7 +276,28 @@ Mixing is fine too.
   };
 
 (... 1 2)
-  
+```
+
+Default `y` is end of stack.
+
+```
+  push 1;
+  push 2;
+  push 3;
+  swap 2;
+
+(... 3 2 1)
+```
+
+And default `x` is the value before.
+
+```
+  push 1;
+  push 2;
+  push 3;
+  swap;
+
+(... 1 3 2)
 ```
 
 #### sweep

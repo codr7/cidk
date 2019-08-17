@@ -1,7 +1,9 @@
-defconst REPS 10000 N 20;
+defconst REPS 10000;
+defconst N 20;
 
 defun fib1(n Int)(Int) {
-  let a 0 b 1;
+  let a 0;
+  let b 1;
   step n -1;
   
   for $ F {
@@ -20,7 +22,8 @@ clock REPS {push N; call fib1[Int]; drop;};
 dump;
 
 defun fib2(_ Int)(Int) {
-  push 1 0;
+  push 1;
+  push 0;
   swap 2;
   step $ -1; 
 

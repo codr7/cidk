@@ -33,17 +33,12 @@ namespace cidk::ops {
 
   void DefconstType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
-    int n(0);
-    
-    for (;;) {
-      auto id(read_val(cx, pos, in));
-      if (!id) { throw ESys(p, "Missing ;"); }
-      if (id->is_eop()) { break; }
+    auto id(read_val(cx, pos, in));
+    if (!id || id->is_eop()) { throw ESys(p, "Missing id"); }
 
-      auto v(read_val(cx, pos, in));
-      if (!v) { throw ESys(p, "Missing value"); }
-      out.emplace_back(cx, p, *this, *id, *v);
-      n++;
-    }
+    auto v(read_val(cx, pos, in));
+    if (!v || v->is_eop()) { throw ESys(p, "Missing value"); }
+    read_eop(pos, in);
+    out.emplace_back(cx, p, *this, *id, *v);
   }
 }

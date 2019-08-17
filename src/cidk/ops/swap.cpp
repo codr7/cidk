@@ -21,8 +21,18 @@ namespace cidk::ops {
                          Env &env,
                          Ops &out,
                          Opts &opts) const {
+    auto &p(in->pos);
     auto &args(in->args);
-    for (int i(0); i < 2; i++) { args[i].compile(in->pos, env, opts); }
+    for (int i(0); i < 2; i++) { args[i].compile(p, env, opts); }
+    
+    if (auto &x(args[0]); x.type != &cx.int_type && x.type != &cx.reg_type) {
+      throw ESys(p, "Invalid swap place: ", x);
+    }
+
+    if (auto &y(args[1]); y.type != &cx.int_type && y.type != &cx.reg_type) {
+      throw ESys(p, "Invalid swap place: ", y);
+    }
+    
     out.push_back(*in);
   }
   
@@ -55,41 +65,22 @@ namespace cidk::ops {
   
   void SwapType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
-    int n(0);
+    Val x(cx.int_type, Int(1)), y(cx.int_type, Int(0));
+
+    auto v(read_val(cx, pos, in));
+    if (!v) { throw ESys(p, "Missing ;"); }
+
+    if (!v->is_eop()) {
+      x = *v;
+      v = read_val(cx, pos, in);
+      if (!v) { throw ESys(p, "Missing ;"); }
+
+      if (!v->is_eop()) {
+        y = *v;
+        read_eop(pos, in);
+      }
+    }
     
-    for (;;) {
-      auto x(read_val(cx, pos, in));
-      if (!x) { throw ESys(p, "Missing ;"); }
-      if (x->is_eop()) { break; }
-
-      if (x->type != &cx.int_type &&
-          x->type != &cx.reg_type &&
-          x->type != &cx.sym_type) {
-        throw ESys(p, "Invalid swap place", x->type->id);
-      }
-
-      n++;
-      auto y(read_val(cx, pos, in));
-      if (!y) { throw ESys(p, "Missing ;"); }
-
-      if (y->is_eop()) {
-        out.emplace_back(cx, p, *this, *x, Val(cx.int_type, Int(0)));
-        break;
-      }
-
-      if (y->type != &cx.int_type && y->type != &cx.sym_type) {
-        throw ESys(p, "Invalid swap place", y->type->id);
-      }
-
-      out.emplace_back(cx, p, *this, *x, *y);
-    }
-
-    if (!n) {
-      out.emplace_back(cx,
-                       pos,
-                       *this,
-                       Val(cx.int_type, Int(1)),
-                       Val(cx.int_type, Int(0)));
-    }
+    out.emplace_back(cx, p, *this, x, y);
   }
 }

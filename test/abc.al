@@ -1,13 +1,19 @@
-push (1 2 3) (1 2 3);
+push (1 2 3);
+push (1 2 3);
 assert({cp 1;}) {dispatch =;};
 
-push 7 14; dispatch <;
+push 7;
+push 14; 
+dispatch <;
 assert({cp;}) {is T;};
 
-push 7 14; dispatch >;
+push 7;
+push 14; 
+dispatch >;
 assert({cp;}) {is F;};
 
-push "foo\"bar" "foo\"bar";
+push "foo\"bar";
+push "foo\"bar";
 assert() {dispatch =;};
 
 do-env {

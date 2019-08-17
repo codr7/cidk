@@ -1,9 +1,16 @@
-defconst REPS 10000 N 20;
+defconst REPS 10000;
+defconst N 20;
 
 defun fib1((n a b) Int)(Int) {
-  push n 1; call >[Any Any]; if $ {
+  push n;
+  push 1; 
+  call >[Any Any]; 
+
+  if $ {
     step n -1; 
-    push b a b; 
+    push b;
+    push a;
+    push b; 
     call +[Int Int];
     call fib1[Int Int Int];
   } {
@@ -12,13 +19,19 @@ defun fib1((n a b) Int)(Int) {
   };
 };
 
-clock REPS {push N 0 1; call fib1[Int Int Int]; drop;};
+clock REPS {push N; push 0; push 1; call fib1[Int Int Int]; drop;};
 dump;
 
 defun fib2((n a b) Int)(Int) {
-  push n 1; call >[Any Any]; if $ {
+  push n;
+  push 1; 
+  call >[Any Any]; 
+
+  if $ {
     step n -1; 
-    push b a b; 
+    push b;
+    push a;
+    push b; 
     call +[Int Int]; 
     recall;
   } {   
@@ -27,7 +40,7 @@ defun fib2((n a b) Int)(Int) {
   };
 };
 
-clock REPS {push N 0 1; call fib2[Int Int Int]; drop;};
+clock REPS {push N; push 0; push 1; call fib2[Int Int Int]; drop;};
 dump;
 
 defun fib3((_ _ _) Int)(Int) {
@@ -56,5 +69,5 @@ defun fib3((_ _ _) Int)(Int) {
   };
 };
 
-clock REPS {push N 0 1; call fib3[Int Int Int]; drop;};
+clock REPS {push N; push 0; push 1; call fib3[Int Int Int]; drop;};
 dump;

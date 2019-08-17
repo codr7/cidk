@@ -66,14 +66,17 @@ namespace cidk::ops {
 
   void SetType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
-    
-    for (;;) {
-      auto k(read_val(cx, pos, in));
-      if (!k) { throw ESys(p, "Missing ;"); }
-      if (k->is_eop()) { break; }
-      auto v(read_val(cx, pos, in));
-      if (!v) { throw ESys(p, "Missing ;"); }
-      out.emplace_back(cx, p, *this, *k, v->is_eop() ? cx.$ : *v);
+    auto k(read_val(cx, pos, in));
+    if (!k || k->is_eop()) { throw ESys(p, "Missing key"); }
+    auto v(read_val(cx, pos, in));
+    if (!v) { throw ESys(p, "Missing ;"); }
+
+    if (v->is_eop()) {
+      v = cx.$;
+    } else {
+      read_eop(pos, in);
     }
+    
+    out.emplace_back(cx, p, *this, *k, *v);
   }
 }

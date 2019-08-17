@@ -1,5 +1,12 @@
-clock 1000 {include "abc.al" "fun.al" "iter.al" "math.al" "stack.al";};
+clock 1000 {
+  include "abc.al";
+  include "fun.al";
+  include "iter.al";
+  include "math.al"; 
+  include "stack.al";
+};
 
 dump;
 dump stack;
-mark; sweep;
+mark; 
+sweep;

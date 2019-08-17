@@ -44,21 +44,20 @@ namespace cidk::ops {
     Pos p(pos);
     auto x(read_val(cx, pos, in));
     if (!x) { throw ESys(p, "Missing ;"); }
+    optional<Val> y(cx.$);
 
     if (x->is_eop()) {
-      out.emplace_back(cx, p, *this, cx.$, cx.$);
-      return;
-    }
-
-    int n(0);
-    
-    for (;; n++) {
-      auto y(read_val(cx, pos, in));
+      x = cx.$;
+    } else {
+      y = read_val(cx, pos, in);
       if (!y) { throw ESys(p, "Missing ;"); }
-      if (y->is_eop()) { break; }
-      out.emplace_back(cx, p, *this, *x, *y);
+      if (y->is_eop()) {
+        y = cx.$;
+      } else {
+        read_eop(pos, in);
+      }
     }
-
-    if (!n) { out.emplace_back(cx, p, *this, *x, cx.$); }
+    
+    out.emplace_back(cx, p, *this, *x, *y);
   }
 }
