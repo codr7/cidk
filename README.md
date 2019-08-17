@@ -108,13 +108,23 @@ Unknown id: foo
 ```
 
 #### dispatch fun+
-Calls the most specific function based on stack contents.
+Calls the most specific implementation for each function based on stack contents.
 
 ```
   push 6 4 3;
   dispatch + *;
 
 (... 42)
+```
+An error is thrown if no matching function is found.
+
+```
+  push "foo" 42;
+  dispatch +;
+  
+Error in "n/a" at row 2, col 9:
+Dispatch failed
+("foo" 42)
 ```
 
 #### do-env body
