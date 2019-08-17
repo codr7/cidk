@@ -22,7 +22,7 @@ namespace cidk::ops {
     auto &p(in->pos);
     auto &body(in->args[0]);
     if (body.type != &cx.expr_type) { throw ESys(p, "Invalid body: ", body); }
-    Env body_env(cx, p, env);
+    Env body_env(cx, env);
     body.compile(p, body_env, body.as_expr->opts);
     out.push_back(*in);
   }

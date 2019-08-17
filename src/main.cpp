@@ -13,8 +13,8 @@ enum struct Mode {load, repl};
 
 int main(int argc, char *argv[]) {  
   Cx cx;
+  Env env(cx, cx.env);
   const Pos &p(Pos::_);
-  Env env(cx, p, cx.env);
   Mode m(Mode::repl);
   
   while (--argc && ++argv) {

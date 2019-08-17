@@ -22,7 +22,7 @@ namespace cidk {
     Items items;
     
     Env(Cx &cx) {}
-    Env(Cx &cx, const Pos &pos, const Env &src);
+    Env(Cx &cx, const Env &src);
 
     Env(const Env &src) = delete;
     Env &operator =(const Env &) = delete;

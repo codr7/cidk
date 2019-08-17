@@ -5,7 +5,7 @@
 #include "cidk/types/expr.hpp"
 
 namespace cidk {
-  Env::Env(Cx &cx, const Pos &pos, const Env &src): items(src.items) { }
+  Env::Env(Cx &cx, const Env &src): items(src.items) { }
 
   void Env::add_const(Cx &cx, const Pos &pos, const string &id, const Val &val) {
     add_const(cx, pos, cx.intern(pos, id), val);

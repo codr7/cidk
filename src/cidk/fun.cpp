@@ -14,7 +14,7 @@ namespace cidk {
            const Sym *id,
            const vector<Arg> &args,
            const vector<Ret> &rets,
-           Fimp imp): Def(cx, pos, id), env(cx, pos, env), imp(imp) {
+           Fimp imp): Def(cx, pos, id), env(cx, env), imp(imp) {
     copy(args.begin(), args.end(), back_inserter(this->args.items));
   }
   
