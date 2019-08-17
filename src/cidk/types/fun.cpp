@@ -14,7 +14,7 @@ namespace cidk {
     TValType<Fun *>(cx, pos, id, parents) {}
 
   int FunType::cmp(const Pos &pos, const Val &x, const Val &y) const {
-    return cidk::cmp(pos, x.as_int, y.as_int);
+    return cidk::cmp(pos, x.as_fun, y.as_fun);
   }
 
   void FunType::cp(Val &dst, const Val &src) const { dst.as_fun = src.as_fun; }

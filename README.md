@@ -2,7 +2,7 @@
   
 ```
 defun fib(n Int)(Int) {
-  push n 2; call <[Int Int]; if $ n {
+  push n 2; call <[Any Any]; if $ n {
     dec n;
     call fib[Int];
     dec n;

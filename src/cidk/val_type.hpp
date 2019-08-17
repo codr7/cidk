@@ -28,7 +28,7 @@ namespace cidk {
     }
 
     virtual int cmp(const Pos &pos, const Val &x, const Val &y) const {
-      throw ESys(pos, "cmp not supported: ", id);
+      throw ESys(pos, "Not comparable: ", id);
     }
     
     virtual void compile(const Pos &pos, Val &val, Env &env, Opts &opts) const {}

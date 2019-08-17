@@ -38,24 +38,6 @@ namespace cidk::libs {
     cx.peek(p).as_int /= y.as_int;
   }
 
-  static void int_lt_imp(Cx &cx,
-                         const Pos &p,
-                         const Fun &f,
-                         Env &env) {
-    auto &y(cx.pop(p));
-    Val &x(cx.peek(p));
-    x.reset(cx.bool_type, x.as_int < y.as_int);
-  }
-
-  static void int_gt_imp(Cx &cx,
-                         const Pos &p,
-                         const Fun &f,
-                         Env &env) {
-    auto &y(cx.pop(p));
-    auto &x(cx.peek(p));
-    x.reset(cx.bool_type, x.as_int > y.as_int);
-  }
-
   void init_math(Cx &cx) {
     cx.env.add_fun(cx, Pos::_,
                    "+",
@@ -80,18 +62,6 @@ namespace cidk::libs {
                    {Arg("x", cx.int_type), Arg("y", cx.int_type)},
                    {Ret(cx.int_type)},
                    int_div_imp);
-
-    cx.env.add_fun(cx, Pos::_,
-                   "<",
-                   {Arg("x", cx.int_type), Arg("y", cx.int_type)},
-                   {Ret(cx.bool_type)},
-                   int_lt_imp);
-
-    cx.env.add_fun(cx, Pos::_,
-                   ">",
-                   {Arg("x", cx.int_type), Arg("y", cx.int_type)},
-                   {Ret(cx.bool_type)},
-                   int_gt_imp);
   }
 }
 

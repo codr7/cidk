@@ -55,6 +55,7 @@ namespace cidk::ops {
       if (!y) { throw ESys(p, "Missing ;"); }
       if (y->is_eop()) { break; }
       out.emplace_back(cx, p, *this, *x, *y);
+      x.swap(y);
     }
 
     if (!n) { out.emplace_back(cx, p, *this, *x, cx.$); }

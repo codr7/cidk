@@ -1,7 +1,7 @@
 defconst REPS 10 N 20;
 
 defun fib1(n Int)(Int) {
-  push n 2; call <[Int Int]; if $ n {
+  push n 2; call <[Any Any]; if $ n {
     dec n;
     call fib1[Int];
     dec n;
@@ -13,7 +13,7 @@ clock REPS {push N; call fib1[Int]; drop;};
 dump;
 
 defun fib2(_ Int)(Int) {
-  cp; push 2; call <[Int Int]; if $ _ {
+  cp; push 2; call <[Any Any]; if $ _ {
     dec; cp;
     call fib2[Int];
     swap; dec;

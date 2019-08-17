@@ -6,6 +6,7 @@
 #include "cidk/defer.hpp"
 #include "cidk/e.hpp"
 #include "cidk/ext_id.hpp"
+#include "cidk/libs/abc.hpp"
 #include "cidk/libs/math.hpp"
 #include "cidk/op.hpp"
 #include "cidk/ops/stash.hpp"
@@ -50,6 +51,7 @@ namespace cidk {
     F(bool_type, false),
     eop(sym_type, intern(Pos::_, ";")),
     stdin(&cin), stdout(&cout), stderr(&cerr) {
+    libs::init_abc(*this);
     libs::init_math(*this);
     env.add_const(*this, Pos::_, "$", $);
     env.add_const(*this, Pos::_, "T", T);

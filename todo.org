@@ -8,6 +8,8 @@ fun (fib ((n a b) Int) Int
 
 * throw error on missing id
 ** test.al
+* add call op arg check
+** extract Fun.match from dispatch op
 * --
 * add read_parens
 ** copy cidk::read_list and emit expr

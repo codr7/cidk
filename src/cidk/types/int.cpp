@@ -9,6 +9,10 @@ namespace cidk {
                    const vector<Type *> &parents):
     TValType<Int>(cx, pos, id, parents) {}
 
+  int IntType::cmp(const Pos &pos, const Val &x, const Val &y) const {
+    return cidk::cmp(pos, x.as_int, y.as_int);
+  }
+
   void IntType::cp(Val &dst, const Val &src) const { dst.as_int = src.as_int; }
 
   void IntType::dump(const Val &val, ostream &out) const { out << val.as_int; }
