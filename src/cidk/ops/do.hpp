@@ -1,11 +1,11 @@
-#ifndef CIDK_OP_DO_ENV_HPP
-#define CIDK_OP_DO_ENV_HPP
+#ifndef CIDK_OP_DO_HPP
+#define CIDK_OP_DO_HPP
 
 #include "cidk/op.hpp"
 
 namespace cidk::ops {
-  struct DoEnvType: OpType {
-    DoEnvType(const string &id);
+  struct DoType: OpType {
+    DoType(const string &id);
     void init(Cx &cx, Op &op, const Val &body) const;
 
     virtual void compile(Cx &cx,
@@ -24,7 +24,7 @@ namespace cidk::ops {
     virtual void read(Cx &cx, Pos &pos, istream &in, Ops &out) const override;
   };
 
-  extern const DoEnvType DoEnv;
+  extern const DoType Do;
 }
 
 #endif

@@ -95,7 +95,7 @@ Passing `-1` copies from beginning to end.
 Defines compile time constant named `id`.
 
 ```
-  do-env {
+  do {
     defconst foo 42;
     dump foo;
   };
@@ -131,11 +131,11 @@ Dispatch failed
 ("foo" 42)
 ```
 
-#### do-env body
+#### do body
 Evaluates body in a fresh environment.
 
 ```
-  do-env {let foo 42; push foo;};
+  do {let foo 42; push foo;};
 
 (... 42)
 ```
@@ -216,7 +216,7 @@ Integers index the stack from end.
 While symbols act on the environment.
 
 ```
-  do-env {
+  do {
     let foo 1;
     push foo;
     set foo 2;
@@ -229,7 +229,7 @@ While symbols act on the environment.
 Expressions are evaluated with current value pushed on stack.
 
 ```
-  do-env {
+  do {
     let foo 1;
     set foo {push 41; dispatch +};
     push foo;
@@ -255,7 +255,7 @@ Integers index the stack from end.
 While symbols act on the environment.
 
 ```
-  do-env {
+  do {
     let foo 1 bar 2;
     swap foo bar;
     push foo;
@@ -268,7 +268,7 @@ While symbols act on the environment.
 Mixing is fine too.
 
 ```
-  do-env {
+  do {
     let foo 1;
     push 2;
     swap foo;

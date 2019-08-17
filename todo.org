@@ -6,18 +6,15 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* rename do-env to do
-** update test/readme
-* rename let to defvar
-** update test/bench/readme
-* --
-* add read_group
-** copy cidk::read_list and emit expr
-* add op
-** calcl (35 + 7);
 * add link op
 ** dl
 ** add calcl tests using link
+* --
+* calcl
+** add read_group
+*** copy cidk::read_list and emit expr
+** add op
+*** calcl (35 + 7);
 * --
 * switch Env::Items to map
 ** remove Val.id

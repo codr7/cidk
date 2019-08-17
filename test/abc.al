@@ -16,14 +16,14 @@ push "foo\"bar";
 push "foo\"bar";
 assert() {dispatch =;};
 
-do-env {
+do {
   defconst foo 42;
   assert(foo) {is foo 42;};
 };
 
-do-env {
+do {
   defconst foo 42;
-  do-env {assert(foo) {is foo 42;};};
+  do {assert(foo) {is foo 42;};};
 };
 
 if T 42 T;
@@ -32,14 +32,14 @@ assert({cp;}) {is 42;};
 if F 42 7;
 assert({cp;}) {is 7;};
 
-do-env {
+do {
   defun foo(_ Int)(Int) { cp; dispatch +; };
   push 21;
   call foo[Int];
   assert({cp;}) {is 42;};
 };
 
-do-env {
+do {
   defun foo(_ Int)() { step $ -1; cp; if $ {recall;} _; };
   push 42;
   call foo[Int];

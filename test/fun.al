@@ -1,4 +1,4 @@
-do-env {
+do {
   defun foo()() {
     let bar 42;
     defun baz()() {push bar;};
@@ -10,7 +10,7 @@ do-env {
   assert({cp;}) {is 42;};
 };
 
-do-env {
+do {
   defun foo((i j) Int)(Int) {
     if i {
       step i -1; 
@@ -25,7 +25,7 @@ do-env {
   assert({cp;}) {is 42;};
 };
 
-do-env {
+do {
   defconst foo (+);
   push 35;
   push 7;

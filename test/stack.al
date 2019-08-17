@@ -35,7 +35,7 @@ swap 1;
 stash;
 assert({cp;}) {push (1 3 2); dispatch =;};
 
-do-env {
+do {
   let foo 1;
   let bar 2;
   swap foo bar;
@@ -45,7 +45,7 @@ do-env {
   assert({cp;}) {push (2 1); dispatch =;};
 };
 
-do-env {
+do {
   let foo 1;
   push 2;
   swap foo;
@@ -61,13 +61,13 @@ set 1 4;
 stash;
 assert({cp;}) {push (1 4 3); dispatch =;};
 
-do-env {
+do {
   let foo 1;
   set foo 2;
   assert(foo) {push foo; push 2; dispatch =;};
 };
 
-do-env {
+do {
   let foo 1;
   set foo {push 41; dispatch +;};
   assert(foo) {push foo; push 42; dispatch =;}; 
