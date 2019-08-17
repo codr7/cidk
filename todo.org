@@ -8,13 +8,20 @@ fun (fib ((n a b) Int) Int
 
 * throw error on missing id
 ** test.al
+* rename dec op to step
+** default +1
+** update bench/test/readme
 * add call op arg check
 ** extract Fun.match from dispatch op
+** bench
+* simplify ops
+** drop varargs
+* eval if != Fun in dispatch compile
 * --
 * add read_parens
 ** copy cidk::read_list and emit expr
 * add calc op
-** calc 35 + 7;
+** calc (35 + 7);
 * add link op
 ** dl
 ** add calcl tests using link
