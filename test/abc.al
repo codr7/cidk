@@ -1,5 +1,5 @@
 push (1 2 3) (1 2 3);
-assert({cp 1;}) {eq;};
+assert({cp 1;}) {dispatch =;};
 
 push 7 14; dispatch <;
 assert({cp;}) {is T;};
@@ -7,7 +7,8 @@ assert({cp;}) {is T;};
 push 7 14; dispatch >;
 assert({cp;}) {is F;};
 
-assert() {eq "foo\"bar" "foo\"bar";};
+push "foo\"bar" "foo\"bar";
+assert() {dispatch =;};
 
 do-env {
   defconst foo 42;
