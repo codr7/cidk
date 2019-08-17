@@ -23,14 +23,14 @@ namespace cidk::ops {
     auto &body(in->args[0]);
     if (body.type != &cx.expr_type) { throw ESys(p, "Invalid body: ", body); }
     Env body_env(cx, env);
-    body.compile(p, body_env, body.as_expr->opts);
+    auto &body_opts(body.as_expr->opts);
+    body.compile(p, body_env, body_opts);
+    for (auto &r: body_opts.ext_ids) { r.val = env.get(p, r.id); }
     out.push_back(*in);
   }
 
   void DoEnvType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
-    auto &p(op.pos);
     auto &body(*op.args[0].as_expr);
-    for (auto &r: body.opts.ext_ids) { r.val = env.get(p, r.id); }
     cx.eval(body.ops, env, body.opts, regs);
   }
 
