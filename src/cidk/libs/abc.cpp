@@ -15,6 +15,15 @@ namespace cidk::libs {
     x.reset(cx.bool_type, x.eq(p, y));
   }
 
+  static void neq_imp(Cx &cx,
+                      const Pos &p,
+                      const Fun &f,
+                      Env &env) {
+    auto &y(cx.pop(p));
+    Val &x(cx.peek(p));
+    x.reset(cx.bool_type, !x.eq(p, y));
+  }
+
   static void lt_imp(Cx &cx,
                          const Pos &p,
                          const Fun &f,
@@ -40,6 +49,12 @@ namespace cidk::libs {
                    {Ret(cx.bool_type)},
                    eq_imp);
 
+    cx.env.add_fun(cx, Pos::_,
+                   "!=",
+                   {Arg("x", cx.any_type), Arg("y", cx.any_type)},
+                   {Ret(cx.bool_type)},
+                   neq_imp);
+        
     cx.env.add_fun(cx, Pos::_,
                    "<",
                    {Arg("x", cx.any_type), Arg("y", cx.any_type)},
