@@ -1,12 +1,12 @@
-#ifndef CIDK_OP_DEC_HPP
-#define CIDK_OP_DEC_HPP
+#ifndef CIDK_OP_STEP_HPP
+#define CIDK_OP_STEP_HPP
 
 #include "cidk/op.hpp"
 #include "cidk/val.hpp"
 
 namespace cidk::ops {
-  struct DecType: OpType {
-    DecType(const string &id);
+  struct StepType: OpType {
+    StepType(const string &id);
     void init(Cx &cx, Op &op, const Val &n, const Val &delta) const;
 
     virtual void compile(Cx &cx,
@@ -25,7 +25,7 @@ namespace cidk::ops {
     virtual void read(Cx &cx, Pos &pos, istream &in, Ops &out) const override;
   };
 
-  extern const DecType Dec;
+  extern const StepType Step;
 }
 
 #endif

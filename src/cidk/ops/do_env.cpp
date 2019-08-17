@@ -25,13 +25,14 @@ namespace cidk::ops {
     Env body_env(cx, env);
     auto &body_opts(body.as_expr->opts);
     body.compile(p, body_env, body_opts);
-    for (auto &r: body_opts.ext_ids) { r.val = env.get(p, r.id); }
+    for (auto &eid: body_opts.ext_ids) { eid.src_reg = opts.get_reg(p, eid.id); }
     out.push_back(*in);
   }
 
   void DoEnvType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &body(*op.args[0].as_expr);
-    cx.eval(body.ops, env, body.opts, regs);
+    for (auto &eid: body.opts.ext_ids) { cx.regp[eid.dst_reg] = regs[eid.src_reg]; }
+    cx.eval(body.ops, env, body.opts);
   }
 
   void DoEnvType::mark_refs(Op &op) const { op.args[0].mark_refs(); }

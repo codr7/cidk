@@ -2,11 +2,15 @@
   
 ```
 defun fib(n Int)(Int) {
-  push n 2; call <[Any Any]; if $ n {
-    dec n;
+  push n 2;
+  call <[Any Any];
+
+  if $ n {
+    step n -1;
     call fib[Int];
-    dec n;
-    call fib[Int] +[Int Int]; 
+    step n -1;
+    call fib[Int];
+    call +[Int Int]; 
   };
 };
 ```

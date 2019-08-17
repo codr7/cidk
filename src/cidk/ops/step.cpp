@@ -1,23 +1,23 @@
 #include "cidk/call.hpp"
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
-#include "cidk/ops/dec.hpp"
+#include "cidk/ops/step.hpp"
 #include "cidk/read.hpp"
 #include "cidk/types/pop.hpp"
 #include "cidk/types/reg.hpp"
 #include "cidk/types/sym.hpp"
 
 namespace cidk::ops {
-  const DecType Dec("dec");
+  const StepType Step("step");
 
-  DecType::DecType(const string &id): OpType(id) {}
+  StepType::StepType(const string &id): OpType(id) {}
 
-  void DecType::init(Cx &cx, Op &op, const Val &n, const Val &delta) const {
+  void StepType::init(Cx &cx, Op &op, const Val &n, const Val &delta) const {
     op.args[0] = n;
     op.args[1] = delta;
   }
 
-  void DecType::compile(Cx &cx,
+  void StepType::compile(Cx &cx,
                         OpIter &in,
                         const OpIter &end,
                         Env &env,
@@ -29,7 +29,7 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void DecType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
+  void StepType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &args(op.args);
     auto &n(args[0]), &delta(args[1]);
@@ -43,7 +43,7 @@ namespace cidk::ops {
       }
 
       auto &nv(regs[n.as_reg].as_int);
-      nv -= dv.as_int;
+      nv += dv.as_int;
       dv.as_int = nv;
     } else {
       n.eval(p, env, regs); 
@@ -54,16 +54,16 @@ namespace cidk::ops {
         throw ESys(p, "Expected Int, was: ", dv.type->id);
       }
 
-      cx.peek(p).as_int -= dv.as_int;
+      cx.peek(p).as_int += dv.as_int;
     }
   }
 
-  void DecType::mark_refs(Op &op) const {
+  void StepType::mark_refs(Op &op) const {
     auto &args(op.args);
     for (int i(0); i < 2; i++) { args[i].mark_refs(); }
   }
 
-  void DecType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
+  void StepType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
     auto n(read_val(cx, pos, in));
     if (!n) { throw ESys(p, "Missing ;"); }
@@ -75,8 +75,9 @@ namespace cidk::ops {
       auto delta(read_val(cx, pos, in));
       if (!delta) { throw ESys(p, "Missing ;"); }
       
-      if (delta->is_eop()) { out.emplace_back(cx, p, *this, *n, one); }
-      else {
+      if (delta->is_eop()) {
+        out.emplace_back(cx, p, *this, *n, one);
+      } else {
         out.emplace_back(cx, p, *this, *n, *delta);
         read_eop(pos, in);
       }

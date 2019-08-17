@@ -18,7 +18,9 @@ namespace cidk {
 
   void Call::eval(Cx &cx) {
   recall:
-    cx.eval(fun.body, fun.env, fun.body_opts, cx.regp);
+    Reg *regs(cx.regp);
+    for (auto &eid: fun.body_opts.ext_ids) { regs[eid.dst_reg] = eid.val; }
+    cx.eval(fun.body, fun.env, fun.body_opts);
     
     if (cx.eval_state == EvalState::recall) {
       cx.eval_state = EvalState::go;

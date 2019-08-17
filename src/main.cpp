@@ -26,8 +26,8 @@ int main(int argc, char *argv[]) {
       Ops ops;  
       Opts opts;
       cx.load(p, a, read_ops, env, ops, opts);
-      for (auto &r: opts.ext_ids) { r.val = env.get(p, r.id); }
-      cx.eval(ops, env, opts, cx.regp);
+      for (auto &eid: opts.ext_ids) { throw ESys(eid.pos, "Unknown id: ", eid.id); }
+      cx.eval(ops, env, opts);
       m = Mode::load;
     }
   }

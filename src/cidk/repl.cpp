@@ -29,8 +29,12 @@ namespace cidk {
             Opts opts;
             read_ops(cx, p, buf, ops);
             cx.compile(ops, opts, env);
-            for (auto &r: opts.ext_ids) { r.val = env.get(p, r.id); }
-            cx.eval(ops, env, opts, cx.regp);
+
+            for (auto &eid: opts.ext_ids) {
+              throw ESys(eid.pos, "Unknown id: ", eid.id);
+            }
+
+            cx.eval(ops, env, opts);
           } catch (const exception &e) {
             out << e.what() << endl;
           }

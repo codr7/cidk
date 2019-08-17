@@ -17,7 +17,7 @@ namespace cidk {
   
   size_t Opts::push_ext_id(const Pos &pos, const Sym *id) {
     auto i(*try_push_reg(pos, id));
-    ext_ids.emplace_back(id, i);
+    ext_ids.emplace_back(pos, id, i);
     return i;
   }
 

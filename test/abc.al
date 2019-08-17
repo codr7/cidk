@@ -34,7 +34,7 @@ do-env {
 };
 
 do-env {
-  defun foo(_ Int)() { dec; cp; if $ {recall;} _; };
+  defun foo(_ Int)() { step $ -1; cp; if $ {recall;} _; };
   push 42;
   call foo[Int];
   assert({cp;}) {is 0;};

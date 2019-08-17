@@ -5,11 +5,12 @@
 
 namespace cidk {
   struct ExtId {
+    Pos pos;
     const Sym *id;
     size_t src_reg, dst_reg;
     Val val;
     
-    ExtId(const Sym *id, size_t dst_reg);
+    ExtId(const Pos &pos, const Sym *id, size_t dst_reg);
     void mark_refs();
   };
 }
