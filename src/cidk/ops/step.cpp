@@ -37,11 +37,7 @@ namespace cidk::ops {
     if (n.type == &cx.reg_type) {
       delta.eval(p, env, regs);
       auto &dv(cx.peek(p));
-      
-      if (dv.type != &cx.int_type) {
-        throw ESys(p, "Expected Int, was: ", dv.type->id);
-      }
-
+      if (dv.type != &cx.int_type) { throw ESys(p, "Expected Int: ", dv.type->id); }
       auto &nv(regs[n.as_reg].as_int);
       nv += dv.as_int;
       dv.as_int = nv;
@@ -49,11 +45,7 @@ namespace cidk::ops {
       n.eval(p, env, regs); 
       delta.eval(p, env, regs);
       auto &dv(cx.pop(p));
-      
-      if (dv.type != &cx.int_type) {
-        throw ESys(p, "Expected Int, was: ", dv.type->id);
-      }
-
+      if (dv.type != &cx.int_type) { throw ESys(p, "Expected Int: ", dv.type->id); }
       cx.peek(p).as_int += dv.as_int;
     }
   }

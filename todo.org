@@ -17,7 +17,7 @@ fun (fib ((n a b) Int) Int
 * --
 * add read_parens
 ** copy cidk::read_list and emit expr
-* add calc op
+* add op
 ** calcl (35 + 7);
 * add link op
 ** dl
