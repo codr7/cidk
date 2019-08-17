@@ -60,6 +60,26 @@ namespace cidk {
     }
   }  
 
+  bool Fun::match(Val *stackp, size_t stack_len) const {
+    auto &as(args.items);
+    
+    if (auto nas(as.size()); nas) {
+      if (nas <= stack_len) {
+        for (auto a = &as.back(); a >= &as[0]; a--, stackp--) {          
+          if (Type *at(a->type); at != &cx.a_type && !stackp->type->isa(*at)) {
+            return false;
+          }
+        }
+
+        return true;
+      }
+
+      return false;
+    }
+
+    return true;
+  }
+  
   void Fun::sweep(Cx &cx, const Pos &pos) {
     Val &root(env.get(pos, id->root));
     auto &rl(*root.as_list);

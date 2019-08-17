@@ -51,20 +51,9 @@ namespace cidk::ops {
     
     for (auto &fv: op.args[0].as_list->items) {
       auto &f(*fv.as_fun);
-      auto &args(f.args.items);
-      ok = &f;
-      
-      if (auto nargs(args.size()); nargs) {
-        if (nargs > stack_len) { continue; }
-        Val *s(stack_end);
-        
-        for (Arg *a = &args.back(); a >= &args[0]; a--, s--) {          
-          if (Type *at(a->type); at != &cx.a_type && !s->type->isa(*at)) {
-            ok = nullptr;
-            break;
-          }
-        }
-      } else {
+
+      if (f.match(stack_end, stack_len)) {
+        ok = &f;
         break;
       }
     }

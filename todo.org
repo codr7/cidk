@@ -9,8 +9,6 @@ fun (fib ((n a b) Int) Int
 * add call op arg check
 ** extract Fun.match from dispatch op
 ** bench
-* fix infinite loop 
-** {push 42}
 * rename do-env to do
 * rename let to defvar
 * --
