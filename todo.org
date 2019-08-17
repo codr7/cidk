@@ -9,12 +9,6 @@ fun (fib ((n a b) Int) Int
 * throw error on missing id
 ** test.al
 * --
-* extract BinOp from eq
-** template <T1, T2> (T1 (ValType::imp)(Pos, Val, Val), TValType<T2>() res_type)
-*** store in op type
-** add gt/lt/cmp
-** update bench/test/readme
-* --
 * add read_parens
 ** copy cidk::read_list and emit expr
 * add calc op
@@ -22,7 +16,7 @@ fun (fib ((n a b) Int) Int
 * add link op
 ** dl
 ** add calcl tests using link
-* ---
+* --
 * switch Env::Items to map
 ** remove Val.id
 ** bench
