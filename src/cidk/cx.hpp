@@ -164,7 +164,7 @@ namespace cidk {
                     Rest &&...rest) {
     auto &ft(cx.fun_type);
     Fun *f(ft.pool.get(cx, pos, *this, id, args, rets, forward<Rest>(rest)...));
-    f->init(cx, pos);
+    f->init(cx, pos, *this);
     let(cx, pos, f->id, Val(ft, f));
     return *f;
   }

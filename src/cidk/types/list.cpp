@@ -76,8 +76,14 @@ namespace cidk {
 
   void ListType::set(Val &dst, List *val) const { dst.as_list = val; }
 
-  void ListType::splat(const Pos &pos, const Val &val, Env &env) const {
-    for (auto &v: val.as_list->items) { cx.push(pos, v); }
+  void ListType::splat(const Pos &pos, const Val &val, int max) const {
+    for (auto &v: val.as_list->items) {
+      if (max) {
+        v.splat(pos, (max == -1) ? max : max - 1);
+      } else { 
+        cx.push(pos, v);
+      }
+    }
   }
 
   void ListType::sweep(const Pos &pos, Val &val) { val.as_list->sweep(cx, pos); }

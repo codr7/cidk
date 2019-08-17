@@ -24,10 +24,6 @@ namespace cidk {
     virtual void mark_refs(const Val &val) const override;
     virtual void set(Val &dst, Str *val) const override;
 
-    virtual void splat(const Pos &pos,
-                       const Val &val,
-                       Env &env) const override;
-    
     virtual void sweep(const Pos &pos, Val &val) override;
 
     virtual bool get_bool(const Val &val) const override;

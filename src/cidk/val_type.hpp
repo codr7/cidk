@@ -1,6 +1,7 @@
 #ifndef CIDK_VAL_TYPE_HPP
 #define CIDK_VAL_TYPE_HPP
 
+#include "cidk/e.hpp"
 #include "cidk/ops.hpp"
 #include "cidk/opts.hpp"
 #include "cidk/reg.hpp"
@@ -25,6 +26,10 @@ namespace cidk {
     virtual void clone(const Pos &pos, Val &dst, const Val &src) const {
       cp(dst, src);
     }
+
+    virtual int cmp(const Pos &pos, const Val &x, const Val &y) const {
+      throw ESys(pos, "cmp not supported: ", id);
+    }
     
     virtual void compile(const Pos &pos, Val &val, Env &env, Opts &opts) const {}
     virtual void dump(const Val &val, ostream &out) const = 0;
@@ -37,7 +42,7 @@ namespace cidk {
 
     virtual bool is(const Val &x, const Val &y) const = 0;
     virtual void mark_refs(const Val &val) const {};
-    virtual void splat(const Pos &pos, const Val &val, Env &env) const;
+    virtual void splat(const Pos &pos, const Val &val, int max) const;
     
     using Type::sweep;
     virtual void sweep(const Pos &pos, Val &val) {}

@@ -40,10 +40,6 @@ namespace cidk {
 
   void StrType::set(Val &dst, Str *val) const { dst.as_str = val; }
 
-  void StrType::splat(const Pos &pos, const Val &val, Env &env) const {
-    for (auto c: val.as_str->data) { cx.push(pos, cx.char_type, c); }
-  }
-
   void StrType::sweep(const Pos &pos, Val &val) { val.as_str->sweep(cx, pos); }
 
   bool StrType::get_bool(const Val &val) const { return !val.as_str->data.empty(); }

@@ -10,18 +10,14 @@ namespace cidk {
     for (auto pt: parents) { derive(cx, *pt); }
   }
   
-  void Type::derive(Cx &cx, Type &parent) {
-    parents[parent.tag] = &parent;
+  void Type::derive(Cx &cx, Type &parent) { derive(cx, parent, parent); }
+    
+  void Type::derive(Cx &cx, Type &parent, Type &root) {
+    parents[parent.tag] = &root;
 
     for(auto pp: parent.parents) {
-      if (pp) { derive(cx, *pp); }
+      if (pp) { derive(cx, *pp, root); }
     }
-  }
-
-  Type *Type::isa(Type &parent) const {
-    Type *p(&parent);
-    if (p == this) { return p; }
-    return parents[parent.tag];
   }
   
   void Type::mark() { ref_mark = true; }

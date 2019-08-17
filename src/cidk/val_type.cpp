@@ -1,7 +1,6 @@
 #include "cidk/call.hpp"
 #include "cidk/const_type.hpp"
 #include "cidk/cx.hpp"
-#include "cidk/e.hpp"
 #include "cidk/ops/push.hpp"
 #include "cidk/types/bool.hpp"
 #include "cidk/val_type.hpp"
@@ -22,7 +21,7 @@ namespace cidk {
     val.clone(pos, cx.push(pos));
   }
 
-  void ValType::splat(const Pos &pos, const Val &val, Env &env) const {
+  void ValType::splat(const Pos &pos, const Val &val, int max) const {
     cx.push(pos, val);
   }
 }

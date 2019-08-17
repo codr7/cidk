@@ -6,15 +6,16 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* rename call-bin to dispatch
-** dispatch 2 + -[Int Int];
-** collect args in List
-*** expand/typecheck/sort by reverse weight on compile
-** use bsearch to skip weight > stack on eval
-*** call first match
-** update test/readme
+* drop call-bin op
+* drop Env constructor Pos arg
 * throw error on missing id
 ** test.al
+* --
+* extract BinOp from eq
+** template <T1, T2> (T1 (ValType::imp)(Pos, Val, Val), TValType<T2>() res_type)
+*** store in op type
+** add gt/lt/cmp
+** update bench/test/readme
 * --
 * add read_parens
 ** copy cidk::read_list and emit expr
@@ -22,9 +23,10 @@ fun (fib ((n a b) Int) Int
 ** calc 35 + 7;
 * add link op
 ** dl
-** add calc tests using link
+** add calcl tests using link
 * ---
 * switch Env::Items to map
+** remove Val.id
 ** bench
 * add Fix type
 ** store value
@@ -41,4 +43,4 @@ fun (fib ((n a b) Int) Int
 * add anon fun support
 ** push on stack from Defun if nil id
 * add Fun.rets (Rets)
-** match against stack suffix if cx.debug
+** match stack if cx.debug

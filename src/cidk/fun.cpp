@@ -1,3 +1,5 @@
+#include <cassert>
+
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
 #include "cidk/ext_id.hpp"
@@ -15,17 +17,22 @@ namespace cidk {
            Fimp imp): Def(cx, pos, id), env(cx, pos, env), imp(imp) {
     copy(args.begin(), args.end(), back_inserter(this->args.items));
   }
-
-  void Fun::init(Cx &cx, const Pos &pos) {
+  
+  void Fun::init(Cx &cx, const Pos &pos, Env &env) {
     Val *root(env.try_get(id));
 
-    if (!root) {
+    if (root) {
+      if (root->type != &cx.list_type) { throw ESys(pos, "Dup binding: ", id); }
+    } else {
       List *l(cx.list_type.pool.get(cx));
       root = &env.let(cx, pos, id, Val(cx.list_type, l));
     }
 
-    auto &rl(root->as_list->items);
-    rl.emplace_back(cx.fun_type, this);
+    auto &rl(*root->as_list);
+    Val rk(cx.fun_type, this);
+    auto i(rl.bsearch(pos, rk));
+    assert(i == rl.items.end());
+    rl.items.insert(i, rk);
     
     stringstream buf;
     buf << id << '[';
@@ -53,5 +60,12 @@ namespace cidk {
     }
   }  
 
-  void Fun::sweep(Cx &cx, const Pos &pos) { cx.fun_type.pool.put(this); }
+  void Fun::sweep(Cx &cx, const Pos &pos) {
+    Val &root(env.get(pos, id->root));
+    auto &rl(*root.as_list);
+    auto i(rl.bsearch(pos, Val(cx.fun_type, this)));
+    assert(i->as_fun == this);
+    rl.items.erase(i);
+    cx.fun_type.pool.put(this);
+  }
 }

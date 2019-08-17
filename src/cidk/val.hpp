@@ -1,6 +1,7 @@
 #ifndef CIDK_VAL_HPP
 #define CIDK_VAL_HPP
 
+#include "cidk/cmp.hpp"
 #include "cidk/e.hpp"
 #include "cidk/opts.hpp"
 #include "cidk/pos.hpp"
@@ -57,16 +58,21 @@ namespace cidk {
       return dst;
     }
 
+    int cmp(const Pos &pos, const Val &y) const {
+      return (y.type == type)
+        ? type->cmp(pos, *this, y)
+        : cidk::cmp(pos, type, y.type);
+    }
+    
+    void compile(const Pos &pos, Env &env, Opts &opts) {
+      type->compile(pos, *this, env, opts);
+    }
+
     Val &cp(Val &dst) const {
       dst.id = id;
       dst.type = type;
       if (type) { type->cp(dst, *this); }
       return dst;
-    }
-
-
-    void compile(const Pos &pos, Env &env, Opts &opts) {
-      type->compile(pos, *this, env, opts);
     }
 
     void dump(ostream &out) const { type->dump(*this, out); }
@@ -95,9 +101,7 @@ namespace cidk {
       type.set(*this, val);
     }
 
-    void splat(const Pos &pos, Env &env) const {
-      return type->splat(pos, *this, env);
-    }
+    void splat(const Pos &pos, int max) const { return type->splat(pos, *this, max); }
     
     void sweep(const Pos &pos) { return type->sweep(pos, *this); }
 
@@ -108,6 +112,9 @@ namespace cidk {
     v.dump(out);
     return out;
   }
+
+  template <>
+  inline int cmp(const Pos &pos, const Val &x, const Val &y) { return x.cmp(pos, y); }
 }
 
 #endif

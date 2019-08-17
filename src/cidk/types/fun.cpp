@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "cidk/call.hpp"
+#include "cidk/cmp.hpp"
 #include "cidk/sym.hpp"
 #include "cidk/types/fun.hpp"
 #include "cidk/val.hpp"
@@ -11,6 +12,10 @@ namespace cidk {
                    const Sym *id,
                    const vector<Type *> &parents):
     TValType<Fun *>(cx, pos, id, parents) {}
+
+  int FunType::cmp(const Pos &pos, const Val &x, const Val &y) const {
+    return cidk::cmp(pos, x.as_int, y.as_int);
+  }
 
   void FunType::cp(Val &dst, const Val &src) const { dst.as_fun = src.as_fun; }
 

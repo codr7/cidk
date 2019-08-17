@@ -1,22 +1,10 @@
-push 35 7; call +[Int Int];
-assert({cp;}) {is 42;};
-
-push 49 7; call -[Int Int];
-assert({cp;}) {is 42;};
-
-push 7 6; call *[Int Int];
-assert({cp;}) {is 42;};
-
-push 42 6; call /[Int Int];
-assert({cp;}) {is 7;};
-
 push (1 2 3) (1 2 3);
 assert({cp 1;}) {eq;};
 
-push 7 14; call-bin <;
+push 7 14; dispatch <;
 assert({cp;}) {is T;};
 
-push 7 14; call-bin >;
+push 7 14; dispatch >;
 assert({cp;}) {is F;};
 
 assert() {eq "foo\"bar" "foo\"bar";};
@@ -38,7 +26,7 @@ if F 42 7;
 assert({cp;}) {is 7;};
 
 do-env {
-  defun foo(_ Int)(Int) { cp; call-bin +; };
+  defun foo(_ Int)(Int) { cp; dispatch +; };
   push 21;
   call foo[Int];
   assert({cp;}) {is 42;};

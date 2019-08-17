@@ -39,7 +39,7 @@ namespace cidk {
       }
     }
 
-    void init(Cx &cx, const Pos &pos);
+    void init(Cx &cx, const Pos &pos, Env &env);
     void mark();
     virtual void sweep(Cx &cx, const Pos &pos) override;
   };

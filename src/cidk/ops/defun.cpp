@@ -57,7 +57,7 @@ namespace cidk::ops {
       if (i->id) { f.body.emplace_back(cx, p, Let, Val(cx.sym_type, i->id), cx.$); }
     }
 
-    f.init(cx, p);
+    f.init(cx, p, env);
     Val fv(cx.fun_type, &f);
     env.let(cx, p, f.id, fv);
     f.env.let(cx, p, f.id, fv);

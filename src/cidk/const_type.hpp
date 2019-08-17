@@ -29,10 +29,6 @@ namespace cidk {
     }
 
     virtual void mark_refs(const Val &val) const override { val_type.mark_refs(val); }
-
-    virtual bool get_bool(const Val &val) const override {
-      return val_type.get_bool(val);
-    }
   };
 }
 

@@ -43,12 +43,12 @@ do-env {
 
 do-env {
   let foo 1;
-  set foo {push 41; call-bin +;};
+  set foo {push 41; dispatch +;};
   assert(foo) {eq foo 42;}; 
 };
 
-push 42 7; poke 35 _; call-bin +;
+push 42 7; poke 35 _; dispatch +;
 assert({cp;}) {is 42;};
 
-push 1 2 3; poke {push 2; call-bin *;} _; stash;
+push 1 2 3; poke {push 2; dispatch *;} _; stash;
 assert({cp;}) {eq (1 4 3);};

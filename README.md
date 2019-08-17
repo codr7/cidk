@@ -37,10 +37,10 @@ Empty input clears stack and Ctrl+D exits.
   push 7 14 21;
   
 (7 14 21)
-  call-bin +;
+  dispatch +;
   
 (7 35)
-  call-bin +;
+  dispatch +;
 
 (42)
 ```
@@ -53,7 +53,7 @@ Each statement starts with an opcode and ends with semicolon, arguments are sepa
 
 ```
   push 35 7;
-  call-bin +;
+  dispatch +;
 
 (... 42)
 ```
@@ -62,9 +62,6 @@ Each statement starts with an opcode and ends with semicolon, arguments are sepa
 
 #### call fun+
 Calls functions in specified order. `fun` is popped from stack if missing.
-
-#### call-bin op+
-Calls binary operators in specified order. `op` is popped from stack if missing. Operators are parameterized using values from the stack on evaluation.
 
 #### cp [offs 0] [len 1]
 Copies `nvals` items starting at `offs` to end of stack.
@@ -99,7 +96,7 @@ Defines compile time constants for pairs of ids and values.
   do-env {
     defconst foo 35 bar 7;
     push foo bar;
-    call-bin +;
+    dispatch +;
   };
   
 (... 42)
@@ -108,6 +105,16 @@ Defines compile time constants for pairs of ids and values.
 
 Error in 'test.al' on row 1, col 5:
 Unknown id: foo
+```
+
+#### dispatch fun+
+Calls the most specific function based on stack contents.
+
+```
+  push 6 4 3;
+  dispatch + *;
+
+(... 42)
 ```
 
 #### do-env body
@@ -182,7 +189,7 @@ Expressions are evaluated with current value pushed on stack.
 
 ```
   push 1 2 3;
-  poke {push 21; call-bin *;} _;
+  poke {push 21; dispatch *;} _;
 
 (... 1 42 3)
 ```
@@ -212,7 +219,7 @@ Expressions are evaluated with current value pushed on stack.
 ```
   do-env {
     let foo 1;
-    set foo {push 41; call-bin +};
+    set foo {push 41; dispatch +};
     push foo;
   };
 
