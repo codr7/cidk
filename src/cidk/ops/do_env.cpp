@@ -28,7 +28,9 @@ namespace cidk::ops {
   }
 
   void DoEnvType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
+    auto &p(op.pos);
     auto &body(*op.args[0].as_expr);
+    for (auto &r: body.opts.ext_ids) { r.val = env.get(p, r.id); }
     cx.eval(body.ops, env, body.opts, regs);
   }
 

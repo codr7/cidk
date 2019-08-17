@@ -6,8 +6,6 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* throw error on missing id
-** test.al
 * rename dec op to step
 ** default +1
 ** update bench/test/readme
@@ -17,6 +15,8 @@ fun (fib ((n a b) Int) Int
 * simplify ops
 ** drop varargs
 * eval if != Fun in dispatch compile
+** add test 
+*** defconst fs (foo bar);
 * --
 * add read_parens
 ** copy cidk::read_list and emit expr

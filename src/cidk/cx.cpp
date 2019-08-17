@@ -70,7 +70,7 @@ namespace cidk {
     for (auto i(refs.next); i != &refs; i = i->next) { i->get().ref_mark = false; }
   }
 
-  void Cx::eval(Ops &in, Env &env, const Opts &opts, Reg *regs) {
+  void Cx::eval(Ops &in, Env &env, Opts &opts, Reg *regs) {
     ops.push_back(&in);
     regp += opts.regs.size();
 
@@ -116,6 +116,7 @@ namespace cidk {
     read(*this, p, f, ops);
     compile(ops, opts, env);
     move(ops.begin(), ops.end(), back_inserter(out));
+    for (auto &r: opts.ext_ids) { r.src_reg = opts.get_reg(p, r.id); }
     load_path = prev;
   }
   

@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "cidk/cx.hpp"
 #include "cidk/types/reg.hpp"
 #include "cidk/types/sym.hpp"
