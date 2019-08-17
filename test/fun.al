@@ -24,3 +24,11 @@ do-env {
   dispatch foo;
   assert({cp;}) {is 42;};
 };
+
+do-env {
+  defconst foo (+);
+  push 35;
+  push 7;
+  dispatch foo;
+  assert({cp;}) {is 42;};
+};
