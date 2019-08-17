@@ -60,7 +60,7 @@ Each statement starts with an opcode and ends with semicolon, arguments are sepa
 
 ### Opcodes
 
-#### call fun?
+#### call [fun $] [check F]
 Calls `fun` or function popped from from stack if missing.
 
 #### cp [offs 0] [len 1]
@@ -153,7 +153,7 @@ Drops `n` values from stack.
 (... 1 2)
 ```
 
-#### dump val?
+#### dump [val $]
 Dumps `val`, or value popped from stack if missing, to `stderr`.
 
 ```
@@ -175,7 +175,7 @@ The following example includes the main test suite, which prints the number if m
 ()
 ```
 
-#### is x y
+#### is [x $] [y $]
 Pushes `T` if `x` and `y` are the same value, otherwise `F`. `x` and `y` are popped from stack if missing.
 
 ```
@@ -185,7 +185,7 @@ Pushes `T` if `x` and `y` are the same value, otherwise `F`. `x` and `y` are pop
 (... T)
 ```
 
-#### let id val?
+#### let id [val $]
 Binds `id` to `val`, or value popped from stack if missing, in the current scope.
 
 ```
@@ -201,7 +201,7 @@ Marks non-reachable references for sweeping.
 #### push val
 Pushes `val` on stack.
 
-#### set key val?
+#### set key [val $]
 Updates value for `key` to `val` or value popped from stack if missing.
 
 Integers index the stack from end.
@@ -238,7 +238,7 @@ Expressions are evaluated with current value pushed on stack.
 (... 42)
 ```
 
-#### swap x y?
+#### swap [x 1] [y 0]
 Swaps value of `x` and `y`.
 
 Integers index the stack from end.
@@ -276,28 +276,6 @@ Mixing is fine too.
   };
 
 (... 1 2)
-```
-
-Default `y` is end of stack.
-
-```
-  push 1;
-  push 2;
-  push 3;
-  swap 2;
-
-(... 3 2 1)
-```
-
-And default `x` is the value before.
-
-```
-  push 1;
-  push 2;
-  push 3;
-  swap;
-
-(... 1 3 2)
 ```
 
 #### sweep

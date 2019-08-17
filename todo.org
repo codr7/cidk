@@ -6,13 +6,12 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* add call op arg check
-** extract Fun.match from dispatch op
-** bench
 * rename do-env to do
+** update test/readme
 * rename let to defvar
+** update test/bench/readme
 * --
-* add read_parens
+* add read_group
 ** copy cidk::read_list and emit expr
 * add op
 ** calcl (35 + 7);

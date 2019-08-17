@@ -6,7 +6,7 @@
 namespace cidk::ops {
   struct CallType: OpType {
     CallType(const string &id);
-    void init(Cx &cx, Op &op, const Val &target) const;
+    void init(Cx &cx, Op &op, const Val &fun, const Val &check) const;
 
     virtual void compile(Cx &cx,
                          OpIter &in,
