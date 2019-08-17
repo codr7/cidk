@@ -9,3 +9,13 @@ do-env {
   call;
   assert({cp;}) {is 42;};
 };
+
+do-env {
+  defun foo((i j) Int)(Int) {
+    if i {step i -1; step j 1; dispatch foo;} j;
+  };
+
+  push 42 0;
+  dispatch foo;
+  assert({cp;}) {is 42;};
+};

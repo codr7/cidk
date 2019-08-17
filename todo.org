@@ -6,8 +6,6 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* fix dispatch id issue
-** test3.al
 * add call op arg check
 ** extract Fun.match from dispatch op
 ** bench
