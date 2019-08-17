@@ -7,7 +7,7 @@ do {
 
   call foo[];
   call;
-  assert({cp;}) {is 42;};
+  check({cp;}) {is 42;};
 };
 
 do {
@@ -22,7 +22,7 @@ do {
   push 42;
   push 0;
   dispatch foo;
-  assert({cp;}) {is 42;};
+  check({cp;}) {is 42;};
 };
 
 do {
@@ -30,5 +30,5 @@ do {
   push 35;
   push 7;
   dispatch foo;
-  assert({cp;}) {is 42;};
+  check({cp;}) {is 42;};
 };

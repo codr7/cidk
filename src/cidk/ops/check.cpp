@@ -1,23 +1,23 @@
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
 #include "cidk/list.hpp"
-#include "cidk/ops/assert.hpp"
+#include "cidk/ops/check.hpp"
 #include "cidk/read.hpp"
 #include "cidk/types/bool.hpp"
 #include "cidk/types/list.hpp"
 #include "cidk/types/nil.hpp"
 
 namespace cidk::ops {
-  const AssertType Assert("assert");
+  const CheckType Check("check");
 
-  AssertType::AssertType(const string &id): OpType(id) {}
+  CheckType::CheckType(const string &id): OpType(id) {}
 
-  void AssertType::init(Cx &cx, Op &op, const Val &msg, const Val &body) const {
+  void CheckType::init(Cx &cx, Op &op, const Val &msg, const Val &body) const {
     op.args[0] = msg;
     op.args[1] = body;
   }
 
-  void AssertType::compile(Cx &cx,
+  void CheckType::compile(Cx &cx,
                            OpIter &in,
                            const OpIter &end,
                            Env &env,
@@ -32,7 +32,7 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void AssertType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
+  void CheckType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &args(op.args);
     
@@ -49,12 +49,12 @@ namespace cidk::ops {
     if (!ok.as_bool) { throw ESys(p, "Test failed: ", msg); }
   }
 
-  void AssertType::mark_refs(Op &op) const {
+  void CheckType::mark_refs(Op &op) const {
     auto &args(op.args);
     for (int i(0); i < 2; i++) { args[i].mark_refs(); }
   }
 
-  void AssertType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
+  void CheckType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
     auto msg(read_val(cx, pos, in));
     if (!msg || msg->is_eop()) { throw ESys(p, "Missing message"); }

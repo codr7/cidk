@@ -1,12 +1,12 @@
-#ifndef CIDK_OP_ASSERT_HPP
-#define CIDK_OP_ASSERT_HPP
+#ifndef CIDK_OP_CHECK_HPP
+#define CIDK_OP_CHECK_HPP
 
 #include "cidk/op.hpp"
 #include "cidk/val.hpp"
 
 namespace cidk::ops {
-  struct AssertType: OpType {
-    AssertType(const string &id);
+  struct CheckType: OpType {
+    CheckType(const string &id);
     void init(Cx &cx, Op &op, const Val &msg, const Val &body) const;
 
     virtual void compile(Cx &cx,
@@ -25,7 +25,7 @@ namespace cidk::ops {
     virtual void read(Cx &cx, Pos &pos, istream &in, Ops &out) const override;
   };
 
-  extern const AssertType Assert;
+  extern const CheckType Check;
 }
 
 #endif
