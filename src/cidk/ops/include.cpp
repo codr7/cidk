@@ -9,7 +9,9 @@ namespace cidk::ops {
 
   IncludeType::IncludeType(const string &id): OpType(id) {}
 
-  void IncludeType::init(Cx &cx, Op &op, const Val &path) const { op.args[0] = path; }
+  void IncludeType::init(Cx &cx, Op &op, const Val &fname) const {
+    op.args[0] = fname;
+  }
 
   void IncludeType::compile(Cx &cx,
                             OpIter &in,
@@ -18,10 +20,10 @@ namespace cidk::ops {
                             Ops &out,
                             Opts &opts) const {
     auto &p(in->pos);
-    auto &path(in->args[0]);
-    path.compile(p, env, opts);
-    if (path.type != &cx.str_type) { throw ESys(p, "Invalid path: ", path); } 
-    cx.load(in->pos, path.as_str->to_utf8(cx), read_ops, env, out, opts);    
+    auto &fname(in->args[0]);
+    fname.compile(p, env, opts);
+    if (fname.type != &cx.str_type) { throw ESys(p, "Invalid filename: ", fname); } 
+    cx.load(in->pos, fname.as_str->to_utf8(cx), read_ops, env, out, opts);    
     out.push_back(*in);
   }
 

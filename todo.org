@@ -6,15 +6,12 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* add link op
-** dl
-** add calcl tests using link
-* --
 * calcl
 ** add read_group
 *** copy cidk::read_list and emit expr
 ** add op
 *** calcl (35 + 7);
+** add tests using link
 * --
 * switch Env::Items to map
 ** remove Val.id
@@ -23,6 +20,9 @@ fun (fib ((n a b) Int) Int
 ** store value
 ** use number of decimals as scale
 * mark regs/stack in cx.mark()
+* add recall op reuse arg
+** default T
+** call in new frame if F
 * add repl break loop
 ** add restarts
 ** gfu

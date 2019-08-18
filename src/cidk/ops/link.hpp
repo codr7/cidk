@@ -1,14 +1,14 @@
-#ifndef CIDK_OP_INCLUDE_HPP
-#define CIDK_OP_INCLUDE_HPP
+#ifndef CIDK_OP_LINK_HPP
+#define CIDK_OP_LINK_HPP
 
 #include "cidk/op.hpp"
 #include "cidk/val.hpp"
 
 namespace cidk::ops {
-  struct IncludeType: OpType {
-    IncludeType(const string &id);
+  struct LinkType: OpType {
+    LinkType(const string &id);
 
-    void init(Cx &cx, Op &op, const Val &fname) const;
+    void init(Cx &cx, Op &op, const Val &path) const;
 
     virtual void compile(Cx &cx,
                          OpIter &in,
@@ -20,7 +20,7 @@ namespace cidk::ops {
     virtual void read(Cx &cx, Pos &pos, istream &in, Ops &out) const override;
   };
 
-  extern const IncludeType Include;
+  extern const LinkType Link;
 }
 
 #endif

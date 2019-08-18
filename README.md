@@ -163,10 +163,10 @@ Dumps `val`, or value popped from stack if missing, to `stderr`.
 (...)
 
 ```
-#### include file
-Inlines the contents of specified file in the current compilation unit.
+#### include fname
+Inlines the specified file in the current compilation unit.
 
-The following example includes the main test suite, which prints the number if milliseconds it took to run.
+The following example includes the main test suite, which prints the number if milliseconds it took to run a thousand repetitions when evaluated.
 
 ```
   include "../test/run.al";
