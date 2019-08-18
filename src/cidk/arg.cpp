@@ -12,23 +12,15 @@ namespace cidk {
                       const List &in,
                       Env &env) {
     auto &vs(in.items);
-    vector<const Sym *> ids;
+    const Sym *id(nullptr);
     
     for (auto i(vs.begin()); i != vs.end(); i++) {
       if (i->type == &cx.nil_type) {
-        ids.push_back(nullptr);
+        id = nullptr;
       } else if (i->type == &cx.sym_type) {
-        ids.push_back(i->as_sym);
-      } else if (i->type == &cx.list_type) {
-        for (auto &id: i->as_list->items) {
-          if (id.type != &cx.sym_type && id.type != &cx.nil_type) {
-            throw ESys(pos, "Invalid argument id: ", id.type->id);
-          }
-
-          ids.push_back((id.type == &cx.sym_type) ? id.as_sym : nullptr);
-        }
+        id = i->as_sym;
       } else {
-        throw ESys(pos, "Invalid argument: ", i->type->id);
+        throw ESys(pos, "Invalid argument: ", *i);
       }
 
       i++;
@@ -40,14 +32,13 @@ namespace cidk {
         auto typev(cx.pop(pos));
 
         if (typev.type != &cx.meta_type) {
-          throw ESys(pos, "Invalid argument type: ", typev.type->id);
+          throw ESys(pos, "Invalid argument type: ", typev);
         }
 
         type = typev.as_type;
       }
 
-      for (auto id: ids) { items.emplace_back(id, type); }
-      ids.clear();
+      items.emplace_back(id, type);
     }
   }
 

@@ -10,13 +10,7 @@ fun (fib ((n a b) Int) Int
 101
 42
 
-* move op_types to Cx
-** add Cx.init_ops
-*** implement in ops.cpp
-** remove lazy static fn
-** add calcl in pluginit
 * inline short op evals
-* --
 * switch Env::Items to map
 ** remove Val.id
 ** bench

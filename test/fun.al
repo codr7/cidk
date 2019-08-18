@@ -11,7 +11,7 @@ do {
 };
 
 do {
-  defun foo((i j) Int)(Int) {
+  defun foo(i Int j Int)(Int) {
     if i {
       step i -1; 
       step j 1; 
