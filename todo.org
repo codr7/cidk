@@ -6,13 +6,6 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* calcl
-** add read_group
-*** copy cidk::read_list and emit expr
-** add op
-*** calcl (35 + 7);
-** add tests using link
-* --
 * switch Env::Items to map
 ** remove Val.id
 ** bench

@@ -7,16 +7,6 @@
 namespace cidk::ops {
   struct LinkType: OpType {
     LinkType(const string &id);
-
-    void init(Cx &cx, Op &op, const Val &path) const;
-
-    virtual void compile(Cx &cx,
-                         OpIter &in,
-                         const OpIter &end,
-                         Env &env,
-                         Ops &out,
-                         Opts &opts) const override;
-
     virtual void read(Cx &cx, Pos &pos, istream &in, Ops &out) const override;
   };
 

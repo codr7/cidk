@@ -46,6 +46,7 @@ namespace cidk {
     char c(0);
     
     if (!in.get(c) || c != ';') { throw ESys(p, "Missing ;"); }
+    pos.col++;
   }
 
   optional<Val> read_val(Cx &cx, Pos &pos, istream &in) {
