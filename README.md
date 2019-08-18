@@ -61,7 +61,7 @@ Each statement starts with an opcode and ends with semicolon, arguments are sepa
 ### Opcodes
 
 #### call [fun $] [check F]
-Calls `fun` or function popped from from stack if missing. Arguments are type checked if `check` is `T`.
+Calls `fun`, arguments are type checked if `check` is `T`.
 
 ```
   push 35;
@@ -118,7 +118,7 @@ Unknown id: foo
 ```
 
 #### dispatch fun
-Calls the most specific implementation for specified function based on stack contents.
+Calls most specific implementation for specified function based on stack contents.
 
 ```
   push 35;
@@ -162,7 +162,7 @@ Drops `n` values from stack.
 ```
 
 #### dump [val $]
-Dumps `val`, or value popped from stack if missing, to `stderr`.
+Dumps `val` to `stderr`.
 
 ```
   dump "hello";
@@ -184,7 +184,7 @@ The following example includes the main test suite, which prints the number if m
 ```
 
 #### is [x $] [y $]
-Pushes `T` if `x` and `y` are the same value, otherwise `F`. `x` and `y` are popped from stack if missing.
+Pushes `T` if `x` and `y` are the same value;
 
 ```
   push 42;
@@ -194,11 +194,13 @@ Pushes `T` if `x` and `y` are the same value, otherwise `F`. `x` and `y` are pop
 ```
 
 #### let id [val $]
-Binds `id` to `val`, or value popped from stack if missing, in the current scope.
+Binds `id` to `val` in the current scope.
 
 ```
-  let foo 42;
-  push foo;
+  do {
+    let foo 42;
+    push foo;
+  };
 
 (... 42)
 ```
@@ -210,7 +212,7 @@ Marks non-reachable references for sweeping.
 Pushes `val` on stack.
 
 #### set key [val $]
-Updates value for `key` to `val` or value popped from stack if missing.
+Updates value for `key` to `val`.
 
 Integers index the stack from end.
 
@@ -247,7 +249,7 @@ Expressions are evaluated with current value pushed on stack.
 ```
 
 #### swap [x 1] [y 0]
-Swaps value of `x` and `y`.
+Swaps values of `x` and `y`.
 
 Integers index the stack from end.
 
