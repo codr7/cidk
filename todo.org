@@ -9,10 +9,16 @@ fun (fib ((n a b) Int) Int
 * switch Env::Items to map
 ** remove Val.id
 ** bench
+* mark regs/stack in cx.mark()
+* add custom read_id to calcl
+** break on isdigit, () and =
+* add calcl assignment support
+** check for '=' after read_id
+** set to next value
+*** use group for more
 * add Fix type
 ** store value
 ** use number of decimals as scale
-* mark regs/stack in cx.mark()
 * add recall op reuse arg
 ** default T
 ** call in new frame if F
