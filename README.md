@@ -61,7 +61,7 @@ Each statement starts with an opcode and ends with semicolon, arguments are sepa
 ### Opcodes
 
 #### call [fun $] [check F]
-Calls `fun` or function popped from from stack if missing. Argument are type checked if `check` is `T`.
+Calls `fun` or function popped from from stack if missing. Arguments are type checked if `check` is `T`.
 
 ```
   push 35;
