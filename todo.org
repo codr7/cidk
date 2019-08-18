@@ -19,6 +19,10 @@ fun (fib ((n a b) Int) Int
 * add Fix type
 ** store value
 ** use number of decimals as scale
+* add type unions
+** parse Type? as Type|_
+** remove any_type
+** don't derive Nil from a_type
 * finish for op
 ** add ValType.iter(const Val &src, function<void (const Val &)>)
 *** call with src in default imp
