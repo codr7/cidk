@@ -42,7 +42,8 @@ namespace cidk {
     
     Pool<Sym> sym_pool;    
     unordered_map<string, Sym *> syms;
-    
+
+    unordered_map<string, const OpType *> op_types;
     Ls<Ref> refs;
     Env env;
     

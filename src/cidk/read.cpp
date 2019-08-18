@@ -31,12 +31,11 @@ namespace cidk {
     }
     
     auto id(idv->as_sym->name);
-    auto &ots(Op::types());
-    auto found(ots.find(id));
+    auto &ts(cx.op_types);
+    auto found(ts.find(id));
     if (id == "") { throw exception(); }
-    if (found == ots.end()) { throw ESys(p, "Unknown op: ", id); } 
-    OpType &ot(*found->second);
-    ot.read(cx, pos, in, out);
+    if (found == ts.end()) { throw ESys(p, "Unknown op: ", id); } 
+    found->second->read(cx, pos, in, out);
     return true;
   }
 

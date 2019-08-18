@@ -13,6 +13,7 @@ namespace cidk {
   using Ops = vector<Op>;
   using OpIter = Ops::iterator;
   
+  void init_op_types(Cx &cx);
   void mark_refs(Ops &ops);
 }
 

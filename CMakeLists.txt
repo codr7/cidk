@@ -30,3 +30,4 @@ install(FILES ${types_inc} DESTINATION include/cidk/types)
 
 install(FILES build/cidk DESTINATION bin PERMISSIONS WORLD_EXECUTE)
 install(FILES build/libcidk.a DESTINATION lib)
+

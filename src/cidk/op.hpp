@@ -23,7 +23,8 @@ namespace cidk {
   
   struct OpType {    
     string id;
-    OpType(const string &id);
+
+    OpType(const string &id): id(id) {}
 
     virtual void compile(Cx &cx,
                          OpIter &in,
@@ -38,8 +39,6 @@ namespace cidk {
   };
 
   struct Op {
-    static unordered_map<string, OpType *> &types();
-
     Pos pos;
     const OpType *type;
     array<Val, CIDK_OP_ARG_MAX> args;
