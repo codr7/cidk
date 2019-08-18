@@ -35,29 +35,7 @@ namespace cidk::ops {
     
     out.push_back(*in);
   }
-  
-  static Val &get_ref(Cx &cx,
-                      const Pos &pos,
-                      Val &place,
-                      Env &env,
-                      Reg *regs) {
-    if (place.type == &cx.int_type) {
-      return cx.stack[cx.stackp - cx.stack.begin() - place.as_int - 1];
-    }
-
-    return (place.type == &cx.reg_type)
-      ? regs[place.as_reg]
-      : env.get(pos, place.as_sym);
-  }
-  
-  void SwapType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
-    auto &p(op.pos);
-    auto &args(op.args);
-
-    swap(get_ref(cx, p, args[0], env, regs),
-         get_ref(cx, p, args[1], env, regs));
-  }
-
+    
   void SwapType::mark_refs(Op &op) const {
     auto &args(op.args);
     for (int i(0); i < 2; i++) { args[i].mark_refs(); }

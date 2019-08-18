@@ -16,11 +16,10 @@ namespace cidk::ops {
                          Ops &out,
                          Opts &opts) const override;
 
-    virtual void eval(Cx &cx,
-                      Op &op,
-                      Env &env,
-                      Reg *regs) const override;
-    
+    virtual void eval(Cx &cx, Op &op, Env &env, Reg *regs) const override {
+      op.args[0].eval(op.pos, env, regs);
+    }
+
     virtual void mark_refs(Op &op) const override;
     virtual void read(Cx &cx, Pos &pos, istream &in, Ops &out) const override;
   };

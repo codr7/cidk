@@ -10,7 +10,6 @@ fun (fib ((n a b) Int) Int
 101
 42
 
-* inline short op evals
 * switch Env::Items to map
 ** remove Val.id
 ** bench

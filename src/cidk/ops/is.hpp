@@ -2,6 +2,7 @@
 #define CIDK_OP_IS_HPP
 
 #include "cidk/op.hpp"
+#include "cidk/types/bool.hpp"
 #include "cidk/val.hpp"
 
 namespace cidk::ops {
@@ -16,11 +17,14 @@ namespace cidk::ops {
                          Ops &out,
                          Opts &opts) const override;
 
-    virtual void eval(Cx &cx,
-                      Op &op,
-                      Env &env,
-                      Reg *regs) const override;
-    
+    virtual void eval(Cx &cx, Op &op, Env &env, Reg *regs) const override {
+      auto &p(op.pos);
+      auto &args(op.args);
+      for (int i(0); i < 2; i++) { args[i].eval(p, env, regs); }
+      auto &y(cx.pop(p)), &x(cx.peek(p));    
+      x.reset(cx.bool_type, x.is(y));
+    }
+
     virtual void mark_refs(Op &op) const override;
     virtual void read(Cx &cx, Pos &pos, istream &in, Ops &out) const override;
   };

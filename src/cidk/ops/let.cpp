@@ -35,13 +35,6 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void LetType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
-    auto &p(op.pos);
-    auto &args(op.args);
-    args[1].eval(p, env, regs);
-    regs[args[2].as_reg] = cx.pop(p);
-  }
-
   void LetType::mark_refs(Op &op) const { op.args[1].mark_refs(); }
 
   void LetType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {

@@ -20,10 +20,6 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void PushType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
-    op.args[0].eval(op.pos, env, regs);
-  }
-
   void PushType::mark_refs(Op &op) const { op.args[0].mark_refs(); }
 
   void PushType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
