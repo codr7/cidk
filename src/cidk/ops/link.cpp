@@ -12,8 +12,6 @@ namespace cidk::ops {
   LinkType::LinkType(const string &id): OpType(id) {}
 
   void LinkType::init(Cx &cx, Op &op, const Val &fname) const { op.args[0] = fname; }
-
-  using Pluginit = void (*)(Cx &);
   
   void LinkType::compile(Cx &cx,
                          OpIter &in,
