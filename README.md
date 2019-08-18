@@ -61,7 +61,15 @@ Each statement starts with an opcode and ends with semicolon, arguments are sepa
 ### Opcodes
 
 #### call [fun $] [check F]
-Calls `fun` or function popped from from stack if missing.
+Calls `fun` or function popped from from stack if missing. Argument are type checked if `check` is `T`.
+
+```
+  push 35;
+  push 7;
+  call +[Int Int] T;
+
+(... 42)
+```
 
 #### cp [offs 0] [len 1]
 Copies `nvals` items starting at `offs` to end of stack.

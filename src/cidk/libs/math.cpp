@@ -6,6 +6,26 @@
 #include "cidk/types/bool.hpp"
 
 namespace cidk::libs {
+  static void int_add_imp(Cx &cx, const Pos &p, const Fun &f, Env &env) {
+    auto &y(cx.pop(p));
+    cx.peek(p).as_int += y.as_int;
+  }
+
+  static void int_sub_imp(Cx &cx, const Pos &p, const Fun &f, Env &env) {
+    auto &y(cx.pop(p));
+    cx.peek(p).as_int -= y.as_int;
+  }
+
+  static void int_mul_imp(Cx &cx, const Pos &p, const Fun &f, Env &env) {
+    auto &y(cx.pop(p));
+    cx.peek(p).as_int *= y.as_int;
+  }
+
+  static void int_div_imp(Cx &cx, const Pos &p, const Fun &f, Env &env) {
+    auto &y(cx.pop(p));
+    cx.peek(p).as_int /= y.as_int;
+  }
+
   void init_math(Cx &cx) {
     cx.env.add_fun(cx, Pos::_,
                    "+",

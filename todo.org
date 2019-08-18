@@ -6,10 +6,6 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-010
-101
-42
-
 * switch Env::Items to map
 ** remove Val.id
 ** bench
