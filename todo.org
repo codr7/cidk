@@ -6,11 +6,10 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* switch Env::Items to map
-** remove Val.id
+* switch Env::Items to bsearch/map
 ** bench
 * mark regs/stack in cx.mark()
-* add custom read_id to calcl
+* add custom read_id in calcl
 ** break on isdigit, () and =
 * add calcl assignment support
 ** check for '=' after read_id
@@ -28,9 +27,6 @@ fun (fib ((n a b) Int) Int
 *** call with src in default imp
 *** update for op to use iter
 ** bind var if not _
-* add recall op reuse arg
-** default T
-** call in new frame if F
 * add repl break loop
 ** add restarts
 ** gfu
@@ -38,3 +34,6 @@ fun (fib ((n a b) Int) Int
 ** push on stack from Defun if nil id
 * add Fun.rets (Rets)
 ** match stack if cx.debug
+* add recall op type check/reuse args
+** default F T
+** call in new frame if reuse=F
