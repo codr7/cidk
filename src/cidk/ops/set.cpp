@@ -28,7 +28,7 @@ namespace cidk::ops {
     auto &k(args[0]);
     
     if (k.type == &cx.sym_type) {      
-      if (auto found(env.try_get(k.as_sym)); found && found->type->is_const) {
+      if (auto found(env.try_get(p, k.as_sym)); found && found->type->is_const) {
         throw ESys(p, "Const set: ", k);
       }
 

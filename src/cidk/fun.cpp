@@ -30,7 +30,7 @@ namespace cidk {
 
     auto &rl(*root->as_list);
     Val rk(cx.fun_type, this);
-    auto i(rl.bsearch(pos, rk));
+    auto i(bsearch(pos, rl.items, rk));
     assert(i == rl.items.end());
     rl.items.insert(i, rk);
     
@@ -83,7 +83,7 @@ namespace cidk {
   void Fun::sweep(Cx &cx, const Pos &pos) {
     Val &root(env.get(pos, id->root));
     auto &rl(*root.as_list);
-    auto i(rl.bsearch(pos, Val(cx.fun_type, this)));
+    auto i(bsearch(pos, rl.items, Val(cx.fun_type, this)));
     assert(i->as_fun == this);
     rl.items.erase(i);
     cx.fun_type.pool.put(this);

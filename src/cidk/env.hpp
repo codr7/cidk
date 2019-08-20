@@ -61,13 +61,13 @@ namespace cidk {
     void add_var(Cx &cx, const Pos &pos, const string &id, const Val &val);
 
     void clear(Cx &cx);
-    Iter find(const Sym *id);
+    Iter find(const Pos &pos, const Sym *id);
 
     Val &get(const Pos &pos, const Sym *id);
     Val &let(Cx &cx, const Pos &pos, const Sym *id, const Val &val);
     void mark_refs();
     void set(Cx &cx, const Pos &pos, const Sym *id, const Val &val);
-    Val *try_get(const Sym *id);
+    Val *try_get(const Pos &pos, const Sym *id);
   };
 }
 

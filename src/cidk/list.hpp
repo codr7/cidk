@@ -22,11 +22,37 @@ namespace cidk {
     template <typename SrcT>
     List(Cx &cx, const SrcT &beg, const SrcT &end): Ref(cx), items(beg, end) {}
 
-    Iter bsearch(const Pos &pos, const Val &key, Cmp<Val> cmp = cidk::cmp<Val>);
     void mark();
     void sort(const Pos &pos, Cmp<Val> cmp = cidk::cmp<Val>);
     virtual void sweep(Cx &cx, const Pos &pos) override;
   };
+
+  template <typename T, typename KeyT = T>
+  typename vector<T>::iterator bsearch(const Pos &pos,
+                                       vector<T> &items,
+                                       const KeyT &key,
+                                       Cmp<KeyT, T> cmp = cidk::cmp<KeyT, T>) {
+    typename vector<T>::iterator beg(items.begin());
+    size_t min(0), max(items.size());
+    
+    while (min < max) {
+      size_t i((min + max) / 2);
+      typename vector<T>::iterator it(beg + i);
+      
+      switch (cmp(pos, key, *it)) {
+      case -1:
+        max = i;
+        break;
+      case 1:
+        min = i + 1;
+        break;
+      default:
+        return it;
+      }
+    }
+
+    return beg + max;
+  }
 }
 
 #endif

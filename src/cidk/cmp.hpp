@@ -8,11 +8,11 @@ namespace cidk {
 
   struct Pos;
   
-  template <typename T>
-  using Cmp = function<int (const Pos &pos, const T&, const T&)>;
+  template <typename X, typename Y = X>
+  using Cmp = function<int (const Pos &pos, const X&, const Y&)>;
   
-  template <typename T>
-  int cmp(const Pos &pos, const T &x, const T &y) {
+  template <typename X, typename Y = X>
+  int cmp(const Pos &pos, const X &x, const Y &y) {
     if (x < y) { return -1; }
     return (x > y) ? 1 : 0;
   }

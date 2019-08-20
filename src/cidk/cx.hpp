@@ -6,6 +6,7 @@
 #include <unordered_map>
 
 #include "cidk/env.hpp"
+#include "cidk/list.hpp"
 #include "cidk/op.hpp"
 #include "cidk/path.hpp"
 #include "cidk/pool.hpp"
@@ -192,22 +193,21 @@ namespace cidk {
     add_var(cx, pos, id, Val(forward<Rest>(rest)...));
   }
 
-  inline typename Env::Iter Env::find(const Sym *id) {
-    for (auto i(items.begin()); i != items.end(); i++) {
-      if (i->id >= id) { return i; }
-    }
-    
-    return items.end();
+  inline typename Env::Iter Env::find(const Pos &pos, const Sym *id) {
+    return bsearch<Val, const Sym *>(pos, items, id,
+                                     [&](auto &p, auto &x, auto &y) {
+                                       return cmp(p, x, y.id);
+                                     });
   }
 
   inline Val &Env::get(const Pos &pos, const Sym *id) {
-    auto i(find(id));
+    auto i(find(pos, id));
     if (i == items.end() || i->id != id) { throw ESys(pos, "Unknown id: ", id); }
     return *i;
   }
 
   inline Val &Env::let(Cx &cx, const Pos &pos, const Sym *id, const Val &val) {
-    auto i(find(id));
+    auto i(find(pos, id));
 
     if (i != items.end() && i->id == id) {
       throw ESys(pos, "Duplicate binding: ", id);
@@ -219,7 +219,7 @@ namespace cidk {
   }
 
   inline void Env::set(Cx &cx, const Pos &pos, const Sym *id, const Val &val) {
-    auto i(find(id));
+    auto i(find(pos, id));
     
     if (i == items.end() || i->id != id) {
       throw ESys(pos, "Missing binding: ", id);
@@ -228,8 +228,8 @@ namespace cidk {
     *i = val;
   }
 
-  inline Val *Env::try_get(const Sym *id) {
-    auto i(find(id));
+  inline Val *Env::try_get(const Pos &pos, const Sym *id) {
+    auto i(find(pos, id));
     return (i == items.end() || i->id != id) ? nullptr : &*i;
   }
 

@@ -14,7 +14,7 @@ namespace cidk {
     auto s(val.as_sym);
     
     if (auto reg(opts.regs.find(s)); reg == opts.regs.end()) {
-      if (auto i(env.try_get(s)); i) {
+      if (auto i(env.try_get(pos, s)); i) {
         i->clone(pos, val);
       } else {
         val.reset(cx.reg_type, opts.push_ext_id(pos, s));
