@@ -19,7 +19,7 @@ namespace cidk {
   }
   
   void Fun::init(Cx &cx, const Pos &pos, Env &env) {
-    Val *root(env.try_get(id));
+    Val *root(env.try_get(pos, id));
 
     if (root) {
       if (root->type != &cx.list_type) { throw ESys(pos, "Dup binding: ", id); }

@@ -63,7 +63,7 @@ namespace cidk::ops {
     f.env.let(cx, p, f.id, fv);
     
     auto rid(f.id->root);
-    if (!f.env.try_get(rid)) { f.env.let(cx, p, rid, env.get(p, rid)); }
+    if (!f.env.try_get(p, rid)) { f.env.let(cx, p, rid, env.get(p, rid)); }
     
     auto &bops(body.as_expr->ops);
     copy(bops.begin(), bops.end(), back_inserter(f.body));
