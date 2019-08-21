@@ -26,6 +26,7 @@ namespace cidk {
   struct CharType;
   struct BoolType;
   struct ExprType;
+  struct FixType;
   struct IntType;
   struct ListType;
   struct NilType;
@@ -57,6 +58,7 @@ namespace cidk {
     BoolType &bool_type;
     CharType &char_type;
     ExprType &expr_type;
+    FixType &fix_type;
     FunType &fun_type;
     IntType &int_type;
     ListType &list_type;

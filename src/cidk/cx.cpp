@@ -14,6 +14,7 @@
 #include "cidk/str.hpp"
 #include "cidk/types/bool.hpp"
 #include "cidk/types/expr.hpp"
+#include "cidk/types/fix.hpp"
 #include "cidk/types/int.hpp"
 #include "cidk/types/nil.hpp"
 #include "cidk/types/list.hpp"
@@ -33,6 +34,7 @@ namespace cidk {
     bool_type(env.add_type<BoolType>(*this, Pos::_, "Bool", {&any_type})),
     char_type(env.add_type<CharType>(*this, Pos::_, "Char", {&any_type})),
     expr_type(env.add_type<ExprType>(*this, Pos::_, "Expr", {&any_type})),
+    fix_type(env.add_type<FixType>(*this, Pos::_, "Fix", {&any_type, &num_type})),
     fun_type(env.add_type<FunType>(*this, Pos::_, "Fun", {&any_type})),
     int_type(env.add_type<IntType>(*this, Pos::_, "Int", {&any_type, &num_type})),
     list_type(env.add_type<ListType>(*this, Pos::_, "List", {&any_type})),

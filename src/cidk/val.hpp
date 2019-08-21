@@ -3,6 +3,7 @@
 
 #include "cidk/cmp.hpp"
 #include "cidk/e.hpp"
+#include "cidk/fix.hpp"
 #include "cidk/opts.hpp"
 #include "cidk/pos.hpp"
 #include "cidk/types/char.hpp"
@@ -27,6 +28,7 @@ namespace cidk {
       Char       as_char;
       Env       *as_env;
       Expr      *as_expr;
+      Fix        as_fix;
       Fun       *as_fun;
       Int        as_int;
       List      *as_list;

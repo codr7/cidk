@@ -6,16 +6,29 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
+* add Fix type
+** add [Fix Int] fun overloads
+** add reader
+*** trigger on . in read_num
+**** extract read_int
+* --
 * mark regs/stack in cx.mark()
 * add custom read_id in calcl
 ** break on isdigit, () and =
+* rename calcl op to calc
+** update tests
 * add calcl assignment support
 ** check for '=' after read_id
 ** set to next value
 *** use group for more
-* add Fix type
-** store value
-** use number of decimals as scale
+* add default args
+** x 42 instead of x Int
+** clone on let
+** add nargs to Call op
+*** update test/bench/readme
+** use for a/b in fib_iter
+*** bench
+* add nargs to Dispatch op
 * add type unions
 ** parse Type? as Type|_
 ** remove any_type
