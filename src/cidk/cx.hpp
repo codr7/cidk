@@ -196,10 +196,10 @@ namespace cidk {
   }
 
   inline typename Env::Iter Env::find(const Pos &pos, const Sym *id) {
-    return bsearch<Val, const Sym *>(pos, items, id,
-                                     [&](auto &p, auto &x, auto &y) {
-                                       return cmp(p, x, y.id);
-                                     });
+    return cidk::find<Val, const Sym *>(pos, items, id,
+                                        [&](auto &p, auto &x, auto &y) {
+                                          return cmp(p, x.id, y);
+                                        });
   }
 
   inline Val &Env::get(const Pos &pos, const Sym *id) {

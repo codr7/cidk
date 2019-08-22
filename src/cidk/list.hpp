@@ -28,30 +28,12 @@ namespace cidk {
   };
 
   template <typename T, typename KeyT = T>
-  typename vector<T>::iterator bsearch(const Pos &pos,
-                                       vector<T> &items,
-                                       const KeyT &key,
-                                       Cmp<KeyT, T> cmp = cidk::cmp<KeyT, T>) {
-    typename vector<T>::iterator beg(items.begin());
-    size_t min(0), max(items.size());
-    
-    while (min < max) {
-      size_t i((min + max) / 2);
-      typename vector<T>::iterator it(beg + i);
-      
-      switch (cmp(pos, key, *it)) {
-      case -1:
-        max = i;
-        break;
-      case 1:
-        min = i + 1;
-        break;
-      default:
-        return it;
-      }
-    }
-
-    return beg + max;
+  typename vector<T>::iterator find(const Pos &pos,
+                                    vector<T> &items,
+                                    const KeyT &key,
+                                    Cmp<T, KeyT> cmp = cidk::cmp<T, KeyT>) {
+    return lower_bound(items.begin(), items.end(), key,
+                       [&](auto &x, auto &y) { return cmp(pos, x, y) == -1; });
   }
 }
 
