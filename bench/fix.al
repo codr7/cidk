@@ -8,8 +8,6 @@ clock REPS {
       step x 0.1; 
       drop;
     };
-    
-    dump x;
 };
 
 dump;

@@ -9,6 +9,8 @@ fun (fib ((n a b) Int) Int
 * add step op push arg
 ** drop result if false
 ** bench/fix
+* reset stack automatically in clock op
+** save stackp & reset after each rep
 * mark regs/stack in cx.mark()
 * add custom read_id in calcl
 ** break on isdigit, () and =
