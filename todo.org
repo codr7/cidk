@@ -9,8 +9,10 @@ fun (fib ((n a b) Int) Int
 * finish Fix type
 ** add Fix bench
 *** snigl
+** replace fix::pow() with lookup table
 ** add [Fix Fix] fun overloads
 ** add [Fix Int] fun overloads
+** add per operation static pow lookup tables 
 * --
 * mark regs/stack in cx.mark()
 * add custom read_id in calcl
