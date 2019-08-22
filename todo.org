@@ -7,6 +7,8 @@ fun (fib ((n a b) Int) Int
 )
 
 * finish Fix type
+** add Fix bench
+*** snigl
 ** add [Fix Fix] fun overloads
 ** add [Fix Int] fun overloads
 * --
@@ -32,7 +34,7 @@ fun (fib ((n a b) Int) Int
 ** add support in Env::let
 *** replace val if env != this
 ** remove Val.id
-* add type unions
+* add sum types
 ** parse Type? as Type|_
 ** remove any_type
 ** don't derive Nil from a_type
