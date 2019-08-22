@@ -6,11 +6,6 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* finish Fix type
-** replace fix::pow() with lookup table
-** add per operation static pow lookup tables
-** bench
-* --
 * mark regs/stack in cx.mark()
 * add custom read_id in calcl
 ** break on isdigit, () and =

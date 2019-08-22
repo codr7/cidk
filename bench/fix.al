@@ -5,8 +5,13 @@ clock REPS {
     let x 0.0;
     
     for N F { 
-      set x {push 0.1; call +[Fix Fix];};
-    };    
+      set x {
+        push 0.1; 
+        call +[Fix Fix];
+      };
+    };
+
+    dump x;
 };
 
 dump;
@@ -18,6 +23,8 @@ clock REPS {
       push 0.1; 
       call +[Fix Fix];
     };
+
+    drop;
 };
 
 dump;

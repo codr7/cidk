@@ -1,12 +1,14 @@
 #ifndef CIDK_FIX_HPP
 #define CIDK_FIX_HPP
 
+#include <cassert>
 #include <iomanip>
 
 #include "cidk/cmp.hpp"
 
 namespace cidk::fix {
-  const uint8_t SCALE_BITS(4);
+  const uint8_t SCALE_BITS(3);
+  const uint8_t SCALE_MAX((1 << SCALE_BITS) - 1);
 
   using T = uint64_t;
     
@@ -26,9 +28,11 @@ namespace cidk::fix {
   }
 
   inline int64_t pow(uint8_t scale) {
-    uint64_t out(1);
-    while (scale--) { out *= 10; }
-    return out;
+    static array<int64_t, SCALE_MAX + 1> tbl({
+        1, 10, 100, 1000, 10000, 100000, 1000000, 10000000});
+    
+    assert(scale < SCALE_MAX);
+    return tbl[scale];
   }
 
   inline int64_t trunc(T f, uint8_t ts = 0) {
