@@ -7,6 +7,12 @@ fun (fib ((n a b) Int) Int
 )
 
 * mark regs/stack in cx.mark()
+* make step op generic
+** add step[Int Int] to abc lib
+*** call from op
+** bench
+** add step[Fix Fix] to math lib
+*** pick fun based on delta in step op 
 * add custom read_id in calcl
 ** break on isdigit, () and =
 * rename calcl op to calc
@@ -23,6 +29,7 @@ fun (fib ((n a b) Int) Int
 ** use for a/b in fib_iter
 *** bench
 * add nargs to Dispatch op
+* compile Dispatch to Call if list.size() == 1
 * add EnvItem
 ** Env *env; const Sym *id; Val val;
 ** add support in Env::let
