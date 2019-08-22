@@ -28,7 +28,7 @@ namespace cidk::fix {
   }
 
   inline int64_t pow(uint8_t scale) {
-    static array<int64_t, SCALE_MAX> tbl({
+    static const array<int64_t, SCALE_MAX> tbl({
         1, 10, 100, 1000, 10000, 100000, 1000000, 10000000});
     
     assert(scale < SCALE_MAX);
@@ -73,12 +73,12 @@ namespace cidk::fix {
 
   inline T mul(T x, T y) {
     const uint8_t xs(scale(x));
-    return make(get(x) * get(y) / pow(scale(y)), xs);
+    return make(get(x) * (get(y) / pow(scale(y))), xs);
   }
 
   inline T div(T x, T y) {
     const uint8_t xs(scale(x));
-    return make(get(x) / get(y) / pow(scale(y)), xs);
+    return make(get(x) / (get(y) / pow(scale(y))), xs);
   }
 }
 
