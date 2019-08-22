@@ -8,22 +8,22 @@
 
 namespace cidk::libs {
   static void int_add_imp(Cx &cx, const Pos &p, const Fun &f, Env &env) {
-    auto y(cx.pop(p).as_int);
+    const Int y(cx.pop(p).as_int);
     cx.peek(p).as_int += y;
   }
 
   static void int_sub_imp(Cx &cx, const Pos &p, const Fun &f, Env &env) {
-    auto y(cx.pop(p).as_int);
+    const Int y(cx.pop(p).as_int);
     cx.peek(p).as_int -= y;
   }
 
   static void int_mul_imp(Cx &cx, const Pos &p, const Fun &f, Env &env) {
-    auto y(cx.pop(p).as_int);
+    const Int y(cx.pop(p).as_int);
     cx.peek(p).as_int *= y;
   }
 
   static void int_div_imp(Cx &cx, const Pos &p, const Fun &f, Env &env) {
-    auto y(cx.pop(p).as_int);
+    const Int y(cx.pop(p).as_int);
     cx.peek(p).as_int /= y;
   }
 
