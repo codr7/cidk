@@ -8,11 +8,10 @@ fun (fib ((n a b) Int) Int
 
 * mark regs/stack in cx.mark()
 * make step op generic
-** add step[Int Int] to abc lib
-*** call from op
+** call +[Int Int] from op
 ** bench
-** add step[Fix Fix] to math lib
-*** pick fun based on delta in step op 
+** pick fun based on delta
+** switch bench/fix from set to step
 * add custom read_id in calcl
 ** break on isdigit, () and =
 * rename calcl op to calc
