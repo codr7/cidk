@@ -36,4 +36,4 @@ check({cp;}) {};
 push 0.123;
 push 10;
 dispatch *;
-check({cp;}) {is 1.23;};
+check({cp;}) {is 1.230;};

@@ -30,16 +30,7 @@ namespace cidk::libs {
   static void fix_int_mul_imp(Cx &cx, const Pos &p, const Fun &f, Env &env) {
     const Int y(cx.pop(p).as_int);
     Fix &x(cx.peek(p).as_fix);
-    int64_t xv(fix::get(x));
-    uint8_t xs(fix::scale(x));
-
-    if (xs) {
-      xs--;
-    } else {
-      xv *= y;
-    }
-
-    x = fix::make(xv, xs);
+    x = fix::make(fix::get(x) * y, fix::scale(x));
   }
 
   void init_math(Cx &cx) {
