@@ -4,13 +4,11 @@ defconst N 100000;
 clock REPS {
     let x 0.0;
     
-    for N F { 
-      set x {
-        push 0.1; 
-        call +[Fix Fix];
-      };
+    for N F {
+      step x 0.1; 
+      drop;
     };
-
+    
     dump x;
 };
 

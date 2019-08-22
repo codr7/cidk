@@ -26,6 +26,8 @@ namespace cidk::ops {
     auto &p(in->pos);
     auto &args(in->args);
     for (int i(0); i < 2; i++) { args[i].compile(p, env, opts); }
+    auto tid(args[1].type->id);
+    args[2] = env.get(p, cx.intern(p, str("+[", tid, ' ', tid, ']')));
     out.push_back(*in);
   }
 
@@ -35,18 +37,15 @@ namespace cidk::ops {
     auto &n(args[0]), &delta(args[1]);
     
     if (n.type == &cx.reg_type) {
-      delta.eval(p, env, regs);
-      auto &dv(cx.peek(p));
-      if (dv.type != &cx.int_type) { throw ESys(p, "Expected Int: ", dv.type->id); }
-      auto &nv(regs[n.as_reg].as_int);
-      nv += dv.as_int;
-      dv.as_int = nv;
+      Val &nv(regs[n.as_reg]);
+      cx.push(p, nv);
+      cx.push(p, delta);
+      args[2].as_fun->call(cx, p, env);
+      nv = cx.peek(p);
     } else {
       n.eval(p, env, regs); 
-      delta.eval(p, env, regs);
-      auto &dv(cx.pop(p));
-      if (dv.type != &cx.int_type) { throw ESys(p, "Expected Int: ", dv.type->id); }
-      cx.peek(p).as_int += dv.as_int;
+      cx.push(p, delta);      
+      args[2].as_fun->call(cx, p, env);
     }
   }
 
