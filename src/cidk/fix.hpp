@@ -8,7 +8,7 @@
 
 namespace cidk::fix {
   const uint8_t SCALE_BITS(3);
-  const uint8_t SCALE_MAX((1 << SCALE_BITS) - 1);
+  const uint8_t SCALE_MAX((1 << SCALE_BITS));
 
   using T = uint64_t;
     
@@ -28,7 +28,7 @@ namespace cidk::fix {
   }
 
   inline int64_t pow(uint8_t scale) {
-    static array<int64_t, SCALE_MAX + 1> tbl({
+    static array<int64_t, SCALE_MAX> tbl({
         1, 10, 100, 1000, 10000, 100000, 1000000, 10000000});
     
     assert(scale < SCALE_MAX);

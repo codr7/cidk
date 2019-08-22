@@ -37,3 +37,8 @@ push 0.123;
 push 10;
 dispatch *;
 check({cp;}) {is 1.230;};
+
+push 0.123;
+cp;
+dispatch +;
+check({cp;}) {is 0.246;};
