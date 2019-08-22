@@ -48,7 +48,11 @@ namespace cidk::fix {
 
   inline void dump(T f, ostream &out) {
     const uint8_t s(scale(f));
-    out << trunc(f) / pow(s) << '.' << setw(s) << setfill('0') << frac(f);
+    const int64_t v(trunc(f) / pow(s));
+    const bool neg(is_neg(f));
+    if (neg && !v) { out << '-'; }
+    const int64_t ff(frac(f));
+    out << v << '.' << setw(s) << setfill('0') << (neg ? -ff : ff);
   }
   
   inline T add(T x, T y) {

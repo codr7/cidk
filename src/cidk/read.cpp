@@ -187,7 +187,7 @@ namespace cidk {
     return Val(cx.list_type, out);
   }
   
-  Val read_int(Cx &cx, Pos &pos, istream &in) {
+  pair<Int, bool> read_int(Cx &cx, Pos &pos, istream &in) {
     Pos p(pos);
     stringstream out;
     char c(0);
@@ -205,7 +205,7 @@ namespace cidk {
     }
 
     if (!in.eof()) { in.unget();}
-    return Val(cx.int_type, is_neg ? -v : v);
+    return make_pair(is_neg ? -v : v, is_neg);
   }
 
   pair<uint64_t, uint8_t> read_frac(Cx &cx, Pos &pos, istream &in) {
@@ -224,18 +224,17 @@ namespace cidk {
   }
   
   Val read_num(Cx &cx, Pos &pos, istream &in) {
-    Val n(read_int(cx, pos, in));
+    auto i(read_int(cx, pos, in));
     char c(0);
     
     if (!in.get(c) || c != '.') {
       in.unget();
-      return n;
+      return Val(cx.int_type, i.first);
     }
     
     auto f(read_frac(cx, pos, in));
-    
-    return Val(cx.fix_type,
-               fix::make(n.as_int * fix::pow(f.second) + f.first, f.second));
+    int64_t v(i.first * fix::pow(f.second) + f.first);
+    return Val(cx.fix_type, fix::make((i.first || !i.second) ? v : -v, f.second));
   }
 
   Val read_str(Cx &cx, Pos &pos, istream &in) {    

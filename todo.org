@@ -6,7 +6,7 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* add Fix type
+* finish Fix type
 ** add [Fix Fix] fun overloads
 ** add [Fix Int] fun overloads
 * --

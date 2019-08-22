@@ -28,6 +28,11 @@ push 0.01;
 dispatch >;
 check({cp;}) {};
 
+push -0.1;
+push 0.1;
+dispatch <;
+check({cp;}) {};
+
 push 0.123;
 push 10;
 dispatch *;
