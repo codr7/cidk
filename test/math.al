@@ -22,3 +22,13 @@ push 42;
 push 6; 
 call /[Int Int];
 check({cp;}) {is 7;};
+
+push 0.1;
+push 0.01;
+dispatch >;
+check({cp;}) {};
+
+push 0.123;
+push 10;
+dispatch *;
+check({cp;}) {is 1.23;};

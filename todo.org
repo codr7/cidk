@@ -7,10 +7,8 @@ fun (fib ((n a b) Int) Int
 )
 
 * add Fix type
+** add [Fix Fix] fun overloads
 ** add [Fix Int] fun overloads
-** add reader
-*** trigger on . in read_num
-**** extract read_int
 * --
 * mark regs/stack in cx.mark()
 * add custom read_id in calcl
@@ -29,6 +27,11 @@ fun (fib ((n a b) Int) Int
 ** use for a/b in fib_iter
 *** bench
 * add nargs to Dispatch op
+* add EnvItem
+** Env *env; const Sym *id; Val val;
+** add support in Env::let
+*** replace val if env != this
+** remove Val.id
 * add type unions
 ** parse Type? as Type|_
 ** remove any_type

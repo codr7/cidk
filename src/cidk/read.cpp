@@ -7,6 +7,7 @@
 #include "cidk/read.hpp"
 #include "cidk/str.hpp"
 #include "cidk/types/expr.hpp"
+#include "cidk/types/fix.hpp"
 #include "cidk/types/list.hpp"
 #include "cidk/types/pop.hpp"
 #include "cidk/types/str.hpp"
@@ -186,20 +187,55 @@ namespace cidk {
     return Val(cx.list_type, out);
   }
   
-  Val read_num(Cx &cx, Pos &pos, istream &in) {
+  Val read_int(Cx &cx, Pos &pos, istream &in) {
     Pos p(pos);
     stringstream out;
     char c(0);
+    Int v(0);
+    bool is_neg(false);
     
-    for (;;) {
-      if (!in.get(c) || (!isdigit(c) && (c != '-' || out.tellg()))) { break; }
-      out << c;
+    while (in.get(c) && (isdigit(c) || (c == '-' && !v))) {
+      if (c == '-') {
+        is_neg = true;
+      } else {
+        v = v * 10 + c - '0';
+      }
+        
       pos.col++;
     }
 
     if (!in.eof()) { in.unget();}
-    Int n(strtoll(out.str().c_str(), NULL, 10));
-    return Val(cx.int_type, n);
+    return Val(cx.int_type, is_neg ? -v : v);
+  }
+
+  pair<uint64_t, uint8_t> read_frac(Cx &cx, Pos &pos, istream &in) {
+    char c(0);    
+    uint64_t v(0);
+    uint8_t s(0);
+    
+    while (in.get(c) && isdigit(c)) {
+      v = v * 10 + c - '0';
+      s++;
+      pos.col++;
+    }
+
+    if (!in.eof()) { in.unget();}
+    return make_pair(v, s);
+  }
+  
+  Val read_num(Cx &cx, Pos &pos, istream &in) {
+    Val n(read_int(cx, pos, in));
+    char c(0);
+    
+    if (!in.get(c) || c != '.') {
+      in.unget();
+      return n;
+    }
+    
+    auto f(read_frac(cx, pos, in));
+    
+    return Val(cx.fix_type,
+               fix::make(n.as_int * fix::pow(f.second) + f.first, f.second));
   }
 
   Val read_str(Cx &cx, Pos &pos, istream &in) {    

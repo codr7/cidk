@@ -1,6 +1,8 @@
 #ifndef CIDK_FIX_HPP
 #define CIDK_FIX_HPP
 
+#include <iomanip>
+
 #include "cidk/cmp.hpp"
 
 namespace cidk::fix {
@@ -32,7 +34,8 @@ namespace cidk::fix {
   inline int64_t trunc(T f, uint8_t ts = 0) {
     const uint8_t fs(scale(f));
     const uint8_t s((fs < ts) ? fs : fs - ts);
-    return get(f) / pow(s);
+    const int64_t m(pow(s)), v(get(f) / m);
+    return v * m;
   }
   
   inline int64_t frac(T f) { return get(f) - trunc(f); }
@@ -43,7 +46,10 @@ namespace cidk::fix {
     return cidk::cmp(pos, xv, (xs == ys) ? yv : yv / pow(ys) * pow(xs));
   }
 
-  inline void dump(T f, ostream &out) { out << trunc(f) << '.' << frac(f); }
+  inline void dump(T f, ostream &out) {
+    const uint8_t s(scale(f));
+    out << trunc(f) / pow(s) << '.' << setw(s) << setfill('0') << frac(f);
+  }
   
   inline T add(T x, T y) {
     const uint8_t xs(scale(x)), ys(scale(y));
