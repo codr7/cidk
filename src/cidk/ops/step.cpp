@@ -12,9 +12,13 @@ namespace cidk::ops {
 
   StepType::StepType(const string &id): OpType(id) {}
 
-  void StepType::init(Cx &cx, Op &op, const Val &n, const Val &delta) const {
-    op.args[0] = n;
+  void StepType::init(Cx &cx, Op &op,
+                      const Val &place,
+                      const Val &delta,
+                      const Val &push) const {
+    op.args[0] = place;
     op.args[1] = delta;
+    op.args[2] = push;
   }
 
   void StepType::compile(Cx &cx,
@@ -25,53 +29,68 @@ namespace cidk::ops {
                         Opts &opts) const {
     auto &p(in->pos);
     auto &args(in->args);
-    for (int i(0); i < 2; i++) { args[i].compile(p, env, opts); }
+    for (int i(0); i < 3; i++) { args[i].compile(p, env, opts); }
     auto tid(args[1].type->id);
-    args[2] = env.get(p, cx.intern(p, str("+[", tid, ' ', tid, ']')));
+    args[3] = env.get(p, cx.intern(p, str("+[", tid, ' ', tid, ']')));
     out.push_back(*in);
   }
 
   void StepType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &args(op.args);
-    auto &n(args[0]), &delta(args[1]);
+    auto &place(args[0]), &delta(args[1]);
+    auto fun(args[3].as_fun);
     
-    if (n.type == &cx.reg_type) {
-      Val &nv(regs[n.as_reg]);
-      cx.push(p, nv);
+    if (place.type == &cx.reg_type) {
+      Val &v(regs[place.as_reg]);
+      cx.push(p, v);
       cx.push(p, delta);
-      args[2].as_fun->call(cx, p, env);
-      nv = cx.peek(p);
+      fun->call(cx, p, env);
+      v = args[2].as_bool ? cx.peek(p) : cx.pop(p);
     } else {
-      n.eval(p, env, regs); 
+      if (place.type == &cx.int_type) {
+        cx.push(p, place);
+      } else {
+        place.eval(p, env, regs);
+      }
+      
       cx.push(p, delta);      
-      args[2].as_fun->call(cx, p, env);
+      fun->call(cx, p, env);
     }
   }
 
   void StepType::mark_refs(Op &op) const {
     auto &args(op.args);
-    for (int i(0); i < 2; i++) { args[i].mark_refs(); }
+    for (int i(0); i < 3; i++) { args[i].mark_refs(); }
+
+    auto &fun(args[3]);
+    if (fun.type) { fun.mark_refs(); }
   }
 
   void StepType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
-    auto n(read_val(cx, pos, in));
-    if (!n) { throw ESys(p, "Missing ;"); }
-    Val one(cx.int_type, Int(1));
+    Val place(cx.$), delta(cx.int_type, Int(1)), push(cx.T);
+
+    auto v(read_val(cx, pos, in));
+    if (!v) { throw ESys(p, "Missing ;"); }
     
-    if (n->is_eop()) {
-      out.emplace_back(cx, p, *this, cx.$, one);
-    } else {
-      auto delta(read_val(cx, pos, in));
-      if (!delta) { throw ESys(p, "Missing ;"); }
-      
-      if (delta->is_eop()) {
-        out.emplace_back(cx, p, *this, *n, one);
-      } else {
-        out.emplace_back(cx, p, *this, *n, *delta);
-        read_eop(pos, in);
+    if (!v->is_eop()) {
+      place = *v;
+      v = read_val(cx, pos, in);
+      if (!v) { throw ESys(p, "Missing ;"); }
+
+      if (!v->is_eop()) {
+        delta = *v;
+        v = read_val(cx, pos, in);
+        if (!v) { throw ESys(p, "Missing ;"); }
+
+        if (!v->is_eop()) {
+          push = *v;
+          read_eop(pos, in);
+        }
       }
     }
+    
+    out.emplace_back(cx, p, *this, place, delta, push);
   }
 }

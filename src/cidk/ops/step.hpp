@@ -7,7 +7,10 @@
 namespace cidk::ops {
   struct StepType: OpType {
     StepType(const string &id);
-    void init(Cx &cx, Op &op, const Val &n, const Val &delta) const;
+    void init(Cx &cx, Op &op,
+              const Val &place,
+              const Val &delta,
+              const Val &push) const;
 
     virtual void compile(Cx &cx,
                          OpIter &in,

@@ -6,9 +6,6 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* add step op push arg
-** drop result if false
-** bench/fix
 * mark regs/stack in cx.mark()
 * add custom read_id in calcl
 ** break on isdigit, () and =

@@ -3,11 +3,7 @@ defconst N 100000;
 
 clock REPS {
     let x 0.0;
-    
-    for N F {
-      step x 0.1; 
-      drop;
-    };
+    for N F {step x 0.1 F;};
 };
 
 dump;
