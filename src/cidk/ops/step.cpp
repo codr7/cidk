@@ -30,8 +30,13 @@ namespace cidk::ops {
     auto &p(in->pos);
     auto &args(in->args);
     for (int i(0); i < 3; i++) { args[i].compile(p, env, opts); }
-    auto tid(args[1].type->id);
-    args[3] = env.get(p, cx.intern(p, str("+[", tid, ' ', tid, ']')));
+    auto &delta(args[1]);
+
+    if (delta.type != &cx.int_type) {
+      auto tid(args[1].type->id);
+      args[3] = env.get(p, cx.intern(p, str("+[", tid, ' ', tid, ']')));
+    }
+    
     out.push_back(*in);
   }
 
@@ -39,23 +44,29 @@ namespace cidk::ops {
     auto &p(op.pos);
     auto &args(op.args);
     auto &place(args[0]), &delta(args[1]);
-    auto fun(args[3].as_fun);
+    bool push(args[2].as_bool);
     
     if (place.type == &cx.reg_type) {
       Val &v(regs[place.as_reg]);
-      cx.push(p, v);
-      cx.push(p, delta);
-      fun->call(cx, p, env);
-      v = args[2].as_bool ? cx.peek(p) : cx.pop(p);
-    } else {
-      if (place.type == &cx.int_type) {
-        cx.push(p, place);
-      } else {
-        place.eval(p, env, regs);
-      }
       
-      cx.push(p, delta);      
-      fun->call(cx, p, env);
+      if (delta.type == &cx.int_type) {
+        v.as_int += delta.as_int;
+        if (push) { cx.push(p, cx.int_type, v.as_int); }
+      } else {
+        cx.push(p, v);
+        cx.push(p, delta);
+        args[3].as_fun->call(cx, p, env);
+        v = push ? cx.peek(p) : cx.pop(p);
+      }
+    } else {
+      place.eval(p, env, regs);
+
+      if (delta.type == &cx.int_type) {
+        cx.peek(p).as_int += delta.as_int;
+      } else {
+        cx.push(p, delta);      
+        args[3].as_fun->call(cx, p, env);
+      }
     }
   }
 
