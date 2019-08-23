@@ -16,6 +16,7 @@
 #include "cidk/ops/include.hpp"
 #include "cidk/ops/if.hpp"
 #include "cidk/ops/is.hpp"
+#include "cidk/ops/isa.hpp"
 #include "cidk/ops/let.hpp"
 #include "cidk/ops/link.hpp"
 #include "cidk/ops/mark.hpp"
@@ -26,6 +27,7 @@
 #include "cidk/ops/step.hpp"
 #include "cidk/ops/swap.hpp"
 #include "cidk/ops/sweep.hpp"
+#include "cidk/ops/typeof.hpp"
 
 namespace cidk {
   void mark_refs(Ops &in) {
@@ -38,12 +40,13 @@ namespace cidk {
         &ops::Defconst, &ops::Defun, &ops::Dispatch, &ops::Do, &ops::Drop, &ops::Dump,
         &ops::For,
         &ops::Include,
-        &ops::If, &ops::Is,
+        &ops::If, &ops::Is, &ops::Isa,
         &ops::Let, &ops::Link, 
         &ops::Mark,
         &ops::Push,
         &ops::Recall,
-        &ops::Set, &ops::Stash, &ops::Step, &ops::Swap, &ops::Sweep
+        &ops::Set, &ops::Stash, &ops::Step, &ops::Swap, &ops::Sweep,
+        &ops::Typeof
     };
 
     for (auto &t: ts) { cx.op_types.emplace(t->id, t); }

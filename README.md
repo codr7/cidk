@@ -21,7 +21,7 @@ Welcome to cidk!<br/>
 This project aims to implement an interpreter dev kit with integrated assembler in C++.
 
 ### Setup
-cidk requires CMake and a C++17-capable compiler to build.
+cidk requires CMake and a C++17 compiler to build.
 
 ```
 $ git clone https://github.com/codr7/cidk.git
@@ -53,12 +53,135 @@ Empty input clears stack and Ctrl+D exits.
 ```
 
 ### Performance
-cidk currently runs at 2-15x the speed of Python3, as far as available [benchmarks](https://github.com/codr7/cidk/tree/master/bench) go. As an added bonus, launching the interpreter is roughly 200x as fast.
+cidk typically runs faster than Python3, 2-15x as far as available [benchmarks](https://github.com/codr7/cidk/tree/master/bench) go. As an added bonus, launching the interpreter is roughly 200x faster.
 
 ### Syntax
-Each statement starts with an opcode and ends with semicolon, arguments are separated by whitespace.
+Each operation starts with an opcode and ends with semicolon, arguments are separated by whitespace.
+
+### Types
+The following types are supported by default.
+
+#### Meta
+`Meta` is the type of all types, including itself.
+
+`typeof` returns the type of the specified value.
+
+```
+  typeof Meta;
+
+(... Meta:Meta)
+```
+
+#### Nil
+`Nil` represents missing values.
+
+```
+  typeof _;
+
+(... Nil:Meta)
+```
+
+#### A
+`A` is the parent of all types except `Nil`.
+
+`isa` returns the direct parent type, or `_` if none exists.
+
+```
+  isa A Int;
+
+(... Num:Meta)
+```
+
+```
+  isa A Num;
+
+(... A:Meta)
+```
+
+#### Bool
+`Bool` has two values, `T` and `F`. All values have boolean representations, most are unconditionally `T`; empty strings and lists are two notable exceptions.
+
+```
+  if "" T F;
+
+(... F)
+```
+
+#### Int
+Integers are 64-bit and signed.
+
+```
+  typeof 42;
+
+(... Int:Meta)
+
+  isa Num;
+
+(... Num:Meta)
+```
+
+#### Fix
+Fix point numbers infer the intended precision from specified number of decimals.
+
+```
+  push 41.90;
+  step $ 0.1;
+
+(... 42.00)
+```
+
+#### Str
+Strings are mutable and passed by reference. Literals are enclosed in double quotes and assumed to be UTF8-encoded.
+
+```
+  is "foo" "foo";
+
+(... F)
+```
+
+```
+  push "foo";
+  push "foo";
+  call =[A A];
+
+(... T)
+```
+
+#### List
+Lists are heterogenous, mutable and passed by reference. Literals are enclosed in parens.
+
+```
+  typeof (42 "foo");
+
+(... List:Meta)
+```
+
+#### Fun
+Functions are generic; the same id may be used for multiple definitions as long as their argument lists are unique.
+
+```
+  push +;
+  
+(... (+[Int Int]:Fun +[Fix Fix]:Fun))
+```
+
+```
+  push 1;
+  push 2;
+  call +[Int Int];
+  
+(... 3)
+```
+
+```
+  push 1 2;
+  dispatch +;
+
+(... 3)
+```
 
 ### Opcodes
+Included below is an alphabetical list of all supported opcodes.
 
 #### call [fun $] [check F]
 Calls `fun`, arguments are type checked if `check` is `T`.
@@ -193,6 +316,15 @@ Pushes `T` if `x` and `y` are the same value;
 (... T)
 ```
 
+#### isa [parent $] [child $]
+Pushes the direct parent type, or `_` if none exists.
+
+```
+  isa A Int;
+
+(... Num:Meta)
+```
+
 #### let id [val $]
 Binds `id` to `val` in the current scope.
 
@@ -302,6 +434,15 @@ Mixing is fine too.
 
 #### sweep
 Sweeps non-marked references.
+
+#### typeof [val $]
+Pushes the type of `val`.
+
+```
+  typeof 42;
+
+(... Int:Meta)
+```
 
 ### License
 MIT

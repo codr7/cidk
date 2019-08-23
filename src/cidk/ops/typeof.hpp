@@ -1,13 +1,12 @@
-#ifndef CIDK_OP_DEFCONST_HPP
-#define CIDK_OP_DEFCONST_HPP
+#ifndef CIDK_OP_TYPEOF_HPP
+#define CIDK_OP_TYPEOF_HPP
 
 #include "cidk/op.hpp"
-#include "cidk/val.hpp"
 
 namespace cidk::ops {
-  struct DefconstType: OpType {
-    DefconstType(const string &id);
-    void init(Cx &cx, Op &op, const Val &id, const Val &val) const;
+  struct TypeofType: OpType {
+    TypeofType(const string &id);
+    void init(Cx &cx, Op &op, const Val &val) const;
 
     virtual void compile(Cx &cx,
                          OpIter &in,
@@ -16,10 +15,12 @@ namespace cidk::ops {
                          Ops &out,
                          Opts &opts) const override;
 
+    virtual void eval(Cx &cx, Op &op, Env &env, Reg *regs) const override;
+    virtual void mark_refs(Op &op) const override;
     virtual void read(Cx &cx, Pos &pos, istream &in, Ops &out) const override;
   };
 
-  extern const DefconstType Defconst;
+  extern const TypeofType Typeof;
 }
 
 #endif

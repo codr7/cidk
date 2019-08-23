@@ -13,7 +13,7 @@ namespace cidk {
   void MetaType::cp(Val &dst, const Val &src) const { dst.as_type = src.as_type; }
 
   void MetaType::dump(const Val &val, ostream &out) const {
-    out << val.as_type->id << ":Type";
+    out << val.as_type->id << ":Meta";
   }
 
   bool MetaType::is(const Val &x, const Val &y) const {

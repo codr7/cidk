@@ -17,7 +17,6 @@ namespace cidk {
   struct List;
   struct OStream;
   struct Str;
-  struct ValType;
   
   struct Val {
     const Sym *id = nullptr;
