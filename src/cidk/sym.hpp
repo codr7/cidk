@@ -7,9 +7,7 @@ namespace cidk {
   struct Type;
   
   struct Sym {
-    string name;
-    const Sym *root;
-    
+    const string name;
     Sym(string name);
   };
 

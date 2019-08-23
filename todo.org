@@ -6,13 +6,6 @@ fun (fib ((n a b) Int) Int
   if n.= 0 a if n.= 1 b fib(n.- 1 b a.+ b)
 )
 
-* fix Fun root list sweep dependencies
-** the list is not there once the fun is swept
-** take root list as Fun constructor arg
-** run tests in valgrind
-** commit
-* --
-* drop sym.root
 * mark regs/stack in cx.mark()
 * add custom read_id in calcl
 ** break on isdigit, () and =

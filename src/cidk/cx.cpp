@@ -88,14 +88,6 @@ namespace cidk {
     if (ok != syms.end()) { return ok->second; }    
     auto s(sym_pool.get(name));
     syms.emplace(make_pair(name, s));
-
-    if (name.back() == ']') {
-      Pos p(pos);
-      auto i(name.find('['));
-      if (i == string::npos) { throw ESys(pos, "Invalid id: ", name); }
-      s->root = intern(pos, name.substr(0, i));
-    }
-    
     return s;
   }
   

@@ -1,7 +1,7 @@
 #include "cidk/sym.hpp"
 
 namespace cidk {
-  Sym::Sym(string name): name(name), root(this) {}
+  Sym::Sym(string name): name(name) {}
 
   ostream &operator <<(ostream &out, const Sym *sym) {
     out << sym->name;
