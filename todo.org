@@ -1,5 +1,3 @@
-* add custom read_id in calcl
-** break on isdigit, () and =
 * add calcl assignment support
 ** check for '=' after read_id
 ** set to next value
