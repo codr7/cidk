@@ -42,3 +42,9 @@ push 0.123;
 cp;
 dispatch +;
 check({cp;}) {is 0.246;};
+
+do {
+  let foo 41.9;
+  step foo 0.1;
+  check({cp;}) {is 42.0;};
+};

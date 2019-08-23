@@ -248,6 +248,18 @@ Expressions are evaluated with current value pushed on stack.
 (... 42)
 ```
 
+#### step place [delta 1] [push T]
+Steps value at `place` by `delta` and pushes result if `push` is `T`.
+
+```
+  do {
+    let foo 41.9;
+    step foo 0.1;
+  };
+
+(... 42.0)
+```
+
 #### swap [x 1] [y 0]
 Swaps values of `x` and `y`.
 
