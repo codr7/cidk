@@ -40,7 +40,13 @@ namespace cidk::ops {
     auto &body(args[1]);
     
     Timer t;
-    for (int i(0); i < nreps.as_int; i++) { body.eval(p, env, regs); }
+    auto stackp(cx.stackp);
+    
+    for (int i(0); i < nreps.as_int; i++) {
+      body.eval(p, env, regs);
+      cx.stackp = stackp;
+    }
+    
     cx.push(p, cx.int_type, Int(t.ms()));
   }
 

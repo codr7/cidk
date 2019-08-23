@@ -19,7 +19,7 @@ defun fib1(n Int a Int b Int)(Int) {
   };
 };
 
-clock REPS {push N; push 0; push 1; call fib1[Int Int Int]; drop;};
+clock REPS {push N; push 0; push 1; call fib1[Int Int Int];};
 dump;
 
 defun fib2(n Int a Int b Int)(Int) {
@@ -40,7 +40,7 @@ defun fib2(n Int a Int b Int)(Int) {
   };
 };
 
-clock REPS {push N; push 0; push 1; call fib2[Int Int Int]; drop;};
+clock REPS {push N; push 0; push 1; call fib2[Int Int Int];};
 dump;
 
 defun fib3(_ Int _ Int _ Int)(Int) {
@@ -69,5 +69,7 @@ defun fib3(_ Int _ Int _ Int)(Int) {
   };
 };
 
-clock REPS {push N; push 0; push 1; call fib3[Int Int Int]; drop;};
+clock REPS {push N; push 0; push 1; call fib3[Int Int Int];};
 dump;
+
+dump stack;

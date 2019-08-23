@@ -19,8 +19,7 @@ clock REPS {
       push 0.1; 
       call +[Fix Fix];
     };
-
-    drop;
 };
 
 dump;
+dump stack;

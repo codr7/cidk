@@ -18,7 +18,7 @@ defun fib1(n Int)(Int) {
   push b;
 };
 
-clock REPS {push N; call fib1[Int]; drop;};
+clock REPS {push N; call fib1[Int];};
 dump;
 
 defun fib2(_ Int)(Int) {
@@ -37,5 +37,7 @@ defun fib2(_ Int)(Int) {
   drop;
 };
 
-clock REPS {push N; call fib2[Int]; drop;};
+clock REPS {push N; call fib2[Int];};
 dump;
+
+dump stack;
