@@ -4,7 +4,7 @@ defconst N 20;
 defun fib1(n Int a Int b Int)(Int) {
   push n;
   push 1; 
-  call >[Any Any]; 
+  call >[A A]; 
 
   if $ {
     step n -1; 
@@ -25,7 +25,7 @@ dump;
 defun fib2(n Int a Int b Int)(Int) {
   push n;
   push 1; 
-  call >[Any Any]; 
+  call >[A A]; 
 
   if $ {
     step n -1; 
@@ -47,7 +47,7 @@ defun fib3(_ Int _ Int _ Int)(Int) {
   swap 2; 
   cp;
   push 1; 
-  call >[Any Any]; 
+  call >[A A]; 
  
   if $ {
     step $ -1;

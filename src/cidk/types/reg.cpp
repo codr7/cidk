@@ -12,7 +12,7 @@ namespace cidk {
   void RegType::cp(Val &dst, const Val &src) const { dst.as_reg = src.as_reg; }
 
   void RegType::dump(const Val &val, ostream &out) const {
-    out << "Reg|" << val.as_reg;
+    out << val.as_reg << ":Reg";
   }
 
   void RegType::eval(const Pos &pos, const Val &val, Env &env, Reg *regs) const {

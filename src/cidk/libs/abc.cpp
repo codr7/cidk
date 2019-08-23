@@ -54,25 +54,25 @@ namespace cidk::libs {
 
     e.add_fun(cx, Pos::_,
               "=",
-              {Arg("x", cx.any_type), Arg("y", cx.any_type)},
+              {Arg("x", cx.a_type), Arg("y", cx.a_type)},
               {Ret(cx.bool_type)},
               eq_imp);
 
     e.add_fun(cx, Pos::_,
               "!=",
-              {Arg("x", cx.any_type), Arg("y", cx.any_type)},
+              {Arg("x", cx.a_type), Arg("y", cx.a_type)},
               {Ret(cx.bool_type)},
               neq_imp);
         
     e.add_fun(cx, Pos::_,
               "<",
-              {Arg("x", cx.any_type), Arg("y", cx.any_type)},
+              {Arg("x", cx.a_type), Arg("y", cx.a_type)},
               {Ret(cx.bool_type)},
               lt_imp);
 
     e.add_fun(cx, Pos::_,
               ">",
-              {Arg("x", cx.any_type), Arg("y", cx.any_type)},
+              {Arg("x", cx.a_type), Arg("y", cx.a_type)},
               {Ret(cx.bool_type)},
               gt_imp);
   }

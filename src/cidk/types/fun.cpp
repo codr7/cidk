@@ -20,7 +20,7 @@ namespace cidk {
   void FunType::cp(Val &dst, const Val &src) const { dst.as_fun = src.as_fun; }
 
   void FunType::dump(const Val &val, ostream &out) const {
-    out << "Fun|" << val.as_fun->id;
+    out << val.as_fun->id << ":Fun";
   }
 
   bool FunType::is(const Val &x, const Val &y) const { return x.as_fun == y.as_fun; }

@@ -16,7 +16,7 @@ namespace cidk {
   }
 
   void ExprType::dump(const Val &val, ostream &out) const {    
-    out << "Expr|" << val.as_expr;
+    out << val.as_expr << ":Expr";
   }
 
   void ExprType::eval(const Pos &pos, const Val &val, Env &env, Reg *regs) const {

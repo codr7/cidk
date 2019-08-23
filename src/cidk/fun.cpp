@@ -43,7 +43,7 @@ namespace cidk {
     
     for (auto &a: args.items) {
       if (!a.id) { a.id = cx.intern(pos, a.id_name); }
-      if (!a.type) { a.type = &cx.a_type; }
+      if (!a.type) { a.type = &cx.opt_type; }
       weight += a.type->tag;
       if (sep) { buf << sep; }
       buf << a.type->id;
@@ -66,19 +66,11 @@ namespace cidk {
 
   bool Fun::match(Val *stackp, size_t stack_len) const {
     auto &as(args.items);
-    
-    if (auto nas(as.size()); nas) {
-      if (nas <= stack_len) {
-        for (auto a = &as.back(); a >= &as[0]; a--, stackp--) {          
-          if (Type *at(a->type); at != &cx.a_type && !stackp->type->isa(*at)) {
-            return false;
-          }
-        }
+    if (as.empty()) { return true; }    
+    if (as.size() > stack_len) { return false; }
 
-        return true;
-      }
-
-      return false;
+    for (auto a = &as.back(); a >= &as[0]; a--, stackp--) {          
+      if (Type *at(a->type); !stackp->type->isa(*at)) { return false; }
     }
 
     return true;

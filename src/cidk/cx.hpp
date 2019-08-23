@@ -51,9 +51,9 @@ namespace cidk {
     
     Int type_tag = 1;
     MetaType &meta_type;
-    Type &a_type;
+    Type &opt_type;
     NilType &nil_type;    
-    Type &any_type, &num_type;
+    Type &a_type, &num_type;
     
     BoolType &bool_type;
     CharType &char_type;

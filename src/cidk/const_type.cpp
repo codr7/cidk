@@ -5,7 +5,7 @@
 
 namespace cidk {
   ConstType::ConstType(Cx &cx, const Pos &pos, ValType &val_type):
-    ValType(cx, pos, cx.intern(pos, str("Const", val_type.id)), {&cx.any_type}),
+    ValType(cx, pos, cx.intern(pos, str("Const", val_type.id)), {&cx.a_type}),
     val_type(val_type) {
     is_const = true;
     _const_type = this;

@@ -4,7 +4,7 @@
 defun fib(n Int)(Int) {
   push n;
   push 2;
-  call <[Any Any];
+  call <[A A];
 
   if $ n {
     step n -1;

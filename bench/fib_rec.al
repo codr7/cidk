@@ -4,7 +4,7 @@ defconst N 20;
 defun fib1(n Int)(Int) {
   push n;
   push 2; 
-  call <[Any Any];
+  call <[A A];
   
   if $ n {
     step n -1;
@@ -21,7 +21,7 @@ dump;
 defun fib2(_ Int)(Int) {
   cp; 
   push 2; 
-  call <[Any Any]; 
+  call <[A A]; 
   
   if $ _ {
     step $ -1; 
