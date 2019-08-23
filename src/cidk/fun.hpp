@@ -16,15 +16,19 @@ namespace cidk {
   struct Pos;
   
   struct Fun: Def {
+    List &root;
     Int weight = 0;
     Env env;
     ArgList args;
     Fimp imp;
     Ops body;
     Opts body_opts;
-    
+
+    static List &get_root(Cx &cx, const Pos &pos, Env &env, const Sym *id);
+
     Fun(Cx &cx,
         const Pos &pos,
+        List &root,
         Env &env,
         const Sym *id,
         const vector<Arg> &args = {},

@@ -167,7 +167,8 @@ namespace cidk {
                     const vector<Ret> &rets,
                     Rest &&...rest) {
     auto &ft(cx.fun_type);
-    Fun *f(ft.pool.get(cx, pos, *this, id, args, rets, forward<Rest>(rest)...));
+    auto &root(Fun::get_root(cx, pos, *this, id));
+    Fun *f(ft.pool.get(cx, pos, root, *this, id, args, rets, forward<Rest>(rest)...));
     f->init(cx, pos, *this);
     let(cx, pos, f->id, Val(ft, f));
     return *f;

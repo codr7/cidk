@@ -49,7 +49,8 @@ namespace cidk::ops {
       throw ESys(p, "Invalid return list: ", args[2]);
     }
 
-    Fun &f(*cx.fun_type.pool.get(cx, p, env, id.as_sym));
+    auto &root(Fun::get_root(cx, p, env, id.as_sym));
+    Fun &f(*cx.fun_type.pool.get(cx, p, root, env, id.as_sym));
     f.args.parse(cx, p, *args[1].as_list, env);
     auto &as(f.args.items);
 
@@ -61,9 +62,6 @@ namespace cidk::ops {
     Val fv(cx.fun_type, &f);
     env.let(cx, p, f.id, fv);
     f.env.let(cx, p, f.id, fv);
-    
-    auto rid(f.id->root);
-    if (!f.env.try_get(p, rid)) { f.env.let(cx, p, rid, env.get(p, rid)); }
     
     auto &bops(body.as_expr->ops);
     copy(bops.begin(), bops.end(), back_inserter(f.body));

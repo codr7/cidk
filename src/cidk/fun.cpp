@@ -8,31 +8,34 @@
 #include "cidk/types/list.hpp"
 
 namespace cidk {
+  List &Fun::get_root(Cx &cx, const Pos &pos, Env &env, const Sym *id) {
+    auto found = env.try_get(pos, id);
+
+    if (found) {
+      if (found->type != &cx.list_type) { throw ESys(pos, "Dup binding: ", id); }
+      return *found->as_list;
+    }
+
+    List *l(cx.list_type.pool.get(cx));
+    return *env.let(cx, pos, id, Val(cx.list_type, l)).as_list;
+  }
+
   Fun::Fun(Cx &cx,
            const Pos &pos,
+           List &root,
            Env &env,
            const Sym *id,
            const vector<Arg> &args,
            const vector<Ret> &rets,
-           Fimp imp): Def(cx, pos, id), env(cx, env), imp(imp) {
+           Fimp imp): Def(cx, pos, id), root(root), env(cx, env), imp(imp) {
     copy(args.begin(), args.end(), back_inserter(this->args.items));
   }
   
   void Fun::init(Cx &cx, const Pos &pos, Env &env) {
-    Val *root(env.try_get(pos, id));
-
-    if (root) {
-      if (root->type != &cx.list_type) { throw ESys(pos, "Dup binding: ", id); }
-    } else {
-      List *l(cx.list_type.pool.get(cx));
-      root = &env.let(cx, pos, id, Val(cx.list_type, l));
-    }
-
-    auto &rl(*root->as_list);
     Val rk(cx.fun_type, this);
-    auto i(find(pos, rl.items, rk));
-    assert(i == rl.items.end());
-    rl.items.insert(i, rk);
+    auto i(find(pos, root.items, rk));
+    assert(i == root.items.end());
+    root.items.insert(i, rk);
     
     stringstream buf;
     buf << id << '[';
@@ -54,6 +57,7 @@ namespace cidk {
   void Fun::mark() {
     if (!ref_mark) {
       ref_mark = true;
+      root.mark();
       env.mark_refs();
       mark_refs(body);
       body_opts.mark_refs();
@@ -81,11 +85,9 @@ namespace cidk {
   }
   
   void Fun::sweep(Cx &cx, const Pos &pos) {
-    Val &root(env.get(pos, id->root));
-    auto &rl(*root.as_list);
-    auto i(find(pos, rl.items, Val(cx.fun_type, this)));
+    auto i(find(pos, root.items, Val(cx.fun_type, this)));
     assert(i->as_fun == this);
-    rl.items.erase(i);
+    root.items.erase(i);
     cx.fun_type.pool.put(this);
   }
 }
