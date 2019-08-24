@@ -10,6 +10,8 @@
 ** bind var if not _
 ** add to readme
 * add missing Fix funs to math lib
+* add list bench
+** add seq lib with push/pop/reserve funs
 * -- devlog
 * add default args
 ** x 42 instead of x Int
