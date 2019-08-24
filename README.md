@@ -32,6 +32,9 @@ $ make
 $ ./cidk ../test/run.al
 39
 ()
+```
+
+```
 $ rlwrap ./cidk
 cidk v0.9
 

@@ -37,7 +37,7 @@ namespace cidk::fix {
 
   inline int64_t trunc(T f, uint8_t ts = 0) {
     const uint8_t fs(scale(f));
-    const uint8_t s((fs < ts) ? fs : fs - ts);
+    const uint8_t s((fs == ts) ? fs : fs - ts);
     const int64_t m(pow(s)), v(get(f) / m);
     return v * m;
   }
@@ -73,12 +73,12 @@ namespace cidk::fix {
 
   inline T mul(T x, T y) {
     const uint8_t xs(scale(x));
-    return make(get(x) * (get(y) / pow(scale(y))), xs);
+    return make(get(x) * get(y) / pow(scale(y)), xs);
   }
 
   inline T div(T x, T y) {
     const uint8_t xs(scale(x));
-    return make(get(x) / (get(y) / pow(scale(y))), xs);
+    return make(get(x) * pow(xs) / (get(y) * pow(xs) / pow(scale(y))), scale(x));
   }
 }
 

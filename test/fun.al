@@ -32,3 +32,10 @@ do {
   dispatch foo;
   check({cp;}) {is 42;};
 };
+
+do {
+  let foo 7;
+  defun bar()() {let foo 42; push foo;};
+  call bar[];
+  check({cp;}) {is 42;};  
+};

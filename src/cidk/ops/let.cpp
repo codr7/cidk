@@ -25,13 +25,10 @@ namespace cidk::ops {
     auto &args(in->args);
     auto &id(args[0]);
     if (id.type != &cx.sym_type) { throw ESys(p, "Invalid id: ", id); }
-    
     auto found(env.try_get(p, id.as_sym));
     if (found && found->type->is_const) { throw ESys(p, "Const let: ", id); }
-
     args[1].compile(p, env, opts);
     args[2].reset(cx.reg_type, opts.push_reg(p, id.as_sym));
-
     out.push_back(*in);
   }
 

@@ -1,15 +1,9 @@
-* add EnvItem
-** Env *env; const Sym *id; Val val;
-** add support in Env::let
-*** replace val if env != this
-** remove Val.id
 * finish for op
 ** add ValType.iter(const Val &src, function<void (const Val &)>)
 *** call with src in default imp
 *** update for op to use iter
 ** bind var if not _
 ** add to readme
-* add missing Fix funs to math lib
 * add list bench
 ** add seq lib with push/pop/reserve funs
 * -- devlog
