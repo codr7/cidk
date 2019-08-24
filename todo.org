@@ -1,5 +1,3 @@
-* add do around calcl group body
-** add test
 * add EnvItem
 ** Env *env; const Sym *id; Val val;
 ** add support in Env::let
@@ -11,8 +9,6 @@
 *** update for op to use iter
 ** bind var if not _
 ** add to readme
-* add calcl :compile command
-** dump ops
 * add missing Fix funs to math lib
 * -- devlog
 * add default args
