@@ -4,9 +4,10 @@
 *** update for op to use iter
 ** bind var if not _
 ** add to readme
+* add missing ops to readme
+* --
 * add list bench
 ** add seq lib with push/pop/reserve funs
-* -- devlog
 * add default args
 ** x 42 instead of x Int
 ** clone on let

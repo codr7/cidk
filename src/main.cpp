@@ -13,7 +13,6 @@ enum struct Mode {load, repl};
 
 int main(int argc, char *argv[]) {  
   Cx cx;
-  Env env(cx, cx.env);
   const Pos &p(Pos::_);
   Mode m(Mode::repl);
   
@@ -25,9 +24,9 @@ int main(int argc, char *argv[]) {
     } else {
       Ops ops;  
       Opts opts;
-      cx.load(p, a, read_ops, env, ops, opts);
+      cx.load(p, a, read_ops, cx.env, ops, opts);
       for (auto &eid: opts.ext_ids) { throw ESys(eid.pos, "Unknown id: ", eid.id); }
-      cx.eval(ops, env, opts);
+      cx.eval(ops, cx.env, opts);
       m = Mode::load;
     }
   }

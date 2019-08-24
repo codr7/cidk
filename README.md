@@ -1,5 +1,8 @@
 ![Logo](logo.png)
   
+### Intro
+cidk is an interpreter devkit with integrated assembler written in C++.
+
 ```
 defun fib(n Int)(Int) {
   push n;
@@ -15,9 +18,6 @@ defun fib(n Int)(Int) {
   };
 };
 ```
-
-### Intro
-cidk is an interpreter devkit with integrated assembler written in C++.
 
 ### Setup
 cidk requires CMake and a C++17 compiler to build.
@@ -123,7 +123,7 @@ Integers are 64-bit and signed.
 ```
 
 #### Fix
-Fix point numbers infer the intended precision from specified number of decimals.
+Fix point numbers infer precision from literals.
 
 ```
   push 41.90;
