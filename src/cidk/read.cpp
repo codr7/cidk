@@ -274,7 +274,7 @@ namespace cidk {
         pos.col = 0;
       };
     }
-    
-    if (!isspace(c)) { in.unget(); }
+  
+    if (!in.eof()) { in.unget(); }
   }
 }

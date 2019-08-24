@@ -1,7 +1,5 @@
-* add calcl assignment support
-** check for '=' after read_id
-** set to next value
-*** use group for more
+* add do around calcl group body
+** add test
 * add EnvItem
 ** Env *env; const Sym *id; Val val;
 ** add support in Env::let
