@@ -17,8 +17,7 @@ defun fib(n Int)(Int) {
 ```
 
 ### Intro
-Welcome to cidk!<br/>
-This project aims to implement an interpreter dev kit with integrated assembler in C++.
+cidk is an interpreter devkit with integrated assembler written in C++.
 
 ### Setup
 cidk requires CMake and a C++17 compiler to build.
