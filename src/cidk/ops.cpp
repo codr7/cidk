@@ -49,6 +49,6 @@ namespace cidk {
         &ops::Typeof
     };
 
-    for (auto &t: ts) { cx.op_types.emplace(t->id, t); }
+    for (auto tp: ts) { cx.add_op_type(*tp); }
   }
 }

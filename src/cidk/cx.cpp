@@ -65,6 +65,8 @@ namespace cidk {
     for (auto &s: syms) { sym_pool.put(s.second); }
   }
 
+  void Cx::add_op_type(const OpType &t) { op_types.emplace(t.id, &t); }
+
   void Cx::clear_refs() {
     for (auto i(refs.next); i != &refs; i = i->next) { i->get().ref_mark = false; }
   }

@@ -88,6 +88,7 @@ namespace cidk {
     Cx();
 
     void deinit();
+    void add_op_type(const OpType &t);
     void clear_refs();
 
     void compile(Ops &ops, Opts &opts, Env &env) {
