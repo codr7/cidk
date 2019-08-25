@@ -66,7 +66,12 @@ namespace cidk {
     Val &get(const Pos &pos, const Sym *id);
     Val &let(Cx &cx, const Pos &pos, const Sym *id, const Val &val);
     void mark_refs();
-    void set(Cx &cx, const Pos &pos, const Sym *id, const Val &val);
+
+    void set(Cx &cx, const Pos &pos,
+             const Sym *id,
+             const Val &val,
+             bool force = false);
+    
     Val *try_get(const Pos &pos, const Sym *id);
   };
 }

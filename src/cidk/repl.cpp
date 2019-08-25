@@ -16,7 +16,6 @@ namespace cidk {
       "Empty input clears stack and Ctrl+D exits." << endl << endl <<
       "  ";
 
-    Env env(cx, cx.env);
     Pos p(Pos::_);
     stringstream buf;
     string line;
@@ -28,13 +27,17 @@ namespace cidk {
             Ops ops;
             Opts opts;
             read_ops(cx, p, buf, ops);
-            cx.compile(ops, opts, env);
+            cx.compile(ops, opts, cx.env);
 
             for (auto &eid: opts.ext_ids) {
               throw ESys(eid.pos, "Unknown id: ", eid.id);
             }
 
-            cx.eval(ops, env, opts);
+            cx.eval(ops, cx.env, cx.regp);
+
+            for (Val *v(cx.regp); v < cx.regp + opts.regs.size(); v++) {
+              if (v->type) { cx.env.set(cx, p, v->id, *v, true); }
+            }
           } catch (const exception &e) {
             out << e.what() << endl;
           }

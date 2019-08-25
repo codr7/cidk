@@ -10,6 +10,8 @@ namespace cidk {
   struct Val;
 
   using Reg = Val;
+
+  void set_reg(Reg *base, size_t n, const Sym *id, const Val &src);
 }
 
 #endif

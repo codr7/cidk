@@ -1,4 +1,5 @@
 #include "cidk/cx.hpp"
+#include "cidk/defer.hpp"
 #include "cidk/e.hpp"
 #include "cidk/expr.hpp"
 #include "cidk/ext_id.hpp"
@@ -31,8 +32,10 @@ namespace cidk::ops {
 
   void DoType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &body(*op.args[0].as_expr);
-    for (auto &eid: body.opts.ext_ids) { cx.regp[eid.dst_reg] = regs[eid.src_reg]; }
-    cx.eval(body.ops, env, body.opts);
+    auto &opts(body.opts);
+    Reg *eval_regs(cx.alloc_regs(opts.regs.size()));
+    for (auto &eid: opts.ext_ids) { eval_regs[eid.dst_reg] = regs[eid.src_reg]; }
+    cx.eval(body.ops, env, eval_regs);
   }
 
   void DoType::mark_refs(Op &op) const { op.args[0].mark_refs(); }

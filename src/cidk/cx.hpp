@@ -89,6 +89,13 @@ namespace cidk {
 
     void deinit();
     void add_op_type(const OpType &t);
+
+    Reg *alloc_regs(size_t n) {
+      Reg *base(regp);
+      for (; n > 0; n--, regp++) { regp->clear(); }
+      return base;
+    }
+    
     void clear_refs();
 
     void compile(Ops &ops, Opts &opts, Env &env) {
@@ -103,14 +110,8 @@ namespace cidk {
 
     
     void dump_stack(ostream &out) const;
-    void eval(Ops &in, Env &env, Opts &opts);
 
-    void eval(Ops &in, Env &env, Reg *regs) {
-      for (Op &o: in) { 
-        o.eval(*this, env, regs); 
-        if (eval_state != EvalState::go) { break; }
-      }
-    }
+    void eval(Ops &in, Env &env, Reg *regs);
     
     const Sym *intern(const Pos &pos, const string &name);
 
@@ -150,6 +151,12 @@ namespace cidk {
     }
   };
 
+  inline void set_reg(Reg *base, size_t n, const Sym *id, const Val &src) {
+    Val &dst(base[n]);
+    dst = src;
+    dst.id = id;
+  }
+  
   template <typename...Rest>
   Fun &Env::add_fun(Cx &cx,
                     const Pos &pos,
@@ -222,14 +229,21 @@ namespace cidk {
     return *i;
   }
 
-  inline void Env::set(Cx &cx, const Pos &pos, const Sym *id, const Val &val) {
+  inline void Env::set(Cx &cx,
+                       const Pos &pos,
+                       const Sym *id,
+                       const Val &val,
+                       bool force) {
     auto i(find(pos, id));
     
     if (i == items.end() || i->id != id) {
-      throw ESys(pos, "Missing binding: ", id);
+      if (!force) { throw ESys(pos, "Missing binding: ", id); }
+      i = items.insert(i, val);
+    } else {
+      *i = val;
     }
 
-    *i = val;
+    i->id = id;
   }
 
   inline Val *Env::try_get(const Pos &pos, const Sym *id) {

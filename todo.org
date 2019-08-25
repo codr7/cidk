@@ -1,11 +1,5 @@
-* fix repl/load env
-** cidk & calcl
-** test load
-*** set var in test1.al and use in test2.al
-** use opts/regs to fill env on successful eval
-** add set(reg, val) fn
-*** set val.id
-*** use instead of direct access
+* add calcl main/repl reg env update like cidk
+* only mark regs with type != nullptr in Cx.mark()
 * --
 * finish for op
 ** add ValType.iter(const Val &src, function<void (const Val &)>)
@@ -14,10 +8,7 @@
 ** bind var if not _
 ** add to readme
 * add list bench
-** add seq lib with push/pop/reserve funs
-* remove eval env-arg
-** remove Fun.env + constructor arg
-** bench
+** add list lib with push/pop/reserve funs
 * add default args
 ** x 42 instead of x Int
 ** clone on let
@@ -27,6 +18,9 @@
 *** bench
 * add nargs to Dispatch op
 * compile Dispatch to Call if list.size() == 1
+* inherit Env from List and add EnvType
+** discard temporary compile envs after use in do/defun
+** add env lib with Env.new fun
 * peel off Do at compile time if no let/defun/defconst
 * add sum types
 ** parse Type? as Type or Nil_

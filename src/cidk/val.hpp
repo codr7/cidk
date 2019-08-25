@@ -47,7 +47,12 @@ namespace cidk {
     
     Val(const Val &src) = default;
     Val &operator =(const Val &src) = default;
-  
+
+    void clear() {
+      id = nullptr;
+      type = nullptr;
+    }
+    
     Val &clone(const Pos &pos, Val &dst) const {
       dst = *this;
       type->clone(pos, dst, *this);
@@ -64,7 +69,13 @@ namespace cidk {
       type->compile(pos, *this, env, opts);
     }
 
-    void dump(ostream &out) const { type->dump(*this, out); }
+    void dump(ostream &out) const {
+      if (type) {
+        type->dump(*this, out);
+      } else {
+        out << "n/a";
+      }
+    }
 
     bool eq(const Pos &pos, const Val &y) const { return type->eq(pos, *this, y); }
 

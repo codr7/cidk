@@ -58,7 +58,7 @@ namespace cidk::ops {
     if (k.type == &cx.int_type) {
       cx.stack[k.as_int] = cx.pop(p);
     } else {
-      regs[k.as_reg] = cx.pop(p);
+      set_reg(regs, k.as_reg, k.as_sym, cx.pop(p));
     }
   }
 

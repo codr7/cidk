@@ -57,7 +57,9 @@ namespace cidk::ops {
         cx.push(p, delta);
         args[3].as_fun->call(cx, p, env);
         v = push ? cx.peek(p) : cx.pop(p);
+        v.id = place.id;
       }
+
     } else {
       place.eval(p, env, regs);
 

@@ -71,18 +71,18 @@ namespace cidk {
     for (auto i(refs.next); i != &refs; i = i->next) { i->get().ref_mark = false; }
   }
 
-  void Cx::eval(Ops &in, Env &env, Opts &opts) {
-    ops.push_back(&in);
-    
-    Reg *regs = regp;
-    regp += opts.regs.size();
+  void Cx::eval(Ops &in, Env &env, Reg *regs) {
+    ops.push_back(&in);   
 
-    auto d1(defer([&]{
-          regp = regs;
+    auto cleanup(defer([&]{
           ops.pop_back();
+          regp = regs;
         }));
 
-    eval(in, env, regs);
+    for (Op &o: in) { 
+      o.eval(*this, env, regs); 
+      if (eval_state != EvalState::go) { break; }
+    }
   }
 
   const Sym *Cx::intern(const Pos &pos, const string &name) {

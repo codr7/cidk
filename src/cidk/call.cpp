@@ -17,11 +17,16 @@ namespace cidk {
   }
 
   void Call::eval(Cx &cx) {
+    auto &opts(fun.body_opts);
   recall:
-    Reg *regs(cx.regp);
-    for (auto &eid: fun.body_opts.ext_ids) { regs[eid.dst_reg] = eid.val; }
-    cx.eval(fun.body, fun.env, fun.body_opts);
+    Reg *eval_regs(cx.alloc_regs(opts.regs.size()));
+
+    for (auto &eid: opts.ext_ids) {
+      set_reg(eval_regs, eid.dst_reg, eid.id, eid.val);
+    }
     
+    cx.eval(fun.body, fun.env, eval_regs);
+
     if (cx.eval_state == EvalState::recall) {
       cx.eval_state = EvalState::go;
       goto recall;

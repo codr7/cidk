@@ -20,7 +20,7 @@ namespace cidk::ops {
       auto &p(op.pos);
       auto &args(op.args);
       args[1].eval(p, env, regs);
-      regs[args[2].as_reg] = cx.pop(p);
+      set_reg(regs, args[2].as_reg, args[0].as_sym, cx.pop(p));
     }
     
     virtual void mark_refs(Op &op) const override;

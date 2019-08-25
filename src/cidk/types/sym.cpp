@@ -22,6 +22,8 @@ namespace cidk {
     } else {
       val.reset(cx.reg_type, reg->second);
     }
+
+    val.id = s;
   }
 
   void SymType::dump(const Val &val, ostream &out) const { out << val.as_sym; }
