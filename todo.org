@@ -1,3 +1,9 @@
+* fix repl vars
+** cidk & calcl
+** use opts/regs to fill environment on successful eval
+** add cx.set_reg
+*** set val.id
+*** use instead of direct access
 * finish for op
 ** add ValType.iter(const Val &src, function<void (const Val &)>)
 *** call with src in default imp
