@@ -6,7 +6,6 @@
 ** add set(reg, val) fn
 *** set val.id
 *** use instead of direct access
-** inc versions
 * --
 * finish for op
 ** add ValType.iter(const Val &src, function<void (const Val &)>)

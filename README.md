@@ -36,7 +36,7 @@ $ ./cidk ../test/run.al
 
 ```
 $ rlwrap ./cidk
-cidk v0.9
+cidk
 
 Press Return on empty row to evaluate.
 Empty input clears stack and Ctrl+D exits.

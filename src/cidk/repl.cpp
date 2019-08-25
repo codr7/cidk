@@ -11,7 +11,7 @@
 namespace cidk {
   void repl(Cx &cx, istream &in, ostream &out) {
     out <<
-      "cidk v" << VERSION[0] << '.' << VERSION[1] << endl << endl <<
+      "cidk v" << VERSION << endl << endl <<
       "Press Return on empty row to evaluate." << endl <<
       "Empty input clears stack and Ctrl+D exits." << endl << endl <<
       "  ";
