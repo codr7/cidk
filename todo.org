@@ -6,6 +6,9 @@
 ** add to readme
 * add list bench
 ** add seq lib with push/pop/reserve funs
+* remove eval env-arg
+** remove Fun.env + constructor arg
+** bench
 * add default args
 ** x 42 instead of x Int
 ** clone on let
