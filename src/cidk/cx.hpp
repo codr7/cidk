@@ -92,7 +92,8 @@ namespace cidk {
 
     Reg *alloc_regs(size_t n) {
       Reg *base(regp);
-      for (; n > 0; n--, regp++) { regp->clear(); }
+      regp += n;
+      fill(base, regp, Val());
       return base;
     }
     

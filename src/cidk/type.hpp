@@ -16,6 +16,7 @@ namespace cidk {
     array<Type *, CIDK_TYPE_MAX> parents;
     
     Type(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents);
+    void init_parents();
 
     void derive(Cx &cx, Type &parent);
     void derive(Cx &cx, Type &parent, Type &root);
