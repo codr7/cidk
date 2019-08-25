@@ -1,6 +1,4 @@
-* add calcl main/repl reg env update like cidk
 * only mark regs with type != nullptr in Cx.mark()
-* --
 * finish for op
 ** add ValType.iter(const Val &src, function<void (const Val &)>)
 *** call with src in default imp

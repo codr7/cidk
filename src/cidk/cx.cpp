@@ -117,7 +117,7 @@ namespace cidk {
     clear_refs();
     env.mark_refs();
     for (Val *v(&stack[0]); v < stackp; v++) { v->mark_refs(); }
-    for (Val *v(&regs[0]); v < regp; v++) { v->mark_refs(); }
+    for (Val *v(&regs[0]); v < regp; v++) { if (v->type) { v->mark_refs(); } }
     for (Ops *os: ops) { cidk::mark_refs(*os); }
     for (Call *c(call); c; c = c->prev) { c->fun.mark(); }
   }
