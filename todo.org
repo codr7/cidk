@@ -1,7 +1,9 @@
-* fix repl vars
+* fix repl/load env
 ** cidk & calcl
-** use opts/regs to fill environment on successful eval
-** add cx.set_reg
+** test load
+*** set var in test1.al and use in test2.al
+** use opts/regs to fill env on successful eval
+** add set(reg, val) fn
 *** set val.id
 *** use instead of direct access
 * finish for op
