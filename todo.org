@@ -6,6 +6,14 @@
 ** add to readme
 * add list bench
 ** add list lib with push/pop/reserve funs
+* add libs
+** add Lib < Def
+** embed Env env
+** add Env.add_lib(id)
+** add deflib op
+** add support for recursive ids
+*** foo.bar.baz
+*** throw error if not Lib
 * add default args
 ** x 42 instead of x Int
 ** clone on let
@@ -15,9 +23,6 @@
 *** bench
 * add nargs to Dispatch op
 * compile Dispatch to Call if list.size() == 1
-* inherit Env from List and add EnvType
-** discard temporary compile envs after use in do/defun
-** add env lib with Env.new fun
 * peel off Do at compile time if no let/defun/defconst
 * add sum types
 ** parse Type? as Type or Nil_
