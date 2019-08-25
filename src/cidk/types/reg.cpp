@@ -9,8 +9,6 @@ namespace cidk {
                    const vector<Type *> &parents):
     TValType<size_t>(cx, pos, id, parents) {}
 
-  void RegType::cp(Val &dst, const Val &src) const { dst.as_reg = src.as_reg; }
-
   void RegType::dump(const Val &val, ostream &out) const {
     out << val.as_reg << ":Reg";
   }

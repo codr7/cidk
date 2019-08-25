@@ -9,8 +9,6 @@ namespace cidk {
                      const vector<Type *> &parents):
     TValType<bool>(cx, pos, id, parents) {}
 
-  void BoolType::cp(Val &dst, const Val &src) const { dst.as_bool = src.as_bool; }
-
   void BoolType::dump(const Val &val, ostream &out) const {
     out << (val.as_bool ? 'T' : 'F');
   }

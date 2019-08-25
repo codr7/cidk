@@ -40,21 +40,16 @@ namespace cidk {
         
     Val() {}
   
-    Val(const Val &src): type(src.type) { src.cp(*this); }
-
     Val(ValType &type): type(&type) {}
 
     template <typename ValT>
     Val(TValType<ValT> &type, ValT val): type(&type) { type.set(*this, val); }
     
-    const Val &operator =(const Val &src) {
-      src.cp(*this);
-      return *this;
-    }
-    
+    Val(const Val &src) = default;
+    Val &operator =(const Val &src) = default;
+  
     Val &clone(const Pos &pos, Val &dst) const {
-      dst.id = id;
-      dst.type = type;
+      dst = *this;
       type->clone(pos, dst, *this);
       return dst;
     }
@@ -67,13 +62,6 @@ namespace cidk {
     
     void compile(const Pos &pos, Env &env, Opts &opts) {
       type->compile(pos, *this, env, opts);
-    }
-
-    Val &cp(Val &dst) const {
-      dst.id = id;
-      dst.type = type;
-      if (type) { type->cp(dst, *this); }
-      return dst;
     }
 
     void dump(ostream &out) const { type->dump(*this, out); }

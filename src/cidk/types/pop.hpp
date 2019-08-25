@@ -8,8 +8,6 @@ namespace cidk {
     PopType(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents):
       ValType(cx, pos, id, parents) {}
 
-    virtual void cp(Val &dst, const Val &src) const override {}
-
     virtual void dump(const Val &val, ostream &out) const override { out << '$'; }
 
     virtual void eval(const Pos &pos,

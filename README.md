@@ -55,7 +55,7 @@ Empty input clears stack and Ctrl+D exits.
 ```
 
 ### Performance
-cidk typically runs faster than Python3, 2-15x as far as available [benchmarks](https://github.com/codr7/cidk/tree/master/bench) go. As an added bonus, launching the interpreter is roughly 200x faster.
+cidk typically runs faster than Python3, 2-20x as far as available [benchmarks](https://github.com/codr7/cidk/tree/master/bench) go.
 
 ### Syntax
 Each operation starts with an opcode and ends with semicolon, arguments are separated by whitespace.

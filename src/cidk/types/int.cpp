@@ -13,8 +13,6 @@ namespace cidk {
     return cidk::cmp(pos, x.as_int, y.as_int);
   }
 
-  void IntType::cp(Val &dst, const Val &src) const { dst.as_int = src.as_int; }
-
   void IntType::dump(const Val &val, ostream &out) const { out << val.as_int; }
 
   bool IntType::is(const Val &x, const Val &y) const { return x.as_int == y.as_int; }

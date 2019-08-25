@@ -21,11 +21,7 @@ namespace cidk {
 
     ConstType &const_type(const Pos &pos);
 
-    virtual void cp(Val &dst, const Val &src) const = 0;
-
-    virtual void clone(const Pos &pos, Val &dst, const Val &src) const {
-      cp(dst, src);
-    }
+    virtual void clone(const Pos &pos, Val &dst, const Val &src) const {}
 
     virtual int cmp(const Pos &pos, const Val &x, const Val &y) const {
       throw ESys(pos, "Not comparable: ", id);

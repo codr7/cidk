@@ -10,8 +10,6 @@ namespace cidk {
                      const vector<Type *> &parents):
     TValType<Char>(cx, pos, id, parents) {}
 
-  void CharType::cp(Val &dst, const Val &src) const { dst.as_char = src.as_char; }
-
   void CharType::dump(const Val &val, ostream &out) const {
     wchar_t c(val.as_char);
 

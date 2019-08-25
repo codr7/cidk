@@ -24,8 +24,6 @@ namespace cidk {
     }
   }
 
-  void SymType::cp(Val &dst, const Val &src) const { dst.as_sym = src.as_sym; }
-
   void SymType::dump(const Val &val, ostream &out) const { out << val.as_sym; }
 
   void SymType::eval(const Pos &pos, const Val &val, Env &env, Reg *regs) const {

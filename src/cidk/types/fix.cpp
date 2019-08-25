@@ -13,8 +13,6 @@ namespace cidk {
     return fix::cmp(pos, x.as_fix, y.as_fix);
   }
 
-  void FixType::cp(Val &dst, const Val &src) const { dst.as_fix = src.as_fix; }
-
   void FixType::dump(const Val &val, ostream &out) const {
     fix::dump(val.as_fix, out);
   } 

@@ -18,10 +18,6 @@ namespace cidk {
       val_type.compile(pos, val, env, opts);
     }
 
-    virtual void cp(Val &dst, const Val &src) const override {
-      val_type.cp(dst, src);
-    }
-
     virtual void dump(const Val &val, ostream &out) const override;
 
     virtual bool is(const Val &x, const Val &y) const override {

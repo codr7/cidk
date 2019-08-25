@@ -17,8 +17,6 @@ namespace cidk {
     return cidk::cmp(pos, x.as_fun, y.as_fun);
   }
 
-  void FunType::cp(Val &dst, const Val &src) const { dst.as_fun = src.as_fun; }
-
   void FunType::dump(const Val &val, ostream &out) const {
     out << val.as_fun->id << ":Fun";
   }

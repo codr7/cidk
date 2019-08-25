@@ -13,8 +13,6 @@ namespace cidk {
     dst.as_str = cx.str_type.pool.get(cx, src.as_str->data);
   }
 
-  void StrType::cp(Val &dst, const Val &src) const { dst.as_str = src.as_str; }
-
   void StrType::dump(const Val &val, ostream &out) const {
     auto s(val.as_str->to_utf8(val.type->cx));
 

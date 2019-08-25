@@ -21,8 +21,6 @@ namespace cidk {
     dst.as_list = dl;
   }
 
-  void ListType::cp(Val &dst, const Val &src) const { dst.as_list = src.as_list; }
-
   void ListType::compile(const Pos &pos,
                          Val &val,
                          Env &env,
