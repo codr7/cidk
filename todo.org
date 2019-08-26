@@ -1,3 +1,16 @@
+scriptl
+abc.sl
+
+lib abc {
+  fun %(x Num y Num)(Num) {x - ((x / y) * y)}
+
+  var foo = 9
+  foo += 1
+}
+
+use abc(%)
+dump(abc.foo % 4)
+
 * finish for op
 ** add ValType.iter(const Val &src, function<void (const Val &)>)
 *** call with src in default imp
@@ -16,6 +29,8 @@
 *** add sym.parts vector
 **** default this
 *** throw error if target is not Lib
+** add use op
+*** env.use(const Pos &pos, const Env &src, {ids...})
 * add default args
 ** x 42 instead of x Int
 ** clone on let
