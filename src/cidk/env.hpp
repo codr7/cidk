@@ -10,6 +10,7 @@ namespace cidk {
   using namespace std;
 
   struct Fun;
+  struct Lib;
   struct Pos;
   struct Sym;
   struct Type;
@@ -31,7 +32,10 @@ namespace cidk {
     void add_const(Cx &cx, const Pos &pos, const string &id, const Val &val);
     void add_const(Cx &cx, const Pos &pos, const Sym *id, const Val &val);
     void add_const_expr(Cx &cx, const Pos &pos, const string &id, const Ops &ops);
-                        
+
+    template <typename LibT, typename...Args>
+    LibT &add_lib(Cx &cx, const Pos &pos, const string &id, Args...args);
+    
     template <typename...Rest>
     Fun &add_fun(Cx &cx,
                  const Pos &pos,

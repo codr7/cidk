@@ -7,11 +7,6 @@
 #include "cidk/types/fix.hpp"
 
 namespace cidk::libs {
-  static void int_add_imp(Cx &cx, const Pos &p, const Fun &f, Env &env) {
-    Int y(cx.pop(p).as_int);
-    cx.peek(p).as_int += y;
-  }
-
   static void int_sub_imp(Cx &cx, const Pos &p, const Fun &f, Env &env) {
     Int y(cx.pop(p).as_int);
     cx.peek(p).as_int -= y;
@@ -56,12 +51,6 @@ namespace cidk::libs {
   }
 
   void init_math(Cx &cx) {
-    cx.env.add_fun(cx, Pos::_,
-                   "+",
-                   {Arg("x", cx.int_type), Arg("y", cx.int_type)},
-                   {Ret(cx.int_type)},
-                   int_add_imp);
-
     cx.env.add_fun(cx, Pos::_,
                    "-",
                    {Arg("x", cx.int_type), Arg("y", cx.int_type)},

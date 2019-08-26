@@ -43,6 +43,11 @@ namespace cidk::libs {
     x.reset(cx.bool_type, x.cmp(p, y) == 1);
   }
 
+  static void int_add_imp(Cx &cx, const Pos &p, const Fun &f, Env &env) {
+    Int y(cx.pop(p).as_int);
+    cx.peek(p).as_int += y;
+  }
+  
   void init_abc(Cx &cx) {
     auto &e(cx.env);
 
@@ -75,6 +80,12 @@ namespace cidk::libs {
               {Arg("x", cx.a_type), Arg("y", cx.a_type)},
               {Ret(cx.bool_type)},
               gt_imp);
+
+    cx.env.add_fun(cx, Pos::_,
+                   "+",
+                   {Arg("x", cx.int_type), Arg("y", cx.int_type)},
+                   {Ret(cx.int_type)},
+                   int_add_imp);
   }
 }
 

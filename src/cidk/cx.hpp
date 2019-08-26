@@ -28,6 +28,7 @@ namespace cidk {
   struct ExprType;
   struct FixType;
   struct IntType;
+  struct LibType;
   struct ListType;
   struct NilType;
   struct PopType;
@@ -61,6 +62,7 @@ namespace cidk {
     FixType &fix_type;
     FunType &fun_type;
     IntType &int_type;
+    LibType &lib_type;
     ListType &list_type;
     OStreamType &ostream_type;
     PopType &pop_type;

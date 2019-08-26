@@ -17,6 +17,7 @@
 #include "cidk/types/fix.hpp"
 #include "cidk/types/int.hpp"
 #include "cidk/types/nil.hpp"
+#include "cidk/types/lib.hpp"
 #include "cidk/types/list.hpp"
 #include "cidk/types/pop.hpp"
 #include "cidk/types/reg.hpp"
@@ -37,6 +38,7 @@ namespace cidk {
     fix_type(env.add_type<FixType>(*this, Pos::_, "Fix", {&num_type})),
     fun_type(env.add_type<FunType>(*this, Pos::_, "Fun", {&a_type})),
     int_type(env.add_type<IntType>(*this, Pos::_, "Int", {&num_type})),
+    lib_type(env.add_type<LibType>(*this, Pos::_, "Lib", {&a_type})),
     list_type(env.add_type<ListType>(*this, Pos::_, "List", {&a_type})),
     ostream_type(env.add_type<OStreamType>(*this, Pos::_, "OStream", {&a_type})),
     pop_type(env.add_type<PopType>(*this, Pos::_, "Pop", {&a_type})),

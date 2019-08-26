@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "cidk/call.hpp"
 #include "cidk/cmp.hpp"
 #include "cidk/sym.hpp"

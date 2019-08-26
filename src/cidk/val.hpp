@@ -14,6 +14,7 @@ namespace cidk {
 
   struct Expr;
   struct Fun;
+  struct Lib;
   struct List;
   struct OStream;
   struct Str;
@@ -30,6 +31,7 @@ namespace cidk {
       Fix        as_fix;
       Fun       *as_fun;
       Int        as_int;
+      Lib       *as_lib;
       List      *as_list;
       OStream   *as_ostream;
       size_t     as_reg;
