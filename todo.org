@@ -13,7 +13,9 @@
 ** add deflib op
 ** add support for recursive ids
 *** foo.bar.baz
-*** throw error if not Lib
+*** add sym.parts vector
+**** default this
+*** throw error if target is not Lib
 * add default args
 ** x 42 instead of x Int
 ** clone on let
