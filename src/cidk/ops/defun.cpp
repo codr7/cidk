@@ -60,8 +60,8 @@ namespace cidk::ops {
 
     f.init(cx, p, env);
     Val fv(cx.fun_type, &f);
-    env.let(cx, p, f.id, fv);
-    f.env.let(cx, p, f.id, fv);
+    env.let(p, f.id, fv);
+    f.env.let(p, f.id, fv);
     
     auto &bops(body.as_expr->ops);
     copy(bops.begin(), bops.end(), back_inserter(f.body));

@@ -3,10 +3,11 @@
 
 namespace cidk {
   struct Cx;
+  struct Pos;
 }
 
 namespace cidk::libs {  
-  void init_abc(Cx &cx);
+  Lib &init_abc(Cx &cx, const Pos &pos);
 }
 
 #endif

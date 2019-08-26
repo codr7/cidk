@@ -6,8 +6,6 @@
 #include "cidk/defer.hpp"
 #include "cidk/e.hpp"
 #include "cidk/ext_id.hpp"
-#include "cidk/libs/abc.hpp"
-#include "cidk/libs/math.hpp"
 #include "cidk/op.hpp"
 #include "cidk/ops/stash.hpp"
 #include "cidk/read.hpp"
@@ -17,7 +15,6 @@
 #include "cidk/types/fix.hpp"
 #include "cidk/types/int.hpp"
 #include "cidk/types/nil.hpp"
-#include "cidk/types/lib.hpp"
 #include "cidk/types/list.hpp"
 #include "cidk/types/pop.hpp"
 #include "cidk/types/reg.hpp"
@@ -40,6 +37,7 @@ namespace cidk {
     int_type(env.add_type<IntType>(*this, Pos::_, "Int", {&num_type})),
     lib_type(env.add_type<LibType>(*this, Pos::_, "Lib", {&a_type})),
     list_type(env.add_type<ListType>(*this, Pos::_, "List", {&a_type})),
+    funs_type(env.add_type<FunsType>(*this, Pos::_, "Funs", {&list_type})),
     ostream_type(env.add_type<OStreamType>(*this, Pos::_, "OStream", {&a_type})),
     pop_type(env.add_type<PopType>(*this, Pos::_, "Pop", {&a_type})),
     reg_type(env.add_type<RegType>(*this, Pos::_, "Reg", {&a_type})),
@@ -56,8 +54,6 @@ namespace cidk {
     eop(sym_type, intern(Pos::_, ";")),
     stdin(&cin), stdout(&cout), stderr(&cerr) {
     init_op_types(*this);
-    libs::init_abc(*this);
-    libs::init_math(*this);
   }
 
   void Cx::deinit() {

@@ -11,21 +11,17 @@ lib abc {
 use abc(%)
 dump(abc.foo % 4)
 
-* add libs
-** add deflib op
-*** add cx.lib
-*** set/restore in deflib
-*** switch cx.env to Env*
-**** override/restore in deflib
+* add deflib op
+** pass lib.env down in compile/eval
 * add support for recursive ids
 ** foo.bar.baz
 ** add sym.parts vector
 *** default this
 ** throw error if target is not Lib
 * add use op
-** env.use(const Pos &pos, const Env &src, {ids...})
+* fix calc %% env issues
 * --
-* remove cx arg from Env constructors
+* remove cx arg from Env constructors/add_const/set
 * finish for op
 ** add ValType.iter(const Val &src, function<void (const Val &)>)
 *** call with src in default imp
@@ -34,6 +30,8 @@ dump(abc.foo % 4)
 ** add to readme
 * add list bench
 ** add list lib with push/pop/reserve funs
+* add enum types
+** use instead of bool op flags
 * add default args
 ** x 42 instead of x Int
 ** clone on let

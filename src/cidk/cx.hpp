@@ -14,6 +14,8 @@
 #include "cidk/reg.hpp"
 #include "cidk/sym.hpp"
 #include "cidk/types/fun.hpp"
+#include "cidk/types/funs.hpp"
+#include "cidk/types/lib.hpp"
 #include "cidk/types/meta.hpp"
 #include "cidk/types/ostream.hpp"
 #include "cidk/types/sym.hpp"
@@ -28,7 +30,6 @@ namespace cidk {
   struct ExprType;
   struct FixType;
   struct IntType;
-  struct LibType;
   struct ListType;
   struct NilType;
   struct PopType;
@@ -64,6 +65,7 @@ namespace cidk {
     IntType &int_type;
     LibType &lib_type;
     ListType &list_type;
+    FunsType &funs_type;
     OStreamType &ostream_type;
     PopType &pop_type;
     RegType &reg_type;
@@ -181,8 +183,16 @@ namespace cidk {
     auto &root(Fun::get_root(cx, pos, *this, id));
     Fun *f(ft.pool.get(cx, pos, root, *this, id, args, rets, forward<Rest>(rest)...));
     f->init(cx, pos, *this);
-    let(cx, pos, f->id, Val(ft, f));
+    let(pos, f->id, Val(ft, f));
     return *f;
+  }
+
+  template <typename LibT, typename...Args>
+  LibT &Env::add_lib(Cx &cx, const Pos &pos, const string &id, Args...args) {
+    auto &lt(cx.lib_type);
+    LibT *l(new LibT(cx, pos, cx.intern(pos, id), forward<Args>(args)...));
+    let(pos, l->id, Val(lt, l));
+    return *l;
   }
 
   template <typename TypeT, typename...Rest>
@@ -193,8 +203,7 @@ namespace cidk {
                        Rest &&...rest) {
     TypeT *t(new TypeT(cx, pos, cx.intern(pos, id), parents, forward<Rest>(rest)...));
     
-    let(cx,
-        pos,
+    let(pos,
         t->id,
         Val((id == "Meta") ? *dynamic_cast<MetaType *>(t) : cx.meta_type,
             dynamic_cast<Type *>(t)));
@@ -220,16 +229,20 @@ namespace cidk {
     return *i;
   }
 
-  inline Val &Env::let(Cx &cx, const Pos &pos, const Sym *id, const Val &val) {
+  inline typename Env::Iter Env::insert(Iter i, const Sym *id, const Val &val) {
+    i = items.insert(i, val);
+    i->id = id;
+    return i;
+  };
+
+  inline Val &Env::let(const Pos &pos, const Sym *id, const Val &val) {
     auto i(find(pos, id));
 
     if (i != items.end() && i->id == id) {
       throw ESys(pos, "Duplicate binding: ", id);
     }
     
-    i = items.insert(i, val);
-    i->id = id;
-    return *i;
+    return *insert(i, id, val);
   }
 
   inline void Env::set(Cx &cx,
@@ -252,6 +265,33 @@ namespace cidk {
   inline Val *Env::try_get(const Pos &pos, const Sym *id) {
     auto i(find(pos, id));
     return (i == items.end() || i->id != id) ? nullptr : &*i;
+  }
+
+  inline void Env::use(Cx &cx,
+                       const Pos &pos,
+                       Env &src,
+                       const vector<const Sym *> &ids) {
+    auto use([&](const Val &src) {
+        auto dst(find(pos, src.id));
+        
+        if (src.type == &cx.funs_type &&
+            dst != items.end() &&
+            dst->id == src.id &&
+            dst->type == &cx.funs_type) {
+          auto &sl(src.as_list->items);
+          copy(sl.begin(), sl.end(), back_inserter(dst->as_list->items));
+        } else if (dst == items.end() || dst->id != src.id) {
+          insert(dst, src.id, src);
+        } else {
+          throw ESys(pos, "Dup binding: ", src.id);
+        }
+      });
+    
+    if (ids.empty()) {
+      for (auto v: src.items) { use(v); }      
+    } else {
+      for (auto id: ids) { use(src.get(pos, id)); }
+    }
   }
 
   inline bool Val::is_eop() const {

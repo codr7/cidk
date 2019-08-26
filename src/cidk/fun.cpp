@@ -5,6 +5,7 @@
 #include "cidk/ext_id.hpp"
 #include "cidk/expr.hpp"
 #include "cidk/fun.hpp"
+#include "cidk/types/funs.hpp"
 #include "cidk/types/list.hpp"
 
 namespace cidk {
@@ -12,12 +13,12 @@ namespace cidk {
     auto found = env.try_get(pos, id);
 
     if (found) {
-      if (found->type != &cx.list_type) { throw ESys(pos, "Dup binding: ", id); }
+      if (found->type != &cx.funs_type) { throw ESys(pos, "Dup binding: ", id); }
       return *found->as_list;
     }
 
-    List *l(cx.list_type.pool.get(cx));
-    return *env.let(cx, pos, id, Val(cx.list_type, l)).as_list;
+    List *l(cx.funs_type.pool.get(cx));
+    return *env.let(pos, id, Val(cx.funs_type, l)).as_list;
   }
 
   Fun::Fun(Cx &cx,

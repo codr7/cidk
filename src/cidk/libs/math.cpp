@@ -50,56 +50,61 @@ namespace cidk::libs {
     x = fix::make(fix::get(x) * y, fix::scale(x));
   }
 
-  void init_math(Cx &cx) {
-    cx.env.add_fun(cx, Pos::_,
-                   "-",
-                   {Arg("x", cx.int_type), Arg("y", cx.int_type)},
-                   {Ret(cx.int_type)},
-                   int_sub_imp);
+  Lib &init_math(Cx &cx, const Pos &pos) {
+    Lib &l(cx.env.add_lib(cx, pos, "math"));
+    auto &e(l.env);
 
-    cx.env.add_fun(cx, Pos::_,
-                   "*",
-                   {Arg("x", cx.int_type), Arg("y", cx.int_type)},
-                   {Ret(cx.int_type)},
-                   int_mul_imp);
+    e.add_fun(cx, pos,
+              "-",
+              {Arg("x", cx.int_type), Arg("y", cx.int_type)},
+              {Ret(cx.int_type)},
+              int_sub_imp);
 
-    cx.env.add_fun(cx, Pos::_,
-                   "/",
-                   {Arg("x", cx.int_type), Arg("y", cx.int_type)},
-                   {Ret(cx.int_type)},
-                   int_div_imp);
+    e.add_fun(cx, pos,
+              "*",
+              {Arg("x", cx.int_type), Arg("y", cx.int_type)},
+              {Ret(cx.int_type)},
+              int_mul_imp);
+
+    e.add_fun(cx, pos,
+              "/",
+              {Arg("x", cx.int_type), Arg("y", cx.int_type)},
+              {Ret(cx.int_type)},
+              int_div_imp);
 
 
-    cx.env.add_fun(cx, Pos::_,
-                   "+",
-                   {Arg("x", cx.fix_type), Arg("y", cx.fix_type)},
-                   {Ret(cx.fix_type)},
-                   fix_add_imp);
+    e.add_fun(cx, pos,
+              "+",
+              {Arg("x", cx.fix_type), Arg("y", cx.fix_type)},
+              {Ret(cx.fix_type)},
+              fix_add_imp);
 
-    cx.env.add_fun(cx, Pos::_,
-                   "-",
-                   {Arg("x", cx.fix_type), Arg("y", cx.fix_type)},
-                   {Ret(cx.fix_type)},
-                   fix_sub_imp);
+    e.add_fun(cx, pos,
+              "-",
+              {Arg("x", cx.fix_type), Arg("y", cx.fix_type)},
+              {Ret(cx.fix_type)},
+              fix_sub_imp);
 
-    cx.env.add_fun(cx, Pos::_,
-                   "*",
-                   {Arg("x", cx.fix_type), Arg("y", cx.fix_type)},
-                   {Ret(cx.fix_type)},
-                   fix_mul_imp);
+    e.add_fun(cx, pos,
+              "*",
+              {Arg("x", cx.fix_type), Arg("y", cx.fix_type)},
+              {Ret(cx.fix_type)},
+              fix_mul_imp);
 
-    cx.env.add_fun(cx, Pos::_,
-                   "/",
-                   {Arg("x", cx.fix_type), Arg("y", cx.fix_type)},
-                   {Ret(cx.fix_type)},
-                   fix_div_imp);
+    e.add_fun(cx, pos,
+              "/",
+              {Arg("x", cx.fix_type), Arg("y", cx.fix_type)},
+              {Ret(cx.fix_type)},
+              fix_div_imp);
     
 
-    cx.env.add_fun(cx, Pos::_,
-                   "*",
-                   {Arg("x", cx.fix_type), Arg("y", cx.int_type)},
-                   {Ret(cx.fix_type)},
-                   fix_int_mul_imp);
+    e.add_fun(cx, pos,
+              "*",
+              {Arg("x", cx.fix_type), Arg("y", cx.int_type)},
+              {Ret(cx.fix_type)},
+              fix_int_mul_imp);
+
+    return l;
   }
 }
 

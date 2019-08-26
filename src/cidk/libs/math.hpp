@@ -6,7 +6,7 @@ namespace cidk {
 }
 
 namespace cidk::libs {  
-  void init_math(Cx &cx);
+  Lib &init_math(Cx &cx, const Pos &pos);
 }
 
 #endif

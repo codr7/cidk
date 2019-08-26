@@ -33,7 +33,7 @@ namespace cidk {
     void add_const(Cx &cx, const Pos &pos, const Sym *id, const Val &val);
     void add_const_expr(Cx &cx, const Pos &pos, const string &id, const Ops &ops);
 
-    template <typename LibT, typename...Args>
+    template <typename LibT = Lib, typename...Args>
     LibT &add_lib(Cx &cx, const Pos &pos, const string &id, Args...args);
     
     template <typename...Rest>
@@ -68,7 +68,8 @@ namespace cidk {
     Iter find(const Pos &pos, const Sym *id);
 
     Val &get(const Pos &pos, const Sym *id);
-    Val &let(Cx &cx, const Pos &pos, const Sym *id, const Val &val);
+    Iter insert(Iter i, const Sym *id, const Val &val);
+    Val &let(const Pos &pos, const Sym *id, const Val &val);
     void mark_refs();
 
     void set(Cx &cx, const Pos &pos,
@@ -77,6 +78,7 @@ namespace cidk {
              bool force = false);
     
     Val *try_get(const Pos &pos, const Sym *id);
+    void use(Cx &cx, const Pos &pos, Env &src, const vector<const Sym *> &ids = {});
   };
 }
 

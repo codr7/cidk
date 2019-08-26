@@ -1,6 +1,7 @@
 #include "cidk/call.hpp"
 #include "cidk/cx.hpp"
 #include "cidk/ext_id.hpp"
+#include "cidk/lib.hpp"
 #include "cidk/libs/abc.hpp"
 #include "cidk/ops/stash.hpp"
 #include "cidk/str.hpp"
@@ -48,44 +49,47 @@ namespace cidk::libs {
     cx.peek(p).as_int += y;
   }
   
-  void init_abc(Cx &cx) {
-    auto &e(cx.env);
+  Lib &init_abc(Cx &cx, const Pos &pos) {
+    Lib &l(cx.env.add_lib(cx, pos, "abc"));
+    auto &e(l.env);
 
-    e.add_const(cx, Pos::_, "$", cx.$);
-    e.add_const(cx, Pos::_, "T", cx.T);
-    e.add_const(cx, Pos::_, "F", cx.F);   
+    e.add_const(cx, pos, "$", cx.$);
+    e.add_const(cx, pos, "T", cx.T);
+    e.add_const(cx, pos, "F", cx.F);   
 
-    e.add_const_expr(cx, Pos::_, "stack", {Op(cx, Pos::_, ops::Stash)});
+    e.add_const_expr(cx, pos, "stack", {Op(cx, pos, ops::Stash)});
 
-    e.add_fun(cx, Pos::_,
+    e.add_fun(cx, pos,
               "=",
               {Arg("x", cx.a_type), Arg("y", cx.a_type)},
               {Ret(cx.bool_type)},
               eq_imp);
 
-    e.add_fun(cx, Pos::_,
+    e.add_fun(cx, pos,
               "!=",
               {Arg("x", cx.a_type), Arg("y", cx.a_type)},
               {Ret(cx.bool_type)},
               neq_imp);
         
-    e.add_fun(cx, Pos::_,
+    e.add_fun(cx, pos,
               "<",
               {Arg("x", cx.a_type), Arg("y", cx.a_type)},
               {Ret(cx.bool_type)},
               lt_imp);
 
-    e.add_fun(cx, Pos::_,
+    e.add_fun(cx, pos,
               ">",
               {Arg("x", cx.a_type), Arg("y", cx.a_type)},
               {Ret(cx.bool_type)},
               gt_imp);
 
-    cx.env.add_fun(cx, Pos::_,
+    cx.env.add_fun(cx, pos,
                    "+",
                    {Arg("x", cx.int_type), Arg("y", cx.int_type)},
                    {Ret(cx.int_type)},
                    int_add_imp);
+
+    return l;
   }
 }
 
