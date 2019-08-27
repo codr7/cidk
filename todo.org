@@ -13,6 +13,7 @@ dump(abc.foo % 4)
 
 * replace Val union with any imp
 ** add as<> fn
+** remove TValType.set
 ** bench
 * --
 * add deflib op
