@@ -11,10 +11,6 @@ lib abc {
 use abc(%)
 dump(abc.foo % 4)
 
-* fix nested env issue
-** build/test.al
-** add logging
-* --
 * add deflib op
 ** pass lib.env down in compile/eval
 * add support for recursive ids
@@ -23,7 +19,6 @@ dump(abc.foo % 4)
 *** default this
 ** throw error if target is not Lib
 * add use op
-* fix calc %% env issues
 * --
 * remove cx arg from Env constructors/add_const/set
 * finish for op
