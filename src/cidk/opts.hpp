@@ -19,6 +19,7 @@ namespace cidk {
     void mark_refs();
     size_t push_ext_id(const Pos &pos, const Sym *id);
     size_t push_reg(const Pos &pos, const Sym *id);
+    optional<size_t> try_get_reg(const Pos &pos, const Sym *id);
     optional<size_t> try_push_reg(const Pos &pos, const Sym *id);
   };
 };

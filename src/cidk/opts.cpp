@@ -6,9 +6,9 @@
 
 namespace cidk {
   size_t Opts::get_reg(const Pos &pos, const Sym *id) {
-    auto i(regs.find(id));
-    if (i == regs.end()) { throw ESys(pos, "Unknown id: ", id); }
-    return i->second;
+    auto i(try_get_reg(pos, id));
+    if (!i) { throw ESys(pos, "Unknown id: ", id); }
+    return *i;
   }
 
   void Opts::mark_refs() {
@@ -31,6 +31,11 @@ namespace cidk {
     auto i(regs.size());
     if (i == CIDK_REG_MAX) { throw ESys(pos, "Register overflow"); }
     if (regs.emplace(id, i).second) { return i; }
+    return {};
+  }
+
+  optional<size_t> Opts::try_get_reg(const Pos &pos, const Sym *id) {
+    if (auto i(regs.find(id)); i != regs.end()) { return i->second; }
     return {};
   }
 }

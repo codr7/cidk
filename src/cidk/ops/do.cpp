@@ -26,7 +26,17 @@ namespace cidk::ops {
     Env body_env(cx, env);
     auto &body_opts(body.as_expr->opts);
     body.compile(p, body_env, body_opts);
-    for (auto &eid: body_opts.ext_ids) { eid.src_reg = opts.get_reg(p, eid.id); }
+
+    for (auto &eid: body_opts.ext_ids) {      
+      if (auto i(env.find(p, eid.id)); i != env.items.end() && i->id == eid.id) {
+        eid.val = *i;
+      } else if (auto r(opts.try_get_reg(p, eid.id)); r) {
+        eid.src_reg = *r;
+      } else {
+        eid.src_reg = opts.push_ext_id(p, eid.id);
+      }
+    }
+    
     out.push_back(*in);
   }
 
@@ -34,7 +44,12 @@ namespace cidk::ops {
     auto &body(*op.args[0].as_expr);
     auto &opts(body.opts);
     Reg *eval_regs(cx.alloc_regs(opts.regs.size()));
-    for (auto &eid: opts.ext_ids) { eval_regs[eid.dst_reg] = regs[eid.src_reg]; }
+
+    for (auto &eid: opts.ext_ids) {
+      auto &ev(eval_regs[eid.dst_reg]);
+      ev = eid.src_reg ? regs[*eid.src_reg] : eid.val;
+    }
+
     cx.eval(body.ops, env, eval_regs);
   }
 

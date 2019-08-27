@@ -73,7 +73,7 @@ namespace cidk::ops {
   
   void DefunType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &opts(op.args[4].as_fun->body_opts);
-    for (auto &eid: opts.ext_ids) { eid.val = regs[eid.src_reg]; }
+    for (auto &eid: opts.ext_ids) { eid.val = regs[*eid.src_reg]; }
   }
 
   void DefunType::mark_refs(Op &op) const {

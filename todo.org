@@ -11,6 +11,10 @@ lib abc {
 use abc(%)
 dump(abc.foo % 4)
 
+* fix nested env issue
+** build/test.al
+** add logging
+* --
 * add deflib op
 ** pass lib.env down in compile/eval
 * add support for recursive ids

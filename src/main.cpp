@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
       Opts opts;
       cx.load(Pos::_, a, read_ops, cx.env, ops, opts);
       for (auto &eid: opts.ext_ids) { throw ESys(eid.pos, "Unknown id: ", eid.id); }
-      cx.eval(ops, cx.env, cx.regp);
+      cx.eval(ops, cx.env, cx.alloc_regs(opts.regs.size()));
 
       for (Val *v(cx.regp); v < cx.regp + opts.regs.size(); v++) {
         if (v->type) { cx.env.set(cx, Pos::_, v->id, *v, true); }
