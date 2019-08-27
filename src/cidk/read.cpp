@@ -161,7 +161,9 @@ namespace cidk {
       pos.col++;
     }
 
+    if (!out.tellp()) { throw ESys(p, "Empty id"); }
     if (!in.eof()) { in.unget(); }
+
     return Val(cx.sym_type, cx.intern(p, out.str()));
   }
   
@@ -274,7 +276,7 @@ namespace cidk {
         pos.col = 0;
       };
     }
-  
+
     if (!in.eof()) { in.unget(); }
   }
 }
