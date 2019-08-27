@@ -11,11 +11,6 @@ lib abc {
 use abc(%)
 dump(abc.foo % 4)
 
-* replace Val union with any imp
-** add as<> fn
-** remove TValType.set
-** bench
-* --
 * add deflib op
 ** pass lib.env down in compile/eval
 * add support for recursive ids
