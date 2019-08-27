@@ -21,6 +21,9 @@ dump(abc.foo % 4)
 * add use op
 * --
 * remove cx arg from Env constructors/add_const/set
+* replace Val union with any imp
+** add as<> fn
+** bench
 * finish for op
 ** add ValType.iter(const Val &src, function<void (const Val &)>)
 *** call with src in default imp
