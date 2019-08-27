@@ -28,9 +28,7 @@ namespace cidk::ops {
     body.compile(p, body_env, body_opts);
 
     for (auto &eid: body_opts.ext_ids) {      
-      if (auto i(env.find(p, eid.id)); i != env.items.end() && i->id == eid.id) {
-        eid.val = *i;
-      } else if (auto r(opts.try_get_reg(p, eid.id)); r) {
+      if (auto r(opts.try_get_reg(p, eid.id)); r) {
         eid.src_reg = *r;
       } else {
         eid.src_reg = opts.push_ext_id(p, eid.id);
