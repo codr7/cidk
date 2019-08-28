@@ -12,37 +12,37 @@ namespace cidk::fix {
 
   using T = uint64_t;
     
-  inline T make(int64_t rep, uint8_t scale) {
+  constexpr T make(int64_t rep, uint8_t scale) {
     const bool is_neg(rep < 0);
     const uint64_t r(is_neg ? -rep : rep);
     return is_neg + (scale << 1) + (r << (SCALE_BITS + 1));
   }
   
-  inline bool is_neg(T f) { return f << 63; }
+  constexpr bool is_neg(T f) { return f << 63; }
   
-  inline uint8_t scale(T f) { return (f >> 1) & ((1 << SCALE_BITS) - 1); }
+  constexpr uint8_t scale(T f) { return (f >> 1) & ((1 << SCALE_BITS) - 1); }
   
-  inline int64_t get(T f) {
+  constexpr int64_t get(T f) {
     const uint64_t r(f >> (SCALE_BITS + 1));
     return is_neg(f) ? -r : r;
   }
 
-  inline int64_t pow(uint8_t scale) {
-    static const array<int64_t, SCALE_MAX> tbl({
-        1, 10, 100, 1000, 10000, 100000, 1000000, 10000000});
-    
+  static const array<int64_t, SCALE_MAX> POW({
+      1, 10, 100, 1000, 10000, 100000, 1000000, 10000000});
+
+  constexpr int64_t pow(uint8_t scale) {    
     assert(scale < SCALE_MAX);
-    return tbl[scale];
+    return POW[scale];
   }
 
-  inline int64_t trunc(T f, uint8_t ts = 0) {
+  constexpr int64_t trunc(T f, uint8_t ts = 0) {
     const uint8_t fs(scale(f));
     const uint8_t s((fs == ts) ? fs : fs - ts);
     const int64_t m(pow(s)), v(get(f) / m);
     return v * m;
   }
   
-  inline int64_t frac(T f) { return get(f) - trunc(f); }
+  constexpr int64_t frac(T f) { return get(f) - trunc(f); }
   
   inline int cmp(const Pos &pos, T x, T y) {
     const int64_t xv(get(x)), yv(get(y));
@@ -50,7 +50,7 @@ namespace cidk::fix {
     return cidk::cmp(pos, xv, (xs == ys) ? yv : yv / pow(ys) * pow(xs));
   }
 
-  inline void dump(T f, ostream &out) {
+  constexpr void dump(T f, ostream &out) {
     const uint8_t s(scale(f));
     const int64_t v(trunc(f) / pow(s));
     const bool neg(is_neg(f));
@@ -59,24 +59,24 @@ namespace cidk::fix {
     out << v << '.' << setw(s) << setfill('0') << (neg ? -ff : ff);
   }
   
-  inline T add(T x, T y) {
+  constexpr T add(T x, T y) {
     const uint8_t xs(scale(x)), ys(scale(y));
     const int64_t yv(get(y));
     return make(get(x) + ((xs == ys) ? yv : yv * pow(xs) / pow(ys)), xs);
   }
   
-  inline T sub(T x, T y) {
+  constexpr T sub(T x, T y) {
     const uint8_t xs(scale(x)), ys(scale(y));
     const int64_t yv(get(y));
     return make(get(x) - ((xs == ys) ? yv : yv * pow(xs) / pow(ys)), xs);
   }
 
-  inline T mul(T x, T y) {
+  constexpr T mul(T x, T y) {
     const uint8_t xs(scale(x));
     return make(get(x) * get(y) / pow(scale(y)), xs);
   }
 
-  inline T div(T x, T y) {
+  constexpr T div(T x, T y) {
     const uint8_t xs(scale(x));
     return make(get(x) * pow(xs) / (get(y) * pow(xs) / pow(scale(y))), scale(x));
   }
