@@ -19,6 +19,16 @@ call /[Int Int];
 check({cp;}) {is 7;};
 
 
+push 7;
+push 2;
+call ^[Int Int];
+check({cp;}) {is 49;};
+
+push 49;
+call sqrt[Int];
+check({cp;}) {is 7;};
+
+    
 push 0.75;
 push 0.25; 
 call +[Fix Fix];

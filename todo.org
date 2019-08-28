@@ -1,5 +1,4 @@
-scriptl
-abc.sl
+abc.ds
 
 lib abc {
   fun %(x Num y Num)(Num) {x - ((x / y) * y)}
@@ -21,9 +20,8 @@ dump(abc.foo % 4)
 * add use op
 * --
 * remove cx arg from Env constructors/add_const/set
-* add -foo support
-** add Neg op
-** emit after val push if val.flags &= CIDK_VAL_NEG
+* fix compile time detection of unknown args
+** dispatch foo;
 * finish for op
 ** add ValType.iter(const Val &src, function<void (const Val &)>)
 *** call with src in default imp
@@ -51,6 +49,9 @@ dump(abc.foo % 4)
 * add repl break loop
 ** add restarts
 ** gfu
+* add -foo support
+** add Neg op
+** emit after val push if val.flags &= CIDK_VAL_NEG
 * add anon fun support
 ** push on stack from Defun if nil id
 * add Fun.rets (Rets)
