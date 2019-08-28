@@ -23,14 +23,14 @@ namespace cidk::libs {
     cx.peek(p).as_int /= y;
   }
 
-  static void pow_imp(Cx &cx, const Pos &p, const Fun &f, Env &env) {
+  static void int_pow_imp(Cx &cx, const Pos &p, const Fun &f, Env &env) {
     Int e(cx.pop(p).as_int);
     if (e < 0) { throw ESys(p, "Negative exponent"); }
     Int &b(cx.peek(p).as_int);
     b = pow(b, e);
   }
 
-  static void sqrt_imp(Cx &cx, const Pos &p, const Fun &f, Env &env) {
+  static void int_sqrt_imp(Cx &cx, const Pos &p, const Fun &f, Env &env) {
     auto &x(cx.peek(p).as_int);
     if (x < 0) { throw ESys(p, "Negative argument"); }
     x = sqrt(x);
@@ -56,12 +56,28 @@ namespace cidk::libs {
     Fix y(cx.pop(p).as_fix), &x(cx.peek(p).as_fix);
     x = fix::div(x, y);
   }
-  
+
+
+  static void fix_sqrt_imp(Cx &cx, const Pos &p, const Fun &f, Env &env) {
+    Fix &x(cx.peek(p).as_fix);
+    if (fix::is_neg(x)) { throw ESys(p, "Negative argument"); }
+    uint8_t xs(fix::scale(x));
+    x = fix::make(sqrt(fix::get(x) * fix::pow(xs)), xs);
+  }
+
   
   static void fix_int_mul_imp(Cx &cx, const Pos &p, const Fun &f, Env &env) {
     const Int y(cx.pop(p).as_int);
     Fix &x(cx.peek(p).as_fix);
     x = fix::make(fix::get(x) * y, fix::scale(x));
+  }
+
+  static void fix_int_pow_imp(Cx &cx, const Pos &p, const Fun &f, Env &env) {
+    const Int e(cx.pop(p).as_int);
+    if (e < 0) { throw ESys(p, "Negative exponent"); }
+    Fix &b(cx.peek(p).as_fix);
+    uint8_t bs(fix::scale(b));
+    b = fix::make(pow(fix::get(b), e) / pow(10, bs), bs);
   }
 
   Lib &init_math(Cx &cx, const Pos &pos) {
@@ -90,13 +106,13 @@ namespace cidk::libs {
               "^",
               {Arg("base", cx.int_type), Arg("exp", cx.int_type)},
               {Ret(cx.int_type)},
-              pow_imp);
+              int_pow_imp);
 
     e.add_fun(cx, pos,
               "sqrt",
               {Arg("x", cx.int_type)},
               {Ret(cx.int_type)},
-              sqrt_imp);
+              int_sqrt_imp);
 
 
     e.add_fun(cx, pos,
@@ -125,10 +141,23 @@ namespace cidk::libs {
     
 
     e.add_fun(cx, pos,
+              "sqrt",
+              {Arg("x", cx.fix_type)},
+              {Ret(cx.fix_type)},
+              fix_sqrt_imp);
+
+    
+    e.add_fun(cx, pos,
               "*",
               {Arg("x", cx.fix_type), Arg("y", cx.int_type)},
               {Ret(cx.fix_type)},
               fix_int_mul_imp);
+
+    e.add_fun(cx, pos,
+              "^",
+              {Arg("base", cx.fix_type), Arg("exp", cx.int_type)},
+              {Ret(cx.fix_type)},
+              fix_int_pow_imp);
 
     return l;
   }

@@ -50,6 +50,22 @@ call /[Fix Fix];
 check({cp;}) {is 4.00;};
 
 
+push 0.07000;
+cp;
+call *[Fix Fix];
+check({cp;}) {is 0.00490;};
+
+push 0.0490;
+call sqrt[Fix];
+check({cp;}) {is 0.2213;};
+
+
+push 0.07000;
+push 2;
+call ^[Fix Int];
+check({cp;}) {is 0.00490;};
+
+
 push 0.1;
 push 0.01;
 dispatch >;

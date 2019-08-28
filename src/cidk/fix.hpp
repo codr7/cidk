@@ -5,6 +5,7 @@
 #include <iomanip>
 
 #include "cidk/cmp.hpp"
+#include "cidk/math.hpp"
 
 namespace cidk::fix {
   const uint8_t SCALE_BITS(3);
