@@ -6,7 +6,7 @@
 namespace cidk::ops {
   struct DispatchType: OpType {
     DispatchType(const string &id);
-    void init(Cx &cx, Op &op, const Val &funs) const;
+    void init(Cx &cx, Op &op, const Val &funs, const Val &nargs) const;
 
     virtual void compile(Cx &cx,
                          OpIter &in,

@@ -241,8 +241,8 @@ Error in 'test.al' on row 1, col 5:
 Unknown id: foo
 ```
 
-#### dispatch fun
-Calls most specific implementation for specified function based on stack contents.
+#### dispatch fun [nargs -1]
+Calls most specific implementation for specified function based on the last `nargs` values on stack.
 
 ```
   push 35;
@@ -251,7 +251,7 @@ Calls most specific implementation for specified function based on stack content
 
 (... 42)
 ```
-An error is thrown if no matching function is found.
+An error is thrown when no matching function can be found.
 
 ```
   push "foo";

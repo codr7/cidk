@@ -10,8 +10,9 @@ namespace cidk::ops {
 
   DispatchType::DispatchType(const string &id): OpType(id) {}
 
-  void DispatchType::init(Cx &cx, Op &op, const Val &funs) const {
+  void DispatchType::init(Cx &cx, Op &op, const Val &funs, const Val &nargs) const {
     op.args[0] = funs;
+    op.args[1] = nargs;
   }
 
   void DispatchType::compile(Cx &cx,
@@ -21,8 +22,14 @@ namespace cidk::ops {
                              Ops &out,
                              Opts &opts) const {
     auto &p(in->pos);
-    auto &funs(in->args[0]);
-    funs.compile(p, env, opts);
+    auto &args(in->args);
+    for (int i(0); i < 2; i ++) { args[i].compile(p, env, opts); }
+
+    if (Val &nargs(args[1]); nargs.type != &cx.int_type) {
+      throw ESys(p, "Invalid number of arguments: ", nargs);
+    }
+    
+    auto &funs(args[0]);
     auto stackp(cx.stackp);
     funs.splat(p, -1);
 
@@ -45,14 +52,23 @@ namespace cidk::ops {
   
   void DispatchType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
-    auto stack_len(cx.stackp - cx.stack.begin());
-    Val *stack_end(&cx.peek(p));
+    auto &args(op.args);
+    Int nargs(args[1].as_int);
+    size_t stack_len(cx.stackp - cx.stack.begin());
+
+    if (nargs == -1) {
+      nargs = stack_len;
+    } else if (nargs > stack_len) {
+      throw ESys(p, "Missing arguments");
+    }
+    
+    Val *stack_end(cx.stackp - 1);
     Fun *ok(nullptr);
     
     for (auto &fv: op.args[0].as_list->items) {
       auto &f(*fv.as_fun);
 
-      if (f.match(stack_end, stack_len)) {
+      if (f.match(stack_end, nargs)) {
         ok = &f;
         break;
       }
@@ -64,9 +80,18 @@ namespace cidk::ops {
 
   void DispatchType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
+
+    auto funs(read_val(cx, pos, in));
+    if (!funs || funs->is_eop()) { throw ESys(p, "Missing function"); }
+
+    Val nargs(cx.int_type, Int(-1));
     auto v(read_val(cx, pos, in));
-    if (!v || v->is_eop()) { throw ESys(p, "Missing ;"); }
-    read_eop(pos, in);
-    out.emplace_back(cx, p, *this, *v);
+
+    if (!v->is_eop()) {
+      nargs = *v;
+      read_eop(pos, in);
+    }
+    
+    out.emplace_back(cx, p, *this, *funs, nargs);
   }
 }

@@ -39,3 +39,22 @@ do {
   call bar[];
   check({cp;}) {is 42;};  
 };
+
+do {
+  defun foo()() { push 0; };
+  defun foo(_ A)() { step $ 7; };
+
+  dispatch foo;
+  check({cp;}) {is 0;};
+
+  push 35;
+  dispatch foo 0;
+  check({cp;}) {is 0;};
+  
+  dispatch foo 1;
+  check({cp;}) {is 42;};
+
+  push 35;
+  dispatch foo;
+  check({cp;}) {is 42;};
+};
