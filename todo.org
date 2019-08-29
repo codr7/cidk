@@ -10,6 +10,12 @@ lib abc {
 use abc(%)
 dump(abc.foo % 4)
 
+* cleanup dasl
+** script op
+*** use read_expr
+** compile
+** git import
+* --
 * add deflib op
 ** pass lib.env down in compile/eval
 * add support for recursive ids
@@ -35,11 +41,10 @@ dump(abc.foo % 4)
 * add default args
 ** x 42 instead of x Int
 ** clone on let
-** add nargs to Call op
+** add nargs to Call op like dispatch
 *** update test/bench/readme
 ** use for a/b in fib_iter
 *** bench
-* add nargs to Dispatch op
 * compile Dispatch to Call if list.size() == 1
 * peel off Do at compile time if no let/defun/defconst
 * add sum types

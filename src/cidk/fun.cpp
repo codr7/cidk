@@ -64,18 +64,6 @@ namespace cidk {
       body_opts.mark_refs();
     }
   }  
-
-  bool Fun::match(Val *stackp, size_t stack_len) const {
-    auto &as(args.items);
-    if (as.empty()) { return true; }    
-    if (as.size() > stack_len) { return false; }
-
-    for (auto a = &as.back(); a >= &as[0]; a--, stackp--) {          
-      if (Type *at(a->type); !stackp->type->isa(*at)) { return false; }
-    }
-
-    return true;
-  }
   
   void Fun::sweep(Cx &cx, const Pos &pos) {
     auto i(find(pos, root.items, Val(cx.fun_type, this)));

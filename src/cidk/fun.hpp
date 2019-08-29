@@ -45,7 +45,7 @@ namespace cidk {
 
     void init(Cx &cx, const Pos &pos, Env &env);
     void mark();
-    bool match(Val *stackp, size_t stack_len) const;
+    bool match(Val *stackp, size_t min, size_t max) const;
     virtual void sweep(Cx &cx, const Pos &pos) override;
   };
 }

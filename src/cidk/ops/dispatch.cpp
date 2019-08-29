@@ -55,20 +55,16 @@ namespace cidk::ops {
     auto &args(op.args);
     Int nargs(args[1].as_int);
     size_t stack_len(cx.stackp - cx.stack.begin());
-
-    if (nargs == -1) {
-      nargs = stack_len;
-    } else if (nargs > stack_len) {
-      throw ESys(p, "Missing arguments");
-    }
-    
+    if (nargs != -1 && nargs > stack_len) { throw ESys(p, "Missing arguments"); }    
     Val *stack_end(cx.stackp - 1);
     Fun *ok(nullptr);
     
     for (auto &fv: op.args[0].as_list->items) {
       auto &f(*fv.as_fun);
 
-      if (f.match(stack_end, nargs)) {
+      if (f.match(stack_end,
+                  (nargs == -1) ? 0 : nargs,
+                  (nargs == -1) ? stack_len : nargs)) {
         ok = &f;
         break;
       }

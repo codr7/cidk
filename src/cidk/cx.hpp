@@ -294,6 +294,19 @@ namespace cidk {
     }
   }
 
+  inline bool Fun::match(Val *stackp, size_t min, size_t max) const {
+    auto &as(args.items);
+    if (as.empty()) { return true; }
+    size_t n(as.size());
+    if (n < min || n > max) { return false; }
+
+    for (auto a = &as.back(); n; n--, a--, stackp--) {          
+      if (Type *at(a->type); !stackp->type->isa(*at)) { return false; }
+    }
+
+    return true;
+  }
+
   inline bool Val::is_eop() const {
     auto &cx(type->cx);
     return type == &cx.sym_type && as_sym == cx.eop.as_sym;

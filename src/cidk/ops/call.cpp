@@ -47,7 +47,7 @@ namespace cidk::ops {
     if (cx.debug || args[1].as_bool) {
       auto stack_len(cx.stackp - cx.stack.begin());
 
-      if (!f->match(stack_len ? &cx.peek(p) : cx.stackp, stack_len)) {
+      if (!f->match(stack_len ? &cx.peek(p) : cx.stackp, 0, stack_len)) {
         throw ESys(p, "Call failed: ", f->id);
       }
     }
