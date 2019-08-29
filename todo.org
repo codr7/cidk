@@ -1,21 +1,3 @@
-abc.ds
-
-lib abc {
-  fun %(x Num y Num)(Num) {x - ((x / y) * y)}
-
-  var foo = 9
-  foo += 1
-}
-
-use abc(%)
-dump(abc.foo % 4)
-
-* cleanup dasl
-** script op
-*** use read_expr
-** compile
-** git import
-* --
 * add deflib op
 ** pass lib.env down in compile/eval
 * add support for recursive ids
