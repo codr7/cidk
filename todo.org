@@ -1,3 +1,19 @@
+* add dump(ops, out) fn
+** add Op.dump(depth, out)
+** add ops::dump_arg(Val, out)
+*** dump expressions at depth+1 with newlines
+** add OpType.dump(out)
+* add calcl :compile command
+** dump generated ops
+* add Expr.allow_inline
+** trap in push compile to inline ops in place of Push
+** default false
+** set for calcl fun calls
+* add support for fun calls in dasl like calcl
+* switch Pos.src to optional<Path>
+** change error dump to skip src if missing
+** change cidk/calcl/dasl repls to pass {}
+* ---
 * add deflib op
 ** pass lib.env down in compile/eval
 * add support for recursive ids
@@ -36,9 +52,6 @@
 * add repl break loop
 ** add restarts
 ** gfu
-* add -foo support
-** add Neg op
-** emit after val push if val.flags &= CIDK_VAL_NEG
 * add anon fun support
 ** push on stack from Defun if nil id
 * add Fun.rets (Rets)
