@@ -1,4 +1,9 @@
-* set expr inline for calcl calls/groups
+* switch Pos.src to optional<Path>
+** change error dump to skip src if missing
+** change cidk/calcl/dasl repls to pass {}
+** update readme
+* add support for fun calls in dasl like calcl
+* --
 * add dump(ops, out) fn
 ** add Op.dump(depth, out)
 ** add ops::dump_arg(Val, out)
@@ -6,10 +11,6 @@
 ** add OpType.dump(out)
 * add calcl :compile command
 ** dump generated ops
-* add support for fun calls in dasl like calcl
-* switch Pos.src to optional<Path>
-** change error dump to skip src if missing
-** change cidk/calcl/dasl repls to pass {}
 * ---
 * add deflib op
 ** pass lib.env down in compile/eval
