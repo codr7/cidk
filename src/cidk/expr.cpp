@@ -3,9 +3,12 @@
 #include "cidk/types/expr.hpp"
 
 namespace cidk {
-  Expr::Expr(Cx &cx): Ref(cx) {}
+  Expr::Flag::Root Expr::FLAGS("Expr:Flag");
+  const Expr::Flag Expr::INLINE(Expr::FLAGS, "INLINE");
 
-  Expr::Expr(Cx &cx, const Ops &ops): Ref(cx), ops(ops) {}
+  Expr::Expr(Cx &cx): Ref(cx), flags(FLAGS) {}
+
+  Expr::Expr(Cx &cx, const Ops &ops): Ref(cx), ops(ops), flags(FLAGS) {}
 
   void Expr::mark() {
     if (!ref_mark) {

@@ -2,6 +2,7 @@
 #include "cidk/e.hpp"
 #include "cidk/ops/push.hpp"
 #include "cidk/read.hpp"
+#include "cidk/types/expr.hpp"
 
 namespace cidk::ops {
   const PushType Push("push");
@@ -16,8 +17,15 @@ namespace cidk::ops {
                          Env &env,
                          Ops &out,
                          Opts &opts) const {
+    auto &v(in->args[0]);
     in->args[0].compile(in->pos, env, opts);
-    out.push_back(*in);
+
+    if (v.type == &cx.expr_type && v.as_expr->flags(Expr::INLINE)) {
+      auto &src(v.as_expr->ops);
+      copy(src.begin(), src.end(), back_inserter(out));
+    } else {
+      out.push_back(*in);
+    }
   }
 
   void PushType::mark_refs(Op &op) const { op.args[0].mark_refs(); }

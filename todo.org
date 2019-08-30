@@ -1,3 +1,4 @@
+* set expr inline for calcl calls/groups
 * add dump(ops, out) fn
 ** add Op.dump(depth, out)
 ** add ops::dump_arg(Val, out)
@@ -5,10 +6,6 @@
 ** add OpType.dump(out)
 * add calcl :compile command
 ** dump generated ops
-* add Expr.allow_inline
-** trap in push compile to inline ops in place of Push
-** default false
-** set for calcl fun calls
 * add support for fun calls in dasl like calcl
 * switch Pos.src to optional<Path>
 ** change error dump to skip src if missing
@@ -37,7 +34,9 @@
 * add enum types
 ** use instead of bool op flags
 * add default args
-** x 42 instead of x Int
+** x (Int 42) instead of x Int
+** add ArgList.min_nargs
+*** calculate during parse
 ** clone on let
 ** add nargs to Call op like dispatch
 *** update test/bench/readme
