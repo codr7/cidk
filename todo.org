@@ -1,6 +1,3 @@
-* peel unused Do ops
-** calcl
-* --
 * switch Pos.src to optional<Path>
 ** change error dump to skip src if missing
 ** change cidk/calcl/dasl repls to pass {}
