@@ -4,6 +4,13 @@
 ** update readme
 * add support for fun calls in dasl like calcl
 * --
+* remove id clone from Val
+** set manually where needed
+* add Val flags like Expr
+** don't clone
+** add Val::CONST
+*** drop const type
+* --
 * add dump(ops, out) fn
 ** add Op.dump(depth, out)
 ** add ops::dump_arg(Val, out)
