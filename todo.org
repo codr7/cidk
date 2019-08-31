@@ -34,8 +34,11 @@
 ** add list lib with push/pop/reserve funs
 * add enum types
 ** use instead of bool op flags
+** add pair support
+*** a:b
+*** add Pair < Ref
 * add default args
-** x (Int 42) instead of x Int
+** x 42:Int / x 42 / x Int
 ** add ArgList.min_nargs
 *** calculate during parse
 ** clone on let
