@@ -21,6 +21,11 @@ namespace cidk {
     cx.eval(val.as_expr->ops, env, regs);
   }
 
+  bool ExprType::find_op(const Val &val,
+                         function<bool (Ops &, OpIter &)> pred) const {
+    return cidk::find_op(val.as_expr->ops, pred);
+  }
+
   bool ExprType::is(const Val &x, const Val &y) const {
     return x.as_expr == y.as_expr;
   }

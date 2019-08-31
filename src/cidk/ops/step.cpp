@@ -72,6 +72,16 @@ namespace cidk::ops {
     }
   }
 
+  bool StepType::find_op(Op &op, function<bool (Ops &, OpIter &)> pred) const {
+    auto &args(op.args);
+
+    for (int i(0); i < 3; i++) {
+      if (args[i].find_op(pred)) { return true; }
+    }
+
+    return false;
+  }
+
   void StepType::mark_refs(Op &op) const {
     auto &args(op.args);
     for (int i(0); i < 3; i++) { args[i].mark_refs(); }

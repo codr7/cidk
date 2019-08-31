@@ -45,6 +45,16 @@ namespace cidk::ops {
     }
   }
 
+  bool IsaType::find_op(Op &op, function<bool (Ops &, OpIter &)> pred) const {
+    auto &args(op.args);
+    
+    for (int i(0); i < 2; i++) {
+      if (args[i].find_op(pred)) { return true; }
+    }
+    
+    return false;
+  }
+
   void IsaType::mark_refs(Op &op) const {
     auto &args(op.args);
     for (int i(0); i < 2; i++) { args[i].mark_refs(); }

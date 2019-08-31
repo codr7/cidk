@@ -1,6 +1,7 @@
 #include "cidk/cidk.hpp"
 #include "cidk/e.hpp"
 #include "cidk/ext_id.hpp"
+#include "cidk/op.hpp"
 #include "cidk/opts.hpp"
 #include "cidk/sym.hpp"
 

@@ -20,6 +20,9 @@ namespace cidk::ops {
       op.args[0].eval(op.pos, env, regs);
     }
 
+    virtual bool find_op(Op &op,
+                         function<bool (Ops &, OpIter &)> pred) const override;
+
     virtual void mark_refs(Op &op) const override;
     virtual void read(Cx &cx, Pos &pos, istream &in, Ops &out) const override;
   };

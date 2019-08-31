@@ -8,6 +8,8 @@ namespace cidk {
   using namespace std;
 
   struct ExtId;
+  struct Op;
+  struct OpType;
   struct Pos;
   struct Sym;
   

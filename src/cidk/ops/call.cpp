@@ -55,6 +55,10 @@ namespace cidk::ops {
     f->call(cx, p, env);
   }
 
+  bool CallType::find_op(Op &op, function<bool (Ops &, OpIter &)> pred) const {
+    return op.args[0].find_op(pred);
+  }
+
   void CallType::mark_refs(Op &op) const { op.args[0].mark_refs(); }
 
   void CallType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {

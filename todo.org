@@ -1,3 +1,6 @@
+* peel unused Do ops
+** calcl
+* --
 * switch Pos.src to optional<Path>
 ** change error dump to skip src if missing
 ** change cidk/calcl/dasl repls to pass {}
@@ -44,7 +47,6 @@
 ** use for a/b in fib_iter
 *** bench
 * compile Dispatch to Call if list.size() == 1
-* peel off Do at compile time if no let/defun/defconst
 * add sum types
 ** parse Type? as Type or Nil_
 ** remove any_type

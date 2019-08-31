@@ -28,6 +28,10 @@ namespace cidk::ops {
     v.reset(cx.meta_type, dynamic_cast<Type *>(v.type));
   }
 
+  bool TypeofType::find_op(Op &op, function<bool (Ops &, OpIter &)> pred) const {
+    return op.args[0].find_op(pred);
+  }
+
   void TypeofType::mark_refs(Op &op) const { op.args[0].mark_refs(); }
 
   void TypeofType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {

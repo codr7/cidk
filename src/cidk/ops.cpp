@@ -30,10 +30,6 @@
 #include "cidk/ops/typeof.hpp"
 
 namespace cidk {
-  void mark_refs(Ops &in) {
-    for (Op &o: in) { o.mark_refs(); }
-  }
-
   void init_op_types(Cx &cx) {
     vector<const OpType *> ts {
       &ops::Call, &ops::Check, &ops::Clock, &ops::Cp,
@@ -50,5 +46,17 @@ namespace cidk {
     };
 
     for (auto tp: ts) { cx.add_op_type(*tp); }
+  }
+  
+  void mark_refs(Ops &ops) {
+    for (Op &o: ops) { o.mark_refs(); }
+  }
+
+  bool find_op(Ops &ops, function<bool (Ops &, OpIter &)> pred) {
+    for (auto op(ops.begin()); op != ops.end(); op++) {
+      if (pred(ops, op) || op->find_op(pred)) { return true; }
+    }
+
+    return false;
   }
 }

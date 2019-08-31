@@ -26,6 +26,16 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
+  bool IsType::find_op(Op &op, function<bool (Ops &, OpIter &)> pred) const {
+    auto &args(op.args);
+
+    for (int i(0); i < 2; i++) {
+      if (args[i].find_op(pred)) { return true; }
+    }
+
+    return false;
+  }
+
   void IsType::mark_refs(Op &op) const {
     auto &args(op.args);
     for (int i(0); i < 2; i++) { args[i].mark_refs(); }

@@ -85,6 +85,10 @@ namespace cidk {
       return type->eval(pos, *this, env, regs);
     }
 
+    bool find_op(function<bool (Ops &, OpIter &)> pred) const {
+      return type->find_op(*this, pred);
+    }
+    
     bool is(const Val &y) const {
       if (type != y.type) { return false; }
       return type->is(*this, y);

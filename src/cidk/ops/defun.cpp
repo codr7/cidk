@@ -76,6 +76,16 @@ namespace cidk::ops {
     for (auto &eid: opts.ext_ids) { eid.val = regs[*eid.src_reg]; }
   }
 
+  bool DefunType::find_op(Op &op, function<bool (Ops &, OpIter &)> pred) const {
+    auto &args(op.args);
+
+    for (int i(1); i < 5; i++) {
+      if (args[i].find_op(pred)) { return true; }
+    }
+
+    return false;
+  }
+
   void DefunType::mark_refs(Op &op) const {
     auto &args(op.args);
 

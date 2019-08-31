@@ -66,6 +66,15 @@ namespace cidk {
     cx.push(pos, cx.list_type, l);
   }
 
+  bool ListType::find_op(const Val &val,
+                         function<bool (Ops &, OpIter &)> pred) const {
+    for (auto &v: val.as_list->items) {
+      if (v.find_op(pred)) { return true; }
+    }
+
+    return false;
+  }
+
   bool ListType::is(const Val &x, const Val &y) const {
     return x.as_list == y.as_list;
   }

@@ -23,7 +23,10 @@ namespace cidk::ops {
       auto &v(cx.pop(p));
       set_reg(regs, args[2].as_reg, args[0].as_sym, v);
     }
-    
+
+    virtual bool find_op(Op &op,
+                         function<bool (Ops &, OpIter &)> pred) const override;
+
     virtual void mark_refs(Op &op) const override;
     virtual void read(Cx &cx, Pos &pos, istream &in, Ops &out) const override;
   };

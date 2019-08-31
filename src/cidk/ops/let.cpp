@@ -32,6 +32,10 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
+  bool LetType::find_op(Op &op, function<bool (Ops &, OpIter &)> pred) const {
+    return op.args[1].find_op(pred);
+  }
+
   void LetType::mark_refs(Op &op) const { op.args[1].mark_refs(); }
 
   void LetType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {

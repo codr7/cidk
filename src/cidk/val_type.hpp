@@ -36,6 +36,11 @@ namespace cidk {
 
     virtual void eval(const Pos &pos, const Val &val, Env &env, Reg *regs) const;
 
+    virtual bool find_op(const Val &val,
+                         function<bool (Ops &, OpIter &)> pred) const {
+      return false;
+    }
+
     virtual bool is(const Val &x, const Val &y) const = 0;
     virtual void mark_refs(const Val &val) const {};
     virtual void splat(const Pos &pos, const Val &val, int max) const;
