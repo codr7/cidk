@@ -4,10 +4,6 @@
 ** update readme
 * add support for fun calls in dasl like calcl
 * --
-* add EnvItem
-** Val & bool is_const
-** drop const type
-* --
 * add dump(ops, out) fn
 ** add Op.dump(depth, out)
 ** add ops::dump_arg(Val, out)
