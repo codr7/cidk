@@ -5,7 +5,11 @@
 
 namespace cidk {  
   struct RegType: TValType<size_t> {
-    RegType(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents);
+    RegType(Cx &cx,
+            const Pos &pos,
+            Env &env,
+            const Sym *id,
+            const vector<Type *> &parents);
 
     virtual void dump(const Val &val, ostream &out) const override;
 

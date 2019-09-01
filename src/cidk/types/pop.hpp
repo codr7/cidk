@@ -5,8 +5,12 @@
 
 namespace cidk {  
   struct PopType: ValType {
-    PopType(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents):
-      ValType(cx, pos, id, parents) {}
+    PopType(Cx &cx,
+            const Pos &pos,
+            Env &env,
+            const Sym *id,
+            const vector<Type *> &parents):
+      ValType(cx, pos, env, id, parents) {}
 
     virtual void dump(const Val &val, ostream &out) const override { out << '$'; }
 

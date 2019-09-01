@@ -5,9 +5,10 @@
 namespace cidk {
   FixType::FixType(Cx &cx,
                    const Pos &pos,
+                   Env &env,
                    const Sym *id,
                    const vector<Type *> &parents):
-    TValType<Fix>(cx, pos, id, parents) {}
+    TValType<Fix>(cx, pos, env, id, parents) {}
 
   int FixType::cmp(const Pos &pos, const Val &x, const Val &y) const {
     return fix::cmp(pos, x.as_fix, y.as_fix);

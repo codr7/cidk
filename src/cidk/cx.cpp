@@ -25,9 +25,8 @@ namespace cidk {
   Cx::Cx():
     env(*this),
     meta_type(env.add_type<MetaType>(*this, Pos::_, "Meta")),
-    opt_type(env.add_type<Type>(*this, Pos::_, "A?")),
-    nil_type(env.add_type<NilType>(*this, Pos::_, "Nil", {&opt_type})),
-    a_type(env.add_type<Type>(*this, Pos::_, "A", {&opt_type})),
+    nil_type(env.add_type<NilType>(*this, Pos::_, "Nil")),
+    a_type(env.add_type<Type>(*this, Pos::_, "A")),
     num_type(env.add_type<Type>(*this, Pos::_, "Num", {&a_type})),
     bool_type(env.add_type<BoolType>(*this, Pos::_, "Bool", {&a_type})),
     char_type(env.add_type<CharType>(*this, Pos::_, "Char", {&a_type})),

@@ -5,9 +5,10 @@
 namespace cidk {
   RegType::RegType(Cx &cx,
                    const Pos &pos,
+                   Env &env,
                    const Sym *id,
                    const vector<Type *> &parents):
-    TValType<size_t>(cx, pos, id, parents) {}
+    TValType<size_t>(cx, pos, env, id, parents) {}
 
   void RegType::dump(const Val &val, ostream &out) const {
     out << val.as_reg << ":Reg";

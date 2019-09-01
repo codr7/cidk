@@ -5,9 +5,10 @@
 namespace cidk {
   IntType::IntType(Cx &cx,
                    const Pos &pos,
+                   Env &env,
                    const Sym *id,
                    const vector<Type *> &parents):
-    TValType<Int>(cx, pos, id, parents) {}
+    TValType<Int>(cx, pos, env, id, parents) {}
 
   int IntType::cmp(const Pos &pos, const Val &x, const Val &y) const {
     return cidk::cmp(pos, x.as_int, y.as_int);

@@ -53,7 +53,6 @@ namespace cidk {
     
     Int type_tag = 1;
     MetaType &meta_type;
-    Type &opt_type;
     NilType &nil_type;    
     Type &a_type, &num_type;
     
@@ -201,7 +200,12 @@ namespace cidk {
                        const string &id,
                        const vector<Type *> parents,
                        Rest &&...rest) {
-    TypeT *t(new TypeT(cx, pos, cx.intern(pos, id), parents, forward<Rest>(rest)...));
+    TypeT *t(new TypeT(cx,
+                       pos,
+                       *this,
+                       cx.intern(pos, id),
+                       parents,
+                       forward<Rest>(rest)...));
     
     let(pos,
         t->id,

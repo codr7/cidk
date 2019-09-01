@@ -8,9 +8,10 @@
 namespace cidk { 
   ValType::ValType(Cx &cx,
                    const Pos &pos,
+                   Env &env,
                    const Sym *id,
                    const vector<Type *> &parents):
-    Type(cx, pos, id, parents), is_const(false), _const_type(nullptr) {}
+    Type(cx, pos, env, id, parents), is_const(false), _const_type(nullptr) {}
 
   ConstType &ValType::const_type(const Pos &pos) {
     if (!_const_type) { _const_type = new ConstType(cx, pos, *this); }

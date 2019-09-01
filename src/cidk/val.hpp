@@ -34,6 +34,7 @@ namespace cidk {
       Lib       *as_lib;
       List      *as_list;
       OStream   *as_ostream;
+      void      *as_ptr;
       size_t     as_reg;
       Str       *as_str;
       const Sym *as_sym;

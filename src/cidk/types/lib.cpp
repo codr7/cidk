@@ -7,9 +7,10 @@
 namespace cidk {
   LibType::LibType(Cx &cx,
                    const Pos &pos,
+                   Env &env,
                    const Sym *id,
                    const vector<Type *> &parents):
-    TValType<Lib *>(cx, pos, id, parents) {}
+    TValType<Lib *>(cx, pos, env, id, parents) {}
 
   int LibType::cmp(const Pos &pos, const Val &x, const Val &y) const {
     return cidk::cmp(pos, x.as_lib, y.as_lib);

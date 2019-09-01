@@ -5,9 +5,10 @@
 namespace cidk {
   ListType::ListType(Cx &cx,
                      const Pos &pos,
+                     Env &env,
                      const Sym *id,
                      const vector<Type *> &parents):
-    TValType<List *>(cx, pos, id, parents) {}
+    TValType<List *>(cx, pos, env, id, parents) {}
 
   void ListType::clone(const Pos &pos, Val &dst, const Val &src) const {
     auto dl(cx.list_type.pool.get(cx));

@@ -5,9 +5,10 @@
 namespace cidk {
   BoolType::BoolType(Cx &cx,
                      const Pos &pos,
+                     Env &env,
                      const Sym *id,
                      const vector<Type *> &parents):
-    TValType<bool>(cx, pos, id, parents) {}
+    TValType<bool>(cx, pos, env, id, parents) {}
 
   void BoolType::dump(const Val &val, ostream &out) const {
     out << (val.as_bool ? 'T' : 'F');

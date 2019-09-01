@@ -10,7 +10,7 @@ namespace cidk::ops {
     virtual void read(Cx &cx, Pos &pos, istream &in, Ops &out) const override;
   };
 
-  using Pluginit = void (*)(Cx &);
+  using Pluginit = void (*)(Cx &, const Pos &);
 
   extern const LinkType Link;
 }

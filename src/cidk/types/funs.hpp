@@ -5,7 +5,11 @@
 
 namespace cidk {
   struct FunsType: ListType {
-    FunsType(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents);
+    FunsType(Cx &cx,
+             const Pos &pos,
+             Env &env,
+             const Sym *id,
+             const vector<Type *> &parents);
   };
 }
 

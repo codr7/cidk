@@ -17,7 +17,11 @@ namespace cidk {
     bool is_const;
     ConstType *_const_type;
     
-    ValType(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents);
+    ValType(Cx &cx,
+            const Pos &pos,
+            Env &env,
+            const Sym *id,
+            const vector<Type *> &parents);
 
     ConstType &const_type(const Pos &pos);
 
@@ -53,8 +57,12 @@ namespace cidk {
   
   template <typename ValT>
   struct TValType: ValType {
-    TValType(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents):
-      ValType(cx, pos, id, parents) {}
+    TValType(Cx &cx,
+             const Pos &pos,
+             Env &env,
+             const Sym *id,
+             const vector<Type *> &parents):
+      ValType(cx, pos, env, id, parents) {}
     
     virtual void set(Val &dst, ValT val) const = 0;
   };

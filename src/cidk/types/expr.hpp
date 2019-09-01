@@ -9,7 +9,11 @@ namespace cidk {
   struct ExprType: TValType<Expr *> {
     Pool<Expr> pool;
 
-    ExprType(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents);
+    ExprType(Cx &cx,
+             const Pos &pos,
+             Env &env,
+             const Sym *id,
+             const vector<Type *> &parents);
     
     virtual void compile(const Pos &pos,
                          Val &val,

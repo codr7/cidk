@@ -6,9 +6,10 @@
 namespace cidk {
   CharType::CharType(Cx &cx,
                      const Pos &pos,
+                     Env &env,
                      const Sym *id,
                      const vector<Type *> &parents):
-    TValType<Char>(cx, pos, id, parents) {}
+    TValType<Char>(cx, pos, env, id, parents) {}
 
   void CharType::dump(const Val &val, ostream &out) const {
     wchar_t c(val.as_char);

@@ -9,7 +9,11 @@ namespace cidk {
   struct ListType: TValType<List *> {
     Pool<List> pool;
 
-    ListType(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents);
+    ListType(Cx &cx,
+             const Pos &pos,
+             Env &env,
+             const Sym *id,
+             const vector<Type *> &parents);
 
     virtual void clone(const Pos &pos, Val &dst, const Val &src) const override;
 

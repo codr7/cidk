@@ -6,7 +6,11 @@
 
 namespace cidk {  
   struct FixType: TValType<Fix> {
-    FixType(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents);
+    FixType(Cx &cx,
+            const Pos &pos,
+            Env &env,
+            const Sym *id,
+            const vector<Type *> &parents);
     
     virtual int cmp(const Pos &pos, const Val &x, const Val &y) const override;
     virtual void dump(const Val &val, ostream &out) const override;

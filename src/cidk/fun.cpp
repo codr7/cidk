@@ -44,7 +44,7 @@ namespace cidk {
     
     for (auto &a: args.items) {
       if (!a.id) { a.id = cx.intern(pos, a.id_name); }
-      if (!a.type) { a.type = &cx.opt_type; }
+      if (!a.type) { a.type = &cx.a_type.or_nil(pos); }
       weight += a.type->tag;
       if (sep) { buf << sep; }
       buf << a.type->id;

@@ -8,18 +8,26 @@
 #include "cidk/int.hpp"
 
 namespace cidk {
-  struct Val;
+  struct Env;
   struct Pos;
+  struct Val;
 
   struct Type: Def {
+    Env &env;
     Int tag;
     array<Type *, CIDK_TYPE_MAX> parents;
+    Type *nil_type;
     
-    Type(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents);
+    Type(Cx &cx,
+         const Pos &pos,
+         Env &env,
+         const Sym *id,
+         const vector<Type *> &parents);
+    
     void init_parents();
 
-    void derive(Cx &cx, Type &parent);
-    void derive(Cx &cx, Type &parent, Type &root);
+    void derive(Type &parent);
+    void derive(Type &parent, Type &root);
 
     Type *isa(Type &parent) const {
       Type *p(&parent);
@@ -28,6 +36,7 @@ namespace cidk {
     }
 
     void mark();
+    Type &or_nil(const Pos &pos);
     virtual void sweep(Cx &cx, const Pos &pos) override;
   };
 }

@@ -6,7 +6,11 @@
 
 namespace cidk {  
   struct SymType: TValType<const Sym *> {
-    SymType(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents);
+    SymType(Cx &cx,
+            const Pos &pos,
+            Env &env,
+            const Sym *id,
+            const vector<Type *> &parents);
 
     virtual void compile(const Pos &pos,
                          Val &val,

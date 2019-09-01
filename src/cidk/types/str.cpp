@@ -4,10 +4,11 @@
 
 namespace cidk {
   StrType::StrType(Cx &cx,
-                     const Pos &pos,
-                     const Sym *id,
-                     const vector<Type *> &parents):
-    TValType<Str *>(cx, pos, id, parents) {}
+                   const Pos &pos,
+                   Env &env,
+                   const Sym *id,
+                   const vector<Type *> &parents):
+    TValType<Str *>(cx, pos, env, id, parents) {}
 
   void StrType::clone(const Pos &pos, Val &dst, const Val &src) const {
     dst.as_str = cx.str_type.pool.get(cx, src.as_str->data);

@@ -23,7 +23,7 @@ namespace cidk::ops {
     if (!h) { throw ESys(p, "Failed linking ", fn, ": ", dlerror()); }
     Pluginit pluginit;
     *reinterpret_cast<void **>(&pluginit) = dlsym(h, "cidk_pluginit");
-    pluginit(cx);
+    pluginit(cx, p);
     dlclose(h);
   }
 }

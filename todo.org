@@ -48,9 +48,7 @@
 *** bench
 * compile Dispatch to Call if list.size() == 1
 * add sum types
-** parse Type? as Type or Nil_
 ** remove any_type
-** don't derive Nil from a_type
 * add repl break loop
 ** add restarts
 ** gfu

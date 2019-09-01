@@ -13,7 +13,11 @@ namespace cidk {
     Pool<Str> pool;
     wstring_convert<codecvt_utf8<Char>, Char> conv;
     
-    StrType(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents);
+    StrType(Cx &cx,
+            const Pos &pos,
+            Env &env,
+            const Sym *id,
+            const vector<Type *> &parents);
 
     virtual void clone(const Pos &pos, Val &dst, const Val &src) const override;
     virtual void dump(const Val &val, ostream &out) const override;

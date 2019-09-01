@@ -6,9 +6,10 @@
 namespace cidk {
   SymType::SymType(Cx &cx,
                    const Pos &pos,
+                   Env &env,
                    const Sym *id,
                    const vector<Type *> &parents):
-    TValType<const Sym *>(cx, pos, id, parents) {}
+    TValType<const Sym *>(cx, pos, env, id, parents) {}
 
   void SymType::compile(const Pos &pos, Val &val, Env &env, Opts &opts) const {
     auto s(val.as_sym);
@@ -17,7 +18,19 @@ namespace cidk {
       if (auto i(env.try_get(pos, s)); i) {
         i->clone(pos, val);
       } else {
-        val.reset(cx.reg_type, opts.push_ext_id(pos, s));
+        auto &n(s->name);
+
+        if (n.size() > 2 && isupper(n.front()) && n.back() == '?') {
+          if (auto i(env.try_get(pos, cx.intern(pos, n.substr(0, n.size()-1)))); i) {
+            i->clone(pos, val);
+            Type *&t(val.as_type);
+            t = &t->or_nil(pos);
+          } else {
+            val.reset(cx.reg_type, opts.push_ext_id(pos, s));
+          }
+        } else {
+          val.reset(cx.reg_type, opts.push_ext_id(pos, s));
+        }        
       }
     } else {
       val.reset(cx.reg_type, reg->second);

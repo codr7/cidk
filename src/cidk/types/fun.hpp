@@ -11,7 +11,11 @@ namespace cidk {
   struct FunType: TValType<Fun *> {
     Pool<Fun> pool;
     
-    FunType(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents);
+    FunType(Cx &cx,
+            const Pos &pos,
+            Env &env,
+            const Sym *id,
+            const vector<Type *> &parents);
 
     virtual int cmp(const Pos &pos, const Val &x, const Val &y) const override;
     virtual void dump(const Val &val, ostream &out) const override;

@@ -5,7 +5,11 @@
 
 namespace cidk {  
   struct MetaType: TValType<Type *> {
-    MetaType(Cx &cx, const Pos &pos, const Sym *id, const vector<Type *> &parents);
+    MetaType(Cx &cx,
+             const Pos &pos,
+             Env &env,
+             const Sym *id,
+             const vector<Type *> &parents);
 
     virtual void dump(const Val &val, ostream &out) const override;
     virtual bool is(const Val &x, const Val &y) const override;
