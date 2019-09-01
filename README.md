@@ -356,6 +356,16 @@ Binds `id` to `val` in the current scope.
 (... 42)
 ```
 
+#### link fname
+Links and initializes the specified plugin.
+
+```
+  link "/usr/local/lib/libcalcl.so";
+  calc(35 + 7);
+
+(... 42)
+```
+
 #### mark
 Marks non-reachable references for sweeping.
 
@@ -461,6 +471,22 @@ Pushes the type of `val`.
   typeof 42;
 
 (... Int:Meta)
+```
+
+### Plugins
+A cidk plugin is a shared library that exports a function with the following signature:
+
+```
+void cidk_pluginit(Cx &cx, const Pos &)
+```
+
+Plugins may be linked and initialized using `link`. The following example loads the `calc` opcode from [calcl](https://github.com/codr7/calcl) dynamically
+
+```
+  link "/usr/local/lib/libcalcl.so";
+  calc(35 + 7);
+
+(... 42)
 ```
 
 ### License
