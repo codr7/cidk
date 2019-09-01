@@ -82,6 +82,24 @@ The following types are supported by default.
 (... Nil:Meta)
 ```
 
+Suffixing any type id except `Nil` with `?` gives its nil type, that matches the specified type or nil.
+
+```
+  dump Meta?;
+  
+(... Meta?:Meta)
+```
+```
+  isa Meta Nil;
+
+(... _)
+```
+```
+  isa Meta? Nil;
+
+(... Meta?:Meta)
+```
+
 #### A
 `A` is the parent of all types except `Nil`.
 

@@ -20,14 +20,18 @@ namespace cidk {
   void Type::derive(Type &parent) { derive(parent, parent); }
     
   void Type::derive(Type &parent, Type &root) {
-    parents[parent.tag] = &root;
+    Type *&dst(parents[parent.tag]);
+    if (!dst) { dst = &root; }
 
     for(auto pp: parent.parents) {
       if (pp) { derive(*pp, root); }
     }
   }
   
-  void Type::mark() { ref_mark = true; }
+  void Type::mark() { 
+    ref_mark = true; 
+    if (nil_type && nil_type != this) { nil_type->mark(); }
+  }
 
   Type &Type::or_nil(const Pos &pos) {
     if (!nil_type) {

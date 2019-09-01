@@ -10,7 +10,9 @@ namespace cidk {
             Env &env,
             const Sym *id,
             const vector<Type *> &parents):
-      ValType(cx, pos, env, id, parents) {}
+      ValType(cx, pos, env, id, parents) {
+      nil_type = this;
+    }
 
     virtual void dump(const Val &val, ostream &out) const override { out << '_'; }
     
