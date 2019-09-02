@@ -1,13 +1,14 @@
-* fix closures
-** build/test.al
-** update ext_ids after eval?
-* --
 * convert defer to fixed size like stack/reg
 ** add deferp
 ** add cx.defer() fn
 *** call from op
+** bench
 * --
 * remove cx arg from Env constructors/add_const/set
+* --
+* fix closures
+** build/test.al
+** update ext_ids after eval?
 * --
 * add dump(ops, out) fn
 ** add Op.dump(depth, out)
