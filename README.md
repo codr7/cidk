@@ -241,6 +241,25 @@ Passing `-1` copies from beginning to end.
 (... 1 2 3 1 2 3)
 ```
 
+#### defer expr
+Schedules `expr` to be undconditionally evaluated in reverse order on scope exit.
+
+```
+  do {
+    defer {dump 3;};
+    defer {dump 2;};
+    dump 1;
+    fail "Going down...";
+  };
+
+1
+2
+3
+Error at row 5, col 6:
+Going down...
+()
+```
+
 #### defconst id val
 Defines compile time constant named `id`.
 
@@ -276,7 +295,7 @@ An error is thrown when no matching function can be found.
   push 42;
   dispatch +;
   
-Error in "n/a" at row 2, col 9:
+Error at row 2, col 9:
 Dispatch failed
 ("foo" 42)
 ```
@@ -313,6 +332,18 @@ Dumps `val` to `stderr`.
 (...)
 
 ```
+
+#### fail msg
+Signal error with message.
+
+```
+  fail "Going down...";
+
+Error at row 1, col 4:
+Going down...
+()
+```
+
 #### include fname
 Inlines the specified file in the current compilation unit.
 

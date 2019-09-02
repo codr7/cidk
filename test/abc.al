@@ -45,3 +45,9 @@ do {
   call foo[Int];
   check({cp;}) {is 0;};
 };
+
+do {
+    defer {push 3;};
+    defer {push 2;};
+    push 1;
+}; stash; check({cp;}) {push (1 2 3); dispatch =;};

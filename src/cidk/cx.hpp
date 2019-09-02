@@ -81,6 +81,7 @@ namespace cidk {
     Val *stackp;
         
     Call *call;
+    vector<pair<Pos, Val>> defers;
     
     const Val _, $, T, F, eop;
 
@@ -112,7 +113,6 @@ namespace cidk {
       swap(ops, tmp);
     }
 
-    
     void dump_stack(ostream &out) const;
 
     void eval(Ops &in, Env &env, Reg *regs);

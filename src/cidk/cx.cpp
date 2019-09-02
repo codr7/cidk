@@ -70,13 +70,20 @@ namespace cidk {
 
   void Cx::eval(Ops &in, Env &env, Reg *regs) {
     ops.push_back(&in);   
+    auto defer_offs(defers.size());
 
-    auto cleanup(defer([&]{
-          ops.pop_back();
-          regp = regs;
-        }));
+    Defer cleanup([&](){
+        while (defers.size() > defer_offs) {
+          auto &d(defers.back());
+          defers.pop_back();
+          d.second.eval(d.first, env, regs);
+        }
+        
+        ops.pop_back();
+        regp = regs;
+      });
 
-    for (Op &o: in) { 
+    for (Op &o: in) {
       o.eval(*this, env, regs); 
       if (eval_state != EvalState::go) { break; }
     }
@@ -117,6 +124,7 @@ namespace cidk {
     for (Val *v(&regs[0]); v < regp; v++) { if (v->type) { v->mark_refs(); } }
     for (Ops *os: ops) { cidk::mark_refs(*os); }
     for (Call *c(call); c; c = c->prev) { c->fun.mark(); }
+    for (auto &d: defers) { d.second.mark_refs(); }
   }
 
   void Cx::dump_stack(ostream &out) const {

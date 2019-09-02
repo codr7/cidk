@@ -16,7 +16,7 @@ namespace cidk {
       "Empty input clears stack and Ctrl+D exits." << endl << endl <<
       "  ";
 
-    Pos p(Pos::_);
+    Pos p;
     stringstream buf;
     string line;
 

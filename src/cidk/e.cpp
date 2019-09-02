@@ -9,10 +9,9 @@ namespace cidk {
   using namespace std;
   
   void E::print(ostream &out) const {
-    out <<
-      "Error in " << pos.src <<
-      " at row " << pos.row << ", col " << pos.col << ":\n" <<
-      msg;
+    out << "Error";
+    if (pos.src) { out << " in " << *pos.src; }
+    out << " at row " << pos.row << ", col " << pos.col << ":\n" << msg;
   }
 
   const char* E::what() const throw() {

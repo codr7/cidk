@@ -1,7 +1,8 @@
 #include "cidk/pos.hpp"
 
 namespace cidk {
-  const Pos Pos::_("n/a", -1, -1);
+  const Pos Pos::_({}, -1, -1);
   
-  Pos::Pos(Path src, int row, int col): src(move(src)), row(row), col(col) {}
+  Pos::Pos(const optional<Path> &src, int row, int col):
+    src(src), row(row), col(col) {}
 }

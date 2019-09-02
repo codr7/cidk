@@ -1,6 +1,8 @@
 #ifndef CIDK_POS_HPP
 #define CIDK_POS_HPP
 
+#include <optional>
+
 #include "cidk/path.hpp"
 
 namespace cidk {
@@ -9,10 +11,10 @@ namespace cidk {
   struct Pos {
     static const Pos _;
     
-    Path src;
+    optional<Path> src;
     int row, col;
     
-    Pos(Path src, int row=1, int col=0);
+    Pos(const optional<Path> &src = {}, int row = 1, int col = 0);
   };
 }
 

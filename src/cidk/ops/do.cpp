@@ -4,6 +4,7 @@
 #include "cidk/expr.hpp"
 #include "cidk/ext_id.hpp"
 #include "cidk/ops/defconst.hpp"
+#include "cidk/ops/defer.hpp"
 #include "cidk/ops/defun.hpp"
 #include "cidk/ops/do.hpp"
 #include "cidk/ops/let.hpp"
@@ -28,7 +29,9 @@ namespace cidk::ops {
     if (body.type != &cx.expr_type) { throw ESys(p, "Invalid body: ", body); }
     
     if (!body.find_op([](Ops &ops, OpIter &i) {
-          return i->type == &Defconst || i->type == &Defun || i->type == &Let;
+          return
+            i->type == &Defconst || i->type == &Defer || i->type == &Defun ||
+            i->type == &Let;
         })) {
       auto &src(body.as_expr->ops);
       cx.compile(src, opts, env);

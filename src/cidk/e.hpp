@@ -26,6 +26,11 @@ namespace cidk {
     template <typename...Args>
     ESys(const Pos &pos, Args &&...args): E(pos, forward<Args>(args)...) {}
   };
+
+  struct EUser: E {
+    template <typename...Args>
+    EUser(const Pos &pos, Args &&...args): E(pos, forward<Args>(args)...) {}
+  };
 }
 
 #endif
