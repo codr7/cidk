@@ -1,8 +1,13 @@
-* switch Pos.src to optional<Path>
-** change error dump to skip src if missing
-** change cidk/calcl/dasl repls to pass {}
-** update readme
-* add support for fun calls in dasl like calcl
+* fix closures
+** build/test.al
+** update ext_ids after eval?
+* --
+* convert defer to fixed size like stack/reg
+** add deferp
+** add cx.defer() fn
+*** call from op
+* --
+* remove cx arg from Env constructors/add_const/set
 * --
 * add dump(ops, out) fn
 ** add Op.dump(depth, out)
@@ -11,7 +16,7 @@
 ** add OpType.dump(out)
 * add calcl :compile command
 ** dump generated ops
-* ---
+* --
 * add deflib op
 ** pass lib.env down in compile/eval
 * add support for recursive ids
@@ -21,7 +26,6 @@
 ** throw error if target is not Lib
 * add use op
 * --
-* remove cx arg from Env constructors/add_const/set
 * fix compile time detection of unknown args
 ** dispatch foo;
 * finish for op
