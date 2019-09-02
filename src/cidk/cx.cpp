@@ -72,7 +72,7 @@ namespace cidk {
     ops.push_back(&in);   
     auto defer_offs(defers.size());
 
-    Defer cleanup([&](){
+    auto cleanup([&](){
         while (defers.size() > defer_offs) {
           auto &d(defers.back());
           defers.pop_back();
@@ -83,10 +83,17 @@ namespace cidk {
         regp = regs;
       });
 
-    for (Op &o: in) {
-      o.eval(*this, env, regs); 
-      if (eval_state != EvalState::go) { break; }
+    try {
+      for (Op &o: in) {
+        o.eval(*this, env, regs); 
+        if (eval_state != EvalState::go) { break; }
+      }
+    } catch (exception &e) {
+      cleanup();
+      throw;
     }
+
+    cleanup();
   }
 
   const Sym *Cx::intern(const Pos &pos, const string &name) {
