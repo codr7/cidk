@@ -129,8 +129,17 @@ namespace cidk {
       }
     }
 
-    void eval(Ops &in, Env &env, Reg *regs);
-    
+    void eval(Ops &in, Env &env, Reg *regs) {
+      ops.push_back(&in);   
+      
+      for (Op &o: in) {
+        o.eval(*this, env, regs); 
+        if (eval_state != EvalState::go) { break; }
+      }
+      
+      ops.pop_back();
+    }
+
     const Sym *intern(const Pos &pos, const string &name);
 
     void load(const Pos &pos,

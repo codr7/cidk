@@ -6,6 +6,12 @@
 * add calcl :compile command
 ** dump generated ops
 * --
+* convert Cx.ops to array/opsp
+** add CIDK_EVAL_MAX
+* grep mark() and rename to mark_refs()
+** add default Ref.mark_refs()
+*** set ref_marked
+* --
 * add deflib op
 ** pass lib.env down in compile/eval
 * add support for recursive ids
