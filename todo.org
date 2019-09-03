@@ -8,7 +8,9 @@
 ** remove EUser from e.hpp
 ** add EUser EvalState subclass
 ** remove try block from cx.Eval
-* move eval_defers call from Cx.eval to Do.eval & Call.eval
+* add EType
+** convert EUser to Ref
+** add EUser *Val.as_e
 * --
 * add dump(ops, out) fn
 ** add Op.dump(depth, out)

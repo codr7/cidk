@@ -63,7 +63,10 @@ namespace cidk::ops {
       ev = eid.src_reg ? regs[*eid.src_reg] : eid.val;
     }
 
+    auto min_defer(cx.deferp);
     cx.eval(body.ops, env, eval_regs);
+    cx.eval_defers(min_defer, env, eval_regs);
+    cx.regp = eval_regs;
   }
 
   bool DoType::find_op(Op &op, function<bool (Ops &, OpIter &)> pred) const {

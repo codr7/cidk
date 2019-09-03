@@ -71,7 +71,6 @@ namespace cidk {
   
   void Cx::eval(Ops &in, Env &env, Reg *regs) {
     ops.push_back(&in);   
-    auto min_defer(deferp);
 
     try {
       for (Op &o: in) {
@@ -79,16 +78,11 @@ namespace cidk {
         if (eval_state != EvalState::go) { break; }
       }
     } catch (exception &e) {
-      eval_defers(min_defer, env, regs);
       ops.pop_back();
-      regp = regs;
-
       throw;
     }
 
-    eval_defers(min_defer, env, regs);
     ops.pop_back();
-    regp = regs;
   }
 
   const Sym *Cx::intern(const Pos &pos, const string &name) {

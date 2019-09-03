@@ -32,12 +32,15 @@ namespace cidk {
             for (auto &eid: opts.ext_ids) {
               throw ESys(eid.pos, "Unknown id: ", eid.id);
             }
-
-            cx.eval(ops, cx.env, cx.alloc_regs(opts.regs.size()));
-
-            for (Val *v(cx.regp); v < cx.regp + opts.regs.size(); v++) {
+            
+            Reg *eval_regs(cx.alloc_regs(opts.regs.size()));
+            cx.eval(ops, cx.env, eval_regs);
+            
+            for (Val *v(eval_regs); v < eval_regs + opts.regs.size(); v++) {
               if (v->type) { cx.env.set(cx, p, v->id, *v, true); }
             }
+
+            cx.regp = eval_regs;
           } catch (const exception &e) {
             out << e.what() << endl;
           }
