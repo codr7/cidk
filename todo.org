@@ -1,5 +1,3 @@
-* fix loqi tests
-** open dispatch fails
 * remove cx arg from Env constructors/add_const/set
 * --
 * convert Cx.EvalState to Enum

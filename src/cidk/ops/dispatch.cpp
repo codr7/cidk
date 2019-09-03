@@ -61,7 +61,7 @@ namespace cidk::ops {
     
     for (auto &fv: op.args[0].as_list->items) {
       auto &f(*fv.as_fun);
-
+      
       if (f.match(stack_end,
                   (nargs == -1) ? 0 : nargs,
                   (nargs == -1) ? stack_len : nargs)) {
