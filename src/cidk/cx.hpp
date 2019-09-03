@@ -122,22 +122,27 @@ namespace cidk {
 
     void dump_stack(ostream &out) const;
 
-    void eval_defers(DeferItem *min, Env &env, Reg *regs) {
+    bool eval_defers(DeferItem *min, Env &env, Reg *regs) {
       while (deferp > min) {
         deferp--;
-        deferp->second.eval(deferp->first, env, regs);
+        if (!deferp->second.eval(deferp->first, env, regs)) { return false; }
       }
+
+      return true;
     }
 
-    void eval(Ops &in, Env &env, Reg *regs) {
+    bool eval(Ops &in, Env &env, Reg *regs) {
       ops.push_back(&in);   
       
       for (Op &o: in) {
-        o.eval(*this, env, regs); 
-        if (eval_state != EvalState::go) { break; }
+        if (!o.eval(*this, env, regs)) {
+          ops.pop_back();
+          return false;
+        }
       }
       
       ops.pop_back();
+      return true;
     }
 
     const Sym *intern(const Pos &pos, const string &name);
@@ -337,6 +342,14 @@ namespace cidk {
   inline bool Val::is_eop() const {
     auto &cx(type->cx);
     return type == &cx.sym_type && as_sym == cx.eop.as_sym;
+  }
+
+  inline bool ValType::eval(const Pos &pos,
+                            const Val &val,
+                            Env &env,
+                            Reg *regs) const {
+    val.clone(pos, cx.push(pos));
+    return true;
   }
 }
 

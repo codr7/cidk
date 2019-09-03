@@ -17,12 +17,17 @@ namespace cidk::ops {
                          Ops &out,
                          Opts &opts) const override;
 
-    virtual void eval(Cx &cx, Op &op, Env &env, Reg *regs) const override {
+    virtual bool eval(Cx &cx, Op &op, Env &env, Reg *regs) const override {
       auto &p(op.pos);
       auto &args(op.args);
-      for (int i(0); i < 2; i++) { args[i].eval(p, env, regs); }
+
+      for (int i(0); i < 2; i++) {
+        if (!args[i].eval(p, env, regs)) { return false; }
+      }
+      
       auto &y(cx.pop(p)), &x(cx.peek(p));    
       x.reset(cx.bool_type, x.is(y));
+      return true;
     }
 
     virtual bool find_op(Op &op,

@@ -31,12 +31,14 @@ namespace cidk::ops {
                          Ops &out,
                          Opts &opts) const override;
 
-    virtual void eval(Cx &cx, Op &op, Env &env, Reg *regs) const override {
+    virtual bool eval(Cx &cx, Op &op, Env &env, Reg *regs) const override {
       auto &p(op.pos);
       auto &args(op.args);
       
       swap(get_ref(cx, p, args[0], env, regs),
            get_ref(cx, p, args[1], env, regs));
+
+      return true;
     }
 
     virtual bool find_op(Op &op,

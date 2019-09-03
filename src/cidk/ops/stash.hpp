@@ -9,7 +9,7 @@ namespace cidk::ops {
     StashType(const string &id);
     void init(Cx &cx, Op &op) const;
 
-    virtual void eval(Cx &cx,
+    virtual bool eval(Cx &cx,
                       Op &op,
                       cidk::Env &env,
                       Reg *regs) const override;

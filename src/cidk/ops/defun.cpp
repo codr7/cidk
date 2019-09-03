@@ -71,9 +71,10 @@ namespace cidk::ops {
     out.push_back(*in);
   }
   
-  void DefunType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
+  bool DefunType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &opts(op.args[4].as_fun->body_opts);
     for (auto &eid: opts.ext_ids) { eid.val = regs[*eid.src_reg]; }
+    return true;
   }
 
   bool DefunType::find_op(Op &op, function<bool (Ops &, OpIter &)> pred) const {

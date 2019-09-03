@@ -10,8 +10,9 @@ namespace cidk::ops {
     RecallType(const string &id);
     void init(Cx &cx, Op &op) const;
 
-    virtual void eval(Cx &cx, Op &op, Env &env, Reg *regs) const override {
+    virtual bool eval(Cx &cx, Op &op, Env &env, Reg *regs) const override {
       cx.eval_state = EvalState::recall;
+      return false;
     }
 
     virtual void read(Cx &cx, Pos &pos, istream &in, Ops &out) const override;

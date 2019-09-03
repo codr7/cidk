@@ -18,10 +18,6 @@ namespace cidk {
     return *_const_type;
   }
 
-  void ValType::eval(const Pos &pos, const Val &val, Env &env, Reg *regs) const {
-    val.clone(pos, cx.push(pos));
-  }
-
   void ValType::splat(const Pos &pos, const Val &val, int max) const {
     cx.push(pos, val);
   }

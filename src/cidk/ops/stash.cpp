@@ -11,7 +11,7 @@ namespace cidk::ops {
 
   void StashType::init(Cx &cx, Op &op) const {}
 
-  void StashType::eval(Cx &cx,
+  bool StashType::eval(Cx &cx,
                        Op &op,
                        cidk::Env &env,
                        Reg *regs) const {
@@ -19,6 +19,7 @@ namespace cidk::ops {
     copy(cx.stack.begin(), cx.stackp, back_inserter(l->items));
     cx.stackp = &cx.stack[0];
     cx.push(op.pos, cx.list_type, l);
+    return true;
   }
 
   void StashType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {

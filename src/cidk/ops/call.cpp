@@ -29,7 +29,7 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void CallType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
+  bool CallType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &args(op.args);
     auto &fv(args[0]);
@@ -38,7 +38,7 @@ namespace cidk::ops {
     if (fv.type == &cx.fun_type) {
       f = fv.as_fun;
     } else {
-      fv.eval(p, env, regs);
+      if (!fv.eval(p, env, regs)) { return false; }
       auto &fv(cx.pop(p));
       if (fv.type != &cx.fun_type) { throw ESys(p, "Invalid call target: ", fv); }
       f = fv.as_fun;
@@ -52,7 +52,7 @@ namespace cidk::ops {
       }
     }
       
-    f->call(cx, p, env);
+    return f->call(cx, p, env);
   }
 
   bool CallType::find_op(Op &op, function<bool (Ops &, OpIter &)> pred) const {

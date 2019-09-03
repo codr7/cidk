@@ -26,9 +26,10 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void FailType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
+  bool FailType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     cx.eval_state = EvalState::error;
     cx.e = cx.e_type.pool.get(cx, op.pos, op.args[0]);
+    return false;
   }
 
   bool FailType::find_op(Op &op, function<bool (Ops &, OpIter &)> pred) const {

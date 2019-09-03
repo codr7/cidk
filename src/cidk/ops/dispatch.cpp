@@ -50,7 +50,7 @@ namespace cidk::ops {
     out.push_back(*in);
   }
   
-  void DispatchType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
+  bool DispatchType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &args(op.args);
     Int nargs(args[1].as_int);
@@ -71,7 +71,7 @@ namespace cidk::ops {
     }
 
     if (!ok) { throw ESys(p, "Dispatch failed"); } 
-    ok->call(cx, p, env);
+    return ok->call(cx, p, env);
   }
 
   void DispatchType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {

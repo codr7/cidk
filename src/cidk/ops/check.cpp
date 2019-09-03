@@ -32,14 +32,14 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void CheckType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
+  bool CheckType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &args(op.args);
     
-    args[0].eval(p, env, regs);
+    if (!args[0].eval(p, env, regs)) { return false; }
     Val msg(cx.pop(p));
 
-    args[1].eval(p, env, regs);
+    if (!args[1].eval(p, env, regs)) { return false; }
     auto &ok(cx.pop(p));
     
     if (ok.type != &cx.bool_type) {
@@ -47,6 +47,7 @@ namespace cidk::ops {
     }
 
     if (!ok.as_bool) { throw ESys(p, "Test failed: ", msg); }
+    return true;
   }
 
   bool CheckType::find_op(Op &op, function<bool (Ops &, OpIter &)> pred) const {

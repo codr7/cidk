@@ -44,7 +44,7 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void SetType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
+  bool SetType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &args(op.args);
     auto &k(args[0]), &v(args[1]);
@@ -53,13 +53,15 @@ namespace cidk::ops {
       cx.push(p, (k.type == &cx.int_type) ? cx.stack[k.as_int] : regs[k.as_reg]);
     }
 
-    v.eval(p, env, regs);
+    if (!v.eval(p, env, regs)) { return false; }
   
     if (k.type == &cx.int_type) {
       cx.stack[k.as_int] = cx.pop(p);
     } else {
       set_reg(regs, k.as_reg, k.as_sym, cx.pop(p));
     }
+
+    return true;
   }
 
   bool SetType::find_op(Op &op, function<bool (Ops &, OpIter &)> pred) const {

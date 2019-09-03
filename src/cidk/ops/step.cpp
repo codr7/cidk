@@ -40,7 +40,7 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void StepType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
+  bool StepType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &args(op.args);
     auto &place(args[0]), &delta(args[1]);
@@ -61,7 +61,7 @@ namespace cidk::ops {
       }
 
     } else {
-      place.eval(p, env, regs);
+      if (!place.eval(p, env, regs)) { return false; }
 
       if (delta.type == &cx.int_type) {
         cx.peek(p).as_int += delta.as_int;
@@ -70,6 +70,8 @@ namespace cidk::ops {
         args[3].as_fun->call(cx, p, env);
       }
     }
+
+    return true;
   }
 
   bool StepType::find_op(Op &op, function<bool (Ops &, OpIter &)> pred) const {

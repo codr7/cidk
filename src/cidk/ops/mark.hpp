@@ -9,7 +9,7 @@ namespace cidk::ops {
     MarkType(const string &id);
     void init(Cx &cx, Op &op) const;
 
-    virtual void eval(Cx &cx,
+    virtual bool eval(Cx &cx,
                       Op &op,
                       Env &env,
                       Reg *regs) const override;

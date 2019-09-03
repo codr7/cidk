@@ -16,8 +16,8 @@ namespace cidk::ops {
                          Ops &out,
                          Opts &opts) const override;
 
-    virtual void eval(Cx &cx, Op &op, Env &env, Reg *regs) const override {
-      op.args[0].eval(op.pos, env, regs);
+    virtual bool eval(Cx &cx, Op &op, Env &env, Reg *regs) const override {
+      return op.args[0].eval(op.pos, env, regs);
     }
 
     virtual bool find_op(Op &op,

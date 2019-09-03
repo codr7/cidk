@@ -31,17 +31,19 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void IfType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
+  bool IfType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &args(op.args);
     args[0].eval(p, env, regs);
     auto &x(args[1]), &y(args[2]);
     
     if (cx.pop(p).get_bool()) {
-      if (x.type != &cx.nil_type) { x.eval(p, env, regs); }
-    } else if (y.type != &cx.nil_type) {
-      y.eval(p, env, regs);
+      if (x.type != &cx.nil_type && !x.eval(p, env, regs)) { return false; }
+    } else if (y.type != &cx.nil_type && !y.eval(p, env, regs)) {
+      return false;
     }
+
+    return true;
   }
 
   bool IfType::find_op(Op &op, function<bool (Ops &, OpIter &)> pred) const {

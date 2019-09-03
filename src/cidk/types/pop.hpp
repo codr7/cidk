@@ -14,10 +14,10 @@ namespace cidk {
 
     virtual void dump(const Val &val, ostream &out) const override { out << '$'; }
 
-    virtual void eval(const Pos &pos,
+    virtual bool eval(const Pos &pos,
                       const Val &val,
                       Env &env,
-                      Reg *regs) const override {}
+                      Reg *regs) const override { return true; }
     
     virtual bool is(const Val &x, const Val &y) const override { return true; }
   };

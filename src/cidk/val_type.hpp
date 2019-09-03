@@ -38,7 +38,7 @@ namespace cidk {
       return is(x, y);
     }
 
-    virtual void eval(const Pos &pos, const Val &val, Env &env, Reg *regs) const;
+    virtual bool eval(const Pos &pos, const Val &val, Env &env, Reg *regs) const;
 
     virtual bool find_op(const Val &val,
                          function<bool (Ops &, OpIter &)> pred) const {

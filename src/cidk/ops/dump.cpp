@@ -22,12 +22,13 @@ namespace cidk::ops {
     out.push_back(*in);
   }
   
-  void DumpType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
+  bool DumpType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &out(*cx.stderr);
-    op.args[0].eval(p, env, regs);
+    if (!op.args[0].eval(p, env, regs)) { return false; }
     cx.pop(p).dump(out);
     out << endl;
+    return true;
   }
 
   bool DumpType::find_op(Op &op, function<bool (Ops &, OpIter &)> pred) const {

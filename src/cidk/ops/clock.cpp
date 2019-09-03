@@ -26,7 +26,7 @@ namespace cidk::ops {
     out.push_back(*in);
   }
   
-  void ClockType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
+  bool ClockType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &args(op.args);
 
@@ -43,11 +43,12 @@ namespace cidk::ops {
     auto stackp(cx.stackp);
     
     for (int i(0); i < nreps.as_int; i++) {
-      body.eval(p, env, regs);
+      if (!body.eval(p, env, regs)) { return false; }
       cx.stackp = stackp;
     }
     
     cx.push(p, cx.int_type, Int(t.ms()));
+    return true;
   }
 
   bool ClockType::find_op(Op &op, function<bool (Ops &, OpIter &)> pred) const {

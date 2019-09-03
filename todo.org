@@ -1,7 +1,3 @@
-* replace op.eval with passed lambda
-* move eval state test to op.eval
-** return bool
-* --
 * add dump(ops, out) fn
 ** add Op.dump(depth, out)
 ** add ops::dump_arg(Val, out)

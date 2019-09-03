@@ -16,7 +16,7 @@ namespace cidk {
     c = prev;
   }
 
-  void Call::eval(Cx &cx) {
+  bool Call::eval(Cx &cx) {
     auto &opts(fun.body_opts);
   recall:
     Reg *eval_regs(cx.alloc_regs(opts.regs.size()));
@@ -26,13 +26,15 @@ namespace cidk {
     }
 
     auto min_defer(cx.deferp);
-    cx.eval(fun.body, fun.env, eval_regs);
+    bool ok(cx.eval(fun.body, fun.env, eval_regs));
     cx.eval_defers(min_defer, fun.env, eval_regs);
     cx.regp = eval_regs;
 
-    if (cx.eval_state == EvalState::recall) {
+    if (!ok && cx.eval_state == EvalState::recall) {
       cx.eval_state = EvalState::go;
       goto recall;
     }
+
+    return ok;
   }
 }

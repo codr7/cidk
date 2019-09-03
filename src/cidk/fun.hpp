@@ -35,12 +35,8 @@ namespace cidk {
         const vector<Ret> &rets = {},
         Fimp imp = nullptr);
 
-    void call(Cx &cx, const Pos &pos, Env &env) {
-      if (imp) {
-        imp(cx, pos, *this, env);
-      } else {
-        Call(pos, *this).eval(cx);
-      }
+    bool call(Cx &cx, const Pos &pos, Env &env) {
+      return imp ? imp(cx, pos, *this, env) : Call(pos, *this).eval(cx);
     }
 
     void init(Cx &cx, const Pos &pos, Env &env);

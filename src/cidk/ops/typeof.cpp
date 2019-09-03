@@ -21,11 +21,12 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void TypeofType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
+  bool TypeofType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
-    op.args[0].eval(p, env, regs);
+    if (!op.args[0].eval(p, env, regs)) { return false; }
     auto &v(cx.peek(p));
     v.reset(cx.meta_type, dynamic_cast<Type *>(v.type));
+    return true;
   }
 
   bool TypeofType::find_op(Op &op, function<bool (Ops &, OpIter &)> pred) const {

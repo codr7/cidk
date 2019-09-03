@@ -25,16 +25,16 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void IsaType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
+  bool IsaType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &args(op.args);
 
-    args[1].eval(p, env, regs);
+    if (!args[1].eval(p, env, regs)) { return false; }
     Val &cv(cx.pop(p));
     if (cv.type != &cx.meta_type) { throw ESys(p, "Expected Meta: ", cv); }
     Type *child(cv.as_type);
 
-    args[0].eval(p, env, regs);
+    if (!args[0].eval(p, env, regs)) { return false; }
     Val &parent(cx.peek(p));
     if (parent.type != &cx.meta_type) { throw ESys(p, "Expected Meta: ", parent); }
       
@@ -43,6 +43,8 @@ namespace cidk::ops {
     } else {
       parent = cx._;
     }
+
+    return true;
   }
 
   bool IsaType::find_op(Op &op, function<bool (Ops &, OpIter &)> pred) const {

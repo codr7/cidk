@@ -25,11 +25,12 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void DropType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
+  bool DropType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto n(op.args[0].as_int);
     if (n > cx.stackp - cx.stack.begin()) { throw ESys(p, "Nothing to drop"); }
     cx.stackp -= n;
+    return true;
   }
 
   void DropType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {

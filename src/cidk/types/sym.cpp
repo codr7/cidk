@@ -41,8 +41,8 @@ namespace cidk {
 
   void SymType::dump(const Val &val, ostream &out) const { out << val.as_sym; }
 
-  void SymType::eval(const Pos &pos, const Val &val, Env &env, Reg *regs) const {
-    env.get(pos, val.as_sym).eval(pos, env, regs);
+  bool SymType::eval(const Pos &pos, const Val &val, Env &env, Reg *regs) const {
+    return env.get(pos, val.as_sym).eval(pos, env, regs);
   }
 
   bool SymType::is(const Val &x, const Val &y) const { return x.as_sym == y.as_sym; }

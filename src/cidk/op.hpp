@@ -33,7 +33,7 @@ namespace cidk {
                          Ops &out,
                          Opts &opts) const { out.push_back(*in); }
     
-    virtual void eval(Cx &cx, Op &op, Env &env, Reg *regs) const {}
+    virtual bool eval(Cx &cx, Op &op, Env &env, Reg *regs) const { return true; }
 
     virtual bool find_op(Op &op, function<bool (Ops &, OpIter &)> pred) const {
       return false;
@@ -62,7 +62,9 @@ namespace cidk {
       type->compile(cx, in, end, env, out, opts);
     }
     
-    void eval(Cx &cx, Env &env, Reg *regs) { type->eval(cx, *this, env, regs); }
+    bool eval(Cx &cx, Env &env, Reg *regs) {
+      return type->eval(cx, *this, env, regs);
+    }
 
     bool find_op(function<bool (Ops &, OpIter &)> pred) {
       return type->find_op(*this, pred);

@@ -8,45 +8,50 @@
 #include "cidk/types/bool.hpp"
 
 namespace cidk::libs {
-  static void eq_imp(Cx &cx,
+  static bool eq_imp(Cx &cx,
                      const Pos &p,
                      const Fun &f,
                      Env &env) {
     auto &y(cx.pop(p));
     Val &x(cx.peek(p));
     x.reset(cx.bool_type, x.eq(p, y));
+    return true;
   }
 
-  static void neq_imp(Cx &cx,
+  static bool neq_imp(Cx &cx,
                       const Pos &p,
                       const Fun &f,
                       Env &env) {
     auto &y(cx.pop(p));
     Val &x(cx.peek(p));
     x.reset(cx.bool_type, !x.eq(p, y));
+    return true;
   }
 
-  static void lt_imp(Cx &cx,
+  static bool lt_imp(Cx &cx,
                      const Pos &p,
                      const Fun &f,
                      Env &env) {
     auto &y(cx.pop(p));
     Val &x(cx.peek(p));
     x.reset(cx.bool_type, x.cmp(p, y) == -1);
+    return true;
   }
 
-  static void gt_imp(Cx &cx,
+  static bool gt_imp(Cx &cx,
                      const Pos &p,
                      const Fun &f,
                      Env &env) {
     auto &y(cx.pop(p));
     auto &x(cx.peek(p));
     x.reset(cx.bool_type, x.cmp(p, y) == 1);
+    return true;
   }
 
-  static void int_add_imp(Cx &cx, const Pos &p, const Fun &f, Env &env) {
+  static bool int_add_imp(Cx &cx, const Pos &p, const Fun &f, Env &env) {
     Int y(cx.pop(p).as_int);
     cx.peek(p).as_int += y;
+    return true;
   }
   
   Lib &init_abc(Cx &cx, const Pos &pos) {

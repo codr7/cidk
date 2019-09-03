@@ -53,7 +53,7 @@ namespace cidk::ops {
     }
   }
 
-  void DoType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
+  bool DoType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &body(*op.args[0].as_expr);
     auto &opts(body.opts);
     Reg *eval_regs(cx.alloc_regs(opts.regs.size()));
@@ -64,9 +64,12 @@ namespace cidk::ops {
     }
 
     auto min_defer(cx.deferp);
-    cx.eval(body.ops, env, eval_regs);
-    cx.eval_defers(min_defer, env, eval_regs);
+
+    bool
+      eok(cx.eval(body.ops, env, eval_regs)),
+      edok(cx.eval_defers(min_defer, env, eval_regs));
     cx.regp = eval_regs;
+    return eok && edok;
   }
 
   bool DoType::find_op(Op &op, function<bool (Ops &, OpIter &)> pred) const {

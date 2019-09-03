@@ -38,7 +38,7 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void CpType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
+  bool CpType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &args(op.args);
     auto offs(args[0].as_int), len(args[1].as_int);
@@ -53,6 +53,8 @@ namespace cidk::ops {
       copy(i, i + len, cx.stackp);
       cx.stackp += len;
     }
+
+    return true;
   }
 
   void CpType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {

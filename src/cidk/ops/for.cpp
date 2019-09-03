@@ -38,19 +38,21 @@ namespace cidk::ops {
     out.push_back(*in);
   }
 
-  void ForType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
+  bool ForType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     auto &p(op.pos);
     auto &args(op.args);
     
-    args[0].eval(p, env, regs);
+    if (!args[0].eval(p, env, regs)) { return false; }
     auto n(cx.pop(p).as_int);
     auto &var(args[1]), &body(args[2]);
     bool push(var.type == &cx.bool_type && var.as_bool);
     
     for (Int i(0); i < n; i++) {
       if (push) { cx.push(p, cx.int_type, i); }
-      body.eval(p, env, regs);
+      if (!body.eval(p, env, regs)) { return false; }
     }
+
+    return true;
   }
 
   bool ForType::find_op(Op &op, function<bool (Ops &, OpIter &)> pred) const {

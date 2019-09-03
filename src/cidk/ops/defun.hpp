@@ -21,7 +21,7 @@ namespace cidk::ops {
                          Ops &out,
                          Opts &opts) const override;
 
-    virtual void eval(Cx &cx,
+    virtual bool eval(Cx &cx,
                       Op &op,
                       Env &env,
                       Reg *regs) const override;

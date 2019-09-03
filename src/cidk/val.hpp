@@ -84,7 +84,7 @@ namespace cidk {
 
     bool eq(const Pos &pos, const Val &y) const { return type->eq(pos, *this, y); }
 
-    void eval(const Pos &pos, Env &env, Reg *regs) const {
+    bool eval(const Pos &pos, Env &env, Reg *regs) const {
       return type->eval(pos, *this, env, regs);
     }
 

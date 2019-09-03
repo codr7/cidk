@@ -18,8 +18,8 @@ namespace cidk {
     out << val.as_expr << ":Expr";
   }
 
-  void ExprType::eval(const Pos &pos, const Val &val, Env &env, Reg *regs) const {
-    cx.eval(val.as_expr->ops, env, regs);
+  bool ExprType::eval(const Pos &pos, const Val &val, Env &env, Reg *regs) const {
+    return cx.eval(val.as_expr->ops, env, regs);
   }
 
   bool ExprType::find_op(const Val &val,

@@ -9,8 +9,9 @@ namespace cidk::ops {
 
   void SweepType::init(Cx &cx, Op &op) const {}
 
-  void SweepType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
+  bool SweepType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
     cx.sweep_refs(op.pos);
+    return true;
   }
 
   void SweepType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {

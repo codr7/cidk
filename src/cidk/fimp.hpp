@@ -9,7 +9,7 @@ namespace cidk {
   struct Fun;
   struct Pos;
   
-  using Fimp = function<void (Cx &, const Pos &, const Fun &, Env &)>;
+  using Fimp = function<bool (Cx &, const Pos &, const Fun &, Env &)>;
 }
 
 #endif
