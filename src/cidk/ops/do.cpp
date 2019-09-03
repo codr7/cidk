@@ -37,7 +37,7 @@ namespace cidk::ops {
       cx.compile(src, opts, env);
       copy(src.begin(), src.end(), back_inserter(out));
     } else {
-      Env body_env(cx, env);
+      Env body_env(env);
       auto &body_opts(body.as_expr->opts);
       body.compile(p, body_env, body_opts);
 

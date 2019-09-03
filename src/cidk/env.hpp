@@ -22,15 +22,8 @@ namespace cidk {
     
     Items items;
     
-    Env(Cx &cx) {}
-    Env(Cx &cx, const Env &src);
-
-    Env(const Env &src) = delete;
-    Env &operator =(const Env &) = delete;
-
-    bool add(Cx &cx, const Pos &pos, const Sym *id, const Val &val, bool silent);
+    void add_const(const Pos &pos, const Sym *id, const Val &val);
     void add_const(Cx &cx, const Pos &pos, const string &id, const Val &val);
-    void add_const(Cx &cx, const Pos &pos, const Sym *id, const Val &val);
     void add_const_expr(Cx &cx, const Pos &pos, const string &id, const Ops &ops);
 
     template <typename LibT = Lib, typename...Args>

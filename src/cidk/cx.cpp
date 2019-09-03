@@ -23,7 +23,7 @@
 
 namespace cidk {
   Cx::Cx():
-    env(*this),
+    env(),
     meta_type(env.add_type<MetaType>(*this, Pos::_, "Meta")),
     nil_type(env.add_type<NilType>(*this, Pos::_, "Nil")),
     a_type(env.add_type<Type>(*this, Pos::_, "A")),

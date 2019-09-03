@@ -5,16 +5,14 @@
 #include "cidk/types/expr.hpp"
 
 namespace cidk {
-  Env::Env(Cx &cx, const Env &src): items(src.items) { }
-
-  void Env::add_const(Cx &cx, const Pos &pos, const string &id, const Val &val) {
-    add_const(cx, pos, cx.intern(pos, id), val);
-  }
-
-  void Env::add_const(Cx &cx, const Pos &pos, const Sym *id, const Val &val) {
+  void Env::add_const(const Pos &pos, const Sym *id, const Val &val) {
     auto v(val);
     v.type = &v.type->const_type(pos);
     let(pos, id, v);
+  }
+
+  void Env::add_const(Cx &cx, const Pos &pos, const string &id, const Val &val) {
+    add_const(pos, cx.intern(pos, id), val);
   }
 
   void Env::add_const_expr(Cx &cx, const Pos &pos, const string &id, const Ops &ops) {

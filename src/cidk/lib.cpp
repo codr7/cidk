@@ -2,7 +2,7 @@
 #include "cidk/val.hpp"
 
 namespace cidk {
-  Lib::Lib(Cx &cx, const Pos &pos, const Sym *id): Def(cx, pos, id), env(cx) {}
+  Lib::Lib(Cx &cx, const Pos &pos, const Sym *id): Def(cx, pos, id) {}
 
   void Lib::mark() {
     if (!ref_mark) { env.mark_refs(); }
