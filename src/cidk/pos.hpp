@@ -3,18 +3,18 @@
 
 #include <optional>
 
-#include "cidk/path.hpp"
-
 namespace cidk {
   using namespace std;
+
+  struct Sym;
   
   struct Pos {
     static const Pos _;
     
-    optional<Path> src;
+    const Sym *src;
     int row, col;
     
-    Pos(const optional<Path> &src = {}, int row = 1, int col = 0);
+    Pos(const Sym *src = nullptr, int row = 1, int col = 0);
   };
 }
 

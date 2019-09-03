@@ -1,7 +1,8 @@
 #ifndef CIDK_TYPE_HPP
 #define CIDK_TYPE_HPP
 
-#include <map>
+#include <array>
+#include <vector>
 
 #include "cidk/cidk.hpp"
 #include "cidk/def.hpp"

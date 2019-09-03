@@ -79,9 +79,12 @@ namespace cidk {
 
     array<Val, CIDK_STACK_MAX> stack;
     Val *stackp;
-        
+
+    using DeferItem = pair<Pos, Val>;
+    array<DeferItem, CIDK_DEFER_MAX> defers;
+    DeferItem *deferp;
+
     Call *call;
-    vector<pair<Pos, Val>> defers;
     
     const Val _, $, T, F, eop;
 
@@ -114,6 +117,13 @@ namespace cidk {
     }
 
     void dump_stack(ostream &out) const;
+
+    void eval_defers(DeferItem *min, Env &env, Reg *regs) {
+      while (deferp > min) {
+        deferp--;
+        deferp->second.eval(deferp->first, env, regs);
+      }
+    }
 
     void eval(Ops &in, Env &env, Reg *regs);
     

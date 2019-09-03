@@ -10,7 +10,7 @@ namespace cidk {
   
   void E::print(ostream &out) const {
     out << "Error";
-    if (pos.src) { out << " in " << *pos.src; }
+    if (pos.src) { out << " in " << pos.src; }
     out << " at row " << pos.row << ", col " << pos.col << ":\n" << msg;
   }
 

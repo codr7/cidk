@@ -33,9 +33,9 @@ namespace cidk::ops {
   }
 
   void DropType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
-    Pos vp(pos);
+    Pos p(pos);
     auto v(read_val(cx, pos, in));
-    if (!v) { throw ESys(pos, "Missing ;"); }
+    if (!v) { throw ESys(p, "Missing ;"); }
     
     Int n(1);
 
@@ -44,6 +44,6 @@ namespace cidk::ops {
       read_eop(pos, in);
     }
 
-    out.emplace_back(cx, pos, *this, Val(cx.int_type, n));
+    out.emplace_back(cx, p, *this, Val(cx.int_type, n));
   }
 }

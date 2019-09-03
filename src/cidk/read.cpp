@@ -94,7 +94,7 @@ namespace cidk {
   Val read_ctrl_char(Cx &cx, Pos &pos, istream &in) {    
     Pos p(pos);
     char c(0);
-    if (!in.get(c)) { throw ESys(pos, "Invalid char literal"); }
+    if (!in.get(c)) { throw ESys(p, "Invalid char literal"); }
     wchar_t wc(0);
     
     switch (c) {
@@ -102,7 +102,7 @@ namespace cidk {
       wc = L'"';
       break;
     default:
-      throw ESys(pos, "Invalid char literal: ", c);
+      throw ESys(p, "Invalid char literal: ", c);
     }
 
     return Val(cx.char_type, wc);
@@ -115,7 +115,7 @@ namespace cidk {
     
     for (;;) {
       skip_ws(pos, in);
-      if (!in.get(c)) { throw ESys(pos, "Open expression"); }
+      if (!in.get(c)) { throw ESys(p, "Open expression"); }
 
       if (c == '}') {
         pos.col++;
@@ -125,7 +125,7 @@ namespace cidk {
       in.unget();
 
       if (!read_op(cx, pos, in, out->ops)) {
-        throw ESys(pos, "Open expression");
+        throw ESys(p, "Open expression");
       }
     }
 
@@ -173,7 +173,7 @@ namespace cidk {
     char c(0);
     
     for (;;) {
-      if (!in.get(c)) { throw ESys(pos, "Open list"); }
+      if (!in.get(c)) { throw ESys(p, "Open list"); }
 
       if (c == ')') {
         pos.col++;
@@ -182,7 +182,7 @@ namespace cidk {
       
       in.unget();
       auto v(read_val(cx, pos, in));
-      if (!v) { throw ESys(pos, "Open list"); }
+      if (!v) { throw ESys(p, "Open list"); }
       out->items.push_back(*v);
     }
     
@@ -190,7 +190,6 @@ namespace cidk {
   }
   
   pair<Int, bool> read_int(Cx &cx, Pos &pos, istream &in) {
-    Pos p(pos);
     stringstream out;
     char c(0);
     Int v(0);
@@ -246,7 +245,7 @@ namespace cidk {
     
     for (;;) {
       pc = c;
-      if (!in.get(c)) { throw ESys(pos, "Open str"); }
+      if (!in.get(c)) { throw ESys(p, "Open str"); }
       pos.col++;
 
       if (pc != '\\') {

@@ -45,6 +45,7 @@ namespace cidk {
     eval_state(EvalState::go),
     regp(&regs[0]),
     stackp(&stack[0]),
+    deferp(&defers[0]),
     call(nullptr),
     _(nil_type),
     $(pop_type),
@@ -67,21 +68,10 @@ namespace cidk {
   void Cx::clear_refs() {
     for (auto i(refs.next); i != &refs; i = i->next) { i->get().ref_mark = false; }
   }
-
+  
   void Cx::eval(Ops &in, Env &env, Reg *regs) {
     ops.push_back(&in);   
-    auto defer_offs(defers.size());
-
-    auto cleanup([&](){
-        while (defers.size() > defer_offs) {
-          auto &d(defers.back());
-          defers.pop_back();
-          d.second.eval(d.first, env, regs);
-        }
-        
-        ops.pop_back();
-        regp = regs;
-      });
+    auto min_defer(deferp);
 
     try {
       for (Op &o: in) {
@@ -89,11 +79,16 @@ namespace cidk {
         if (eval_state != EvalState::go) { break; }
       }
     } catch (exception &e) {
-      cleanup();
+      eval_defers(min_defer, env, regs);
+      ops.pop_back();
+      regp = regs;
+
       throw;
     }
 
-    cleanup();
+    eval_defers(min_defer, env, regs);
+    ops.pop_back();
+    regp = regs;
   }
 
   const Sym *Cx::intern(const Pos &pos, const string &name) {
@@ -114,7 +109,7 @@ namespace cidk {
     ifstream f(fp);
     if (f.fail()) { throw ESys(pos, "File not found: ", fp); }
 
-    Pos p(src);
+    Pos p(intern(pos, src));
     auto prev(load_path);
     load_path = src.parent_path();
     Ops ops;
@@ -131,7 +126,7 @@ namespace cidk {
     for (Val *v(&regs[0]); v < regp; v++) { if (v->type) { v->mark_refs(); } }
     for (Ops *os: ops) { cidk::mark_refs(*os); }
     for (Call *c(call); c; c = c->prev) { c->fun.mark(); }
-    for (auto &d: defers) { d.second.mark_refs(); }
+    for (auto d(&defers[0]); d < deferp; d++) { d->second.mark_refs(); }
   }
 
   void Cx::dump_stack(ostream &out) const {

@@ -27,8 +27,8 @@ namespace cidk::ops {
   }
 
   void DeferType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
-    auto &body();
-    cx.defers.emplace_back(op.pos, op.args[0]);
+    *cx.deferp = make_pair(op.pos, op.args[0]);
+    cx.deferp++;
   }
 
   bool DeferType::find_op(Op &op, function<bool (Ops &, OpIter &)> pred) const {

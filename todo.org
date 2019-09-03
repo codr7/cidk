@@ -1,9 +1,3 @@
-* convert defer to fixed size like stack/reg
-** add deferp
-** add cx.defer() fn
-*** call from op
-** bench
-* --
 * remove cx arg from Env constructors/add_const/set
 * --
 * fix closures

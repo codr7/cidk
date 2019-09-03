@@ -6,6 +6,7 @@
 #define CIDK_TYPE_MAX 100
 #define CIDK_STACK_MAX 100
 #define CIDK_REG_MAX 100
+#define CIDK_DEFER_MAX 100
 
 #define CIDK_OP_ARG_MAX 5
 
