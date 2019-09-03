@@ -23,7 +23,6 @@ namespace cidk::ops {
     auto &p(in->pos);
     auto &msg(in->args[0]);
     msg.compile(p, env, opts);
-    if (msg.type != &cx.str_type) { throw ESys(p, "Invalid message: ", msg); }
     out.push_back(*in);
   }
 
