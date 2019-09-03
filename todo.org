@@ -4,6 +4,11 @@
 ** build/test.al
 ** update ext_ids after eval?
 * --
+* convert Cx.EvalState to Enum
+** remove EUser from e.hpp
+** add EUser EvalState subclass
+** remove try block from cx.Eval
+* --
 * add dump(ops, out) fn
 ** add Op.dump(depth, out)
 ** add ops::dump_arg(Val, out)
