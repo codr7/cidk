@@ -6,7 +6,8 @@
 * add calcl :compile command
 ** dump generated ops
 * --
-* convert Cx.ops to array/opsp
+* convert Cx.ops to array
+** rename to evals/evalp
 ** add CIDK_EVAL_MAX
 * grep mark() and rename to mark_refs()
 ** add default Ref.mark_refs()
