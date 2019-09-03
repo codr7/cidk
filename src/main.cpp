@@ -4,6 +4,7 @@
 #include "cidk/cx.hpp"
 #include "cidk/defer.hpp"
 #include "cidk/ext_id.hpp"
+#include "cidk/e_user.hpp"
 #include "cidk/libs/abc.hpp"
 #include "cidk/libs/math.hpp"
 #include "cidk/repl.hpp"
@@ -35,12 +36,13 @@ int main(int argc, char *argv[]) {
       for (auto &eid: opts.ext_ids) { throw ESys(eid.pos, "Unknown id: ", eid.id); }
       Reg *eval_regs(cx.alloc_regs(opts.regs.size()));
       cx.eval(ops, cx.env, eval_regs);
-      
+      cx.regp = eval_regs;
+
       for (Val *v(eval_regs); v < eval_regs + opts.regs.size(); v++) {
         if (v->type) { cx.env.set(cx, Pos::_, v->id, *v, true); }
       }
 
-      cx.regp = eval_regs;
+      if (cx.e) { throw *cx.e; }
       m = Mode::load;
     }
   }

@@ -1,11 +1,3 @@
-* add EvalState.error
-** add EUser *cx.error
-** change fail op to set eval state
-** remove try block from cx.eval
-* add EType
-** convert EUser to Ref
-** add EUser *Val.as_e
-* --
 * add dump(ops, out) fn
 ** add Op.dump(depth, out)
 ** add ops::dump_arg(Val, out)

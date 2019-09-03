@@ -12,6 +12,7 @@
 namespace cidk {
   using namespace std;
 
+  struct EUser;
   struct Expr;
   struct Fun;
   struct Lib;
@@ -28,6 +29,7 @@ namespace cidk {
       Char       as_char;
       Env       *as_env;
       Expr      *as_expr;
+      EUser     *as_e;
       Fix        as_fix;
       Fun       *as_fun;
       Int        as_int;

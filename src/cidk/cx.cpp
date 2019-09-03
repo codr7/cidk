@@ -11,6 +11,7 @@
 #include "cidk/read.hpp"
 #include "cidk/str.hpp"
 #include "cidk/types/bool.hpp"
+#include "cidk/types/e.hpp"
 #include "cidk/types/expr.hpp"
 #include "cidk/types/fix.hpp"
 #include "cidk/types/int.hpp"
@@ -30,6 +31,7 @@ namespace cidk {
     num_type(env.add_type<Type>(*this, Pos::_, "Num", {&a_type})),
     bool_type(env.add_type<BoolType>(*this, Pos::_, "Bool", {&a_type})),
     char_type(env.add_type<CharType>(*this, Pos::_, "Char", {&a_type})),
+    e_type(env.add_type<EType>(*this, Pos::_, "E", {&a_type})),
     expr_type(env.add_type<ExprType>(*this, Pos::_, "Expr", {&a_type})),
     fix_type(env.add_type<FixType>(*this, Pos::_, "Fix", {&num_type})),
     fun_type(env.add_type<FunType>(*this, Pos::_, "Fun", {&a_type})),
@@ -47,6 +49,7 @@ namespace cidk {
     stackp(&stack[0]),
     deferp(&defers[0]),
     call(nullptr),
+    e(nullptr),
     _(nil_type),
     $(pop_type),
     T(bool_type, true),
@@ -72,14 +75,9 @@ namespace cidk {
   void Cx::eval(Ops &in, Env &env, Reg *regs) {
     ops.push_back(&in);   
 
-    try {
-      for (Op &o: in) {
-        o.eval(*this, env, regs); 
-        if (eval_state != EvalState::go) { break; }
-      }
-    } catch (exception &e) {
-      ops.pop_back();
-      throw;
+    for (Op &o: in) {
+      o.eval(*this, env, regs); 
+      if (eval_state != EvalState::go) { break; }
     }
 
     ops.pop_back();
@@ -119,8 +117,9 @@ namespace cidk {
     for (Val *v(&stack[0]); v < stackp; v++) { v->mark_refs(); }
     for (Val *v(&regs[0]); v < regp; v++) { if (v->type) { v->mark_refs(); } }
     for (Ops *os: ops) { cidk::mark_refs(*os); }
-    for (Call *c(call); c; c = c->prev) { c->fun.mark(); }
     for (auto d(&defers[0]); d < deferp; d++) { d->second.mark_refs(); }
+    for (Call *c(call); c; c = c->prev) { c->fun.mark(); }
+    if (e) { e->mark_refs(); }
   }
 
   void Cx::dump_stack(ostream &out) const {

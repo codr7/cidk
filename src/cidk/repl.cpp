@@ -4,6 +4,7 @@
 #include "cidk/cx.hpp"
 #include "cidk/env.hpp"
 #include "cidk/ext_id.hpp"
+#include "cidk/e_user.hpp"
 #include "cidk/pos.hpp"
 #include "cidk/read.hpp"
 #include "cidk/repl.hpp"
@@ -35,12 +36,16 @@ namespace cidk {
             
             Reg *eval_regs(cx.alloc_regs(opts.regs.size()));
             cx.eval(ops, cx.env, eval_regs);
-            
+            cx.regp = eval_regs;
+
             for (Val *v(eval_regs); v < eval_regs + opts.regs.size(); v++) {
               if (v->type) { cx.env.set(cx, p, v->id, *v, true); }
             }
 
-            cx.regp = eval_regs;
+            if (cx.e) {
+              out << cx.e->what() << endl;
+              cx.e = nullptr;
+            }
           } catch (const exception &e) {
             out << e.what() << endl;
           }

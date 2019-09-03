@@ -4,6 +4,7 @@
 #include "cidk/ext_id.hpp"
 #include "cidk/ops/fail.hpp"
 #include "cidk/read.hpp"
+#include "cidk/types/e.hpp"
 #include "cidk/types/str.hpp"
 
 namespace cidk::ops {
@@ -27,7 +28,8 @@ namespace cidk::ops {
   }
 
   void FailType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
-    throw EUser(op.pos, op.args[0].as_str->to_utf8(cx));
+    cx.eval_state = EvalState::error;
+    cx.e = cx.e_type.pool.get(cx, op.pos, op.args[0]);
   }
 
   bool FailType::find_op(Op &op, function<bool (Ops &, OpIter &)> pred) const {

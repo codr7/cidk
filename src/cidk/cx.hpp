@@ -28,6 +28,8 @@ namespace cidk {
   struct CharType;
   struct BoolType;
   struct ExprType;
+  struct EType;
+  struct EUser;
   struct FixType;
   struct IntType;
   struct ListType;
@@ -37,7 +39,7 @@ namespace cidk {
   struct RegType;
   struct StrType;
   
-  enum struct EvalState { go, recall };
+  enum struct EvalState { error, go, recall };
 
   using Stack = Val *;
 
@@ -58,6 +60,7 @@ namespace cidk {
     
     BoolType &bool_type;
     CharType &char_type;
+    EType &e_type;
     ExprType &expr_type;
     FixType &fix_type;
     FunType &fun_type;
@@ -85,6 +88,7 @@ namespace cidk {
     DeferItem *deferp;
 
     Call *call;
+    EUser *e;
     
     const Val _, $, T, F, eop;
 
