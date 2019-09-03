@@ -1,5 +1,7 @@
 * remove cx arg from Env constructors/add_const/set
 * --
+* add unwind bench
+** fail inside fun call
 * convert Cx.EvalState to Enum
 ** remove EUser from e.hpp
 ** add EUser EvalState subclass
