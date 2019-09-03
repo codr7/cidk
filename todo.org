@@ -1,8 +1,6 @@
+* fix loqi tests
+** open dispatch fails
 * remove cx arg from Env constructors/add_const/set
-* --
-* fix closures
-** build/test.al
-** update ext_ids after eval?
 * --
 * convert Cx.EvalState to Enum
 ** remove EUser from e.hpp
@@ -29,7 +27,7 @@
 ** throw error if target is not Lib
 * add use op
 * --
-* fix compile time detection of unknown args
+* improve compile time detection of unknown args
 ** dispatch foo;
 * finish for op
 ** add ValType.iter(const Val &src, function<void (const Val &)>)
