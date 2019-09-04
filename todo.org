@@ -1,3 +1,9 @@
+* add pair support
+** a:b
+** add Pair < Ref
+** use in cidk/loqi arg lists
+*** update test/readme/bench
+* --
 * add try op
 ** try (foo ()() {}) {...};
 ** take list of restarts
@@ -40,9 +46,6 @@
 * add list bench
 ** add list lib with push/pop/reserve funs
 * add support for 0x/0b in read_num
-* add pair support
-** a:b
-** add Pair < Ref
 * add default args
 ** x 42:Int / x 42 / x Int
 ** add ArgList.min_nargs
