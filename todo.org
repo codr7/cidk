@@ -1,3 +1,10 @@
+* add try op
+** try (foo ()() {}) {...};
+** take list of restarts
+* add retry op
+** retry ((e E) {push 'foo;}) {...};
+* add repl break loop
+* --
 * add dump(ops, out) fn
 ** add Op.dump(depth, out)
 ** add ops::dump_arg(Val, out)
