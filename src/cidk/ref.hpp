@@ -15,6 +15,7 @@ namespace cidk {
     Ref(Cx &cx);
     virtual ~Ref() = default;
     
+    virtual bool mark_refs() { return ref_mark ? false : (ref_mark = true); }
     virtual void sweep(Cx &cx, const Pos &pos) = 0;
   };
 }

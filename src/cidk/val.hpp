@@ -18,12 +18,12 @@ namespace cidk {
   struct Lib;
   struct List;
   struct OStream;
+  struct Pair;
   struct Str;
-  
+
   struct Val {
-    const Sym *id = nullptr;
     ValType *type = nullptr;
-    
+
     union {
       bool       as_bool;
       Char       as_char;
@@ -36,13 +36,16 @@ namespace cidk {
       Lib       *as_lib;
       List      *as_list;
       OStream   *as_ostream;
+      Pair      *as_pair;
       void      *as_ptr;
       size_t     as_reg;
       Str       *as_str;
       const Sym *as_sym;
       Type      *as_type;
     };
-        
+
+    const Sym *id = nullptr;
+    
     Val() {}
   
     Val(ValType &type): type(&type) {}

@@ -166,6 +166,15 @@ Strings are mutable and passed by reference. Literals are enclosed in double quo
 (... T)
 ```
 
+#### Pairs
+Values may be paired using `:`.
+
+```
+  42:"foo"
+
+(... 42:"foo")
+```
+
 #### List
 Lists are heterogenous, mutable and passed by reference. Literals are enclosed in parens.
 

@@ -40,6 +40,7 @@ namespace cidk {
     list_type(env.add_type<ListType>(*this, Pos::_, "List", {&a_type})),
     funs_type(env.add_type<FunsType>(*this, Pos::_, "Funs", {&list_type})),
     ostream_type(env.add_type<OStreamType>(*this, Pos::_, "OStream", {&a_type})),
+    pair_type(env.add_type<PairType>(*this, Pos::_, "Pair", {&a_type})),
     pop_type(env.add_type<PopType>(*this, Pos::_, "Pop", {&a_type})),
     reg_type(env.add_type<RegType>(*this, Pos::_, "Reg", {&a_type})),
     str_type(env.add_type<StrType>(*this, Pos::_, "Str", {&a_type})),
@@ -107,7 +108,7 @@ namespace cidk {
     for (Val *v(&regs[0]); v < regp; v++) { if (v->type) { v->mark_refs(); } }
     for (Ops *os: ops) { cidk::mark_refs(*os); }
     for (auto d(&defers[0]); d < deferp; d++) { d->second.mark_refs(); }
-    for (Call *c(call); c; c = c->prev) { c->fun.mark(); }
+    for (Call *c(call); c; c = c->prev) { c->fun.mark_refs(); }
     if (e) { e->mark_refs(); }
   }
 

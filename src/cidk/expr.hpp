@@ -22,7 +22,7 @@ namespace cidk {
     
     Expr(Cx &cx);
     Expr(Cx &cx, const Ops &ops);
-    void mark();
+    bool mark_refs() override;
     virtual void sweep(Cx &cx, const Pos &pos) override;
   };
 }

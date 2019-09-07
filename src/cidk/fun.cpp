@@ -55,14 +55,16 @@ namespace cidk {
     id = cx.intern(pos, buf.str());
   }
 
-  void Fun::mark() {
-    if (!ref_mark) {
-      ref_mark = true;
+  bool Fun::mark_refs() {
+    if (Ref::mark_refs()) {
       root.mark();
       env.mark_refs();
-      mark_refs(body);
+      cidk::mark_refs(body);
       body_opts.mark_refs();
+      return true;
     }
+
+    return false;
   }  
   
   void Fun::sweep(Cx &cx, const Pos &pos) {

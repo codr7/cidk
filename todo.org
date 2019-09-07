@@ -1,8 +1,7 @@
-* add pair support
-** a:b
-** add Pair < Ref
-** use in cidk/loqi arg lists
-*** update test/readme/bench
+* use pairs in cidk/loqi arg lists
+** add pair support in loqi reader
+*** copy cidk
+** update test/readme/bench
 * --
 * add try op
 ** try (foo ()() {}) {...};
@@ -32,7 +31,8 @@
 ** foo.bar.baz
 ** add sym.parts vector
 *** default this
-** throw error if target is not Lib
+** add Val &ValType.resolve(Sym *id);
+*** call for each part
 * add use op
 * --
 * improve compile time detection of unknown args

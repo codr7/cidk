@@ -18,6 +18,7 @@
 #include "cidk/types/lib.hpp"
 #include "cidk/types/meta.hpp"
 #include "cidk/types/ostream.hpp"
+#include "cidk/types/pair.hpp"
 #include "cidk/types/sym.hpp"
 #include "cidk/val.hpp"
 
@@ -69,6 +70,7 @@ namespace cidk {
     ListType &list_type;
     FunsType &funs_type;
     OStreamType &ostream_type;
+    PairType &pair_type;
     PopType &pop_type;
     RegType &reg_type;
     StrType &str_type;
@@ -337,6 +339,10 @@ namespace cidk {
     }
 
     return true;
+  }
+
+  inline void Pair::sweep(Cx &cx, const Pos &pos) {
+    cx.pair_type.pool.put(this);
   }
 
   inline bool Val::is_eop() const {

@@ -5,11 +5,13 @@
 namespace cidk {
   EUser::EUser(Cx &cx, const Pos &pos, const Val &val): Ref(cx), E(pos) {}
 
-  void EUser::mark_refs() {
-    if (!ref_mark) {
-      ref_mark = true;
+  bool EUser::mark_refs() {
+    if (Ref::mark_refs()) {
       val.mark_refs();
+      return true;
     }
+
+    return false;
   }
 
   void EUser::print(ostream &out) const {

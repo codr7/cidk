@@ -51,24 +51,31 @@ namespace cidk {
 
   optional<Val> read_val(Cx &cx, Pos &pos, istream &in) {
     skip_ws(pos, in);
+    Pos vp(pos);
+    optional<Val> v;
     
     if (char c(0); in.get(c)) {
       switch (c) {
       case '{':
         pos.col++;
         return read_expr(cx, pos, in);
+        break;
       case '(':
         pos.col++;
-        return read_list(cx, pos, in);
+        v = read_list(cx, pos, in);
+        break;
       case '"':
         pos.col++;
-        return read_str(cx, pos, in);
+        v = read_str(cx, pos, in);
+        break;
       case '\\':
         pos.col++;
-        return read_ctrl_char(cx, pos, in);
+        v = read_ctrl_char(cx, pos, in);
+        break;
       case '_':
         pos.col++;
-        return cx._;
+        v = cx._;
+        break;
       case ';':
         pos.col++;
         return cx.eop;
@@ -82,10 +89,26 @@ namespace cidk {
           in.unget();
         }
         
-        if (isdigit(c)) { return read_num(cx, pos, in); }
-        if (isgraph(c)) { return read_id(cx, pos, in); }
-        throw ESys(pos, "Invalid input: ", c);
+        if (isdigit(c)) {
+          v = read_num(cx, pos, in);
+        } else if (isgraph(c)) {
+          v = read_id(cx, pos, in);
+        } else {
+          throw ESys(pos, "Invalid input: ", c);
+        }
       };
+
+      if (in.get(c)) {
+        if (c == ':') {
+          auto right(read_val(cx, pos, in));
+          if (!right) { throw ESys(vp, "Invalid pair"); }
+          v = Val(cx.pair_type, cx.pair_type.pool.get(cx, *v, *right));
+        } else {
+          in.unget();
+        }
+      }
+
+      return v;
     }
     
     return {};

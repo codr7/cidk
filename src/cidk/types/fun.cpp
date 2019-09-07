@@ -22,7 +22,7 @@ namespace cidk {
 
   bool FunType::is(const Val &x, const Val &y) const { return x.as_fun == y.as_fun; }
 
-  void FunType::mark_refs(const Val &val) const { val.as_fun->mark(); }
+  void FunType::mark_refs(const Val &val) const { val.as_fun->mark_refs(); }
 
   void FunType::set(Val &dst, Fun *val) const { dst.as_fun = val; }
 

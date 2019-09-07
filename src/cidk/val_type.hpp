@@ -46,6 +46,7 @@ namespace cidk {
     }
 
     virtual bool is(const Val &x, const Val &y) const = 0;
+    using Ref::mark_refs;
     virtual void mark_refs(const Val &val) const {};
     virtual void splat(const Pos &pos, const Val &val, int max) const;
     

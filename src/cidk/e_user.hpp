@@ -12,7 +12,7 @@ namespace cidk {
     Val val;
     
     EUser(Cx &cx, const Pos &pos, const Val &val);
-    void mark_refs();
+    virtual bool mark_refs() override;
     virtual void print(ostream &out) const override;
     virtual void sweep(Cx &cx, const Pos &pos) override;
   };
