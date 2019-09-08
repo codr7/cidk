@@ -1,3 +1,7 @@
+* add list<pair<Val, Val>> cx.pairs
+** change pair to store iterator in constructor and remove in destructor
+** remove pool/Ref 
+* --
 * add try op
 ** try (foo ()() {}) {...};
 ** take list of restarts

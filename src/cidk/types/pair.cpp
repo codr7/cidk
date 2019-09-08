@@ -65,9 +65,7 @@ namespace cidk {
     return xp.first.is(yp.first) && xp.second.is(yp.second);
   }
 
-  void PairType::mark_refs(const Val &val) const {
-    val.as_pair->mark_refs();
-  }
+  void PairType::mark_refs(const Val &val) const { val.as_pair->mark_refs(); }
 
   void PairType::set(Val &dst, Pair *val) const { dst.as_pair = val; }
 
