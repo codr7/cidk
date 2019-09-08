@@ -39,12 +39,18 @@ namespace cidk {
                       Reg *regs) const {
     auto &p(*val.as_pair);
     
-    if (!p.second.eval(pos, env, regs) ||
-        !p.first.eval(pos, env, regs)) {
+    if (!p.first.eval(pos, env, regs) || !p.second.eval(pos, env, regs)) {
       return false;
     }
 
-    cx.push(pos, cx.pair_type, cx.pair_type.pool.get(cx, cx.pop(pos), cx.pop(pos)));
+    Val &right(cx.pop(pos)), &left(cx.pop(pos));
+
+    if (left.is(p.first) && right.is(p.second)) {
+      cx.push(pos, val);
+    } else {
+      cx.push(pos, cx.pair_type, cx.pair_type.pool.get(cx, left, right));
+    }
+    
     return true;
   }
 
