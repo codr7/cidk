@@ -1,7 +1,7 @@
 defconst REPS 10000;
 defconst N 20;
 
-defun fib1(n Int a Int b Int)(Int) {
+defun fib1(n:Int a:Int b:Int)(Int) {
   push n;
   push 1; 
   call >[A A]; 
@@ -22,7 +22,7 @@ defun fib1(n Int a Int b Int)(Int) {
 clock REPS {push N; push 0; push 1; call fib1[Int Int Int];};
 dump;
 
-defun fib2(n Int a Int b Int)(Int) {
+defun fib2(n:Int a:Int b:Int)(Int) {
   push n;
   push 1; 
   call >[A A]; 
@@ -43,7 +43,7 @@ defun fib2(n Int a Int b Int)(Int) {
 clock REPS {push N; push 0; push 1; call fib2[Int Int Int];};
 dump;
 
-defun fib3(_ Int _ Int _ Int)(Int) {
+defun fib3(_:Int _:Int _:Int)(Int) {
   swap 2; 
   cp;
   push 1; 

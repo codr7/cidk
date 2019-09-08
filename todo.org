@@ -35,6 +35,16 @@
 *** call for each part
 * add use op
 * --
+* add default args
+** x:Int:42
+** add ArgList.min_nargs
+*** calculate during parse
+** clone on let
+** add nargs to Call op like dispatch
+*** update test/bench/readme
+** use for a/b in fib_iter
+*** bench
+* --
 * improve compile time detection of unknown args
 ** dispatch foo;
 * finish for op
@@ -46,15 +56,6 @@
 * add list bench
 ** add list lib with push/pop/reserve funs
 * add support for 0x/0b in read_num
-* add default args
-** x 42:Int / x 42 / x Int
-** add ArgList.min_nargs
-*** calculate during parse
-** clone on let
-** add nargs to Call op like dispatch
-*** update test/bench/readme
-** use for a/b in fib_iter
-*** bench
 * compile Dispatch to Call if list.size() == 1
 * add sum types
 ** remove any_type

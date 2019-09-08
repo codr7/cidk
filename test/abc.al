@@ -36,14 +36,14 @@ if F 42 7;
 check({cp;}) {is 7;};
 
 do {
-  defun foo(_ Int)(Int) { cp; dispatch +; };
+  defun foo(_:Int)(Int) { cp; dispatch +; };
   push 21;
   call foo[Int];
   check({cp;}) {is 42;};
 };
 
 do {
-  defun foo(_ Int)() { step $ -1; cp; if $ {recall;} _; };
+  defun foo(_:Int)() { step $ -1; cp; if $ {recall;} _; };
   push 42;
   call foo[Int];
   check({cp;}) {is 0;};

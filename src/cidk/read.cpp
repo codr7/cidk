@@ -166,7 +166,10 @@ namespace cidk {
           (!arg_depth && (!isgraph(c) ||
                           c == '(' || c == ')' ||
                           c == '{' || c == '}' ||
-                          c == ']' || c == ';'))) { break; }
+                          c == ']' ||
+                          c == ':' || c == ';'))) {
+        break;
+      }
       
       out << c;
 

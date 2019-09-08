@@ -11,34 +11,19 @@ namespace cidk {
                       const Pos &pos,
                       const List &in,
                       Env &env) {
-    auto &vs(in.items);
-    const Sym *id(nullptr);
-    
-    for (auto i(vs.begin()); i != vs.end(); i++) {
-      if (i->type == &cx.nil_type) {
-        id = nullptr;
-      } else if (i->type == &cx.sym_type) {
-        id = i->as_sym;
-      } else {
-        throw ESys(pos, "Invalid argument: ", *i);
+    for (auto &a: in.items) {
+      if (a.type != &cx.pair_type) { throw ESys(pos, "Invalid argument: ", a); }
+      Pair &ap(*a.as_pair);
+      Val &id(ap.first);
+      
+      if (id.type != &cx.nil_type && id.type != &cx.sym_type) {
+        throw ESys(pos, "Invalid argument id: ", id);
       }
 
-      i++;
-      if (i == vs.end()) { throw ESys(pos, "Invalid argument list"); }
-      Type *type(nullptr);
-
-      if (i->type != &cx.nil_type) {
-        i->eval(pos, env, cx.regp);
-        auto typev(cx.pop(pos));
-
-        if (typev.type != &cx.meta_type) {
-          throw ESys(pos, "Invalid argument type: ", typev);
-        }
-
-        type = typev.as_type;
-      }
-
-      items.emplace_back(id, type);
+      ap.second.eval(pos, env, cx.regp);
+      auto &t(cx.pop(pos));
+      if (t.type != &cx.meta_type) { throw ESys(pos, "Expected type: ", t); }
+      items.emplace_back((id.type == &cx.nil_type) ? nullptr : id.as_sym, t.as_type);
     }
   }
 

@@ -4,17 +4,17 @@
 cidk is an interpreter devkit with integrated assembler written in C++.
 
 ```
-defun fib(n Int)(Int) {
+defun fib(n:Int)(Int) {
   push n;
   push 2;
-  call <[A A];
+  dispatch <;
 
   if $ n {
     step n -1;
-    call fib[Int];
+    dispatch fib;
     step n -1;
-    call fib[Int];
-    call +[Int Int]; 
+    dispatch fib;
+    dispatch +; 
   };
 };
 ```

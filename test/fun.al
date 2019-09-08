@@ -11,7 +11,7 @@ do {
 };
 
 do {
-  defun foo(i Int j Int)(Int) {
+  defun foo(i:Int j:Int)(Int) {
     if i {
       step i -1; 
       step j 1; 
@@ -42,7 +42,7 @@ do {
 
 do {
   defun foo()() { push 0; };
-  defun foo(_ A)() { step $ 7; };
+  defun foo(_:A)() { step $ 7; };
 
   dispatch foo;
   check({cp;}) {is 0;};
