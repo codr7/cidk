@@ -168,12 +168,18 @@ namespace cidk {
       return *--stackp;
     }
 
-    template <typename...Args>
-    Val &push(const Pos &p, Args &&...args) {
+    Val &push(const Pos &p, const Val &val) {
       if (stackp == stack.end()) { throw ESys(p, "Stack overflow"); }
-      auto &dst(*stackp);
-      dst = Val(forward<Args>(args)...);
-      stackp++;
+      auto &dst(*stackp++);
+      dst = val;
+      return dst;
+    }
+
+    template <typename ValT>
+    Val &push(const Pos &p, TValType<ValT> &type, ValT val) {
+      if (stackp == stack.end()) { throw ESys(p, "Stack overflow"); }
+      auto &dst(*stackp++);
+      dst.reset(type, val);
       return dst;
     }
 
@@ -354,7 +360,7 @@ namespace cidk {
                             const Val &val,
                             Env &env,
                             Reg *regs) const {
-    val.clone(pos, cx.push(pos));
+    val.clone(pos, cx.push(pos, Val()));
     return true;
   }
 }

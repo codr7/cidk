@@ -58,7 +58,7 @@ namespace cidk {
       switch (c) {
       case '{':
         pos.col++;
-        return read_expr(cx, pos, in);
+        v = read_expr(cx, pos, in);
         break;
       case '(':
         pos.col++;

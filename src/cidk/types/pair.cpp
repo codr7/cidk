@@ -33,6 +33,21 @@ namespace cidk {
     return xp.first.eq(pos, yp.first) && xp.second.eq(pos, yp.second);
   }
 
+  bool PairType::eval(const Pos &pos,
+                      const Val &val,
+                      Env &env,
+                      Reg *regs) const {
+    auto &p(*val.as_pair);
+    
+    if (!p.second.eval(pos, env, regs) ||
+        !p.first.eval(pos, env, regs)) {
+      return false;
+    }
+
+    cx.push(pos, cx.pair_type, cx.pair_type.pool.get(cx, cx.pop(pos), cx.pop(pos)));
+    return true;
+  }
+
   bool PairType::find_op(const Val &val,
                          function<bool (Ops &, OpIter &)> pred) const {
     auto &p(*val.as_pair);

@@ -179,13 +179,24 @@ Values may be paired using `:`.
 
 ```
   do {
-    push 1:2:3;
     let a:b 1:2:3;
     push a;
     push b;
   };
 
 (... 1 2:3)
+```
+
+Braces may be used to control evaluation order.
+
+```
+  do {
+    let a:b {push 1:2}:3;
+    push a;
+    push b;
+  };
+
+(... 1:2 3)
 ```
 
 #### List

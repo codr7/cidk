@@ -1,3 +1,6 @@
+* add pair eval like list
+** allow using expr to control eval order
+* --
 * add try op
 ** try (foo ()() {}) {...};
 ** take list of restarts

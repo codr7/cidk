@@ -11,7 +11,7 @@
 #define CIDK_OP_ARG_MAX 5
 
 namespace cidk {
-  const int VERSION = 17;
+  const int VERSION = 18;
 }
 
 #endif

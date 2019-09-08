@@ -4,6 +4,7 @@ clock 1000 {
   include "fun.al";
   include "iter.al";
   include "math.al"; 
+  include "pair.al"; 
   include "stack.al";
   include "type.al";
 };
