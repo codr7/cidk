@@ -55,6 +55,23 @@ namespace cidk {
     return true;
   }
 
+  bool ListType::eval(const Pos &pos,
+                      const Val &val,
+                      Env &env,
+                      Reg *regs) const {
+    Val *beg(cx.stackp);
+    
+    for (auto &v: val.as_list->items) {
+      if (!v.eval(pos, env, regs)) { return false; };
+    }
+    
+    List *l(cx.list_type.pool.get(cx));
+    move(beg, cx.stackp, back_inserter(l->items));
+    cx.stackp = beg;
+    cx.push(pos, cx.list_type, l);
+    return true;
+  }
+  
   bool ListType::find_op(const Val &val,
                          function<bool (Ops &, OpIter &)> pred) const {
     for (auto &v: val.as_list->items) {

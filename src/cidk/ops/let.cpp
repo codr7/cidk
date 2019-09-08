@@ -2,7 +2,6 @@
 #include "cidk/e.hpp"
 #include "cidk/ops/let.hpp"
 #include "cidk/read.hpp"
-#include "cidk/types/reg.hpp"
 #include "cidk/types/sym.hpp"
 
 namespace cidk::ops {
@@ -15,6 +14,22 @@ namespace cidk::ops {
     op.args[1] = val;
   }
 
+  static void check_id(Cx &cx, const Pos &pos, Val &id, Env &env, Opts &opts) {
+    if (id.type == &cx.pair_type) {
+      auto &p(*id.as_pair);
+      check_id(cx, pos, p.first, env, opts);
+      check_id(cx, pos, p.second, env, opts);
+    } else {
+      if (id.type != &cx.sym_type) { throw ESys(pos, "Invalid id: ", id); }
+      auto found(env.try_get(pos, id.as_sym));
+      if (found && found->type->is_const) { throw ESys(pos, "Const let: ", id); }
+      
+      auto &ids(id.as_sym);
+      id.reset(cx.reg_type, opts.push_reg(pos, ids));
+      id.id = ids;
+    }
+  }
+  
   void LetType::compile(Cx &cx,
                         OpIter &in,
                         const OpIter &end,
@@ -23,12 +38,8 @@ namespace cidk::ops {
                         Opts &opts) const {
     auto &p(in->pos);
     auto &args(in->args);
-    auto &id(args[0]);
-    if (id.type != &cx.sym_type) { throw ESys(p, "Invalid id: ", id); }
-    auto found(env.try_get(p, id.as_sym));
-    if (found && found->type->is_const) { throw ESys(p, "Const let: ", id); }
+    check_id(cx, p, args[0], env, opts);
     args[1].compile(p, env, opts);
-    args[2].reset(cx.reg_type, opts.push_reg(p, id.as_sym));
     out.push_back(*in);
   }
 

@@ -175,6 +175,19 @@ Values may be paired using `:`.
 (... 42:"foo")
 ```
 
+`let` supports destructuring.
+
+```
+  do {
+    push 1:2:3;
+    let a:b 1:2:3;
+    push a;
+    push b;
+  };
+
+(... 1 2:3)
+```
+
 #### List
 Lists are heterogenous, mutable and passed by reference. Literals are enclosed in parens.
 

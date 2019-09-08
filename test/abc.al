@@ -20,6 +20,17 @@ push 1:2:3:4:5:6:7;
 check({cp;}) {push 1:2:3:4:5:6:7; dispatch =;};
 
 do {
+  push 1:2:3;
+  let a:b $;
+  
+  push a;
+  check({cp;}) { is 1;};
+
+  push b;
+  check({cp;}) {push 2:3; dispatch =;};
+};
+
+do {
   defconst foo 42;
   check(foo) {is foo 42;};
 };

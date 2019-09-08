@@ -3,9 +3,24 @@
 
 #include "cidk/op.hpp"
 #include "cidk/val.hpp"
+#include "cidk/types/reg.hpp"
 
 namespace cidk::ops {
-  struct LetType: OpType {
+  inline void bind_id(Cx &cx, const Pos &pos,
+                      const Val &id, const Val &val,
+                      Reg *regs) {
+    if (id.type == &cx.pair_type) {
+      if (val.type != &cx.pair_type) { throw ESys(pos, "Expected pair: ", val);}
+      auto &ip(*id.as_pair), vp(*val.as_pair);
+      bind_id(cx, pos, ip.first, vp.first, regs);
+      bind_id(cx, pos, ip.second, vp.second, regs);
+    } else {
+      if (id.type != &cx.reg_type) { throw ESys(pos, "Expected reg: ", id); }
+      set_reg(regs, id.as_reg, id.id, val);
+    }
+  }
+  
+  struct LetType: OpType {    
     LetType(const string &id);
     void init(Cx &cx, Op &op, const Val &id, const Val &val) const;
 
@@ -15,13 +30,12 @@ namespace cidk::ops {
                          Env &env,
                          Ops &out,
                          Opts &opts) const override;
-
+    
     virtual bool eval(Cx &cx, Op &op, Env &env, Reg *regs) const override {
       auto &p(op.pos);
       auto &args(op.args);
       if (!args[1].eval(p, env, regs)) { return false; }
-      auto &v(cx.pop(p));
-      set_reg(regs, args[2].as_reg, args[0].as_sym, v);
+      bind_id(cx, p, args[0], cx.pop(p), regs);
       return true;
     }
 
