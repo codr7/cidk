@@ -356,6 +356,10 @@ namespace cidk {
     return type == &cx.sym_type && as_sym == cx.eop.as_sym;
   }
 
+  inline void ValType::cp(Val &dst, const Val &src) const {
+    dynamic_cast<V &>(dst) = src;
+  }
+
   inline bool ValType::eval(const Pos &pos,
                             const Val &val,
                             Env &env,

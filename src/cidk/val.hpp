@@ -21,9 +21,7 @@ namespace cidk {
   struct Pair;
   struct Str;
 
-  struct Val {
-    ValType *type = nullptr;
-
+  struct V {
     union {
       bool       as_bool;
       Char       as_char;
@@ -43,7 +41,10 @@ namespace cidk {
       const Sym *as_sym;
       Type      *as_type;
     };
-
+  };
+  
+  struct Val: V {
+    ValType *type = nullptr;
     const Sym *id = nullptr;
     
     Val() {}
@@ -52,9 +53,22 @@ namespace cidk {
 
     template <typename ValT>
     Val(TValType<ValT> &type, ValT val): type(&type) { type.set(*this, val); }
+
+    Val(const Val &src): type(src.type), id(src.id) {
+      if (type) { type->cp(*this, src); }
+    }
     
-    Val(const Val &src) = default;
-    Val &operator =(const Val &src) = default;
+    ~Val() {
+      if (type) { type->destroy(*this); }
+    }
+    
+    Val &operator =(const Val &src) {
+      if (type) { type->destroy(*this); }
+      type = src.type;
+      id = src.id;
+      if (type) { type->cp(*this, src); }
+      return *this;
+    }
 
     void clear() {
       id = nullptr;
@@ -109,6 +123,7 @@ namespace cidk {
 
     template <typename ValT>
     void reset(TValType<ValT> &type, ValT val) {
+      if (this->type) { this->type->destroy(*this); }
       this->type = &type;
       type.set(*this, val);
     }
