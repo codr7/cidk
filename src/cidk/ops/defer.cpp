@@ -13,17 +13,12 @@ namespace cidk::ops {
 
   void DeferType::init(Cx &cx, Op &op, const Val &body) const { op.args[0] = body; }
 
-  void DeferType::compile(Cx &cx,
-                          OpIter &in,
-                          const OpIter &end,
-                          Env &env,
-                          Ops &out,
-                          Opts &opts) const {
-    auto &p(in->pos);
-    auto &body(in->args[0]);
+  void DeferType::compile(Cx &cx, Op &op, Env &env, Ops &out, Opts &opts) const {
+    auto &p(op.pos);
+    auto &body(op.args[0]);
     body.compile(p, env, opts);
     if (body.type != &cx.expr_type) { throw ESys(p, "Invalid body: ", body); }
-    out.push_back(*in);
+    out.push_back(op);
   }
 
   bool DeferType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {

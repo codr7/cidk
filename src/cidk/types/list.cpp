@@ -64,17 +64,16 @@ namespace cidk {
     
     for (auto &v: val.as_list->items) {
       if (!v.eval(pos, env, regs)) { return false; };
-      auto &ev(cx.peek(pos));
-      changed |= !ev.is(v);
+      changed |= !cx.peek(pos).is(v);
     }
-
-    cx.stackp = beg;
 
     if (changed) {
       List *l(cx.list_type.pool.get(cx));
       move(beg, cx.stackp, back_inserter(l->items));
+      cx.stackp = beg;
       cx.push(pos, cx.list_type, l);
     } else {
+      cx.stackp = beg;
       cx.push(pos, val);
     }
     

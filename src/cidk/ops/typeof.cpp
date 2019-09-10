@@ -10,15 +10,10 @@ namespace cidk::ops {
 
   void TypeofType::init(Cx &cx, Op &op, const Val &val) const { op.args[0] = val; }
 
-  void TypeofType::compile(Cx &cx,
-                           OpIter &in,
-                           const OpIter &end,
-                           Env &env,
-                           Ops &out,
-                           Opts &opts) const {
-    auto &p(in->pos);
-    in->args[0].compile(p, env, opts);
-    out.push_back(*in);
+  void TypeofType::compile(Cx &cx, Op &op, Env &env, Ops &out, Opts &opts) const {
+    auto &p(op.pos);
+    op.args[0].compile(p, env, opts);
+    out.push_back(op);
   }
 
   bool TypeofType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {

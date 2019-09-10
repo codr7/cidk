@@ -16,6 +16,7 @@ namespace cidk {
   
   void init_op_types(Cx &cx);
   bool find_op(Ops &ops, function<bool (Ops &, OpIter &)> pred);
+  
   void mark_refs(Ops &ops);
 }
 

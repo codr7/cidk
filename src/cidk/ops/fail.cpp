@@ -14,16 +14,11 @@ namespace cidk::ops {
 
   void FailType::init(Cx &cx, Op &op, const Val &msg) const { op.args[0] = msg; }
 
-  void FailType::compile(Cx &cx,
-                         OpIter &in,
-                         const OpIter &end,
-                         Env &env,
-                         Ops &out,
-                         Opts &opts) const {
-    auto &p(in->pos);
-    auto &msg(in->args[0]);
+  void FailType::compile(Cx &cx, Op &op, Env &env, Ops &out, Opts &opts) const {
+    auto &p(op.pos);
+    auto &msg(op.args[0]);
     msg.compile(p, env, opts);
-    out.push_back(*in);
+    out.push_back(op);
   }
 
   bool FailType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {

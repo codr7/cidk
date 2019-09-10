@@ -12,17 +12,12 @@ namespace cidk::ops {
     op.args[0] = n;
   }
 
-  void DropType::compile(Cx &cx,
-                         OpIter &in,
-                         const OpIter &end,
-                         Env &env,
-                         Ops &out,
-                         Opts &opts) const {
-    auto &p(in->pos);
-    auto &n(in->args[0]);
+  void DropType::compile(Cx &cx, Op &op, Env &env, Ops &out, Opts &opts) const {
+    auto &p(op.pos);
+    auto &n(op.args[0]);
     n.compile(p, env, opts);
     if (n.type != &cx.int_type) { throw ESys(p, "Expected Int: ", n.type->id); }
-    out.push_back(*in);
+    out.push_back(op);
   }
 
   bool DropType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {

@@ -20,14 +20,9 @@ namespace cidk::ops {
     op.args[2] = body;
   }
 
-  void ForType::compile(Cx &cx,
-                        OpIter &in,
-                        const OpIter &end,
-                        Env &env,
-                        Ops &out,
-                        Opts &opts) const {
-    auto &p(in->pos);
-    auto &args(in->args);
+  void ForType::compile(Cx &cx, Op &op, Env &env, Ops &out, Opts &opts) const {
+    auto &p(op.pos);
+    auto &args(op.args);
     for (int i(0); i < 3; i++) { args[i].compile(p, env, opts); }
     auto &var(args[1]);
 
@@ -35,7 +30,7 @@ namespace cidk::ops {
       throw ESys(p, "Invalid var: ", var);
     }
 
-    out.push_back(*in);
+    out.push_back(op);
   }
 
   bool ForType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {

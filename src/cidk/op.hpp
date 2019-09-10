@@ -26,12 +26,9 @@ namespace cidk {
 
     OpType(const string &id): id(id) {}
 
-    virtual void compile(Cx &cx,
-                         OpIter &in,
-                         const OpIter &end,
-                         Env &env,
-                         Ops &out,
-                         Opts &opts) const { out.push_back(*in); }
+    virtual void compile(Cx &cx, Op &op, Env &env, Ops &out, Opts &opts) const {
+      out.push_back(op);
+    }
     
     virtual bool eval(Cx &cx, Op &op, Env &env, Reg *regs) const { return true; }
 
@@ -53,13 +50,8 @@ namespace cidk {
       type.init(cx, *this, forward<Args>(args)...);
     }
 
-    void compile(Cx &cx,
-                 OpIter &in,
-                 const OpIter &end,
-                 Env &env,
-                 Ops &out,
-                 Opts &opts) {
-      type->compile(cx, in, end, env, out, opts);
+    void compile(Cx &cx, Env &env, Ops &out, Opts &opts) {
+      type->compile(cx, *this, env, out, opts);
     }
     
     bool eval(Cx &cx, Env &env, Reg *regs) {
@@ -72,6 +64,17 @@ namespace cidk {
     
     void mark_refs() { type->mark_refs(*this); }
   };
+
+  template <typename...ArgsT>
+  void compile_back(Cx &cx,
+                    const Pos &pos,
+                    Env &env,
+                    Ops &ops,
+                    Opts &opts,
+                    ArgsT &&...args) {
+    Op op(cx, pos, forward<ArgsT>(args)...);
+    op.compile(cx, env, ops, opts);
+  }
 }
 
 #endif

@@ -11,8 +11,7 @@ namespace cidk::ops {
     void init(Cx &cx, Op &op, const Val &fname) const;
 
     virtual void compile(Cx &cx,
-                         OpIter &in,
-                         const OpIter &end,
+                         Op &op,
                          Env &env,
                          Ops &out,
                          Opts &opts) const override;

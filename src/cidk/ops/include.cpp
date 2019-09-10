@@ -13,18 +13,13 @@ namespace cidk::ops {
     op.args[0] = fname;
   }
 
-  void IncludeType::compile(Cx &cx,
-                            OpIter &in,
-                            const OpIter &end,
-                            Env &env,
-                            Ops &out,
-                            Opts &opts) const {
-    auto &p(in->pos);
-    auto &fname(in->args[0]);
+  void IncludeType::compile(Cx &cx, Op &op, Env &env, Ops &out, Opts &opts) const {
+    auto &p(op.pos);
+    auto &fname(op.args[0]);
     fname.compile(p, env, opts);
     if (fname.type != &cx.str_type) { throw ESys(p, "Invalid filename: ", fname); } 
-    cx.load(in->pos, fname.as_str->to_utf8(cx), read_ops, env, out, opts);    
-    out.push_back(*in);
+    cx.load(op.pos, fname.as_str->to_utf8(cx), read_ops, env, out, opts);    
+    out.push_back(op);
   }
 
   void IncludeType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {

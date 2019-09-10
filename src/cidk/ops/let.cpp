@@ -1,7 +1,10 @@
 #include "cidk/cx.hpp"
 #include "cidk/e.hpp"
 #include "cidk/ops/let.hpp"
+#include "cidk/ops/push.hpp"
+#include "cidk/ops/splat.hpp"
 #include "cidk/read.hpp"
+#include "cidk/types/pop.hpp"
 #include "cidk/types/sym.hpp"
 
 namespace cidk::ops {
@@ -14,33 +17,42 @@ namespace cidk::ops {
     op.args[1] = val;
   }
 
-  static void check_id(Cx &cx, const Pos &pos, Val &id, Env &env, Opts &opts) {
+  static void compile_id(Cx &cx,
+                         const Pos &pos,
+                         const Val &id,
+                         Env &env,
+                         Ops &out,
+                         Opts &opts) {
     if (id.type == &cx.pair_type) {
+      compile_back(cx, pos, env, out, opts, Splat, cx.$, Val(cx.int_type, Int(1)));
       auto &p(*id.as_pair);
-      check_id(cx, pos, p.first, env, opts);
-      check_id(cx, pos, p.second, env, opts);
+      compile_id(cx, pos, p.second, env, out, opts);
+      compile_id(cx, pos, p.first, env, out, opts);
     } else {
-      if (id.type != &cx.sym_type) { throw ESys(pos, "Invalid id: ", id); }
-      auto found(env.try_get(pos, id.as_sym));
-      if (found && found->type->is_const) { throw ESys(pos, "Const let: ", id); }
-      
-      auto &ids(id.as_sym);
-      id.reset(cx.reg_type, opts.push_reg(pos, ids));
-      id.id = ids;
+      compile_back(cx, pos, env, out, opts, Let, id, cx.$);
     }
   }
   
-  void LetType::compile(Cx &cx,
-                        OpIter &in,
-                        const OpIter &end,
-                        Env &env,
-                        Ops &out,
-                        Opts &opts) const {
-    auto &p(in->pos);
-    auto &args(in->args);
-    check_id(cx, p, args[0], env, opts);
-    args[1].compile(p, env, opts);
-    out.push_back(*in);
+  void LetType::compile(Cx &cx, Op &op, Env &env, Ops &out, Opts &opts) const {
+    auto &p(op.pos);
+    auto &args(op.args);
+    auto &id(args[0]), &val(args[1]);
+    val.compile(p, env, opts);
+
+    if (id.type == &cx.sym_type) {
+      auto found(env.try_get(p, id.as_sym));
+      if (found && found->type->is_const) { throw ESys(p, "Const let: ", id); }
+      auto &ids(id.as_sym);
+      id.reset(cx.reg_type, opts.push_reg(p, ids));
+      id.id = ids;
+      out.push_back(op);
+    } else {
+      if (val.type != &cx.pop_type) { 
+        compile_back(cx, p, env, out, opts, Push, val); 
+      }
+
+      compile_id(cx, p, id, env, out, opts);
+    }
   }
 
   bool LetType::find_op(Op &op, function<bool (Ops &, OpIter &)> pred) const {

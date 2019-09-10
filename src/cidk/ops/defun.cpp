@@ -26,14 +26,9 @@ namespace cidk::ops {
     op.args[3] = body;
   }
 
-  void DefunType::compile(Cx &cx,
-                          OpIter &in,
-                          const OpIter &end,
-                          Env &env,
-                          Ops &out,
-                          Opts &opts) const {
-    auto &p(in->pos);
-    auto &args(in->args);
+  void DefunType::compile(Cx &cx, Op &op, Env &env, Ops &out, Opts &opts) const {
+    auto &p(op.pos);
+    auto &args(op.args);
 
     auto &id(args[0]);
     if (id.type != &cx.sym_type) { throw ESys(p, "Invalid id: ", id); }
@@ -67,8 +62,8 @@ namespace cidk::ops {
     copy(bops.begin(), bops.end(), back_inserter(f.body));
     cx.compile(f.body, f.body_opts, f.env);
     for (auto &eid: f.body_opts.ext_ids) { eid.src_reg = opts.get_reg(p, eid.id); }
-    in->args[4].reset(cx.fun_type, &f);
-    out.push_back(*in);
+    op.args[4].reset(cx.fun_type, &f);
+    out.push_back(op);
   }
   
   bool DefunType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {

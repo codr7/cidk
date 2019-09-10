@@ -15,14 +15,9 @@ namespace cidk::ops {
     op.args[1] = nargs;
   }
 
-  void DispatchType::compile(Cx &cx,
-                             OpIter &in,
-                             const OpIter &end,
-                             Env &env,
-                             Ops &out,
-                             Opts &opts) const {
-    auto &p(in->pos);
-    auto &args(in->args);
+  void DispatchType::compile(Cx &cx, Op &op, Env &env, Ops &out, Opts &opts) const {
+    auto &p(op.pos);
+    auto &args(op.args);
     for (int i(0); i < 2; i ++) { args[i].compile(p, env, opts); }
 
     if (Val &nargs(args[1]); nargs.type != &cx.int_type) {
@@ -47,7 +42,7 @@ namespace cidk::ops {
         return narg_cmp ? narg_cmp : cmp(pos, yf.weight, xf.weight);
       });
 
-    out.push_back(*in);
+    out.push_back(op);
   }
   
   bool DispatchType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {

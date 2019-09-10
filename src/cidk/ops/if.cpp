@@ -19,16 +19,11 @@ namespace cidk::ops {
     op.args[2] = y;
   }
 
-  void IfType::compile(Cx &cx,
-                       OpIter &in,
-                       const OpIter &end,
-                       Env &env,
-                       Ops &out,
-                       Opts &opts) const {
-    auto &p(in->pos);
-    auto &args(in->args);
+  void IfType::compile(Cx &cx, Op &op, Env &env, Ops &out, Opts &opts) const {
+    auto &p(op.pos);
+    auto &args(op.args);
     for (int i(0); i < 3; i++) { args[i].compile(p, env, opts); }
-    out.push_back(*in);
+    out.push_back(op);
   }
 
   bool IfType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {

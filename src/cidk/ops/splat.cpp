@@ -15,31 +15,18 @@ namespace cidk::ops {
     op.args[1] = max;
   }
 
-  void SplatType::compile(Cx &cx,
-                          OpIter &in,
-                          const OpIter &end,
-                          Env &env,
-                          Ops &out,
-                          Opts &opts) const {
-    auto &p(in->pos);
-    auto &args(in->args);
+  void SplatType::compile(Cx &cx, Op &op, Env &env, Ops &out, Opts &opts) const {
+    auto &p(op.pos);
+    auto &args(op.args);
     for (int i(0); i < 2; i ++) { args[i].compile(p, env, opts); }
 
     if (Val &max(args[1]); max.type != &cx.int_type) {
       throw ESys(p, "Invalid max: ", max);
     }
 
-    out.push_back(*in);
+    out.push_back(op);
   }
   
-  bool SplatType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
-    auto &p(op.pos);
-    auto &args(op.args);
-    if (!args[0].eval(p, env, regs)) { return false; }
-    cx.pop(p).splat(p, args[1].as_int);
-    return true;
-  }
-
   void SplatType::read(Cx &cx, Pos &pos, istream &in, Ops &out) const {
     Pos p(pos);
 

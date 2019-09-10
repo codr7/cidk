@@ -114,11 +114,7 @@ namespace cidk {
 
     void compile(Ops &ops, Opts &opts, Env &env) {
       Ops tmp;
-      
-      for (auto i(ops.begin()); i != ops.end(); i++) {
-        i->compile(*this, i, ops.end(), env, tmp, opts);
-      }
-      
+      for (Op &op: ops) { op.compile(*this, env, tmp, opts); }      
       swap(ops, tmp);
     }
 

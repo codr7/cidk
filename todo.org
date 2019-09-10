@@ -1,6 +1,3 @@
-* emit splat/let ops for pairs in let-compile
-** replaces bind_id
-** bench
 * add bin/hex support to read_num
 ** 0x03/0b11
 * --
@@ -22,9 +19,6 @@
 * convert Cx.ops to array
 ** rename to evals/evalp
 ** add CIDK_EVAL_MAX
-* grep mark() and rename to mark_refs()
-** add default Ref.mark_refs()
-*** set ref_marked
 * --
 * add deflib op
 ** pass lib.env down in compile/eval

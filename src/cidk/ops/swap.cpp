@@ -15,14 +15,9 @@ namespace cidk::ops {
     op.args[1] = y;
   }
 
-  void SwapType::compile(Cx &cx,
-                         OpIter &in,
-                         const OpIter &end,
-                         Env &env,
-                         Ops &out,
-                         Opts &opts) const {
-    auto &p(in->pos);
-    auto &args(in->args);
+  void SwapType::compile(Cx &cx, Op &op, Env &env, Ops &out, Opts &opts) const {
+    auto &p(op.pos);
+    auto &args(op.args);
     for (int i(0); i < 2; i++) { args[i].compile(p, env, opts); }
     
     if (auto &x(args[0]); x.type != &cx.int_type && x.type != &cx.reg_type) {
@@ -33,7 +28,7 @@ namespace cidk::ops {
       throw ESys(p, "Invalid swap place: ", y);
     }
     
-    out.push_back(*in);
+    out.push_back(op);
   }
 
   bool SwapType::find_op(Op &op, function<bool (Ops &, OpIter &)> pred) const {

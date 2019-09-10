@@ -15,18 +15,13 @@ namespace cidk::ops {
     op.args[1] = check;
   }
 
-  void CallType::compile(Cx &cx,
-                         OpIter &in,
-                         const OpIter &end,
-                         Env &env,
-                         Ops &out,
-                         Opts &opts) const {
-    auto &p(in->pos);
-    auto &args(in->args);
+  void CallType::compile(Cx &cx, Op &op, Env &env, Ops &out, Opts &opts) const {
+    auto &p(op.pos);
+    auto &args(op.args);
     for (int i(0); i < 2; i++) { args[i].compile(p, env, opts); }
     auto &check(args[1]);
     if (check.type != &cx.bool_type) { throw ESys(p, "Expected Bool: ", check); }
-    out.push_back(*in);
+    out.push_back(op);
   }
 
   bool CallType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {

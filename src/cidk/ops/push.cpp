@@ -11,20 +11,15 @@ namespace cidk::ops {
 
   void PushType::init(Cx &cx, Op &op, const Val &val) const { op.args[0] = val; }
 
-  void PushType::compile(Cx &cx,
-                         OpIter &in,
-                         const OpIter &end,
-                         Env &env,
-                         Ops &out,
-                         Opts &opts) const {
-    auto &v(in->args[0]);
-    in->args[0].compile(in->pos, env, opts);
+  void PushType::compile(Cx &cx, Op &op, Env &env, Ops &out, Opts &opts) const {
+    auto &v(op.args[0]);
+    op.args[0].compile(op.pos, env, opts);
 
     if (v.type == &cx.expr_type && v.as_expr->flags(Expr::INLINE)) {
       auto &src(v.as_expr->ops);
       copy(src.begin(), src.end(), back_inserter(out));
     } else {
-      out.push_back(*in);
+      out.push_back(op);
     }
   }
 

@@ -18,14 +18,9 @@ namespace cidk::ops {
 
   void DoType::init(Cx &cx, Op &op, const Val &body) const { op.args[0] = body; }
 
-  void DoType::compile(Cx &cx,
-                       OpIter &in,
-                       const OpIter &end,
-                       Env &env,
-                       Ops &out,
-                       Opts &opts) const {
-    auto &p(in->pos);
-    auto &body(in->args[0]);
+  void DoType::compile(Cx &cx, Op &op, Env &env, Ops &out, Opts &opts) const {
+    auto &p(op.pos);
+    auto &body(op.args[0]);
     if (body.type != &cx.expr_type) { throw ESys(p, "Invalid body: ", body); }
     
     if (!body.find_op([](Ops &ops, OpIter &i) {
@@ -49,7 +44,7 @@ namespace cidk::ops {
         }
       }
     
-      out.push_back(*in);
+      out.push_back(op);
     }
   }
 

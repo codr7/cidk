@@ -10,16 +10,12 @@ namespace cidk::ops {
     void init(Cx &cx, Op &op, const Val &nreps, const Val &body) const;
 
     virtual void compile(Cx &cx,
-                         OpIter &in,
-                         const OpIter &end,
+                         Op &op,
                          Env &env,
                          Ops &out,
                          Opts &opts) const override;
 
-    virtual bool eval(Cx &cx,
-                      Op &op,
-                      Env &env,
-                      Reg *regs) const override;
+    virtual bool eval(Cx &cx, Op &op, Env &env, Reg *regs) const override;
     
     virtual bool find_op(Op &op,
                          function<bool (Ops &, OpIter &)> pred) const override;

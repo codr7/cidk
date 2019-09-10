@@ -17,19 +17,14 @@ namespace cidk::ops {
     op.args[1] = body;
   }
 
-  void CheckType::compile(Cx &cx,
-                           OpIter &in,
-                           const OpIter &end,
-                           Env &env,
-                           Ops &out,
-                           Opts &opts) const {
-    auto &p(in->pos);
-    auto &args(in->args);
+  void CheckType::compile(Cx &cx, Op &op, Env &env, Ops &out, Opts &opts) const {
+    auto &p(op.pos);
+    auto &args(op.args);
     for (int i(0); i < 2; i++) { args[i].compile(p, env, opts); }
 
     auto &msg(args[0]);
     if (msg.type != &cx.list_type) { throw ESys(p, "Expected List: ", msg.type->id); }
-    out.push_back(*in);
+    out.push_back(op);
   }
 
   bool CheckType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {

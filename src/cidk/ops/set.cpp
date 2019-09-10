@@ -16,14 +16,9 @@ namespace cidk::ops {
     op.args[1] = val;
   }
 
-  void SetType::compile(Cx &cx,
-                        OpIter &in,
-                        const OpIter &end,
-                        Env &env,
-                        Ops &out,
-                        Opts &opts) const {
-    auto &p(in->pos);
-    auto &args(in->args);
+  void SetType::compile(Cx &cx, Op &op, Env &env, Ops &out, Opts &opts) const {
+    auto &p(op.pos);
+    auto &args(op.args);
     args[1].compile(p, env, opts);
     auto &k(args[0]);
     
@@ -41,7 +36,7 @@ namespace cidk::ops {
         throw ESys(p, "Invalid key: ", k);
     }
                  
-    out.push_back(*in);
+    out.push_back(op);
   }
 
   bool SetType::eval(Cx &cx, Op &op, Env &env, Reg *regs) const {
