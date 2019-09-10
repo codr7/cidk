@@ -1,3 +1,8 @@
+* add splat op
+** copy push
+** implement splat for pair
+** emit splat/let ops for pairs in let-compile
+* --
 * add try op
 ** try (foo ()() {}) {...};
 ** take list of restarts

@@ -32,8 +32,6 @@ namespace cidk {
     }
     
     virtual void compile(const Pos &pos, Val &val, Env &env, Opts &opts) const {}
-    virtual void cp(Val &dst, const Val &src) const;
-    virtual void destroy(Val &val) const {}
     virtual void dump(const Val &val, ostream &out) const = 0;
 
     virtual bool eq(const Pos &pos, const Val &x, const Val &y) const {

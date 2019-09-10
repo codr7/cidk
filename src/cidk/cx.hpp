@@ -351,13 +351,46 @@ namespace cidk {
     cx.pair_type.pool.put(this);
   }
 
+  inline void PairType::clone(const Pos &pos, Val &dst, const Val &src) const {
+    dst.as_pair = cx.pair_type.pool.get(cx, *src.as_pair);
+  }
+
+  inline bool PairType::eq(const Pos &pos, const Val &x, const Val &y) const {
+    auto &xp(*x.as_pair), &yp(*y.as_pair);
+    return xp.first.eq(pos, yp.first) && xp.second.eq(pos, yp.second);
+  }
+
+  inline bool PairType::eval(const Pos &pos,
+                      const Val &val,
+                      Env &env,
+                      Reg *regs) const {
+    auto &p(*val.as_pair);
+    
+    if (!p.first.eval(pos, env, regs) || !p.second.eval(pos, env, regs)) {
+      return false;
+    }
+
+    Val &right(cx.pop(pos)), &left(cx.pop(pos));
+
+    if (left.is(p.first) && right.is(p.second)) {
+      cx.push(pos, val);
+    } else {
+      cx.push(pos, cx.pair_type, cx.pair_type.pool.get(cx, left, right));
+    }
+    
+    return true;
+  }
+
+  inline bool PairType::is(const Val &x, const Val &y) const {
+    auto &xp(*x.as_pair), &yp(*y.as_pair);
+    return xp.first.is(yp.first) && xp.second.is(yp.second);
+  }
+
+  inline void PairType::set(Val &dst, Pair *val) const { dst.as_pair = val; }
+
   inline bool Val::is_eop() const {
     auto &cx(type->cx);
     return type == &cx.sym_type && as_sym == cx.eop.as_sym;
-  }
-
-  inline void ValType::cp(Val &dst, const Val &src) const {
-    dynamic_cast<V &>(dst) = src;
   }
 
   inline bool ValType::eval(const Pos &pos,
