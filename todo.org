@@ -1,9 +1,6 @@
-* add splat op
-** copy push
-** implement pair splat
-** emit splat/let ops for pairs in let-compile
+* emit splat/let ops for pairs in let-compile
 ** replaces bind_id
-* --
+** bench
 * add bin/hex support to read_num
 ** 0x03/0b11
 * --

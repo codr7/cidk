@@ -25,6 +25,7 @@
 #include "cidk/ops/push.hpp"
 #include "cidk/ops/recall.hpp"
 #include "cidk/ops/set.hpp"
+#include "cidk/ops/splat.hpp"
 #include "cidk/ops/stash.hpp"
 #include "cidk/ops/step.hpp"
 #include "cidk/ops/swap.hpp"
@@ -44,7 +45,7 @@ namespace cidk {
         &ops::Mark,
         &ops::Push,
         &ops::Recall,
-        &ops::Set, &ops::Stash, &ops::Step, &ops::Swap, &ops::Sweep,
+        &ops::Set, &ops::Splat, &ops::Stash, &ops::Step, &ops::Swap, &ops::Sweep,
         &ops::Typeof
     };
 
