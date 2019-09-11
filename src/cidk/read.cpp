@@ -216,23 +216,18 @@ namespace cidk {
   }
   
   pair<Int, bool> read_int(Cx &cx, Pos &pos, istream &in) {
-    stringstream out;
-    char c(0);
-    Int v(0);
+    Pos p(pos);
     bool is_neg(false);
-    
-    while (in.get(c) && (isdigit(c) || (c == '-' && !v))) {
-      if (c == '-') {
-        is_neg = true;
-      } else {
-        v = v * 10 + c - '0';
-      }
-        
-      pos.col++;
-    }
 
-    if (!in.eof()) { in.unget();}
-    return make_pair(is_neg ? -v : v, is_neg);
+    if (char c(0); in.get(c)) {
+      is_neg = c == '-';
+      in.unget();
+    }
+    
+    Int v(0);
+    in >> v;
+    if (in.fail()) { throw ESys(p, "Failed reading int"); }
+    return make_pair(v, is_neg);
   }
 
   pair<uint64_t, uint8_t> read_frac(Cx &cx, Pos &pos, istream &in) {
