@@ -5,6 +5,7 @@ clock 1000 {
   include "iter.al";
   include "list.al";
   include "math.al"; 
+  include "num.al";
   include "pair.al"; 
   include "stack.al";
   include "type.al";

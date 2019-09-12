@@ -1,6 +1,4 @@
-* add bin/hex support to read_num
-** 0x03/0b11
-* --
+* add hex support to read_num
 * add try op
 ** try (foo ()() {}) {...};
 ** take list of restarts

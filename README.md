@@ -139,6 +139,14 @@ Integers are 64-bit and signed.
 (... Num:Meta)
 ```
 
+Prefixing integers with `0x` triggers hex decoding.
+
+```
+  push 0x2a;
+
+(... 42)
+```
+
 #### Fix
 Fix point numbers infer precision from literals.
 

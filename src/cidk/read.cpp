@@ -215,7 +215,7 @@ namespace cidk {
     return Val(cx.list_type, out);
   }
   
-  pair<Int, bool> read_int(Cx &cx, Pos &pos, istream &in) {
+  pair<Int, bool> read_int(Cx &cx, Pos &pos, istream &in, bool is_hex) {
     Pos p(pos);
     bool is_neg(false);
 
@@ -225,7 +225,7 @@ namespace cidk {
     }
     
     Int v(0);
-    in >> v;
+    in >> (is_hex ? hex : dec) >> v;
     if (in.fail()) { throw ESys(p, "Failed reading int"); }
     return make_pair(v, is_neg);
   }
@@ -246,17 +246,37 @@ namespace cidk {
   }
   
   Val read_num(Cx &cx, Pos &pos, istream &in) {
-    auto i(read_int(cx, pos, in));
+    bool is_hex(false);
     char c(0);
-    
-    if (!in.get(c) || c != '.') {
-      in.unget();
-      return Val(cx.int_type, i.first);
+      
+    if (in.get(c)) {
+      if (c == '0') {
+        if (in.get(c)) {
+          if (c == 'x') {
+            is_hex = true;
+          } else {
+            in.unget();
+            in.unget();
+          }                 
+        }
+      } else {
+        in.unget();
+      }
     }
     
-    auto f(read_frac(cx, pos, in));
-    int64_t v(i.first * fix::pow(f.second) + f.first);
-    return Val(cx.fix_type, fix::make((i.first || !i.second) ? v : -v, f.second));
+    auto i(read_int(cx, pos, in, is_hex));
+    
+    if (!is_hex && in.get(c)) {
+      if (c == '.') {
+        auto f(read_frac(cx, pos, in));
+        int64_t v(i.first * fix::pow(f.second) + f.first);
+        return Val(cx.fix_type, fix::make((i.first || !i.second) ? v : -v, f.second));
+      }
+      
+      in.unget();
+    }
+
+    return Val(cx.int_type, i.first);
   }
 
   Val read_str(Cx &cx, Pos &pos, istream &in) {    
