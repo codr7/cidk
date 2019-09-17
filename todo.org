@@ -1,4 +1,3 @@
-* add hex support to read_num
 * add try op
 ** try (foo ()() {}) {...};
 ** take list of restarts
