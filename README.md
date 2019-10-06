@@ -563,3 +563,8 @@ Plugins may be linked and initialized using `link`. The following example loads 
 
 ### License
 MIT
+
+### support
+Please consider donating if you would like to help the project evolve and improve.
+
+<a href="https://liberapay.com/codr7/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
